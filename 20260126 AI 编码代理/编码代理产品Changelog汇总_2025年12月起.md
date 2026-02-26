@@ -1,21 +1,32 @@
-# 编码代理产品 Changelog 汇总（2025年4月 ~ 2026年2月中旬）
+# 编码代理产品 Changelog 汇总（2025年4月 ~ 2026年2月下旬）
 
 > 本文档为[《AI 编码代理产品形态全景（2026年1月）》](./20250126%20AI%20编码代理产品形态全景.md)的配套文档。全景文档回答"有哪些产品、怎么选"，本文档回答"**这些产品最近做了什么、行业往哪走**"。覆盖范围含专业编码代理（Cursor、Copilot、Claude Code、Codex 等）和通用 AI 平台的编码能力（ChatGPT Canvas、Claude.ai Artifacts、Gemini Code Assist、Grok Build 等）。
 
 ---
+
+## 本文涉及产品分类（按产品形态）
+
+- **IDE 内置编码代理**：Cursor、Windsurf、Trae、Google Antigravity、Gemini Code Assist
+- **CLI 编码代理**：Claude Code、GitHub Copilot CLI、Gemini CLI、Codex CLI、Augment Auggie CLI、Grok Build CLI
+- **云端/异步代理与 Web 编码入口**：Cursor Long-Running Agents、GitHub Copilot Coding Agent、Claude Code on Web、Codex App/Web
+- **全栈应用生成器**：Bolt、Lovable、Claude.ai Artifacts
+- **通用 AI 平台中的编码工作区**：ChatGPT（Canvas）、Claude.ai、GitHub Copilot（github.com / Mobile）
+- **设计与多模态协同工具**：Figma（MCP Server、Claude Code to Figma、Codex to Figma）
+
+> 信息口径：优先采用各产品官方 changelog/发布公告；涉及“性能提升、基准分数、节省比例”等数据，若缺乏第三方复现实验，均按官方披露口径记录。
 
 ## 0. 执行摘要
 
 | 功能维度 | 核心趋势 | 代表性更新 |
 |---------|---------|----------|
 | **长时自主代理** | 从"对话式辅助"到"小时级/天级自主编码"，是最新最核心的能力跃迁 | Cursor Long-Running Agents（52 小时 / 151K 行代码）、Self-Driving Codebase（1000 commits/h）、Codex Floating Window（跟随式执行） |
-| **多代理/子代理架构** | 从单代理到多代理协作，是最核心的架构演进 | Cursor Subagents、Claude Code Agent Teams（16 实例协作）、Bolt v2 多代理架构、Gemini CLI v0.28 Subagent 进化 |
+| **多代理/子代理架构** | 从单代理到多代理协作，是最核心的架构演进 | Cursor Subagents、Claude Code Agent Teams（16 实例协作）、Bolt v2 多代理架构、Gemini CLI v0.30 子代理/策略引擎进化 |
 | **规划模式** | "先规划再执行"成为行业标配 | Cursor / Copilot CLI / Windsurf / Gemini CLI / Gemini Code Assist / Lovable / Bolt 全面支持 |
 | **调试与运行时智能** | 从"写代码"向"理解运行时行为"进化 | Cursor Debug Mode、Lovable Browser Testing、ChatGPT Canvas 代码审查 |
 | **CLI 代理** | CLI 从辅助终端进化为独立开发入口 | Cursor CLI、Copilot CLI、Gemini CLI、Codex CLI、Grok Build CLI 五线并进 |
 | **Skills 与可扩展性** | 从 Prompt Engineering 到 Flow Engineering | SKILL.md / AGENTS.md 生态 + MCP 协议（Figma MCP / Augment Context Engine MCP / Artifacts MCP）+ Extensions GA + GitHub Agentic Workflows |
-| **Hooks 与生命周期控制** | 代理不再是黑盒，开发者可注入自定义逻辑 | Claude Code 8 种 Hook 类型、Cursor Hooks **40x** 性能提升 |
-| **模型更新** | 多模型并存、编码专用与通用推理分化加速 | Claude Opus 4.6（**1M** 上下文）、GPT-5.3-Codex-Spark（**1000+ tokens/s**）、Gemini 2.5 Pro/Flash、Grok 4/Code Fast 1、GitHub Copilot 旧模型批量淘汰 |
+| **Hooks 与生命周期控制** | 代理不再是黑盒，开发者可注入自定义逻辑 | Claude Code Hook 事件持续扩展（Worktree/Config）、Cursor Hooks **40x** 性能提升 |
+| **模型更新** | 多模型并存、编码专用与通用推理分化加速 | Claude Opus 4.6（**1M** 上下文）、GPT-5.3-Codex-Spark（**1000+ tokens/s**）、Gemini 2.5 / 3.1 系列、Grok 4/Code Fast 1、GitHub Copilot 旧模型批量淘汰 |
 | **企业级功能** | 从个人工具向企业基础设施演进 | Cursor Enterprise、Augment Analytics API、Lovable 环境隔离、Grok Build 空气隔离 |
 | **UI/UX 与交互创新** | IDE 从"编辑器中心"向"代理中心"转型，通用平台向编码工作区延伸 | Cursor 四种布局、Windsurf Arena、Codex Steer Mode + Floating Window、ChatGPT Canvas、Claude Code on Web |
 | **图像生成与多模态** | 从纯文本走向多模态 | Cursor 图像生成、Figma Make/Vectorize、Claude Artifacts 交互式应用、Gemini 2.5 原生多模态 |
@@ -29,21 +40,21 @@
 | 产品 | 覆盖版本/时间段 | 产品形态 | 关键里程碑 |
 |------|----------------|---------|-----------|
 | **Cursor** | v0.44（v2.2）~ v0.47 / CLI / Long-Running Agents | IDE 内置代理 + 云端长时代理 | **Long-Running Agents**（52h 自主编码）、Self-Driving Codebase（1000 commits/h）、Subagents、Debug Mode |
-| **GitHub Copilot** | VS Code / CLI / Coding Agent / Extensions / **Agentic Workflows** | IDE 插件 + CLI 代理 + CI/CD 自动化 | **Agentic Workflows**（Markdown 定义自动化）、GPT-5.3-Codex GA、Extensions GA、旧模型批量淘汰 |
-| **Claude Code** | v2.1.0 ~ v2.1.44 / Agent Teams / Opus 4.6 | CLI 代理 | Agent Teams（16 实例）、8 种 Hooks、Windows ARM64 支持 |
+| **GitHub Copilot** | VS Code / CLI / Coding Agent / Extensions / **Agentic Workflows** | IDE 插件 + CLI 代理 + CI/CD 自动化 | **Agentic Workflows**（Markdown 定义自动化）、Copilot CLI GA（2月25日）、组织级 Metrics（2月20日） |
+| **Claude Code** | v2.1.0 ~ v2.1.59 / Agent Teams / Opus 4.6 | CLI 代理 | Agent Teams（16 实例）、Hook 事件扩展（Worktree/Config）、Windows ARM64 支持 |
 | **Trae** | SOLO Stable / Builder / Coder / v1.3.0 MCP | IDE 内置代理 + 全栈生成器 | MCP 协议支持、多模态上下文 |
 | **Google Antigravity** | v1.11 ~ v1.16.5 | 多代理 IDE | Agent Manager、Agent Skills、终端沙箱 |
-| **Gemini CLI** | v0.24 ~ v0.28.2 | CLI 代理 | Agent Skills、Hook 系统、**后台 Shell 命令**、子代理进化 |
-| **Windsurf** | Wave 13 / Wave 14 / v1.12 ~ v1.9544 | IDE 内置代理 | Arena Mode、SWE-1.5、Cascade Hooks、Tab v2 |
+| **Gemini CLI** | v0.24 ~ v0.30.0 | CLI 代理 | Agent Skills、Hook 系统、**后台 Shell 命令**、Policy Engine + Plan Mode 强化 |
+| **Windsurf** | Wave 13 / Wave 14 / v1.12 ~ v1.95xx | IDE 内置代理 | Arena Mode、SWE-1.5、Cascade Hooks、Plan→Code 自动切换 |
 | **Augment Code** | Auggie CLI 0.12.0 / Subagents / Analytics API / **Context Engine MCP** | CLI 代理 + IDE 插件 + MCP 服务 | **Context Engine MCP**（跨代理上下文服务）、CLI Subagents、Analytics API |
-| **Codex** | v0.97 ~ CLI v0.101 / GPT-5-Codex → **GPT-5.3-Codex-Spark** | 云端 + CLI + IDE 编码代理 | **GPT-5.3-Codex-Spark**（1000+ tokens/s）、Floating Window、JS REPL、Steer Mode |
+| **Codex** | v0.97 ~ CLI v0.105 / GPT-5-Codex → **GPT-5.3-Codex-Spark** | 云端 + CLI + IDE 编码代理 | **GPT-5.3-Codex-Spark**（1000+ tokens/s）、Floating Window、多代理 CSV 扇出、权限流增强 |
 | **Bolt** | v2（2025年10月~）/ 持续更新 | 全栈应用生成器 | 多代理架构、Plan Mode、**Opus 4.6 集成** |
 | **Lovable** | 持续更新 ~ 2026年2月5日大版本 | 全栈应用生成器 | Plan Mode、Browser Testing、Visual Edits、**Opus 4.6 集成** |
 | **Gemini Code Assist** | Agent Mode GA / VS Code 2.68.0 / IntelliJ 1.40.0 | IDE 插件 + Agent Mode | Agent Mode GA、MCP 迁移、180K 免费补全/月 |
 | **ChatGPT（Canvas）** | Canvas 更新 / o3 / o4-mini | 对话式编码工作区 | HTML/React 实时渲染、内置代码执行、代码审查 |
 | **Claude.ai** | Claude Code on Web / Artifacts MCP / Max 计划 | Web 编码 + 应用生成平台 | 云端并行任务、Artifacts 5亿+ 创建、1M 上下文 |
 | **Grok / xAI** | Grok Build（2026年2月） / Grok Code Fast 1 / Grok 4 | CLI + Web 编码代理 | 本地优先架构、92 tokens/s 编码模型、Vibe Coding |
-| **Figma** | AI 功能持续更新 / MCP Server | 设计工具 + AI | Figma Make、MCP Server、Vectorize、**AI Credits 改革** |
+| **Figma** | AI 功能持续更新 / MCP Server | 设计工具 + AI | Figma Make、MCP Server、Vectorize、**Claude/Codex to Figma** |
 
 ---
 
@@ -128,6 +139,18 @@ Dec 27  Windsurf 集成                       ∟ Enterprise 命令控制       
 
                                     Jan~Feb Claude Code Agent Teams        Feb 17  Copilot 旧模型批量淘汰
                                             ∟ 16 实例协作                          ∟ Claude 4.1 / Gemini 2.5 Pro / GPT-5
+
+                                                                           Feb 19  Copilot 企业模型选择器开放
+                                                                                   ∟ Business/Enterprise 可选 GPT-5.3-Codex 等
+                                                                                   Gemini 3.1 Pro 进入 Copilot 公测
+                                                                                   Copilot Metrics API 新增 PR throughput / time-to-merge
+                                                                           Feb 20  Copilot 组织级 Metrics Dashboard 公测
+                                                                           Feb 25  Copilot CLI GA（公开可用）
+                                                                                   GPT-5.3-Codex 扩展至 github.com / Mobile / Visual Studio
+                                                                                   Codex CLI v0.105.0
+                                                                                   Gemini CLI v0.30.0 稳定版
+                                                                           Feb 26  Figma 发布 Codex to Figma
+                                                                                   ∟ 与 Claude Code to Figma 形成双向代码↔画布链路
 
                                     持续    Bolt v2 多代理 / Plan Mode     Feb     Grok Build 发布（xAI）
                                             Figma MCP Server (open beta)           ∟ Vibe Coding / 本地优先 / CLI + Web
@@ -258,11 +281,12 @@ Team Lead（主代理）
 |------|----------|---------|------|
 | **Cursor** | v2.4（2026年1月22日） | Subagents — 独立并行子代理 | 各自拥有独立上下文和模型配置 |
 | **Claude Code** | v2.1.32（2026年1月~2月） | Agent Teams — 多代理协作 | team lead + teammates + 共享任务列表 |
-| **GitHub Copilot** | CLI（2026年1月14日） | 4 个专用代理 | Explore / Task / Plan / Code-review |
+| **GitHub Copilot** | CLI（2026年1月14日~2月25日） | 4 个专用代理 + CLI GA | Explore / Task / Plan / Code-review，支持并行委派 |
 | **Augment Code** | CLI（2026年1月8日） | CLI Subagents | 并行子代理 + 自动上下文共享 |
 | **Google Antigravity** | v1.11+（2025年11月~） | Agent Manager | 跨编辑器/终端/浏览器协同 |
 | **Trae** | SOLO Stable（2025年11月~） | 多任务并行 | 多代理独立模型与上下文 |
-| **Gemini CLI** | v0.28.0（2026年2月10日） | 子代理能力进化 | 通用 Checklist 组件 + 结构化任务管理 |
+| **Gemini CLI** | v0.28.0 ~ v0.30.0（2026年2月） | 子代理能力进化 | Checklist + Policy Engine + Plan 工作流强化 |
+| **Codex CLI** | v0.102 ~ v0.105（2026年2月17日~25日） | 多代理能力深化 | 角色可配置、多代理 CSV 扇出、子线程审批可视化 |
 | **Gemini Code Assist** | Agent Mode GA（2025年10月） | Agent Mode — 自主多步骤编码 | 规划→执行→调试→验证全流程自动化 |
 | **Bolt** | v2（2025年10月~） | 多代理架构 | agents-of-agents 架构，Claude Agent 可切换 |
 
@@ -275,11 +299,11 @@ Team Lead（主代理）
 #### Claude Code
 
 - **v2.1.32**（2026年1月~2月）：推出 **Agent Teams** 功能——由一个 team lead 和多个 teammates 组成的多代理协作框架，通过**共享任务列表**进行协调。标杆案例：16 个 Claude 实例协作构建了 10 万行 C 编译器，验证了多代理架构在大规模工程项目中的可行性。
-- **v2.1.39~v2.1.44**（2026年2月10日~16日）：持续质量改进。**v2.1.41**（2月13日）新增 **CLI auth 子命令**（`claude auth login/status/logout`）、**Windows ARM64 原生二进制支持**、防止嵌套启动的安全保护。**v2.1.42**（2月13日）优化 **prompt cache 命中率**（将日期移出系统提示）和启动性能（延迟 Zod schema 构建），新增 Opus 4.6 effort 级别引导。**v2.1.44**（2月16日）修复了认证刷新错误。
+- **v2.1.39~v2.1.59**（2026年2月中下旬）：在 Agent Teams 基础上持续增强多代理可控性和稳定性。新增/强化点包括：`--worktree` 隔离执行、`background: true` 后台代理、`Ctrl+F` 批量终止后台代理、以及多实例并发下的 OAuth 刷新与配置写入稳定性修复。
 
 #### GitHub Copilot CLI
 
-- **CLI**（2026年1月14日）：内置 **4 个专用代理**——**Explore**（代码探索）、**Task**（任务执行）、**Plan**（规划）、**Code-review**（代码审查）。支持自动委派与并行运行，将不同类型的开发任务路由到最合适的专用代理。
+- **CLI**（2026年1月14日~2月25日）：内置 **4 个专用代理**——**Explore**（代码探索）、**Task**（任务执行）、**Plan**（规划）、**Code-review**（代码审查）。**2月25日 GA** 后，继续强化后台委派（`&`）、跨本地/云端会话切换（`/resume`）、自动并行委派和自动驾驶执行模式。
 
 #### Augment Code
 
@@ -295,7 +319,11 @@ Team Lead（主代理）
 
 #### Gemini CLI
 
-- **v0.28.0**（2026年2月10日）：子代理能力持续进化——引入通用 **Checklist 组件**用于结构化任务管理，使子代理能够更有效地分解和追踪复杂任务。结合后台 Shell 命令执行能力，子代理可以在不阻塞主流程的情况下并行运行长时间任务。
+- **v0.28.0 ~ v0.30.0**（2026年2月）：子代理能力持续进化——在 Checklist 与后台 Shell 基础上，进一步引入 **Policy Engine**、Plan Mode 工作流细化、以及更稳定的扩展管理与模式切换逻辑，使多代理任务分解与执行更可控。
+
+#### Codex CLI
+
+- **v0.102 ~ v0.105**（2026年2月17日~25日）：多代理能力和执行控制继续增强。新增**多代理角色可配置**、`spawn_agents_on_csv` 批量扇出任务、子线程审批提示可视化、以及更细粒度的命令审批流（含独立 approval id 与附加权限申请），在复杂并行任务中可观测性更强。
 
 #### Gemini Code Assist
 
@@ -371,8 +399,8 @@ Plan Mode 输出（保存至 .lovable/plan.md）：
 | **Cursor** | v2.2（2025年12月10日） | Plan Mode | 支持内联 Mermaid 图表自动生成 |
 | **Cursor** | CLI（2026年1月16日） | CLI Plan Mode | CLI 中的离线规划模式 |
 | **GitHub Copilot** | CLI（2026年1月21日） | 协作规划 | Shift+Tab 触发，代理主动提问澄清需求 |
-| **Windsurf** | Wave 14（2026年1月30日） | Plan Mode | 加入 Arena 模式 |
-| **Gemini CLI** | v0.27（2026年2月4日） | Plan Mode | Shift+Tab 模式循环扩展 |
+| **Windsurf** | Wave 14 + 2月后续迭代 | Plan Mode | Arena 模式 + 计划执行阶段自动切回 Code Mode |
+| **Gemini CLI** | v0.27 ~ v0.30.0（2026年2月） | Plan Mode | Shift+Tab 模式循环扩展 + 规划工作流强化 |
 | **Lovable** | 2026年2月5日 | Plan Mode | Chat Mode 重命名，计划保存至 `.lovable/plan.md` |
 | **Gemini Code Assist** | Agent Mode GA（2025年10月） | Plan-before-execute | Agent Mode 先展示执行计划，用户审批后再执行 |
 | **Bolt** | v2 持续 | Plan Mode / Discussion Mode | 代理先规划整个项目再编写代码 |
@@ -390,11 +418,11 @@ Plan Mode 输出（保存至 .lovable/plan.md）：
 
 #### Windsurf
 
-- **Wave 14**（2026年1月30日）：Plan Mode 加入 **Arena 模式**，允许多个模型同时生成规划方案并进行对比，开发者可以选择最优方案执行。
+- **Wave 14 + 2月后续迭代**：Plan Mode 加入 **Arena 模式**，并支持在进入实现阶段时**自动回切 Code Mode**，减少“规划—执行”手动切换成本。
 
 #### Gemini CLI
 
-- **v0.27**（2026年2月4日）：通过 **Shift+Tab** 扩展模式循环，新增 Plan Mode 作为可选模式之一。与 Copilot CLI 采用了相同的触发方式，体现了交互范式的趋同。
+- **v0.27 ~ v0.30.0**（2026年2月）：通过 **Shift+Tab** 扩展模式循环引入 Plan Mode，并在后续版本中持续强化规划阶段的策略约束、AskUser 交互与计划执行衔接能力。
 
 #### Lovable
 
@@ -519,10 +547,10 @@ $ cursor --approve    # 确认计划，开始执行
 | 产品 | 版本/日期 | 更新内容 | 亮点 |
 |------|----------|---------|------|
 | **Cursor CLI** | 2026年1月8日~16日 | 模型选择、Rules、MCP、Plan/Ask/Cloud 模式 | 全功能 CLI 代理 |
-| **GitHub Copilot CLI** | 2026年1月14日 | WinGet/Homebrew 安装、自动化标志 | GPT-5 mini / GPT-4.1 免费使用 |
-| **Gemini CLI** | v0.24~v0.28.2（2025年12月~2026年2月） | Agent Skills、/rewind、后台 Shell、子代理进化 | v0.28 后台命令 + /prompt-suggest |
+| **GitHub Copilot CLI** | 2026年1月14日~2月25日 | WinGet/Homebrew 安装、自动化标志、GA | 后台委派、专用代理并行协作、GPT-5 mini / GPT-4.1 免费 |
+| **Gemini CLI** | v0.24~v0.30.0（2025年12月~2026年2月） | Agent Skills、/rewind、后台 Shell、Policy Engine | v0.30 稳定版，Plan/扩展管理增强 |
 | **Augment Auggie CLI** | 2025年12月16日 | v0.12.0 — /about 命令、导航优化 | 轻量级更新 |
-| **Codex CLI** | v0.97 ~ v0.101（2026年1月~2月） | Steer Mode、JS REPL、内存管理、Floating Window | **GPT-5.3-Codex-Spark**（1000+ tokens/s） |
+| **Codex CLI** | v0.97 ~ v0.105（2026年1月~2月） | Steer Mode、JS REPL、内存管理、多代理增强 | **GPT-5.3-Codex-Spark**（1000+ tokens/s） |
 | **Grok Build** | 2026年2月 | CLI + Web UI 编码代理 | Vibe Coding、本地优先、GitHub 集成 |
 
 ### 详细更新
@@ -533,11 +561,11 @@ $ cursor --approve    # 确认计划，开始执行
 
 #### GitHub Copilot CLI
 
-- **2026年1月14日**：推出独立 CLI 代理，支持 **WinGet** 和 **Homebrew** 安装，降低入门门槛。内置 `--silent` 和 `--share` 等**自动化标志**，方便集成到脚本和 CI/CD 流程中。亮点是 **GPT-5 mini** 和 **GPT-4.1** 对订阅用户**免费使用**，大幅降低使用成本。
+- **2026年1月14日~2月25日**：Copilot CLI 从预览快速演进到 **GA**。除 WinGet/Homebrew 安装与 `--silent` / `--share` 自动化标志外，进一步强化了**后台委派**（`&`）、本地与云端会话切换（`/resume`）、Autopilot 模式、专用代理并行协作（Explore/Task/Plan/Code-review）和跨会话记忆能力。
 
 #### Gemini CLI
 
-- **v0.24~v0.28**（2025年12月~2026年2月）：持续快速迭代。**v0.24** 引入基础架构；**v0.25**（2026年1月20日）默认启用 **Agent Skills**；**v0.26**（2026年1月27日）新增 `skill-creator` 和 `pr-creator` 技能；**v0.27**（2026年2月4日）引入 `/rewind` 命令（回退到之前状态）、**code-reviewer** 内置技能、以及**事件驱动调度器**；**v0.28.0**（2026年2月10日）新增**后台 Shell 命令**（长时间命令可在后台执行而不阻塞主流程）、**`/prompt-suggest` 命令**（AI 自动生成提示建议）、**Positron IDE 支持**、以及通用 **Checklist 组件**用于结构化任务管理。子代理能力持续进化，将 CLI 从简单的命令行工具升级为可编排的自动化平台。
+- **v0.24~v0.30.0**（2025年12月~2026年2月）：持续快速迭代。**v0.24** 引入基础架构；**v0.25** 默认启用 Agent Skills；**v0.26** 新增 `skill-creator` 与 `pr-creator`；**v0.27** 引入 `/rewind` 与模式循环扩展；**v0.28** 新增后台 Shell、`/prompt-suggest` 与 Checklist；**v0.30.0**（2月25日稳定版）进一步强化 Policy Engine、Plan 工作流与扩展管理。Gemini CLI 已从“终端助手”演进为“可治理的自动化编排入口”。
 
 #### Augment Auggie CLI
 
@@ -545,7 +573,7 @@ $ cursor --approve    # 确认计划，开始执行
 
 #### Codex CLI
 
-- **v0.97~v0.101**（2026年1月~2月）：OpenAI Codex CLI 是其**多界面统一产品**的核心入口之一，与 IDE 扩展、Web 端、GitHub 集成和 ChatGPT App 共享同一账户和上下文。**v0.97** 引入 **Session-scoped Approvals**（会话级工具授权——对 MCP 工具调用选择"允许并记住"后，同一会话内自动放行）和 **Live Skill Updates**（技能文件修改后无需重启即可生效）。**v0.98**（2026年2月5日）稳定了 **Steer Mode**（实时引导模式），默认启用，允许在代理执行任务过程中实时发送指令引导方向。底层模型同步升级至 **GPT-5.3-Codex**。**v0.100**（2026年2月12日）引入多项重大更新：**实验性 JavaScript REPL 运行时**（带状态持久化）、**多层速率限制**、**内存管理斜杠命令**（`/m_update`、`/m_drop`）和 **Apps SDK 支持**。**v0.101**（2026年2月12日）优化了内存阶段处理的并发稳定性。底层新增 **GPT-5.3-Codex-Spark** 模型（超过 1000 tokens/s 的实时编码模型）。
+- **v0.97~v0.105**（2026年1月~2月）：Codex CLI 是其多界面统一产品的核心入口。**v0.97~v0.101**阶段完成 Session-scoped Approvals、Steer Mode、JS REPL、内存命令和 Apps SDK 基础能力。**v0.102~v0.105**（2月17日~25日）继续强化可控执行与多代理：结构化网络审批、更细粒度权限流、多代理角色配置、`spawn_agents_on_csv` 批量扇出、`/copy` 与 `/clear` 等 TUI 工作流改进，以及子线程状态与审批可视化。底层持续受益于 **GPT-5.3-Codex-Spark** 的高吞吐实时编码能力。
 
 #### Grok Build（xAI）
 
@@ -615,10 +643,10 @@ $ cursor --approve    # 确认计划，开始执行
 | **Gemini CLI** | v0.25~v0.26（2026年1月20日~27日） | Agent Skills | skill-creator / pr-creator 技能 |
 | **Google Antigravity** | v1.14（2026年1月13日） | Agent Skills | Skills 系统引入 |
 | **Trae** | v1.3.0 | MCP 协议支持 | stdio + SSE 双协议 |
-| **Windsurf** | v1.12.41（2025年12月10日） | MCP Server + Cascade Hooks | 扩展支持 |
+| **Windsurf** | Wave 14 + 2月后续迭代 | MCP + Skills + Hooks | `.agents/skills` 支持、`rules_applied` 透出 |
 | **GitHub Copilot** | Extensions（2026年2月） | Extensions GA | Perplexity / Docker / Mermaid 等 |
-| **Figma** | MCP Server（open beta） | Figma MCP Server | 设计数据直连 AI 编码工具 |
-| **Codex** | v0.97~v0.98（2026年1月~2月） | AGENTS.md + MCP + Live Skills | 层级化指令 + 会话级工具授权 |
+| **Figma** | 2026年2月17日 / 2月26日 | Claude Code to Figma / Codex to Figma | 代码实现与设计画布双向流动 |
+| **Codex** | v0.97~v0.105（2026年1月~2月） | AGENTS.md + MCP + Live Skills | 层级化指令 + 会话级工具授权 + 审批流增强 |
 | **Bolt** | 持续 | System Prompt 定制 | 项目级/全局系统提示 + 集成生态 |
 | **GitHub Copilot** | Agentic Workflows（2026年2月13日） | GitHub Agentic Workflows（技术预览） | Markdown 定义自动化、多 AI 引擎支持、深度 GitHub 集成 |
 | **Augment Code** | Context Engine MCP（2026年2月） | 跨代理上下文服务 | +80% 质量提升（Claude Code）、+71%（Cursor）、任意 MCP 代理可用 |
@@ -651,7 +679,7 @@ $ cursor --approve    # 确认计划，开始执行
 
 #### Windsurf
 
-- **v1.12.41**（2025年12月10日）：新增 **MCP Server** 扩展支持和 **Cascade Hooks**，将 Windsurf 的代理系统（Cascade）开放给外部工具和自定义逻辑。
+- **Wave 14 + 2月后续迭代**：在 MCP 与 Cascade Hooks 基础上，新增从 `.agents/skills` 目录加载技能，并在 `post_cascade_response` 中透出 `rules_applied` 字段，提升企业规则审计与可观测性。
 
 #### GitHub Copilot Extensions
 
@@ -678,11 +706,13 @@ $ cursor --approve    # 确认计划，开始执行
 
 #### Figma
 
-- **MCP Server**（open beta，2025年6月发布，持续更新）：推出官方 **Figma MCP Server**，将设计数据直接连接到 AI 编码工具（Cursor、Windsurf 等）。提供两种连接方式——**远程 MCP 服务器**（`mcp.figma.com/mcp`）和**桌面本地服务器**（`127.0.0.1:3845/mcp`）。支持从 Figma 帧生成代码、提取设计变量和组件数据、与 Code Connect 集成复用代码库组件。
+- **Figma MCP Server**（open beta，持续更新）：提供远程（`mcp.figma.com/mcp`）与本地（`127.0.0.1:3845/mcp`）两种接入方式，可提取设计变量、组件和结构化帧信息并供编码代理调用。
+- **Claude Code to Figma**（2026年2月17日）：把 Claude Code 在浏览器中的页面/流程捕获为 Figma 可编辑画布，支持“实现结果→设计探索”回流。
+- **Codex to Figma**（2026年2月26日）：从 Codex 通过 Figma MCP 直接生成 Figma Design 文件，形成“代码↔画布”的双向迭代链路。
 
 #### Codex
 
-- **v0.97**（2026年1月~2月）：引入 **Session-scoped Approvals**——对 MCP 和 App 工具调用选择"Allow and remember"后，同一会话内自动放行重复调用，大幅减少人工确认频次。同步推出 **Live Skill Updates**——AGENTS.md 等技能文件修改后无需重启即自动生效。
+- **v0.97~v0.105**（2026年1月~2月）：在 Session-scoped Approvals 与 Live Skill Updates 基础上，持续增强审批流与多代理编排能力（独立 approval id、附加权限请求、多代理扇出与子线程可视化），让 AGENTS.md + MCP 在复杂任务中的可执行性更强。
 - **AGENTS.md**（持续）：Codex 的自定义指令系统，类似于 Cursor 的 SKILL.md。支持**层级化指令范围**——根目录的 AGENTS.md 提供全局指令，子目录的 AGENTS.md 提供局部覆盖，实现模块级别的差异化代理行为。
 
 #### Bolt
@@ -749,8 +779,8 @@ Hooks 的核心价值：
 | 产品 | 版本/日期 | 更新内容 | 亮点 |
 |------|----------|---------|------|
 | **Cursor** | v2.4（2026年1月22日） | Hooks 性能优化 | 性能提升 **40x** |
-| **Claude Code** | v2.1 | 8 种 Hook 类型 | PreToolUse / PostToolUse / PermissionRequest 等 |
-| **Windsurf** | v1.12.41（2025年12月10日） | Cascade Hooks | 首批支持 Hooks 的 IDE 代理之一 |
+| **Claude Code** | v2.1（持续） | Hook 事件持续扩展 | PreToolUse / PostToolUse + WorktreeCreate / WorktreeRemove / ConfigChange |
+| **Windsurf** | Wave 14 + 2月后续迭代 | Cascade Hooks 扩展 | `POST_CASCADE_RESPONSE_WITH_TRANSCRIPT`、`rules_applied` |
 | **Gemini CLI** | v0.27（2026年2月4日） | Hook 系统迁移 | beforeTool/afterTool → hookSystem |
 
 ### 详细更新
@@ -761,17 +791,11 @@ Hooks 的核心价值：
 
 #### Claude Code
 
-- **v2.1**：实现了目前最完整的 Hook 体系，提供 **8 种 Hook 类型**：
-  - `PreToolUse`：工具调用前触发
-  - `PostToolUse`：工具调用后触发
-  - `PermissionRequest`：权限请求时触发
-  - 以及其他 5 种生命周期事件的 Hook
-
-  这使得开发者可以对代理行为进行精细化的控制和审计。
+- **v2.1（持续）**：Claude Code 在既有 Hook 体系上继续扩展事件覆盖面，新增/强化 `WorktreeCreate`、`WorktreeRemove`、`ConfigChange` 等事件，结合 `PreToolUse` / `PostToolUse` / `PermissionRequest` 实现更细粒度的安全控制与审计。
 
 #### Windsurf
 
-- **v1.12.41**（2025年12月10日）：引入 **Cascade Hooks**，是首批支持 Hooks 机制的 IDE 内置代理之一。开发者可以在 Cascade（Windsurf 的代理系统）的执行流程中注入自定义逻辑。
+- **Wave 14 + 2月后续迭代**：在 Cascade Hooks 基础上新增 `POST_CASCADE_RESPONSE_WITH_TRANSCRIPT`，并通过 `rules_applied` 字段暴露被触发规则，便于企业做合规追踪和回放分析。
 
 #### Gemini CLI
 
@@ -818,7 +842,7 @@ Hooks 的核心价值：
 | 模型 | 集成产品 | 日期 | 亮点 |
 |------|---------|------|------|
 | **Claude Opus 4.6** | Claude Code / Claude.ai / Windsurf / **Copilot / Bolt / Lovable** | 2026年2月5日 | **1M token** 上下文（beta）、adaptive thinking、fast mode |
-| **GPT-5.3-Codex** | Codex / **GitHub Copilot** | 2026年2月5日 / 2月9日 GA | 编码专用模型，比 GPT-5-Codex 快 **25%** |
+| **GPT-5.3-Codex** | Codex / **GitHub Copilot** | 2026年2月5日 / 2月9日 / 2月25日 | 编码专用模型，比 GPT-5-Codex 快 **25%**，覆盖更多 Copilot 端点 |
 | ★ **GPT-5.3-Codex-Spark** | Codex | 2026年2月12日 | **1000+ tokens/s**（15x 提速）、Cerebras 合作、128K 上下文 |
 | **o3** | ChatGPT | 2025年4月16日 | SWE-Bench / Codeforces **SOTA**，多工具 agentic 调用 |
 | **o4-mini** | ChatGPT | 2025年4月16日 | 编码+数学优化小模型，**128K** 上下文 |
@@ -827,6 +851,7 @@ Hooks 的核心价值：
 | **Gemini 2.5 Pro** | Gemini Code Assist（企业版） | 持续 | **1M** 上下文、SWE-Bench 63.8%、Deep Think 模式 |
 | **Gemini 2.5 Flash** | Gemini Code Assist（免费版） | 持续 | **1M** 上下文、速度优化、首个具备思考能力的 Flash 模型 |
 | **Gemini 3 Pro** | Antigravity / Gemini CLI | 持续 | Google 原生集成 |
+| **Gemini 3.1 Pro** | GitHub Copilot（公测） | 2026年2月19日 | 工具调用更高效、编辑-测试循环更快 |
 | **Gemini 3 Flash** | Windsurf / Antigravity | 2025年12月27日 / 2025年12月17日 | 快速推理模型 |
 | **Grok 4** | Grok Build / xAI API | 2025年7月9日 | **256K** 上下文、CodeLiveBench 71.34%、实时 X 平台数据 |
 | **Grok Code Fast 1** | Grok Build / xAI API | 2025年8月28日 | **314B** MoE、**92 tokens/s**、SWE-Bench 70.8% |
@@ -851,7 +876,8 @@ Hooks 的核心价值：
 #### GPT-5.3-Codex
 
 - **2026年2月5日**：OpenAI 发布 **GPT-5.3-Codex**，融合 Codex 和 GPT-5 训练栈，是目前最强的编码专用模型。比 GPT-5-Codex 快约 **25%**，从"代码生成器"转型为"通用编码代理"——用户可以在模型执行任务的过程中通过 Steer Mode 实时引导方向。在简单任务上实现 **93.7% 的 token 用量减少**，在复杂任务上则投入两倍推理时间，可独立工作超过 **7 小时**处理大型项目。基准成绩：SWE-Bench Pro **56.8%**、OSWorld-Verified **64.7%**、Terminal-Bench 2.0 **77.3%**。
-- **2026年2月9日**：**GPT-5.3-Codex 在 GitHub Copilot 中 GA**，面向 Copilot Pro、Pro+、Business 和 Enterprise 用户开放，可在 VS Code、GitHub CLI、GitHub Mobile 等平台使用。
+- **2026年2月9日**：**GPT-5.3-Codex 在 GitHub Copilot 中 GA**，面向 Copilot Pro、Pro+、Business 和 Enterprise 用户开放。
+- **2026年2月25日**：可用范围进一步扩展到 github.com、GitHub Mobile、Visual Studio（并在 VS Code 持续可用），企业管理员可通过模型策略统一启用。
 
 #### GPT-5.3-Codex-Spark
 
@@ -875,6 +901,7 @@ Hooks 的核心价值：
 #### Gemini 3 系列
 
 - **Gemini 3 Pro**：作为 Google 自家模型，在 **Antigravity** 和 **Gemini CLI** 中原生集成。
+- **Gemini 3.1 Pro**（2026年2月19日）：进入 **GitHub Copilot 公测**，在编辑-测试循环和工具调用效率方面表现突出，可在 github.com、Mobile、VS Code、Visual Studio 的多模式下选用（按策略逐步放量）。
 - **Gemini 3 Flash**：**Windsurf**（2025年12月27日）和 **Antigravity**（2025年12月17日）先后集成，作为快速推理的轻量级选择。
 
 #### SWE-1.5
@@ -963,6 +990,7 @@ Hooks 的核心价值：
 | **Cursor** | Enterprise（2025年12月18日） | 对话洞察、计费分组、Linux 沙箱、服务账户 | 全套企业治理 |
 | **Cursor** | 2026年1月27日 | Secure Codebase Indexing | Merkle-tree 增量同步、队友索引复用 |
 | **Augment Code** | 2026年1月28日 | Analytics API | 企业级使用数据 API |
+| **GitHub Copilot** | 2026年2月19日~20日 | Metrics API + 组织级 Dashboard | 新增 PR throughput / time-to-merge、组织级可视化 |
 | **Windsurf** | v1.13.12（2026年1月25日） | Enterprise 命令控制 | 自动执行权限管理 |
 | **Google Antigravity** | v1.11.17（2025年12月8日） | Secure Mode | 后改名 Strict Mode |
 | **Google Antigravity** | v1.15.6（2026年1月23日） | macOS 终端沙箱 | 沙箱隔离执行 |
@@ -985,6 +1013,12 @@ Hooks 的核心价值：
 #### Augment Code
 
 - **2026年1月28日**：发布 **Analytics API**，提供企业级使用数据接口。企业客户可以通过 API 查询团队的代理使用频率、任务完成率、模型偏好等数据，用于成本优化和效率分析。
+
+#### GitHub Copilot
+
+- **2026年2月19日**：Copilot Usage Metrics API 新增企业级 **PR throughput** 与 **time-to-merge** 等指标，帮助量化 Copilot 对交付效率的影响。
+- **2026年2月20日**：组织级 Copilot Usage Metrics Dashboard 进入公测，组织管理员可在 GitHub UI 直接查看组织范围内的采用率与使用趋势，无需完全依赖企业级汇总报表。
+- **2026年2月19日**：Copilot Coding Agent 的模型选择器向 Business / Enterprise 开放，企业可按策略启用模型并统一治理。
 
 #### Windsurf
 
@@ -1229,7 +1263,7 @@ Lovable 接收设计数据：
 | **Cursor** | v2.4（2026年1月22日） | 图像生成 | Google Nano Banana Pro 模型 |
 | **Trae SOLO** | 持续 | 多模态上下文 | Figma 设计稿转代码 |
 | **Google Antigravity** | 持续 | 视觉验证 | 内置浏览器 QA 截图 |
-| **Figma** | 持续 ~ 2026年2月 | Make / Vectorize / Buzz | 设计生成 + 图像向量化 + 品牌资产生成 |
+| **Figma** | 持续 ~ 2026年2月下旬 | Make / Vectorize / Claude Code to Figma / Codex to Figma | 设计生成 + 图像向量化 + 代码↔画布双向流 |
 | **Lovable** | 持续 | Figma 转代码 + Visual Edits | Builder.io 插件 + 可视化编辑 |
 | **Codex** | 持续 | 图像/截图分析 | 前端设计验证 + 视觉输入理解 |
 | **Claude.ai（Artifacts）** | 2025年7月 GA / 10月 MCP | 交互式应用生成 | 可视化 React 应用 / 游戏 / 教育工具，5亿+ 创建量 |
@@ -1255,6 +1289,8 @@ Lovable 接收设计数据：
 
 - **Figma Make**（2025年5月发布，2025年7月 GA，持续更新）：AI 驱动的**设计生成工具**，支持通过自然语言和图片生成可编辑的设计稿和交互原型。用户可以在对话中附加 Figma 组件进行实时迭代，并将原型发布为可访问的网页。
 - **Vectorize Images**（2026年2月）：新增 **AI 图像向量化**功能，可将静态图片（手绘草图、PNG 图标、纹理等）转换为可编辑的矢量图形，适用于 Figma Design 和 Draw。
+- **Claude Code to Figma**（2026年2月17日）：将 Claude Code 中的页面状态和流程捕获为 Figma 可编辑帧，支持从“代码实现”回流到“设计探索”。
+- **Codex to Figma**（2026年2月26日）：通过 Figma MCP Server 从 Codex 直接生成 Figma Design 文件，进一步补齐“画布到代码、代码回画布”的双向链路。
 - **Figma Buzz**（beta）：**品牌资产批量生成**工具，支持 42+ 预定义资产类型（Instagram、LinkedIn、Twitter 等社交媒体格式），通过 AI 生成符合品牌规范的营销素材。
 
 #### Lovable
@@ -1383,6 +1419,18 @@ Lovable 接收设计数据：
 
 ---
 
-*文档整理时间：2026年2月18日（增补 Cursor Long-Running Agents / GPT-5.3-Codex-Spark / GitHub Agentic Workflows / Augment Context Engine MCP / 模型淘汰等内容）*
+*文档整理时间：2026年2月27日（增补 Copilot 2月下旬更新 / Codex CLI 0.105 / Claude Code 2.1.59 / Gemini CLI 0.30 / Figma 双向 MCP 工作流等内容）*
 *本文档为[《AI 编码代理产品形态全景（2026年1月）》](./20250126%20AI%20编码代理产品形态全景.md)的配套 Changelog 汇总*
 *覆盖 16 个产品/产品线，11 个功能维度，数据来源经过交叉验证，如有更新请以官方最新发布为准*
+
+---
+
+## 更新日志（本次修订）
+
+### 2026-02-27
+
+- 基于 2 月下旬官方 changelog 对全文做了增量校准，修正时间窗口为“截至 2026-02-27”。
+- 新增文首“产品分类清单”（按 IDE/CLI/Web/生成器/平台/设计工具分组），便于快速定位产品形态。
+- 补充 Copilot 2 月下旬关键更新：CLI GA、组织级指标看板、PR throughput/time-to-merge 指标、Gemini 3.1 Pro 公测与模型选择器范围扩展。
+- 补充 Codex CLI `v0.102~v0.105`、Claude Code `v2.1.51~v2.1.59`、Gemini CLI `v0.30.0`、Windsurf 2 月后续迭代的核心变化，并同步更新相关维度表格。
+- 补充 Figma 在 2 月中下旬的双向 MCP 流程（Claude Code to Figma / Codex to Figma），增强多模态章节与扩展性章节的一致性。
