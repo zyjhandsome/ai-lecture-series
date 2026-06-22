@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light" style="--rec-label: '★ 推荐'">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>用 Ruflo 部署多 Agent 蜂群：超越单提示词编码</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FAFAF7;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F0;
+      --surface-3: #EFEEE8;
+      --text: #1A1A1A;
+      --text-muted: #4A4A45;
+      --text-subtle: #6B6B66;
+      --accent: #D97757;
+      --accent-hover: #C56843;
+      --accent-soft: #FBEEE6;
+      --accent-border: #F0D5C4;
+      --accent-strong: #A85533;
+      --border: #E5E4DC;
+      --border-strong: #CDCDC4;
+      --code-bg: #F5F2EC;
+      --code-text: #2A2A2A;
+      --info: #2563EB;
+      --info-soft: #EFF6FF;
+      --info-border: #BFDBFE;
+      --warn: #B45309;
+      --warn-soft: #FFFBEB;
+      --warn-border: #FDE68A;
+      --danger: #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #047857;
+      --success-soft: #ECFDF5;
+      --success-border: #A7F3D0;
+      --decision: #6D28D9;
+      --decision-soft: #F5F3FF;
+      --decision-border: #DDD6FE;
+      --shadow-sm: 0 1px 2px rgba(20, 14, 8, 0.04);
+      --shadow: 0 1px 2px rgba(20, 14, 8, 0.04), 0 4px 12px rgba(20, 14, 8, 0.06);
+      --shadow-lg: 0 8px 24px rgba(20, 14, 8, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+      --z-progress: 200;
+      --z-topbar: 100;
+      --z-drawer: 300;
+      --z-backdrop: 250;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1714;
+      --surface: #221E1A;
+      --surface-2: #2A2520;
+      --surface-3: #322C26;
+      --text: #F5F0E8;
+      --text-muted: #C8C0B6;
+      --text-subtle: #9A938A;
+      --accent: #E89572;
+      --accent-hover: #F2A87F;
+      --accent-soft: #3A2A22;
+      --accent-border: #5A3D2E;
+      --accent-strong: #F5B493;
+      --border: #2E2924;
+      --border-strong: #463F38;
+      --code-bg: #1E1B17;
+      --code-text: #E8E2D8;
+      --info: #93C5FD;
+      --info-soft: #1E2A3D;
+      --info-border: #2A4365;
+      --warn: #FBBF24;
+      --warn-soft: #332817;
+      --warn-border: #5C4520;
+      --danger: #FCA5A5;
+      --danger-soft: #3A1F1F;
+      --danger-border: #5C2A2A;
+      --success: #6EE7B7;
+      --success-soft: #1A3329;
+      --success-border: #1F5C45;
+      --decision: #C4B5FD;
+      --decision-soft: #2A1F40;
+      --decision-border: #4A3870;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    ::selection { background: var(--accent-soft); color: var(--accent-strong); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 8px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 1000;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* SVG sprite container (hidden) */
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .icon { display: inline-block; flex-shrink: 0; vertical-align: middle; stroke: currentColor; fill: none; }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: var(--z-progress);
+      transition: width 0.05s linear;
+    }
+
+    /* ============================================================
+       TOPBAR
+       ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      background: rgba(250, 250, 247, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .topbar { background: rgba(26, 23, 20, 0.85); }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      animation: brand-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes brand-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft); }
+      50%      { box-shadow: 0 0 0 7px transparent; }
+    }
+    .topbar-actions { display: flex; gap: 6px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      padding: 0;
+    }
+    .icon-btn .icon { width: 18px; height: 18px; stroke-width: 2; }
+    .icon-btn[hidden] { display: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 32px 24px 96px;
+    }
+    .content { min-width: 0; }
+
+    /* ============================================================
+       TOC (desktop + mobile drawer)
+       ============================================================ */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .toc::-webkit-scrollbar { width: 6px; }
+    .toc::-webkit-scrollbar-track { background: transparent; }
+    .toc::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+    .toc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .toc-close { display: none; }
+    .toc-nav { display: flex; flex-direction: column; gap: 2px; }
+    .toc-nav a {
+      display: flex; align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 500;
+    }
+    .toc-nav a.lvl-3 { padding-left: 26px; font-size: 12.5px; }
+    .toc-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: var(--z-backdrop);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ============================================================
+       DOC HEADER
+       ============================================================ */
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-eyebrow {
+      display: inline-flex; align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-size: clamp(28px, 3vw + 16px, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .doc-subtitle {
+      font-size: clamp(15px, 0.6vw + 13px, 18px);
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      max-width: 75ch;
+      text-wrap: pretty;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+    .doc-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    .doc-meta .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ============================================================
+       CONTENT (typography)
+       ============================================================ */
+    .content h1, .content h2, .content h3, .content h4 {
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+    .content h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 56px 0 16px;
+      padding-top: 8px;
+      position: relative;
+    }
+    .content h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      position: relative;
+    }
+    .content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .content > p,
+    .content > ul,
+    .content > ol,
+    .content > blockquote { max-width: 75ch; }
+    .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
+    .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
+    .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
+    .content li { margin: 4px 0; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content em { color: var(--text-muted); }
+    .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Anchor links injected by JS on h2/h3 with id */
+    .anchor {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      color: var(--text-subtle);
+      opacity: 0;
+      transform: translateY(-1px);
+      transition: opacity 0.15s, color 0.15s;
+      border-bottom: none !important;
+      border-radius: var(--radius-sm);
+    }
+    .anchor .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* Images */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+    .content figure { margin: 20px 0; }
+    .content figure img { margin: 0; }
+    .content figcaption {
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Task lists (- [ ] / - [x]) */
+    .content .task-list-item { list-style: none; margin-left: -22px; }
+    .content .task-list-item-checkbox {
+      margin-right: 8px;
+      vertical-align: -2px;
+      accent-color: var(--accent);
+    }
+
+    /* Footnotes */
+    .content .footnote-ref a,
+    .content sup a {
+      font-size: 0.75em;
+      vertical-align: super;
+      border-bottom: none;
+      padding: 0 2px;
+    }
+    .content .footnotes {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       CODE
+       ============================================================ */
+    .content code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    .content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      position: relative;
+    }
+    .content pre code {
+      background: none; padding: 0; border: none;
+      color: var(--code-text);
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-subtle);
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .copy-btn .icon { width: 14px; height: 14px; stroke-width: 2; }
+    .copy-btn.copied { color: var(--success); border-color: var(--success-border); opacity: 1; }
+
+    /* ============================================================
+       TIMELINE / STEPS
+       ============================================================ */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 24px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-border), var(--border));
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 16px 4px;
+      position: relative;
+      border-radius: var(--radius);
+      transition: background-color 0.15s;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .step.done .step-num { background: var(--accent); color: #fff; }
+    .step-body { padding-top: 6px; min-width: 0; }
+    .step-body h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: 75ch; }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: 75ch;
+    }
+    .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
+    .callout-body { min-width: 0; }
+    .callout-title { font-weight: 600; margin: 0 0 4px; font-size: 14px; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout-body code { background: rgba(0,0,0,0.04); }
+    [data-theme="dark"] .callout-body code { background: rgba(255,255,255,0.06); }
+
+    .callout-info     { background: var(--info-soft);     border-color: var(--info-border);     color: var(--text); }
+    .callout-info     .callout-title, .callout-info     .callout-icon { color: var(--info); }
+    .callout-warn     { background: var(--warn-soft);     border-color: var(--warn-border);     color: var(--text); }
+    .callout-warn     .callout-title, .callout-warn     .callout-icon { color: var(--warn); }
+    .callout-danger   { background: var(--danger-soft);   border-color: var(--danger-border);   color: var(--text); }
+    .callout-danger   .callout-title, .callout-danger   .callout-icon { color: var(--danger); }
+    .callout-success  { background: var(--success-soft);  border-color: var(--success-border);  color: var(--text); }
+    .callout-success  .callout-title, .callout-success  .callout-icon { color: var(--success); }
+    .callout-decision { background: var(--decision-soft); border-color: var(--decision-border); color: var(--text); }
+    .callout-decision .callout-title, .callout-decision .callout-icon { color: var(--decision); }
+    .callout-tip      { background: var(--accent-soft);   border-color: var(--accent-border);   color: var(--text); }
+    .callout-tip      .callout-title, .callout-tip      .callout-icon { color: var(--accent-strong); }
+
+    /* ============================================================
+       KEY-POINT HIGHLIGHT
+       ============================================================ */
+    .highlight {
+      background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+      border-left: 4px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 75ch;
+    }
+    .highlight-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       MERMAID
+       ============================================================ */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .mermaid { text-align: center; min-height: 80px; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .mermaid:not([data-processed]) {
+      opacity: 0.4;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ============================================================
+       PROS / CONS
+       ============================================================ */
+    .proscons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .proscons-col {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .proscons-col h4 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proscons-col ul { margin: 0; padding-left: 18px; }
+    .proscons-col li { margin: 6px 0; }
+    .pros { background: var(--success-soft); border-color: var(--success-border); }
+    .pros h4 { color: var(--success); }
+    .cons { background: var(--danger-soft); border-color: var(--danger-border); }
+    .cons h4 { color: var(--danger); }
+
+    /* ============================================================
+       COMPARISON CARDS
+       ============================================================ */
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .compare-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .compare-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .compare-card.recommended::before {
+      content: var(--rec-label, "★ Recommended");
+      position: absolute; top: -10px; right: 14px;
+      background: var(--accent); color: #fff;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+    }
+    .compare-card h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); text-transform: none; letter-spacing: normal; }
+    .compare-card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+    /* ============================================================
+       COLLAPSIBLE
+       ============================================================ */
+    details.collapsible {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 16px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    details.collapsible[open] { box-shadow: var(--shadow-sm); }
+    details.collapsible > summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 500;
+      color: var(--text);
+      list-style: none;
+      display: flex; align-items: center; gap: 10px;
+      user-select: none;
+      transition: background 0.15s;
+      min-height: 44px;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::before {
+      content: "›";
+      display: inline-block;
+      transition: transform 0.18s;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    details.collapsible[open] > summary::before { transform: rotate(90deg); }
+    .collapsible-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+    .collapsible-body > *:first-child { margin-top: 12px; }
+
+    /* ============================================================
+       TABLES (wrapped via .table-wrap or naturally responsive)
+       ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      margin: 0;
+    }
+    /* Standalone tables (not inside .table-wrap) keep visual border */
+    .content > table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      display: block;
+      overflow-x: auto;
+    }
+    .content th {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .content td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    /* ============================================================
+       BLOCKQUOTE
+       ============================================================ */
+    .content blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-border);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       FOCUS-VISIBLE (a11y)
+       ============================================================ */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .toc-nav a:focus-visible { outline-offset: -2px; }
+    .icon-btn:focus-visible { outline-offset: 2px; }
+    .anchor:focus-visible { opacity: 1; outline-offset: 2px; }
+    details.collapsible > summary:focus-visible { outline-offset: -2px; }
+
+    /* ============================================================
+       HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
+       ============================================================ */
+    @media (hover: hover) {
+      .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+      .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+      .compare-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow); }
+      .compare-card.recommended:hover { border-color: var(--accent); }
+      .content tr:hover td { background: var(--surface-2); }
+      details.collapsible > summary:hover { background: var(--surface-2); }
+      .step:hover { background: var(--surface-2); }
+      .step:hover .step-num { transform: scale(1.05); }
+      .anchor:hover { color: var(--accent); }
+      .content h2:hover .anchor,
+      .content h3:hover .anchor { opacity: 1; }
+      .copy-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+      .content pre:hover .copy-btn { opacity: 1; }
+    }
+    /* On touch devices, copy-btn is always visible at low opacity */
+    @media (hover: none) {
+      .copy-btn { opacity: 0.6; }
+      .anchor { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       MOBILE (≤900px) — TOC becomes off-canvas drawer
+       ============================================================ */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px 80px;
+      }
+      .topbar-inner { padding: 8px 12px; }
+      .doc-header { margin-bottom: 28px; padding-bottom: 20px; }
+
+      .toc-mobile-trigger { display: inline-flex !important; }
+
+      .toc {
+        position: fixed;
+        top: 0; left: 0;
+        width: min(300px, 82vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        background: var(--surface);
+        z-index: var(--z-drawer);
+        padding: 16px 8px 24px 16px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc-head { padding: 4px 4px 12px 8px; }
+      .toc-close {
+        display: inline-flex !important;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+      }
+      .toc-close .icon { width: 18px; height: 18px; stroke-width: 2; }
+      body.toc-open .toc { transform: translateX(0); }
+      body.toc-open .toc-backdrop {
+        display: block;
+        opacity: 1;
+      }
+      .toc-backdrop {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.toc-open .toc-backdrop { pointer-events: auto; }
+      body.toc-open { overflow: hidden; }
+    }
+    @media (min-width: 901px) {
+      .toc-mobile-trigger { display: none !important; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION (a11y)
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html { scroll-behavior: auto; }
+      .brand-dot { animation: none; box-shadow: 0 0 0 4px var(--accent-soft); }
+    }
+
+    /* ============================================================
+       PRINT
+       ============================================================ */
+    @media print {
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      a { color: #000; }
+      .content pre, .callout, .compare-card, .step, .diagram { break-inside: avoid; }
+      .doc-footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">跳到正文</a>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- SVG icon sprite (Lucide-style) -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-decision" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0 4 4 0 0 1 1.59 2h2.99a4 4 0 0 1 1.6-2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  </svg>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn toc-mobile-trigger" id="toc-toggle" onclick="openToc()" aria-label="目录" title="目录">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>系统设计</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-printer"/></svg>
+        </button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use id="theme-icon-use" href="#i-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC drawer backdrop (mobile) -->
+  <div class="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-head">
+        <p class="toc-title">目录</p>
+        <button class="toc-close" onclick="closeToc()" aria-label="关闭">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#meta" class="lvl-2">文章元数据</a>
+        <a href="#intro" class="lvl-2">核心导读</a>
+        <a href="#single-prompt-limit" class="lvl-2">单提示词编码为何触顶</a>
+        <a href="#ruflo-overview" class="lvl-2">Ruflo 是什么</a>
+        <a href="#prerequisites" class="lvl-2">前置条件与环境搭建</a>
+        <a href="#core-concepts" class="lvl-2">核心概念</a>
+        <a href="#dual-agent-setup" class="lvl-2">搭建双 Agent 蜂群</a>
+        <a href="#config-guide" class="lvl-2">分布式蜂群配置指南</a>
+        <a href="#cicd" class="lvl-2">CI/CD 与工作流集成</a>
+        <a href="#checklist" class="lvl-2">上线前实现清单</a>
+        <a href="#conclusion" class="lvl-2">从编排概念到可运行蜂群</a>
+        <a href="#quotes" class="lvl-2">关键语录</a>
+        <a href="#glossary" class="lvl-2">延伸术语表</a>
+        <a href="#qa-report" class="lvl-2">自检报告</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main">
+      <header class="doc-header">
+        <span class="doc-eyebrow">SYSTEM DESIGN</span>
+        <h1 class="doc-title">用 Ruflo 部署多 Agent 蜂群：超越单提示词编码</h1>
+        <p class="doc-subtitle">从单提示词编码的瓶颈出发，用 Ruflo 编排 Test Writer + Code Writer 双 Agent 蜂群，跑通 TDD 工作流——含配置、错误处理、上下文调优与 CI/CD 集成。</p>
+        <div class="doc-meta">
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
+            20260302 用Ruflo部署多Agent蜂群超越单提示词编码_整理文档.md
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
+            2026-03-02
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+            ~7 分钟阅读
+          </span>
+        </div>
+      </header>
+
+      <!-- CONTENT_START -->
+
+      <h2 id="meta">文章元数据</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>项目</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><strong>原标题</strong></td><td>Deploying Multi-Agent Swarms with Ruflo: Beyond Single-Prompt Coding</td></tr>
+            <tr><td><strong>内容链接</strong></td><td><a href="https://www.sitepoint.com/deploying-multiagent-swarms-with-ruflo-beyond-singleprompt-coding/">SitePoint 原文</a></td></tr>
+            <tr><td><strong>发布时间</strong></td><td>2026-03-02</td></tr>
+            <tr><td><strong>元数据抓取时间</strong></td><td>2026-05-25</td></tr>
+            <tr><td><strong>播放量/访问量</strong></td><td>未获取（SitePoint 页面未展示单篇阅读量）</td></tr>
+            <tr><td><strong>时长</strong></td><td>不适用（文稿）</td></tr>
+            <tr><td><strong>讲者</strong></td><td><strong>SitePoint Team</strong>（SitePoint 技术教程）</td></tr>
+            <tr><td><strong>内容来源</strong></td><td>SitePoint 博客；页面抓取 + WebFetch 全文交叉核对</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <aside class="callout callout-info">
+        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-info"/></svg>
+        <div class="callout-body">
+          <p class="callout-title">背景</p>
+          <p>本文为 <strong>SitePoint</strong> 发布的实操型技术教程，以 <strong>Ruflo</strong>（GitHub：<code>ruvnet/ruflo</code>）为编排框架，手把手搭建「测试编写 Agent + 代码编写 Agent」双 Agent 蜂群，演示 TDD 工作流，并覆盖配置、错误处理、上下文共享调优与 CI/CD 集成。</p>
+        </div>
+      </aside>
+
+      <h2 id="intro">核心导读</h2>
+      <div class="highlight">
+        <span class="highlight-label">要点</span>
+        <p>单 Agent 适合孤立小任务；跨 <strong>10+ 文件</strong>、模块相互依赖、任务可拆成专业化子任务时，<strong>Ruflo 多 Agent 编排</strong>才是使能层——但双 Agent 全量 handoff 的 token 消耗约为单 Agent 的 <strong>2–3 倍</strong>，且成功是概率性的，合并前须人工审阅。</p>
+      </div>
+      <p>最常见的 AI 辅助编码，困在「一条提示词 → 一次回复 → 一个上下文窗口」的窄循环里。<strong>GitHub Copilot</strong>、<strong>ChatGPT</strong>、<strong>Claude Code</strong> 都能当单实例 Agent 用，孤立小任务足够；一旦项目跨多文件、模块相互依赖、任务天然可拆成专业化子任务，单 Agent 就会撞墙。</p>
+      <p><strong>Ruflo</strong> 提供另一套基础设施：配置、部署、管理多个专业化 Agent，让它们通信、交接工作、产出整合结果。教程终点是一个可运行的双 Agent 蜂群——<strong>Test Writer</strong> 先写测试，<strong>Code Writer</strong> 再写实现，全程由 Ruflo 编排。</p>
+
+      <h2 id="single-prompt-limit">单提示词编码为何触顶</h2>
+      <p>AI 辅助编码的主流形态，是「一问一答、单窗口」的交互。<strong>GitHub Copilot</strong>、<strong>ChatGPT</strong>、<strong>Claude Code</strong> 都能以单实例 Agent 身份生成代码或回答问题。</p>
+      <div class="highlight">
+        <span class="highlight-label">要点</span>
+        <p>跨多文件、可拆分子任务的项目里，单 Agent 是瓶颈；多 Agent 蜂群用角色分工、并行与协调协作换出路。</p>
+      </div>
+      <p>孤立任务上，单 Agent 足够快。但当项目涉及 <strong>10 个以上文件</strong>、模块彼此依赖、工作流天然可分解为测试编写、实现、Lint、文档等专业化步骤时，一个 Agent 必须<strong>串行</strong>包揽一切。</p>
+      <p>技术上可以手动开多个会话并行，但输出之间<strong>没有自动衔接</strong>，上下文一致性随输入累积逼近模型窗口上限而恶化——基础 <strong>GPT-4</strong> 约 <strong>8K</strong> token，<strong>GPT-4 Turbo</strong> 可达 <strong>128K</strong>。</p>
+      <p><strong>Ruflo</strong>（<code>ruvnet/ruflo</code>）定位是蜂群编排框架。动手前应用 <code>npm info ruflo</code> 确认包是否已发布、仓库是否公开。</p>
+
+      <h3 id="deploy-overview">八步部署速览</h3>
+      <div class="timeline">
+        <article class="step"><div class="step-num">1</div><div class="step-body"><h3>安装 Node.js v18+</h3><p>克隆 <code>ruvnet/ruflo</code>，<code>npm install</code> 装依赖。</p></div></article>
+        <article class="step"><div class="step-num">2</div><div class="step-body"><h3>配置 LLM 提供商</h3><p>在 <code>ruflo.config.js</code> 配置模型与环境变量中的 API Key。</p></div></article>
+        <article class="step"><div class="step-num">3</div><div class="step-body"><h3>定义 Agent 角色</h3><p>唯一角色、范围化系统提示词、工具绑定与输出格式。</p></div></article>
+        <article class="step"><div class="step-num">4</div><div class="step-body"><h3>设置编排规则</h3><p>在 <code>orchestration</code> 块设置执行顺序与 handoff，控制上下文流。</p></div></article>
+        <article class="step"><div class="step-num">5</div><div class="step-body"><h3>配置错误处理</h3><p>重试次数、抖动、备用 Agent、人工介入断点。</p></div></article>
+        <article class="step"><div class="step-num">6</div><div class="step-body"><h3>编程式运行蜂群</h3><p><code>node run-swarm.js</code>，监听 Agent 生命周期事件。</p></div></article>
+        <article class="step"><div class="step-num">7</div><div class="step-body"><h3>独立验证测试</h3><p>运行 <strong>Jest</strong> 套件，验证生成文件。</p></div></article>
+        <article class="step"><div class="step-num">8</div><div class="step-body"><h3>接入 CI/CD</h3><p>在 <code>package.json</code> 增加脚本条目，自动执行。</p></div></article>
+      </div>
+
+      <h2 id="ruflo-overview">Ruflo 是什么：与单实例 Agent 的差异</h2>
+      <h3 id="single-agent-limits">单 Agent 模型及其局限</h3>
+      <p>传统单实例 AI 编码工具在<strong>单一提示—回复上下文</strong>里处理请求，<strong>没有内置</strong>多 Agent 编排能力：不能把子任务委派给其他专业化 Agent，也不能同时维护多个角色隔离的上下文。</p>
+
+      <h3 id="swarm-architecture">Ruflo 蜂群架构一览</h3>
+      <p><strong>Ruflo</strong>（GitHub：<code>ruvnet/ruflo</code>）是面向多 Agent 工作流的<strong>编排层</strong>。开发者定义多个 Agent——各自有角色、系统提示词、工具集——再组合成执行协调任务的蜂群。</p>
+      <figure class="diagram">
+        <pre class="mermaid">
+flowchart LR
+  Task[任务提交] --> Orch[编排器]
+  Orch --> TW[Test Writer]
+  TW -->|Handoff| CW[Code Writer]
+  Orch --> Mem[(共享上下文)]
+  TW --> Mem
+  CW --> Mem
+  CW --> Out[整合交付物]
+        </pre>
+        <figcaption class="diagram-caption">Ruflo 蜂群：编排器路由任务，Agent 通过 Handoff 与共享上下文协作。</figcaption>
+      </figure>
+      <ul>
+        <li><strong>Agent</strong>：绑定角色的单个 AI 执行体</li>
+        <li><strong>Swarm（蜂群）</strong>：带定义交互模式的 Agent 组合</li>
+        <li><strong>Task（任务）</strong>：提交给蜂群的工作单元</li>
+        <li><strong>Handoff（交接）</strong>：上游 Agent 输出传给下游的机制</li>
+        <li><strong>Shared context（共享上下文）</strong>：蜂群内 Agent 可访问的共享记忆</li>
+      </ul>
+      <p><strong>核心差异在编排层本身</strong>：管理 Agent 生命周期、在 Agent 间路由任务、维护蜂群共享记忆、处理 handoff 与事件驱动消息等通信协议。</p>
+
+      <h3 id="when-to-use">何时选 Ruflo、何时留单 Agent</h3>
+      <p>取决于三个因素：工作流里<strong>相互依赖的子任务数量</strong>、这些任务是否受益于<strong>角色隔离的上下文</strong>、是否需要<strong>流水线自动化</strong>。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>维度</th><th>单 Agent</th><th>Ruflo 蜂群</th></tr></thead>
+          <tbody>
+            <tr><td>任务范围</td><td>一提示一回复</td><td>拆分到专业化 Agent</td></tr>
+            <tr><td>上下文管理</td><td>单窗口、所有关切共享</td><td>按 Agent 隔离，受控共享</td></tr>
+            <tr><td>并行性</td><td>仅串行（手动多 session 无协调）</td><td>可并行或串行（视配置）</td></tr>
+            <tr><td>角色专业化</td><td>无（通才）</td><td>明确区分的角色 + 定制提示词与工具</td></tr>
+            <tr><td>交接与委派</td><td>手动</td><td>编排规则自动完成</td></tr>
+            <tr><td>CI/CD 集成</td><td>临时、零散</td><td>面向流水线设计</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="compare">
+        <div class="compare-card">
+          <h4>单 Agent</h4>
+          <p>快速函数建议、一次性重构——更快、更省 token。</p>
+        </div>
+        <div class="compare-card recommended">
+          <h4>Ruflo 蜂群</h4>
+          <p>协调「测试生成 + 实现」、多文件脚手架、自动化审查流水线——编排层才是使能层。</p>
+        </div>
+      </div>
+
+      <h2 id="prerequisites">前置条件与环境搭建</h2>
+      <div class="highlight">
+        <span class="highlight-label">要点</span>
+        <p><strong>Node.js 18+</strong>、<strong>Jest 29+</strong>、OpenAI GPT-4 权限与 CommonJS 配置语法，是复现教程 demo 的硬门槛。</p>
+      </div>
+      <ul>
+        <li><strong>Node.js v18+</strong>（推荐 v18 LTS 或 v20 LTS）；教程用 <strong>CommonJS</strong></li>
+        <li><strong>npm</strong> 或 <strong>yarn</strong>、<strong>Git</strong></li>
+        <li><strong>Jest v29+</strong>（<code>npm install --save-dev jest</code>）</li>
+        <li><strong>OpenAI API Key</strong>，且账户已开通 <strong>GPT-4</strong></li>
+      </ul>
+      <p>读者应熟悉 <strong>JavaScript</strong>、<strong>Node.js</strong> 与基础 <strong>React</strong> 概念——demo 任务是生成 React 工具函数。</p>
+      <h3 id="install-ruflo">安装 Ruflo</h3>
+      <pre><code>git clone https://github.com/ruvnet/ruflo.git
+cd ruflo
+npm install</code></pre>
+      <pre><code>./node_modules/.bin/ruflo --version</code></pre>
+      <pre><code>node -e "const { Swarm } = require('ruflo'); console.log(typeof Swarm);"
+# 期望输出: "function"</code></pre>
+
+      <h2 id="core-concepts">核心概念：Agent、蜂群与任务编排</h2>
+      <h3 id="agent-four-elements">定义 Agent 的四要素</h3>
+      <ol>
+        <li><strong>role（角色）</strong>：人类可读的功能标签</li>
+        <li><strong>systemPrompt（系统提示词）</strong>：行为指令</li>
+        <li><strong>tools（工具）</strong>：可调用能力（文件系统、测试运行器等）</li>
+        <li><strong>output contract（输出契约）</strong>：产出物格式</li>
+      </ol>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>工具 ID</th><th>能力</th></tr></thead>
+          <tbody>
+            <tr><td><code>fs</code></td><td>文件系统读写</td></tr>
+            <tr><td><code>testRunner</code></td><td>调用 Jest</td></tr>
+            <tr><td><code>linter</code></td><td>ESLint 风格检查</td></tr>
+            <tr><td><code>dependencyInstaller</code></td><td>npm 包安装</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <aside class="callout callout-warn">
+        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg>
+        <div class="callout-body">
+          <p class="callout-title">安全</p>
+          <p><code>dependencyInstaller</code> 可在自动化流水线中执行 <code>npm install</code>。绑定时应配置 <code>allowedPackages</code> 白名单，并设 <code>denyUnknown: true</code>，防止任意或 typosquat 包被安装。</p>
+        </div>
+      </aside>
+
+      <h3 id="task-lifecycle">任务生命周期</h3>
+      <figure class="diagram">
+        <pre class="mermaid">
+sequenceDiagram
+  participant O as 编排器
+  participant TW as Test Writer
+  participant CW as Code Writer
+  participant J as Jest
+  O->>TW: 分配子任务
+  TW->>TW: 生成测试文件
+  TW->>CW: Handoff 完整输出
+  CW->>CW: 写实现代码
+  CW->>J: testPass 成功标准
+  O->>O: 整合最终结果
+        </pre>
+        <figcaption class="diagram-caption">双 Agent TDD 流程：Test Writer 先跑，输出作为 Code Writer 上下文；编排器以 Jest 验证结果。</figcaption>
+      </figure>
+      <aside class="callout callout-warn">
+        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-warn"/></svg>
+        <div class="callout-body">
+          <p class="callout-title">注意</p>
+          <p>因测试与实现皆 LLM 生成，成功是<strong>概率性</strong>的——编排器会重试至多 <code>maxRetries</code> 次，<strong>合并前强烈建议人工审阅</strong>。</p>
+        </div>
+      </aside>
+
+      <details class="collapsible">
+        <summary>最小双 Agent 配置示例（ruflo.config.js）</summary>
+        <div class="collapsible-body">
+          <pre><code>// ruflo.config.js — 最小双 Agent 蜂群
+module.exports = {
+  swarm: {
+    name: "tdd-swarm",
+    agents: [
+      {
+        id: "test-writer",
+        role: "Test Writer",
+        systemPrompt: "You are a test-writing specialist. Generate unit tests using Jest for the described functionality. Output only test files.",
+        tools: ["fs", "testRunner"],
+        outputFormat: "file"
+      },
+      {
+        id: "code-writer",
+        role: "Code Writer",
+        systemPrompt: "You are an implementation specialist. Write source code that passes the provided tests. Output only source files.",
+        tools: [
+          "fs",
+          "linter",
+          {
+            name: "dependencyInstaller",
+            options: {
+              allowedPackages: ["lodash", "date-fns", "uuid"],
+              denyUnknown: true
+            }
+          }
+        ],
+        outputFormat: "file"
+      }
+    ],
+    orchestration: {
+      executionOrder: ["test-writer", "code-writer"],
+      handoff: {
+        from: "test-writer",
+        to: "code-writer",
+        contextMode: "full"
+      }
+    }
+  }
+};</code></pre>
+          <p>校验配置：<code>node -e "require('./ruflo.config')"</code> 应无输出无报错。</p>
+        </div>
+      </details>
+
+      <h2 id="dual-agent-setup">搭建双 Agent 蜂群：Test Writer + Code Writer</h2>
+      <div class="highlight">
+        <span class="highlight-label">要点</span>
+        <p>TDD 蜂群把「先写测试、后写实现」拆成两个 Agent，用 handoff 与 Jest 成功标准把概率性 LLM 输出拴在可验证闭环上。</p>
+      </div>
+      <h3 id="test-writer">Test Writer Agent</h3>
+      <p>遵循 <strong>TDD 优先</strong>：系统提示词要求在任何实现存在<strong>之前</strong>生成单元与集成测试。输出契约：按严格命名约定（<code>*.test.js</code>）产出测试文件。</p>
+      <h3 id="code-writer">Code Writer Agent</h3>
+      <p>以 Test Writer 输出为主上下文。系统提示词要求写<strong>满足已提供测试</strong>的源码；工具含文件系统、linter、dependencyInstaller。</p>
+      <h3 id="run-swarm">编排脚本与端到端运行</h3>
+      <ul>
+        <li><code>require("dotenv").config()</code> 加载环境变量</li>
+        <li><code>withTimeout</code>：默认 <strong>120_000 ms</strong>（可用 <code>SWARM_TIMEOUT_MS</code> 覆盖）</li>
+        <li>事件监听：<code>agent:start</code>、<code>agent:complete</code>、<code>handoff</code>、<code>swarm:complete</code>、<code>error</code></li>
+        <li>样例任务：生成 React <strong>debounce</strong> 工具函数</li>
+        <li><code>successCriteria</code>：<code>type: "testPass"</code>，<code>command: "./node_modules/.bin/jest --no-cache"</code></li>
+      </ul>
+      <pre><code>export OPENAI_API_KEY="your-api-key-here"
+# Windows PowerShell: $env:OPENAI_API_KEY = "..."
+node run-swarm.js</code></pre>
+      <pre><code>[test-writer] Starting task: Create a React utility function called debounce...
+[test-writer] Completed. Output files: src/__tests__/debounce.test.js
+[handoff] test-writer → code-writer (&lt;token count&gt; tokens of context)
+[code-writer] Starting task: ...
+[code-writer] Completed. Output files: src/debounce.js
+Swarm finished. Tests passed: true</code></pre>
+      <aside class="callout callout-tip">
+        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+        <div class="callout-body">
+          <p class="callout-title">提示</p>
+          <p>独立验证：<code>./node_modules/.bin/jest src/__tests__/debounce.test.js</code>。token 数与测试数为<strong>非确定性</strong>，各次运行可能不同——合并前须审阅。</p>
+        </div>
+      </aside>
+
+      <h2 id="config-guide">分布式蜂群智能的配置指南</h2>
+      <h3 id="extend-agents">扩展到两个 Agent 以上</h3>
+      <p>双 Agent 模式可自然扩展：<strong>Reviewer Agent</strong>（自动审查）、<strong>Docs Agent</strong>（JSDoc + README）、<strong>Refactor Agent</strong>（测试通过后优化）。编排块可配置串行、并行或混合执行模式。</p>
+      <h3 id="context-tuning">通信与上下文共享调优</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>contextMode</th><th>行为</th></tr></thead>
+          <tbody>
+            <tr><td><code>"full"</code></td><td>传递上游完整输出</td></tr>
+            <tr><td><code>"summary"</code></td><td>编排器生成精简摘要版</td></tr>
+            <tr><td><code>"filtered"</code></td><td>按模式或键转发部分输出</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <aside class="callout callout-warn">
+        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-warn"/></svg>
+        <div class="callout-body">
+          <p class="callout-title">注意</p>
+          <p><strong>Token 预算</strong>极易失控：五个 Agent 若各自从前序接收全量上下文，五个各 4K token 即 <strong>20K</strong>/轮——已超过 <strong>GPT-4-8K</strong> 窗口。双 Agent 全量 handoff 约为单 Agent 的 <strong>2–3 倍</strong> token 消耗。</p>
+        </div>
+      </aside>
+      <h3 id="error-handling">错误处理与重试策略</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>字段</th><th>含义</th></tr></thead>
+          <tbody>
+            <tr><td><code>onError</code></td><td>初始响应：retry / skip / halt</td></tr>
+            <tr><td><code>maxRetries</code></td><td>最大重试次数（如 3 → 最多额外 3 次 LLM 调用）</td></tr>
+            <tr><td><code>retryDelay</code></td><td>重试间隔（毫秒，如 2000）</td></tr>
+            <tr><td><code>retryJitter</code></td><td>随机抖动（毫秒，如 1000），防惊群重试碰撞</td></tr>
+            <tr><td><code>fallbackAgentId</code></td><td>重试耗尽后接管的备用 Agent</td></tr>
+            <tr><td><code>humanInTheLoop</code></td><td>暂停蜂群、通知开发者，允许人工介入后再执行 fallback</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="cicd">CI/CD 与日常开发工作流集成</h2>
+      <p>Ruflo 蜂群可在 <strong>GitHub Actions</strong>、<strong>GitLab CI</strong> 或任何支持 Node.js 的 CI 中运行。典型用法：在 PR 流水线中作为一步，为 PR 内的新功能描述生成测试与实现。</p>
+      <pre><code>"swarm:tdd": "node run-swarm.js"</code></pre>
+      <p>开发者用 <code>npm run swarm:tdd</code> 触发。配置中的输出目录直接指向项目源码树，生成文件无需手动搬运。</p>
+
+      <h2 id="checklist">上线前实现清单</h2>
+      <div class="timeline">
+        <article class="step done"><div class="step-num">1</div><div class="step-body"><h3>Node.js v18+</h3><p><code>node --version</code> 确认版本。</p></div></article>
+        <article class="step done"><div class="step-num">2</div><div class="step-body"><h3>Ruflo 已克隆</h3><p><code>require("ruflo")</code> 无报错。</p></div></article>
+        <article class="step done"><div class="step-num">3</div><div class="step-body"><h3>Jest v29+</h3><p>devDependency 已安装。</p></div></article>
+        <article class="step done"><div class="step-num">4</div><div class="step-body"><h3>LLM Key 配置</h3><p><code>.env</code> + <code>dotenv</code>，<code>.env</code> 已入 <code>.gitignore</code>。</p></div></article>
+        <article class="step"><div class="step-num">5</div><div class="step-body"><h3>Agent 提示词与工具</h3><p>角色清晰；工具绑定已与注册表核对；<code>dependencyInstaller</code> 白名单已设。</p></div></article>
+        <article class="step"><div class="step-num">6</div><div class="step-body"><h3>Handoff 与错误处理</h3><p>执行顺序、contextMode、重试/抖动/fallback/humanInTheLoop 已配置。</p></div></article>
+        <article class="step"><div class="step-num">7</div><div class="step-body"><h3>端到端验证</h3><p>样例任务通过；<strong>生成文件合并前经人工审阅</strong>。</p></div></article>
+        <article class="step"><div class="step-num">8</div><div class="step-body"><h3>CI/CD 与扩展规划</h3><p>可选接入流水线；规划 Reviewer、Docs、Refactor 等 Agent。</p></div></article>
+      </div>
+
+      <h2 id="conclusion">从编排概念到可运行蜂群</h2>
+      <div class="highlight">
+        <span class="highlight-label">要点</span>
+        <p>角色专业化、受控上下文共享、带明确成功标准的自动编排，是单提示词编码之外的可复制工程路径。</p>
+      </div>
+      <p>教程已构建一个功能完整的双 Agent Ruflo 蜂群：在协调的 TDD 工作流中生成测试与实现代码。架构通过角色分工、上下文 handoff 配置、错误处理、备用 Agent 与 CI/CD 集成，越过了单提示词编码的上限。</p>
+      <p><strong>下一步建议</strong>：向蜂群添加 Reviewer 与 Docs Agent；实验并行执行模式；调优上下文共享模式优化 token 用量。起点仓库：<strong>ruvnet/ruflo</strong>。</p>
+
+      <h2 id="quotes">关键语录</h2>
+      <blockquote><p><em>"AI-assisted coding in its most common form operates within a narrow loop: one prompt, one response, one context window."</em></p></blockquote>
+      <blockquote><p><em>"The core differentiator is the orchestration layer itself: it manages agent lifecycle, routes tasks between agents, maintains shared memory across the swarm, and handles communication protocols including handoffs and event-driven messaging."</em></p></blockquote>
+      <blockquote><p><em>"Because both tests and implementation are LLM-generated, success is probabilistic. The orchestrator will retry up to maxRetries times, and human review of generated artifacts is strongly recommended before merging."</em></p></blockquote>
+      <blockquote><p><em>"Managing token budgets across agents matters more than you might expect: five agents each receiving full context from all predecessors can blow through limits fast."</em></p></blockquote>
+      <blockquote><p><em>"A two-agent swarm with full context handoffs may consume 2-3x the tokens of a single-agent call."</em></p></blockquote>
+      <blockquote><p><em>"These patterns make Ruflo swarms more deployable by adding retry logic, fallback routing, and human-in-the-loop pause points — the failure modes that LLM-based agents will encounter in any sustained use."</em></p></blockquote>
+
+      <h2 id="glossary">延伸术语表</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>术语</th><th>解释</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Ruflo</strong></td><td>GitHub <code>ruvnet/ruflo</code> 上的多 Agent 蜂群编排框架</td></tr>
+            <tr><td><strong>Swarm（蜂群）</strong></td><td>多个 Agent 按定义交互模式组成的协调单元</td></tr>
+            <tr><td><strong>Handoff（交接）</strong></td><td>上游输出作为下游输入；<code>contextMode</code> 控制 full / summary / filtered</td></tr>
+            <tr><td><strong>TDD Swarm</strong></td><td>Test Writer 先写 Jest 测试，Code Writer 后写实现，成功标准为 <code>testPass</code></td></tr>
+            <tr><td><strong>contextMode</strong></td><td>Handoff 规则属性：控制跨 Agent 传递的上下文粒度</td></tr>
+            <tr><td><strong>humanInTheLoop</strong></td><td>重试耗尽后暂停蜂群、通知开发者的人工介入配置</td></tr>
+            <tr><td><strong>dependencyInstaller</strong></td><td>内置工具；可自动 <code>npm install</code>，须白名单约束</td></tr>
+            <tr><td><strong>GPT-4 / GPT-4 Turbo</strong></td><td>教程默认模型；上下文窗口约 8K / 128K token</td></tr>
+            <tr><td><strong>Claude Code</strong></td><td>Anthropic 终端/CLI 编码工具；与 Ruflo 编排层属不同层级</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="qa-report">自检报告</h2>
+      <details class="collapsible" open>
+        <summary>自检报告（Quality Check）</summary>
+        <div class="collapsible-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>检查项</th><th>结果</th><th>备注</th></tr></thead>
+              <tbody>
+                <tr><td>术语校验</td><td>✅</td><td>OpenAI、ChatGPT、Claude Code、Agent 写法已校准</td></tr>
+                <tr><td>纯净排版校验</td><td>✅</td><td>无文字墙；标题无锚点标签</td></tr>
+                <tr><td>防幻觉与盲区标注</td><td>✅</td><td>概率性成功、token 估算等原文限定已保留</td></tr>
+                <tr><td>原数据快照</td><td>✅</td><td>抓取 2026-05-25；访问量未获取</td></tr>
+                <tr><td>正文中文叙事</td><td>✅</td><td>4c 检索已修正 3 处</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><em>文档生成时间：2026-05-25</em></p>
+        </div>
+      </details>
+
+      <!-- CONTENT_END -->
+
+      <footer class="doc-footer">
+        <span>Generated by <a href="#">md2html</a></span>
+        <span>来源: 20260302 用Ruflo部署多Agent蜂群超越单提示词编码_整理文档.md</span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    // ---------- Theme ----------
+    const STORAGE_KEY = "md2html-theme";
+    function currentTheme() { return document.documentElement.dataset.theme || "light"; }
+    function applyThemeIcon() {
+      const use = document.getElementById("theme-icon-use");
+      if (use) use.setAttribute("href", currentTheme() === "dark" ? "#i-sun" : "#i-moon");
+    }
+    (function restoreTheme() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) document.documentElement.dataset.theme = saved;
+    })();
+
+    // ---------- Mermaid ----------
+    const diagramSources = new Map();
+    function initMermaid() {
+      const isDark = currentTheme() === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        themeVariables: {
+          primaryColor: isDark ? "#3A2A22" : "#FBEEE6",
+          primaryTextColor: isDark ? "#F5F0E8" : "#1A1A1A",
+          primaryBorderColor: isDark ? "#E89572" : "#D97757",
+          lineColor: isDark ? "#9A938A" : "#6B6B66",
+          secondaryColor: isDark ? "#2A2520" : "#F5F5F0",
+          tertiaryColor: isDark ? "#221E1A" : "#FFFFFF",
+          fontFamily: "Inter, system-ui, sans-serif",
+        },
+      });
+    }
+    async function renderMermaid() {
+      initMermaid();
+      const els = document.querySelectorAll(".mermaid");
+      els.forEach(el => {
+        if (!diagramSources.has(el)) diagramSources.set(el, el.textContent.trim());
+        el.textContent = diagramSources.get(el);
+        el.removeAttribute("data-processed");
+      });
+      try { await mermaid.run({ nodes: els }); } catch (e) { console.error(e); }
+    }
+    function toggleTheme() {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(STORAGE_KEY, next);
+      applyThemeIcon();
+      renderMermaid();
+    }
+
+    // ---------- TOC drawer (mobile) ----------
+    function openToc()  { document.body.classList.add("toc-open"); }
+    function closeToc() { document.body.classList.remove("toc-open"); }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+
+    // ---------- TOC scrollspy ----------
+    function setupTocSpy() {
+      const links = document.querySelectorAll("#toc-nav a[href^='#']");
+      if (!links.length) {
+        const toc = document.getElementById("toc");
+        if (toc) toc.style.display = "none";
+        return;
+      }
+      const map = new Map();
+      links.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) map.set(el, a);
+        a.addEventListener("click", () => {
+          if (window.matchMedia("(max-width: 900px)").matches) closeToc();
+        });
+      });
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          const link = map.get(en.target);
+          if (!link) return;
+          if (en.isIntersecting) {
+            links.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+          }
+        });
+      }, { rootMargin: "-80px 0px -70% 0px", threshold: 0 });
+      map.forEach((_, el) => obs.observe(el));
+    }
+
+    // ---------- Anchor links on h2/h3 ----------
+    function injectAnchors() {
+      document.querySelectorAll(".content h2[id], .content h3[id]").forEach(h => {
+        if (h.querySelector(".anchor")) return;
+        const a = document.createElement("a");
+        a.className = "anchor";
+        a.href = "#" + h.id;
+        a.setAttribute("aria-label", "Permalink");
+        a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
+        h.appendChild(a);
+      });
+    }
+
+    // ---------- Copy-to-clipboard on <pre> ----------
+    function injectCopyButtons() {
+      document.querySelectorAll(".content pre").forEach(pre => {
+        if (pre.classList.contains("mermaid")) return;
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "Copy code");
+        btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent ?? pre.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.classList.add("copied");
+            btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+            }, 1500);
+          } catch (e) { console.error(e); }
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    // ---------- Scroll progress ----------
+    function setupScrollProgress() {
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = h > 0 ? (document.documentElement.scrollTop / h * 100) : 0;
+        bar.style.width = p + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    // ---------- Boot ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      applyThemeIcon();
+      injectAnchors();
+      injectCopyButtons();
+      renderMermaid();
+      setupTocSpy();
+      setupScrollProgress();
+    });
+  </script>
+</body>
+</html>
