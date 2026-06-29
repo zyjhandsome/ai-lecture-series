@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light" style="--rec-label: '★ 推荐'">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>编码代理加速一切，瓶颈却在别处：Andrew Ng 在 Interrupt 26 的炉边对谈</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FAFAF7;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F0;
+      --surface-3: #EFEEE8;
+      --text: #1A1A1A;
+      --text-muted: #4A4A45;
+      --text-subtle: #6B6B66;
+      --accent: #D97757;
+      --accent-hover: #C56843;
+      --accent-soft: #FBEEE6;
+      --accent-border: #F0D5C4;
+      --accent-strong: #A85533;
+      --border: #E5E4DC;
+      --border-strong: #CDCDC4;
+      --code-bg: #F5F2EC;
+      --code-text: #2A2A2A;
+      --info: #2563EB;
+      --info-soft: #EFF6FF;
+      --info-border: #BFDBFE;
+      --warn: #B45309;
+      --warn-soft: #FFFBEB;
+      --warn-border: #FDE68A;
+      --danger: #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #047857;
+      --success-soft: #ECFDF5;
+      --success-border: #A7F3D0;
+      --decision: #6D28D9;
+      --decision-soft: #F5F3FF;
+      --decision-border: #DDD6FE;
+      --shadow-sm: 0 1px 2px rgba(20, 14, 8, 0.04);
+      --shadow: 0 1px 2px rgba(20, 14, 8, 0.04), 0 4px 12px rgba(20, 14, 8, 0.06);
+      --shadow-lg: 0 8px 24px rgba(20, 14, 8, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --measure: 75ch;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+      --z-progress: 200;
+      --z-topbar: 100;
+      --z-drawer: 300;
+      --z-backdrop: 250;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1714;
+      --surface: #221E1A;
+      --surface-2: #2A2520;
+      --surface-3: #322C26;
+      --text: #F5F0E8;
+      --text-muted: #C8C0B6;
+      --text-subtle: #9A938A;
+      --accent: #E89572;
+      --accent-hover: #F2A87F;
+      --accent-soft: #3A2A22;
+      --accent-border: #5A3D2E;
+      --accent-strong: #F5B493;
+      --border: #2E2924;
+      --border-strong: #463F38;
+      --code-bg: #1E1B17;
+      --code-text: #E8E2D8;
+      --info: #93C5FD;
+      --info-soft: #1E2A3D;
+      --info-border: #2A4365;
+      --warn: #FBBF24;
+      --warn-soft: #332817;
+      --warn-border: #5C4520;
+      --danger: #FCA5A5;
+      --danger-soft: #3A1F1F;
+      --danger-border: #5C2A2A;
+      --success: #6EE7B7;
+      --success-soft: #1A3329;
+      --success-border: #1F5C45;
+      --decision: #C4B5FD;
+      --decision-soft: #2A1F40;
+      --decision-border: #4A3870;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    ::selection { background: var(--accent-soft); color: var(--accent-strong); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 8px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 1000;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* SVG sprite container (hidden) */
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .icon { display: inline-block; flex-shrink: 0; vertical-align: middle; stroke: currentColor; fill: none; }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: var(--z-progress);
+      transition: width 0.05s linear;
+    }
+
+    /* ============================================================
+       TOPBAR
+       ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      background: rgba(250, 250, 247, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .topbar { background: rgba(26, 23, 20, 0.85); }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      animation: brand-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes brand-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft); }
+      50%      { box-shadow: 0 0 0 7px transparent; }
+    }
+    .topbar-actions { display: flex; gap: 6px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      padding: 0;
+    }
+    .icon-btn .icon { width: 18px; height: 18px; stroke-width: 2; }
+    .icon-btn[hidden] { display: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 32px 24px 96px;
+    }
+    .content { min-width: 0; }
+    /* Unified reading measure: every top-level block shares one width so
+       paragraphs, callouts, diagrams, timelines, tables and code align to a
+       single clean column. Opt out with .full-bleed where truly needed. */
+    .content > * { max-width: var(--measure); }
+    .content > .full-bleed { max-width: none; }
+
+    /* ============================================================
+       TOC (desktop + mobile drawer)
+       ============================================================ */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .toc::-webkit-scrollbar { width: 6px; }
+    .toc::-webkit-scrollbar-track { background: transparent; }
+    .toc::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+    .toc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .toc-close { display: none; }
+    .toc-nav { display: flex; flex-direction: column; gap: 2px; }
+    .toc-nav a {
+      display: flex; align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 500;
+    }
+    .toc-nav a.lvl-3 { padding-left: 26px; font-size: 12.5px; }
+    .toc-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: var(--z-backdrop);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ============================================================
+       DOC HEADER
+       ============================================================ */
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-eyebrow {
+      display: inline-flex; align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-size: clamp(28px, 3vw + 16px, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .doc-subtitle {
+      font-size: clamp(15px, 0.6vw + 13px, 18px);
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      max-width: var(--measure);
+      text-wrap: pretty;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+    .doc-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    .doc-meta .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ============================================================
+       CONTENT (typography)
+       ============================================================ */
+    .content h1, .content h2, .content h3, .content h4 {
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+    .content h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 56px 0 16px;
+      padding-top: 8px;
+      position: relative;
+    }
+    .content h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      position: relative;
+    }
+    .content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .content > p,
+    .content > ul,
+    .content > ol,
+    .content > blockquote { max-width: var(--measure); }
+    .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
+    .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
+    .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
+    .content li { margin: 4px 0; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content em { color: var(--text-muted); }
+    .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Anchor links injected by JS on h2/h3 with id */
+    .anchor {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      color: var(--text-subtle);
+      opacity: 0;
+      transform: translateY(-1px);
+      transition: opacity 0.15s, color 0.15s;
+      border-bottom: none !important;
+      border-radius: var(--radius-sm);
+    }
+    .anchor .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* Images */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+    .content figure { margin: 20px 0; }
+    .content figure img { margin: 0; }
+    .content figcaption {
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Task lists (- [ ] / - [x]) */
+    .content .task-list-item { list-style: none; margin-left: -22px; }
+    .content .task-list-item-checkbox {
+      margin-right: 8px;
+      vertical-align: -2px;
+      accent-color: var(--accent);
+    }
+
+    /* Footnotes */
+    .content .footnote-ref a,
+    .content sup a {
+      font-size: 0.75em;
+      vertical-align: super;
+      border-bottom: none;
+      padding: 0 2px;
+    }
+    .content .footnotes {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       CODE
+       ============================================================ */
+    .content code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    .content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      position: relative;
+    }
+    .content pre code {
+      background: none; padding: 0; border: none;
+      color: var(--code-text);
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-subtle);
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .copy-btn .icon { width: 14px; height: 14px; stroke-width: 2; }
+    .copy-btn.copied { color: var(--success); border-color: var(--success-border); opacity: 1; }
+
+    /* ============================================================
+       TIMELINE / STEPS
+       ============================================================ */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-border), var(--border));
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 8px 4px;
+      position: relative;
+      border-radius: var(--radius);
+      transition: background-color 0.15s;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .step.done .step-num { background: var(--accent); color: #fff; }
+    .step-body { padding-top: 6px; min-width: 0; }
+    .step-body h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: var(--measure); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: var(--measure);
+    }
+    .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
+    .callout-body { min-width: 0; }
+    .callout-title { font-weight: 600; margin: 0 0 4px; font-size: 14px; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout-body code { background: rgba(0,0,0,0.04); }
+    [data-theme="dark"] .callout-body code { background: rgba(255,255,255,0.06); }
+
+    .callout-info     { background: var(--info-soft);     border-color: var(--info-border);     color: var(--text); }
+    .callout-info     .callout-title, .callout-info     .callout-icon { color: var(--info); }
+    .callout-warn     { background: var(--warn-soft);     border-color: var(--warn-border);     color: var(--text); }
+    .callout-warn     .callout-title, .callout-warn     .callout-icon { color: var(--warn); }
+    .callout-danger   { background: var(--danger-soft);   border-color: var(--danger-border);   color: var(--text); }
+    .callout-danger   .callout-title, .callout-danger   .callout-icon { color: var(--danger); }
+    .callout-success  { background: var(--success-soft);  border-color: var(--success-border);  color: var(--text); }
+    .callout-success  .callout-title, .callout-success  .callout-icon { color: var(--success); }
+    .callout-decision { background: var(--decision-soft); border-color: var(--decision-border); color: var(--text); }
+    .callout-decision .callout-title, .callout-decision .callout-icon { color: var(--decision); }
+    .callout-tip      { background: var(--accent-soft);   border-color: var(--accent-border);   color: var(--text); }
+    .callout-tip      .callout-title, .callout-tip      .callout-icon { color: var(--accent-strong); }
+
+    /* ============================================================
+       KEY-POINT HIGHLIGHT
+       ============================================================ */
+    .highlight {
+      background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+      border-left: 4px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: var(--measure);
+    }
+    .highlight-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       MERMAID
+       ============================================================ */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .mermaid { text-align: center; min-height: 80px; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .mermaid:not([data-processed]) {
+      opacity: 0.4;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ============================================================
+       PROS / CONS
+       ============================================================ */
+    .proscons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .proscons-col {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .proscons-col h4 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proscons-col ul { margin: 0; padding-left: 18px; }
+    .proscons-col li { margin: 6px 0; }
+    .pros { background: var(--success-soft); border-color: var(--success-border); }
+    .pros h4 { color: var(--success); }
+    .cons { background: var(--danger-soft); border-color: var(--danger-border); }
+    .cons h4 { color: var(--danger); }
+
+    /* ============================================================
+       COMPARISON CARDS
+       ============================================================ */
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .compare-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .compare-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .compare-card.recommended::before {
+      content: var(--rec-label, "★ Recommended");
+      position: absolute; top: -10px; right: 14px;
+      background: var(--accent); color: #fff;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+    }
+    .compare-card h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); text-transform: none; letter-spacing: normal; }
+    .compare-card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+    /* ============================================================
+       COLLAPSIBLE
+       ============================================================ */
+    details.collapsible {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 16px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    details.collapsible[open] { box-shadow: var(--shadow-sm); }
+    details.collapsible > summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 500;
+      color: var(--text);
+      list-style: none;
+      display: flex; align-items: center; gap: 10px;
+      user-select: none;
+      transition: background 0.15s;
+      min-height: 44px;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::before {
+      content: "›";
+      display: inline-block;
+      transition: transform 0.18s;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    details.collapsible[open] > summary::before { transform: rotate(90deg); }
+    .collapsible-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+    .collapsible-body > *:first-child { margin-top: 12px; }
+
+    /* ============================================================
+       TABLES (wrapped via .table-wrap or naturally responsive)
+       ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      margin: 0;
+    }
+    /* Standalone tables (not inside .table-wrap) keep visual border */
+    .content > table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      display: block;
+      overflow-x: auto;
+    }
+    .content th {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .content td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    /* ============================================================
+       BLOCKQUOTE
+       ============================================================ */
+    .content blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-border);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       FOCUS-VISIBLE (a11y)
+       ============================================================ */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .toc-nav a:focus-visible { outline-offset: -2px; }
+    .icon-btn:focus-visible { outline-offset: 2px; }
+    .anchor:focus-visible { opacity: 1; outline-offset: 2px; }
+    details.collapsible > summary:focus-visible { outline-offset: -2px; }
+
+    /* ============================================================
+       HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
+       ============================================================ */
+    @media (hover: hover) {
+      .back-to-top:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+      .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+      .compare-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow); }
+      .compare-card.recommended:hover { border-color: var(--accent); }
+      .content tr:hover td { background: var(--surface-2); }
+      details.collapsible > summary:hover { background: var(--surface-2); }
+      .step:hover { background: var(--surface-2); }
+      .step:hover .step-num { transform: scale(1.05); }
+      .anchor:hover { color: var(--accent); }
+      .content h2:hover .anchor,
+      .content h3:hover .anchor { opacity: 1; }
+      .copy-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+      .content pre:hover .copy-btn { opacity: 1; }
+    }
+    /* On touch devices, copy-btn is always visible at low opacity */
+    @media (hover: none) {
+      .copy-btn { opacity: 0.6; }
+      .anchor { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       MOBILE (≤900px) — TOC becomes off-canvas drawer
+       ============================================================ */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px 80px;
+      }
+      .topbar-inner { padding: 8px 12px; }
+      .doc-header { margin-bottom: 28px; padding-bottom: 20px; }
+
+      .toc-mobile-trigger { display: inline-flex !important; }
+
+      .toc {
+        position: fixed;
+        top: 0; left: 0;
+        width: min(300px, 82vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        background: var(--surface);
+        z-index: var(--z-drawer);
+        padding: 16px 8px 24px 16px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc-head { padding: 4px 4px 12px 8px; }
+      .toc-close {
+        display: inline-flex !important;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+      }
+      .toc-close .icon { width: 18px; height: 18px; stroke-width: 2; }
+      body.toc-open .toc { transform: translateX(0); }
+      body.toc-open .toc-backdrop {
+        display: block;
+        opacity: 1;
+      }
+      .toc-backdrop {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.toc-open .toc-backdrop { pointer-events: auto; }
+      body.toc-open { overflow: hidden; }
+    }
+    @media (min-width: 901px) {
+      .toc-mobile-trigger { display: none !important; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION (a11y)
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html { scroll-behavior: auto; }
+      .brand-dot { animation: none; box-shadow: 0 0 0 4px var(--accent-soft); }
+    }
+
+    /* ============================================================
+       LAYER HEADINGS (对谈三层结构)
+       ============================================================ */
+    .layer-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .layer-heading::before {
+      flex-shrink: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .layer-insight::before {
+      content: "洞察";
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+    }
+    .layer-analysis::before {
+      content: "解析";
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .layer-dialogue::before {
+      content: "实录";
+      background: var(--info-soft);
+      color: var(--info);
+      border: 1px solid var(--info-border);
+    }
+    .layer-insight { font-size: 0; }
+    .layer-insight::before { font-size: 11px; }
+    .layer-insight .anchor { font-size: 14px; }
+    .layer-analysis { font-size: 0; }
+    .layer-analysis::before { font-size: 11px; }
+    .layer-analysis .anchor { font-size: 14px; }
+    .layer-dialogue { font-size: 0; }
+    .layer-dialogue::before { font-size: 11px; }
+    .layer-dialogue .anchor { font-size: 14px; }
+    .section-insight { margin-top: 12px; margin-bottom: 20px; }
+    .section-insight .callout-body p { margin: 0; }
+
+    /* Section jump pills (injected by JS) */
+    .section-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 20px;
+      max-width: var(--measure);
+    }
+    .section-jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+    }
+    .section-jump a:hover,
+    .section-jump a:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Speaker differentiation in dialogue timeline */
+    .step.speaker-host .step-num {
+      border-color: var(--info);
+      color: var(--info);
+      background: var(--info-soft);
+    }
+    .step.speaker-guest .step-num {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .step.speaker-host .step-body h3 { color: var(--info); }
+    .step.speaker-guest .step-body h3 { color: var(--accent-strong); }
+
+    /* Meta panel + table URL wrap */
+    .meta-panel { margin-bottom: 32px; }
+    .toc-nav .toc-meta-link {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-subtle);
+      font-size: 12.5px;
+    }
+    .table-wrap td a { word-break: break-all; }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: opacity 0.2s, transform 0.2s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .back-to-top .icon { width: 20px; height: 20px; stroke-width: 2; }
+    .back-to-top:not([hidden]) { opacity: 1; transform: translateY(0); }
+    .back-to-top[hidden] { display: inline-flex; opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+    /* ============================================================
+       PRINT
+       ============================================================ */
+    @media print {
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress, .back-to-top, .section-jump { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      a { color: #000; }
+      .content pre, .callout, .compare-card, .step, .diagram { break-inside: avoid; }
+      .doc-footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">跳到正文</a>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- SVG icon sprite (Lucide-style) -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-decision" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0 4 4 0 0 1 1.59 2h2.99a4 4 0 0 1 1.6-2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  </svg>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn toc-mobile-trigger" id="toc-toggle" onclick="openToc()" aria-label="目录" title="目录">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>笔记</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-printer"/></svg>
+        </button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use id="theme-icon-use" href="#i-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC drawer backdrop (mobile) -->
+  <div class="toc-backdrop" id="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-head">
+        <p class="toc-title">目录</p>
+        <button class="toc-close" onclick="closeToc()" aria-label="关闭">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#核心导读" class="lvl-2">核心导读</a>
+        <a href="#过去一年的-ai-节奏-炒作-末日叙事与编码代理" class="lvl-2">过去一年的 AI 节奏：炒作、末日叙事与编码代理</a>
+        <a href="#编码代理重塑软件工程-产品管理瓶颈与全能小队" class="lvl-2">编码代理重塑软件工程：产品管理瓶颈与全能小队</a>
+        <a href="#通才从哪来-工程底色与跨职能扩张" class="lvl-2">通才从哪来：工程底色与跨职能扩张</a>
+        <a href="#进入-ai-软件工程-积木式组合与-context-hub" class="lvl-2">进入 AI 软件工程：积木式组合与 Context Hub</a>
+        <a href="#deeplearningai-langchain-与教育实验" class="lvl-2">DeepLearning.AI、LangChain 与教育实验</a>
+        <a href="#企业-ai-落地-自下而上失灵与贷款审批案例" class="lvl-2">企业 AI 落地：自下而上失灵与贷款审批案例</a>
+        <a href="#省成本还是促增长-roi-与本垒打组合" class="lvl-2">省成本还是促增长：ROI 与本垒打组合</a>
+        <a href="#前线部署工程师-供应商锁定与-langsmith" class="lvl-2">前线部署工程师、供应商锁定与 LangSmith</a>
+        <a href="#开源模型-数据战略与非结构化重构" class="lvl-2">开源模型、数据战略与非结构化重构</a>
+        <a href="#mongodb-与快速迭代-编码代理改变技术选型" class="lvl-2">MongoDB 与快速迭代：编码代理改变技术选型</a>
+        <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
+        <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main">
+      <header class="doc-header">
+        <span class="doc-eyebrow">对谈笔记</span>
+        <h1 class="doc-title">编码代理加速一切，瓶颈却在别处：Andrew Ng 在 Interrupt 26 的炉边对谈</h1>
+        <p class="doc-subtitle">编码代理正以「每三个月变一次前沿能力」的速度改写交付方式，但把软件造快 10–100 倍并不会消灭瓶颈，只会把约束挪到产品管理、法务、营销与数据架构。</p>
+        <div class="doc-meta">
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
+            Interrupt 26 · Andrew Ng × Harrison Chase
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
+            2026-06-17
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+            ~19 分钟阅读
+          </span>
+        </div>
+      </header>
+
+      <!-- CONTENT_START -->
+
+<h2 id="核心导读">核心导读</h2>
+
+<div class="highlight">
+  <p>编码代理正以「每三个月变一次前沿能力」的速度改写个人与团队交付方式，但<strong>把软件造快 10–100 倍并不会消灭瓶颈，只会把约束挪到产品管理、法务、营销与数据架构</strong>；企业若只做单点提效而缺少自上而下重设计工作流，就换不来 AI 承诺的转型——<strong>增长型用例、保留供应商选择权、以及面向代理的非结构化数据重构</strong>，才是下一阶段的硬功课。</p>
+</div>
+
+<p><strong>快慢错位的一年。</strong> 炒作与末日叙事（含「工作末日」）都超出 <strong>Andrew Ng</strong> 预期；真正快于预期的是<strong>编码代理</strong>——他六个月前几乎只用 <strong>Claude Code</strong>，如今已混用 <strong>OpenAI Codex</strong>、<strong>Gemini CLI</strong> 与 <strong>OpenCode</strong>，甚至在手机上写代码。<strong>代理式工作流</strong>也开始进入企业，节奏「感觉不错」。</p>
+
+<p><strong>小团队、宽护栏、多角色一人扛。</strong> 软件交付变快后，<strong>产品管理瓶颈</strong>恶化成「全面瓶颈」：营销跟不上功能解释、法务跟不上日级发布、设计同样滞后。<strong>Andrew Ng</strong> 倾向 1–10 人的高上下文通才小队，在宽护栏内狂奔，甚至用 AI 起草服务条款再交律师定稿——工程背景者最常见，但产品经理、营销、运营也在学编码参与。</p>
+
+<p><strong>积木、文档与教育。</strong> 未来工程师像拼 <strong>LEGO</strong>：掌握 <strong>检索增强生成（RAG）</strong>、代理框架、评测、<strong>护栏（guardrails）</strong> 与 UI/身份/数据库等积木，组合式快速组装；新积木常超出模型知识截止日期——<strong>Context Hub（chub）</strong> 为代理提供最新 API 文档。<strong>DeepLearning.AI</strong> 与 <strong>LangChain</strong> 长期合作短课；<strong>CodeDream.ai</strong> 用「对话式一对一视频 + 可点击交互 JavaScript」试探教育形态，但 <strong>Andrew Ng</strong> 认为教育大转型仍被过度炒作。</p>
+
+<p><strong>企业：自下而上不够，要重画贷款流程。</strong> 「千花齐放」式自下而上创新大多只产出<strong>点状提效</strong>；以银行贷款为例，只自动化审批中间一小时是增量，<strong>「10 分钟获批」</strong> 产品才需要营销、路由、数据基建与尽调全链路重设计。<strong>ROI</strong> 难有一刀切公式；他更兴奋于<strong>可衡量且真正改变业务</strong>的「挥棒打本垒打」项目组合——原型成本已暴跌，但资源分配仍常需自上而下。<strong>前线部署工程师（FDE）</strong> 有价值但炒作大于现实；<strong>LangSmith</strong> 等<strong>供应商中立</strong>观测层与<strong>一年期合同</strong>保留选择权同样关键。<strong>开源/开放权重模型</strong> 落后前沿约六至九个月却足够实用；<strong>非结构化数据</strong> 的治理、权限与碎片化，将催生数千万至数亿美元级重构项目——<strong>MongoDB</strong> 等 <strong>NoSQL</strong> 则因模式灵活而契合代理时代的快速原型。</p>
+
+<h2 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理">过去一年的 AI 节奏：炒作、末日叙事与编码代理</h2>
+
+<figure class="diagram">
+  <pre class="mermaid">
+flowchart LR
+  CC[Claude Code] --> CX[OpenAI Codex]
+  CX --> GC[Gemini CLI]
+  GC --> OC[OpenCode]
+  </pre>
+  <figcaption class="diagram-caption">Andrew Ng 个人编码代理工具组合在约六个月内快速切换。</figcaption>
+</figure>
+
+<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>炒作与「工作末日」叙事都超预期；真正快于预期的是编码代理前沿与手机端工作流。</p></div>
+</div>
+<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harrison Chase</strong> 开场点出：距去年 <strong>Interrupt</strong> 一年间 AI 变化极多；去年 <strong>Andrew Ng</strong> 炉边对谈是大会回放中<strong>最受喜欢、观看最多</strong>的一场。<strong>Andrew Ng</strong> 被问「什么比预期更快、什么更慢」时，先划两条线：<strong>炒作超出预期</strong>；<strong>末日叙事</strong>（含工作末日，他认为不会发生）也比预期更有市场——这是「慢于期望的理性共识」一侧。</p>
+<p>积极侧：<strong>编码代理</strong> 起飞速度超出他原先猜测。虽「AI 每三个月变天」并不完全成立，<strong>对编码代理而言接近真实</strong>——前沿能力竞争激烈。约六个月前他几乎全用 <strong>Claude Code</strong>；如今仍大量 <strong>Claude Code</strong>，也越来越多用 <strong>OpenAI Codex</strong>，并混用 <strong>Gemini CLI</strong> 与 <strong>OpenCode</strong>（因其开源）。工具组合切换极快；他亦未料到一年前会<strong>在手机上写这么多代码</strong>——办公室 <strong>Mac Mini</strong> 等工作流都在变。</p>
+<p><strong>代理式工作流</strong> 也开始进入企业，「感觉相当不错」。</p>
+<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「过去一年 AI 空间发生太多——什么比您预期更快，什么更慢？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「炒作超出预期；末日叙事也传得更广，包括工作末日——我不认为会发生。积极一面，编码代理比我猜的还快；『每三个月变天』的说法不全是真的，但对编码代理几乎属实——竞争太激烈。六个月前我几乎全是 Claude Code，现在还有 Codex、Gemini CLI、OpenCode……工作流变得极快，我也没想到会在手机上写这么多代码。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="编码代理重塑软件工程-产品管理瓶颈与全能小队">编码代理重塑软件工程：产品管理瓶颈与全能小队</h2>
+
+<figure class="diagram">
+  <pre class="mermaid">
+flowchart TD
+  PM[产品管理瓶颈] --> M[营销瓶颈]
+  PM --> L[法务合规瓶颈]
+  PM --> D[设计瓶颈]
+  </pre>
+  <figcaption class="diagram-caption">构建加速 10–100 倍后，约束从 PM 扩散到营销、法务与设计。</figcaption>
+</figure>
+
+<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>软件快 10–100 倍后，瓶颈从 PM 扩散到营销、法务、设计——未来团队可能是 2 人扛 5 种职能。</p></div>
+</div>
+<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Andrew Ng</strong> 约一年前提出 <strong>产品管理瓶颈（product management bottleneck）</strong>：若构建变快，<strong>决定做什么、定范围、收客户反馈</strong> 的产品管理工作成约束。过去一年该瓶颈「以好的方式变得更糟」——因为交付确实更快了。</p>
+<p>但现象更广：当写软件快 <strong>10 倍或 100 倍</strong>，<strong>几乎一切</strong> 都成了瓶颈。他的团队已见 <strong>营销瓶颈</strong>——功能太多，营销难以弄清新功能是什么、如何对外讲。法务同理：以前三个月做一个需合规的产品，等法务一周尚可；<strong>现在一天造完却等法务一周</strong>，即成 <strong>法务合规瓶颈</strong>。设计亦然。</p>
+<p>他常思考未来软件团队如何组织——<strong>尚无定论</strong>。趋势是极小规模编制：<strong>1–10 名工程师</strong> 的团队，成员多为<strong>高上下文、高授权通才</strong>，在<strong>很宽的护栏</strong>内狂奔交付，甚至写传统上不属于工程的 <strong>营销文案</strong>。若一个团队需要工程、产品、服务条款、营销文案、设计五种职能，却只有<strong>两名人类</strong>，由<strong>抽屉原理（鸽巢原理）</strong> 每人必兼多职。</p>
+<p>好消息：AI 不会让他变成好营销人，但「<strong>没那么烂</strong>」——高上下文、深度技术、又能用前沿工具兼一点其他角色的通才，流程明显加速。工程师已用 AI 起草 <strong>服务条款</strong> 初稿，再交律师润色后发布。</p>
+<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「软件工程的未来在您脑中是什么样？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「我写产品管理瓶颈时观察到：构建变快，决定做什么就成瓶颈——过去一年这瓶颈以好的方式恶化了。但快 10 或 100 倍时，几乎一切都成瓶颈——营销、法务、设计……我在设 1–10 人的高上下文通才小队，宽护栏内狂奔，甚至写营销文案。两人团队要代表五种职能，每人必兼多职。AI 没让我变成好营销，但没那么烂——这些流程让团队快很多。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="通才从哪来-工程底色与跨职能扩张">通才从哪来：工程底色与跨职能扩张</h2>
+
+<h3 id="通才从哪来-工程底色与跨职能扩张-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>工程背景者最常见，但产品、营销、运营也能学编码加入——方向不限，工程理解前沿略占优势。</p></div>
+</div>
+<h3 id="通才从哪来-工程底色与跨职能扩张-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Andrew Ng</strong> 密切合作者多为<strong>深厚工程与技术背景</strong>，又是高授权、略通才、可跨入他岗并借 AI 补技能缺口的人。成功路径<strong>不限方向</strong>：产品经理加强编码后参与这类团队；营销人员有效学编码；运营人员开始造更多产品——<strong>任何背景都可能</strong>，但当前<strong>人数上工程出身最多</strong>，因 AI 编码与理解前沿技术天然略占优。</p>
+<p>团队仍鼓励各背景尝试扮演该角色。</p>
+<h3 id="通才从哪来-工程底色与跨职能扩张-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「这些人该有什么背景？工程师？还是别的学科第一次学编码？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「密切合作者多深工程背景，又是高授权通才，AI 帮补没受过的技能。任何方向都能成功——PM 加强编码、营销学编码、运营造产品都行。但眼下做得最好的人数里，工程背景最多；我们仍鼓励各背景尝试。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="进入-ai-软件工程-积木式组合与-context-hub">进入 AI 软件工程：积木式组合与 Context Hub</h2>
+
+<h3 id="进入-ai-软件工程-积木式组合与-context-hub-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>掌握足够「积木」并组合式组装，比从零写一切更快；新 API 需 Context Hub 给代理最新文档。</p></div>
+</div>
+<h3 id="进入-ai-软件工程-积木式组合与-context-hub-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Andrew Ng</strong> 用 <strong>LEGO 积木</strong> 比喻：若只有白色砖只能搭无聊东西；黑白黄棕绿加曲线件，<strong>组合空间指数级增长</strong>。计算机科学一直有优秀积木；<strong>代理式编码</strong> 时代 AI 与非 AI 积木都在激增——<strong>检索增强生成（RAG）</strong>、代理框架、<strong>评测（evals）</strong>、<strong>护栏（guardrails）</strong>，以及 UI 组件、身份机制、前后端持久化等。</p>
+<p>精通足够多积木的开发者，可<strong>组合式</strong>极快造软件。<strong>DeepLearning.AI</strong> 提供大量短课帮人们掌握各供应商积木；另一挑战是用编码代理<strong>快速组装</strong>积木成目标软件。</p>
+<p>痛点：许多积木太新，代理不知如何调用——例如 <strong>Nano Banana</strong> 在不少领先模型 <strong>知识截止日期之后</strong> 发布，代理甚至不知存在、更不知 API 语法。<strong>Context Hub（chub）</strong> 是他与 <strong>Rohit Prasad</strong> 推动的项目：像「<strong>给 AI 代理用的 Stack Overflow</strong>」，让代理获取最新 API、SDK、积木文档，并可<strong>反馈文档</strong>以改进。<strong>Andrew Ng</strong> 个人对一些 API 语法嫌烦，用 Context Hub 加载最新文档后让代理代劳调用，显著加速自己的编码。</p>
+<p><strong>Harrison Chase</strong> 插话：<strong>LangChain</strong> 也有名叫 Context Hub 的产品，但是不同东西——<strong>Andrew Ng</strong> 的 chub <strong>对编码代理更有用</strong>，应去用那个。另：<strong>LangChain</strong> 是 <strong>DeepLearning.AI</strong> 课程合作方中<strong>仅次于 OpenAI 的第二家</strong>；许多人通过 DeepLearning 课程认识 LangChain。</p>
+<h3 id="进入-ai-软件工程-积木式组合与-context-hub-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「想进入新软件工程的人该试什么工具、什么心态？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「我脑中有积木模型——检索增强生成、框架、评测、护栏，还有 UI、身份、数据库……精通足够积木就能组合式快速搭建，像 LEGO：颜色越多组合指数增长。DeepLearning.AI 有很多短课；还要用编码代理组装。问题是新积木代理不会用——Nano Banana 在知识截止后才发布，代理不知道。Context Hub 是 Rohit 和我做的：代理版 Stack Overflow，拿最新文档还能反馈改进。LangChain 也有 Context Hub 名字，但是不同东西——他的对编码代理更有用。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="deeplearningai-langchain-与教育实验">DeepLearning.AI、LangChain 与教育实验</h2>
+
+<h3 id="deeplearningai-langchain-与教育实验-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>该学什么在变（积木+PM 通识），但教育「大转型」仍被过度炒作——CodeDream.ai 在试对话式交互课。</p></div>
+</div>
+<h3 id="deeplearningai-langchain-与教育实验-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>DeepLearning.AI</strong> 在训练内容与<strong>交付方式</strong>两侧实验。开发者要学：<strong>编码代理</strong>、积木、一点 <strong>产品管理</strong> 等通识技能——「学什么」已显著变化；<strong>Coursera</strong> 与 DeepLearning 已提供大量相关训练。</p>
+<p>「怎么学」的变革则<strong>尚未真正到来</strong>——他们几周前预览上线 <strong>CodeDream.ai</strong>：愿景不是上网课，而是<strong>来对话</strong>。体验是模拟与 <strong>Andrew Ng</strong> 一对一视频：可后仰听他讲 <strong>Context Hub</strong> 与编码代理，也可随时打断 AI 提问。他个人大量实验用 <strong>JavaScript 替代视频与幻灯片</strong>——演示区可点击、可输入自己的提示词或查询，<strong>静态视频变交互区</strong>（已上线：不是录屏而是 <strong>JavaScript 共享</strong>，可交互运行）。</p>
+<p>教育大转型<strong>被过度炒作</strong>；变革在路上，但今天上网课仍希望有更好形态——比十年前课程更互动（如当天刚上线 <strong>AMD Sharon Jo</strong> 的 <strong>Transformers</strong> 新课，可视化与可玩组件增多），<strong>更大跃迁</strong>他仍在深思。</p>
+<h3 id="deeplearningai-langchain-与教育实验-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「AI 新世界下教育怎么变？DeepLearning 课程有没有融入新做法？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「学什么变了——学编码代理、积木、一点产品管理。DeepLearning 和 Coursera 在补训练。但怎么学的大转型还没真正到——我们几周前预览 CodeDream.ai：不是课，是对话；模拟跟我视频，可打断。我用 JavaScript 替视频——演示区能点、能输提示词，已上线。教育转型被过度炒作；变革在路上，但今天上网课我还想要更好的——比十年前互动多了，比如今早刚上的 Transformers 课，但更大变革我还在想。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「点进视频输入——今天就有还是未来方向？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「今天就有。不是录屏共享，是 JavaScript 共享——你能交互我『屏幕共享』里跑的代码。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="企业-ai-落地-自下而上失灵与贷款审批案例">企业 AI 落地：自下而上失灵与贷款审批案例</h2>
+
+<figure class="diagram">
+  <pre class="mermaid">
+flowchart LR
+  A[营销产品] --> B[收集申请]
+  B --> C[AI 审批]
+  C --> D[最终尽调]
+  D --> E[执行放款]
+  </pre>
+  <figcaption class="diagram-caption">银行贷款承销五步流程；仅自动化中间审批一小时 vs 全链路「10 分钟获批」重设计。</figcaption>
+</figure>
+
+<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>「千花齐放」自下而上创新大多只产点状提效；贷款案例说明须自上而下重设计全链路才换增长。</p></div>
+</div>
+<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>AI Aspire</strong>（<strong>Andrew Ng</strong> 与 <strong>Chris Tann</strong> 共创的 AI 顾问公司）常对话 <strong>Fortune 50/500、G2000</strong> 级企业。一致主题：大家都投过<strong>自下而上创新</strong>、「千花齐放」，<strong>大多未见回报</strong>——CEO 与董事会问 <strong>AI 的 ROI 在哪</strong>。他仍主张继续自下而上，但这类创新常产出<strong>点状方案</strong>、带来<strong>增量效率</strong>——好事，却不是 AI 承诺的<strong>更广转型</strong>。</p>
+<p><strong>银行贷款承销</strong> 例：流程五步——营销产品、收申请、审批准、最终尽调、执行放款。多团队发现中间<strong>审批</strong>可用 AI：人审一小时变 AI，值得做。但若<strong>整条承销流程不变</strong>、只省一小时人工，只是<strong>小增量效率</strong>。</p>
+<p>部分银行转向：不做这点效率，而<strong>重想工作流</strong>，营销 <strong>「10 分钟获批」</strong> 贷款——不必等一周才有人空出一小时审件，申请可<strong>立刻</strong>送 AI 决策。落地难在需<strong>更广范围</strong> 的人重设计：要营销新产品、申请立刻路由审批、<strong>营销与数据基建</strong>介入、AI 做初判、尽调与执行也要扩容。<strong>自下而上</strong> 产创意，须配 <strong>自上而下</strong> 推动改全链路步骤才能<strong>促增长</strong>。</p>
+<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「企业采用 AI 比您预期快还是慢？正确做法是什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「AI Aspire 跟 Fortune 50/500 谈策略。一致的是：大家都投自下而上、千花齐放，大多未见回报——CEO 问 ROI。仍要继续，但常是点状提效，不是更广转型。银行贷款五步骤——若只自动化中间审批一小时，流程不变，只是小增量。有的银行改做『10 分钟获批』——要重设计营销、路由、数据基建、尽调扩容。自下而上很有价值，但要配自上而下改全链路才能促增长。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="省成本还是促增长-roi-与本垒打组合">省成本还是促增长：ROI 与本垒打组合</h2>
+
+<h3 id="省成本还是促增长-roi-与本垒打组合-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>省钱有顶、增长无顶；本垒打项目可测但更需创意——300 条想法表格里筛少数大注常靠自上而下。</p></div>
+</div>
+<h3 id="省成本还是促增长-roi-与本垒打组合-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>许多企业谈 <strong>降本</strong>——可以做，但 <strong>Andrew Ng</strong> 更推动 <strong>更有想象力的增长</strong>：钱只能省那么多，<strong>增长几乎无上限</strong>。<strong>10 分钟贷款</strong>（银行真实推进）、<strong>客服/联络中心</strong>——不只省钱，自动化后可<strong>更快服务更多客户</strong>、体验更好从而促增长；<strong>汽车餐厅语音点餐</strong> 自动化亦带来更愉悦体验与增长。更多案例在不同行业涌现，部分因权限未公开。</p>
+<p><strong>ROI 怎么量？</strong> 他坦言「我也给不出一刀切答案」——企业太多元，像量整个业务，难有一刀切公式。最让他兴奋的项目<strong>应测、值得测</strong>；也有些 <strong>挥棒打本垒打</strong> 式项目创造巨大价值——不是争论磁盘驱动 2% 增长减 1% 实施成本，而是<strong>一目了然在转型</strong>（上市公司仍须量，但性质不同）。</p>
+<p>反直觉：<strong>驱动增量有时比驱动转型更难</strong>——老板要明年 <strong>2%</strong> 改善，大家只能更努力一点；若要 <strong>20% 或 50%</strong> 增长，不能全员多干 50%，必须更有创意。</p>
+<p><strong>AI Aspire</strong> 经验：企业常寄来<strong>数百条想法</strong> 的电子表格——一家金融机构 <strong>300+</strong> 条，请帮忙筛该投哪些。分析极难；面对这么多想法，要技术可行性 + 业务影响双重分析，缩到<strong>少数值得重仓</strong>的下注。<strong>挥棒打本垒打</strong> 型多为 <strong>自上而下</strong>；他建议<strong>组合</strong>几笔深思熟虑的大注，而非一次孤注一掷。</p>
+<p><strong>代理式编码</strong> 让实验与原型成本<strong>暴跌</strong>——他们不断做原型；但 <strong>10 万美元预算</strong> 也无法全做，重仓仍需资源分配，故常需略 <strong>自上而下</strong> 推动。</p>
+<h3 id="省成本还是促增长-roi-与本垒打组合-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「有没有特别兴奋的增长案例？ROI 怎么量？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「银行 10 分钟贷款是真实案例；客服中心不只为省钱——服务更多人更快、体验更好促增长；汽车餐厅语音点餐也是。ROI？我也给不出一刀切答案——企业太多元。让我兴奋的项目要测；也有挥棒打本垒打型，一目了然在转型。有趣的是：增量 2% 有时比 50% 增长更难——后者逼你想更有创意的方案。AI Aspire 有人寄 300+ 条想法表格让我们筛——技术分析加业务分析缩到少数大注。本垒打型常自上而下；组合几笔深思熟虑的下注。原型成本暴跌，我们不断做原型，但重仓仍要自上而下分配资源。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「本垒打型多是自上而下？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「对——组合几笔深思熟虑的下注；别只孤注一掷一次。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="前线部署工程师-供应商锁定与-langsmith">前线部署工程师、供应商锁定与 LangSmith</h2>
+
+<h3 id="前线部署工程师-供应商锁定与-langsmith-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>FDE 有价值但炒作被放大；多数公司仍是内部工程师为主、少量 FDE——合同与工具层要保留模型选择权。</p></div>
+</div>
+<h3 id="前线部署工程师-供应商锁定与-langsmith-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>前线部署工程师（Forward Deployed Engineer，FDE）</strong> 在硅谷热议中很火（<strong>Aaron Levie</strong> 一两天前亦上台分享）。<strong>Andrew Ng</strong> 认为 FDE <strong>是好主意</strong>，多数公司未来仍是<strong>大量内部 AI 工程师 + 较小嵌入式 FDE 团队</strong>——比例上内部远多于 FDE；炒作 <strong>略大于现实</strong>，但仍是好事，应多创造 FDE 就业。</p>
+<p>构建代理工作流 <strong>很难</strong>：懂业务、面向客户、可靠性、<strong>可观测性</strong>、<strong>评测</strong>、对客户反驳不可行方案、与利益相关方定自动化范围、<strong>变更管理</strong>——需深度技术判断；嵌入式 FDE 能加速。</p>
+<p>另一难题：<strong>能否供应商中立的 FDE？</strong> AI 领先模型 <strong>变化极快</strong>——他不知一年后领先模型或领先 <strong>编码代理</strong> 是谁；不确定期 <strong>选择权极有价值</strong>。许多供应商给 <strong>20–30% 折扣</strong> 但要 <strong>三年合同</strong>——他个人<strong>几乎从不签超过一年</strong>，不论折扣，以保留一年后选最好供应商的权利。</p>
+<p>企业亦问：若让某家供应商的少数 FDE 嵌入并深度绑定单一模型，<strong>一两年后选择权损失多少？</strong> 这是他个人常用 <strong>LangSmith</strong> 的原因——<strong>Harrison Chase</strong> 把它做得易用；这类 <strong>供应商中立</strong> 工具对观测、长期保留选择权很有价值。供应商很好，要合作，但<strong>长期保留选择权</strong>也重要。</p>
+<h3 id="前线部署工程师-供应商锁定与-langsmith-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「FDE 最近谈很多——每家公司都会有吗？为何影响这么大？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「硅谷热议，Aaron 前几天也讲了——FDE 是好主意。未来多数公司内部工程师远多于嵌入式 FDE 小团队；炒作略大于现实，但是好事。建代理工作流很难——业务、客户、可观测性、评测、变更管理……嵌入式 FDE 能加速。难的是供应商中立的 FDE 吗？领先模型变化快——我不知道一年后领先编码代理是谁；选择权很有价值。供应商给 20–30% 折扣要三年合同——我几乎从不签超过一年。FDE 嵌入单一模型会损选择权。LangSmith 我用很多——Harrison 做得易用；供应商中立工具对观测和选择权很有价值。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="开源模型-数据战略与非结构化重构">开源模型、数据战略与非结构化重构</h2>
+
+<h3 id="开源模型-数据战略与非结构化重构-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>开放权重模型落后前沿约六至九个月却够用；代理之前应先修数据——非结构化重构将是巨额项目。</p></div>
+</div>
+<h3 id="开源模型-数据战略与非结构化重构-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>开源/开放权重模型</strong> 持续保持这一格局：约 <strong>六至九个月</strong> 落后前沿，但前沿模型够贵，他的团队大量用开放权重模型（有时微调有时不）。希望持续支持；近两周白宫关于<strong>发布前审查模型</strong> 的声音令他 <strong>相当担忧</strong>，已与政府朋友沟通——<strong>开源/开放权重之战</strong> 仍在，有时以美中竞争等名义出现；保护开源会让世界更丰富，也帮大家保留选择权。</p>
+<p><strong>先修数据战略再建代理</strong>：<strong>AI Aspire</strong> 见大型企业最常见痛点之一是 <strong>重思数据架构</strong>。过去 10–20 年精力在<strong>结构化数据</strong>（表、关系型、电子表格）——仍重要；但 AI 能处理<strong>非结构化</strong>（文本、图像、PDF、音频、视频），<strong>在正确时间地点把非结构化数据组织好交给代理</strong> 突然比过去有价值得多。</p>
+<p>市场很多供应商谈非结构化，但他<strong>找不到从政治上满意的单一好方案</strong>——<strong>AI Fund / AI Aspire</strong> 内部在做「疯狂实验」自建重构；若成功会多谈。他预见：像当年结构化 <strong>数据架构</strong> 大工程一样，未来数年许多企业会有 <strong>数千万至数亿美元级</strong> 项目，让数据更 <strong>AI 就绪 / 代理就绪</strong>。</p>
+<p>现有架构为何未就绪？<strong>碎片化</strong>、<strong>治理</strong>、数据散落、<strong>无共识模式</strong>、数据在某人笔记本、<strong>权限为人类设计非为代理</strong>——代理继承我的权限吗？治理与可观测性怎么管？金融服务业大量 PDF <strong>合规保留 20 年无人读</strong>——现在 AI 能看，整理极有价值。</p>
+<p><strong>Harrison Chase</strong> 提到 <strong>CJ</strong> 稍后讲链接技术；<strong>Andrew Ng</strong> 顺带编码小经验：他个人大量用 <strong>MongoDB</strong>——关系库虽好，但快速原型时 <strong>重设计数据库模式</strong> 太烦；虽 AI 做迁移 <strong>几乎从不</strong> 删库，「几乎从不但不是从不」仍烦。<strong>NoSQL</strong> 可写入任意数据、读时再定模式，迭代快；不一定撑最大生产负载，超大企业终用关系库，但 <strong>NoSQL 比多数人想更可扩展</strong>，支撑代理时代节奏。</p>
+<h3 id="开源模型-数据战略与非结构化重构-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「开源模型相对前沿怎么看？建代理前数据战略？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「开放权重持续落后六至九个月，前沿模型贵，我们大量用开放权重。白宫最近要发布前审查模型让我担忧——要保护开源。AI Aspire 见最多痛点是重思数据架构：结构化做了 20 年，非结构化突然有价值——文本 PDF 音频在正确时间给代理。供应商很多，我找不到满意的单一方案——我们在自建实验。预见数千万到数亿美元级重构项目。问题：碎片化、治理、权限为人类非代理、PDF 合规存 20 年没人看——AI 看很有价值。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「编码代理不仅改变做什么，还改变什么技术栈合适。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「MongoDB 我用很多——原型时改模式烦，AI 迁移几乎从不删库但不是从不。NoSQL 写入数据读时再定模式，迭代快——别被模式重构拖慢，代理已经很快了。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="mongodb-与快速迭代-编码代理改变技术选型">MongoDB 与快速迭代：编码代理改变技术选型</h2>
+
+<h3 id="mongodb-与快速迭代-编码代理改变技术选型-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>代理编码极快时，别让数据库模式重构成为新瓶颈——NoSQL 换迭代速度。</p></div>
+</div>
+<h3 id="mongodb-与快速迭代-编码代理改变技术选型-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>本节承接数据与工具链讨论：<strong>编码代理</strong> 改变的不只是「写什么软件」，还有「什么底层技术利于快速试」。<strong>Andrew Ng</strong> 的 <strong>MongoDB</strong> 偏好是工作流层面的务实选择，与企业级非结构化数据架构大工程形成对照——前者服务个人/小团队原型迭代速度，后者服务代理规模化接入公司知识库。</p>
+<p>大会在 <strong>Andrew Ng</strong> 感谢生态贡献中收尾；观众鼓掌。<strong>CJ</strong> 将讲链接技术（大会议程引用，正文未展开）。</p>
+<h3 id="mongodb-与快速迭代-编码代理改变技术选型-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harrison Chase</h3>
+      <p>「代表大家感谢你来、分享思考、为生态所做一切。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Andrew Ng</h3>
+      <p>「谢谢，谢谢大家。」</p>
+    </div>
+  </article>
+</div>
+
+<details class="collapsible meta-panel" id="延伸术语表">
+  <summary>延伸术语表</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>说明</th></tr></thead><tbody><tr><td><strong>Interrupt 26</strong></td><td>LangChain 主办的 Agent 主题年度大会（2026 第二届）</td></tr><tr><td><strong>产品管理瓶颈（product management bottleneck）</strong></td><td>构建加速后，「决定做什么、定范围、收反馈」成为系统约束</td></tr><tr><td><strong>Context Hub（chub）</strong></td><td>Andrew Ng 与 Rohit Prasad 开源的 CLI；为编码代理提供最新 API/SDK 文档与反馈闭环</td></tr><tr><td><strong>AI Aspire</strong></td><td>Andrew Ng 与 Chris Tann 共创的企业 AI 战略顾问机构</td></tr><tr><td><strong>CodeDream.ai</strong></td><td>DeepLearning.AI 预览中的对话式交互学习实验站</td></tr><tr><td><strong>前线部署工程师（FDE）</strong></td><td>嵌入客户现场、兼具业务与技术、推动 agent 工作流落地的角色</td></tr><tr><td><strong>LangSmith</strong></td><td>LangChain 推出的 agent 可观测与调试平台，强调多模型/供应商中立</td></tr><tr><td><strong>开放权重模型（open-weight models）</strong></td><td>权重可获取、可本地部署或微调的开源或半开源大模型</td></tr><tr><td><strong>Nano Banana</strong></td><td>Google 多模态/图像相关模型产品；常晚于 LLM 训练截止日期发布</td></tr><tr><td><strong>OpenCode</strong></td><td>开源编码代理工具（Andrew Ng 个人工作流之一）</td></tr></tbody></table></div>
+  </div>
+</details>
+
+<details class="collapsible meta-panel" id="文章元数据">
+  <summary>文章元数据与来源</summary>
+  <div class="collapsible-body">
+<div class="table-wrap">
+<table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody>
+<tr><td><strong>原标题</strong></td><td>The Future of AI Agents with Andrew NG | Interrupt 26</td></tr>
+<tr><td><strong>内容链接（主）</strong></td><td><a href="https://www.youtube.com/watch?v=OaRhpwz_TGM">YouTube 原视频</a></td></tr>
+<tr><td><strong>发布时间</strong></td><td>2026-06-17</td></tr>
+<tr><td><strong>元数据抓取时间</strong></td><td>2026-06-23</td></tr>
+<tr><td><strong>播放量/访问量</strong></td><td>21,080 次（用户提供）</td></tr>
+<tr><td><strong>时长</strong></td><td>约 31 分 22 秒（章节末段 31:22）</td></tr>
+<tr><td><strong>核心人物</strong></td><td><strong>Andrew Ng</strong>（DeepLearning.AI 创始人、AI Fund / AI Aspire 联合创始人）；<strong>Harrison Chase</strong>（LangChain 创始人，Interrupt 大会主办）</td></tr>
+<tr><td><strong>活动</strong></td><td><strong>Interrupt 26</strong>——LangChain 主办的代理（Agent）主题大会</td></tr>
+<tr><td><strong>内容来源</strong></td><td>用户提供的完整字幕转写；YouTube 页面元数据（标题、日期、播放量、章节）</td></tr>
+<tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr>
+</tbody></table>
+</div>
+
+<blockquote><strong>讲者背景</strong>：<strong>Andrew Ng</strong> 是 <strong>DeepLearning.AI</strong> 与 <strong>Coursera</strong> 联合创始人，<strong>AI Fund</strong> 与 <strong>AI Aspire</strong>（AI 战略咨询）联合创始人；长期推动 AI 教育与产业落地。<strong>Harrison Chase</strong> 创办 <strong>LangChain</strong> 并主办 <strong>Interrupt</strong>；去年 <strong>Andrew Ng</strong> 的炉边对谈是该大会 YouTube 回放中点赞与观看量最高的一场，今年回归第二场。</blockquote>
+  </div>
+</details>
+
+<h2 id="自检报告" hidden>自检报告</h2>
+
+<details class="collapsible">
+  <summary>展开自检报告详情</summary>
+  <div class="collapsible-body">
+    <div class="table-wrap">
+    <table><thead><tr><th>检查项</th><th>结果</th></tr></thead><tbody><tr><td><strong>节结构（对谈三层）</strong></td><td>✅ 10 节均含核心洞察+深度解析+对谈实录（末节实录较短）</td></tr><tr><td><strong>导读论点（v5.26）</strong></td><td>✅ 含 <code>&gt; <strong>全文论点</strong></code>；分层段覆盖企业落地、FDE/供应商、数据架构收束线</td></tr><tr><td><strong>元数据</strong></td><td>✅ 标题/链接/2026-06-17/21080 播放/31:22 时长/抓取时间</td></tr><tr><td><strong>术语校准</strong></td><td>✅ guardrails（原 God rails）、FDE（原 FBE）、CodeDream.ai、Nano Banana、OpenCode、Chris Tann</td></tr><tr><td><strong>主持人引子</strong></td><td>✅ 去年最受欢迎回放、LangChain Context Hub 同名区分、CJ links、Aaron Levie stage</td></tr><tr><td><strong>附着型信息</strong></td><td>✅ 手机编码/Mac Mini、20–30% 三年折扣、300+ ideas 表格、almost never 删库</td></tr><tr><td><strong>多源一致性</strong></td><td>不适用（单源字幕）</td></tr><tr><td><strong>可读性内化</strong></td><td>不适用</td></tr><tr><td><strong>正文中文叙事</strong></td><td>✅ 4c 闸门通过；grep 命中 48→修正后 0；对谈实录已译中文；专名/原标题英文保留</td></tr><tr><td><strong>首现缩写注释</strong></td><td>✅ RAG、FDE、evals（评测）首现已注或上下文释义</td></tr><tr><td><strong>纯净排版（4d 节间空白）</strong></td><td>✅ 4d 闸门通过；--- 共 4 处（≤5）；正文节间 --- 0；三连空行 0</td></tr><tr><td><strong>防幻觉</strong></td><td>✅ 数字均来自用户字幕；无 URL 浏览器二次抓取（用户已供完整转写）</td></tr><tr><td><strong>文档生成时间</strong></td><td>2026-06-23</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+
+      <!-- CONTENT_END -->
+
+      <footer class="doc-footer">
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=OaRhpwz_TGM" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260617 Andrew_Ng_AI代理未来_Interrupt26_Harrison_Chase_整理文档.md</span>
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    // ---------- Theme ----------
+    const STORAGE_KEY = "md2html-theme";
+    function currentTheme() { return document.documentElement.dataset.theme || "light"; }
+    function applyThemeIcon() {
+      const use = document.getElementById("theme-icon-use");
+      if (use) use.setAttribute("href", currentTheme() === "dark" ? "#i-sun" : "#i-moon");
+    }
+    (function restoreTheme() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        document.documentElement.dataset.theme = saved;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+
+    // ---------- Mermaid ----------
+    const diagramSources = new Map();
+    function initMermaid() {
+      const isDark = currentTheme() === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        themeVariables: {
+          primaryColor: isDark ? "#3A2A22" : "#FBEEE6",
+          primaryTextColor: isDark ? "#F5F0E8" : "#1A1A1A",
+          primaryBorderColor: isDark ? "#E89572" : "#D97757",
+          lineColor: isDark ? "#9A938A" : "#6B6B66",
+          secondaryColor: isDark ? "#2A2520" : "#F5F5F0",
+          tertiaryColor: isDark ? "#221E1A" : "#FFFFFF",
+          fontFamily: "Inter, system-ui, sans-serif",
+        },
+      });
+    }
+    async function renderMermaid() {
+      initMermaid();
+      const els = document.querySelectorAll(".mermaid");
+      els.forEach(el => {
+        if (!diagramSources.has(el)) diagramSources.set(el, el.textContent.trim());
+        el.textContent = diagramSources.get(el);
+        el.removeAttribute("data-processed");
+      });
+      try { await mermaid.run({ nodes: els }); } catch (e) { console.error(e); }
+    }
+    function toggleTheme() {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(STORAGE_KEY, next);
+      applyThemeIcon();
+      renderMermaid();
+    }
+
+    // ---------- TOC drawer (mobile) ----------
+    const tocEl = () => document.getElementById("toc");
+    const tocToggle = () => document.getElementById("toc-toggle");
+    const isMobileToc = () => window.matchMedia("(max-width: 900px)").matches;
+
+    function syncTocA11y(open) {
+      const toc = tocEl();
+      if (!toc) return;
+      if (isMobileToc()) {
+        toc.setAttribute("role", "dialog");
+        toc.setAttribute("aria-modal", open ? "true" : "false");
+        toc.setAttribute("aria-hidden", open ? "false" : "true");
+      } else {
+        toc.removeAttribute("role");
+        toc.removeAttribute("aria-modal");
+        toc.removeAttribute("aria-hidden");
+      }
+    }
+
+    function openToc() {
+      document.body.classList.add("toc-open");
+      syncTocA11y(true);
+      const closeBtn = tocEl()?.querySelector(".toc-close");
+      closeBtn?.focus();
+    }
+    function closeToc() {
+      document.body.classList.remove("toc-open");
+      syncTocA11y(false);
+      if (isMobileToc()) tocToggle()?.focus();
+    }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+    window.addEventListener("resize", () => {
+      if (!document.body.classList.contains("toc-open")) syncTocA11y(false);
+    });
+
+    // ---------- TOC scrollspy ----------
+    function setupTocSpy() {
+      const links = Array.from(document.querySelectorAll("#toc-nav a[href^='#']"));
+      if (!links.length) {
+        const toc = document.getElementById("toc");
+        if (toc) toc.style.display = "none";
+        return;
+      }
+      const entries = [];
+      links.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) entries.push({ el, link: a });
+        a.addEventListener("click", () => {
+          if (isMobileToc()) closeToc();
+        });
+      });
+
+      let ticking = false;
+      const setActive = () => {
+        ticking = false;
+        const offset = 96;
+        let current = entries[0]?.link;
+        for (const { el, link } of entries) {
+          if (el.getBoundingClientRect().top <= offset) current = link;
+        }
+        links.forEach(l => l.classList.toggle("active", l === current));
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(setActive);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setActive();
+    }
+
+    // ---------- Section jump pills ----------
+    function injectSectionJumps() {
+      document.querySelectorAll(".content h2[id]").forEach(h2 => {
+        const id = h2.id;
+        const parts = [
+          { suffix: "-insight", label: "洞察" },
+          { suffix: "-analysis", label: "解析" },
+          { suffix: "-dialogue", label: "实录" },
+        ];
+        const items = parts
+          .map(p => ({ el: document.getElementById(id + p.suffix), label: p.label }))
+          .filter(x => x.el);
+        if (!items.length) return;
+        const nav = document.createElement("nav");
+        nav.className = "section-jump";
+        nav.setAttribute("aria-label", "本节导航");
+        items.forEach(({ el, label }) => {
+          const a = document.createElement("a");
+          a.href = "#" + el.id;
+          a.textContent = label;
+          nav.appendChild(a);
+        });
+        h2.insertAdjacentElement("afterend", nav);
+      });
+    }
+
+    // ---------- Speaker tags in dialogue ----------
+    function tagSpeakers() {
+      document.querySelectorAll(".timeline .step-body h3").forEach(h3 => {
+        const step = h3.closest(".step");
+        if (!step) return;
+        const name = h3.textContent.trim();
+        if (/Harrison/i.test(name)) step.classList.add("speaker-host");
+        else if (/Andrew/i.test(name)) step.classList.add("speaker-guest");
+      });
+    }
+
+    // ---------- Anchor links on h2/h3 ----------
+    function injectAnchors() {
+      document.querySelectorAll(".content h2[id], .content h3[id]").forEach(h => {
+        if (h.querySelector(".anchor")) return;
+        const a = document.createElement("a");
+        a.className = "anchor";
+        a.href = "#" + h.id;
+        a.setAttribute("aria-label", "段落链接");
+        a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
+        h.appendChild(a);
+      });
+    }
+
+    // ---------- Copy-to-clipboard on <pre> ----------
+    function injectCopyButtons() {
+      document.querySelectorAll(".content pre").forEach(pre => {
+        if (pre.classList.contains("mermaid")) return;
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "复制代码");
+        btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent ?? pre.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.classList.add("copied");
+            btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+            }, 1500);
+          } catch (e) { console.error(e); }
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    // ---------- Back to top ----------
+    function setupBackToTop() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      const toggle = () => {
+        btn.hidden = window.scrollY < 480;
+      };
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+    }
+
+    // ---------- Scroll progress ----------
+    function setupScrollProgress() {
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = h > 0 ? (document.documentElement.scrollTop / h * 100) : 0;
+        bar.style.width = p + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    // ---------- Boot ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      applyThemeIcon();
+      syncTocA11y(false);
+      tagSpeakers();
+      injectAnchors();
+      injectCopyButtons();
+      renderMermaid();
+      setupTocSpy();
+      setupScrollProgress();
+      setupBackToTop();
+    });
+  </script>
+</body>
+</html>
