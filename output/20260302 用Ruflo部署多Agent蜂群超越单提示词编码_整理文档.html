@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
-  <title>用 Ruflo 部署多 Agent 蜂群：超越单提示词编码</title>
+  <title>Windows PowerShell: $env:OPENAI_API_KEY = "..."</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -50,6 +50,7 @@
       --radius: 12px;
       --radius-sm: 8px;
       --radius-lg: 16px;
+      --measure: 75ch;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
       --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
       --z-progress: 200;
@@ -209,6 +210,11 @@
       padding: 32px 24px 96px;
     }
     .content { min-width: 0; }
+    /* Unified reading measure: every top-level block shares one width so
+       paragraphs, callouts, diagrams, timelines, tables and code align to a
+       single clean column. Opt out with .full-bleed where truly needed. */
+    .content > * { max-width: var(--measure); }
+    .content > .full-bleed { max-width: none; }
 
     /* ============================================================
        TOC (desktop + mobile drawer)
@@ -301,7 +307,7 @@
       color: var(--text-muted);
       line-height: 1.55;
       margin: 0 0 20px;
-      max-width: 75ch;
+      max-width: var(--measure);
       text-wrap: pretty;
     }
     .doc-meta {
@@ -348,7 +354,7 @@
     .content > p,
     .content > ul,
     .content > ol,
-    .content > blockquote { max-width: 75ch; }
+    .content > blockquote { max-width: var(--measure); }
     .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
     .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
     .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
@@ -465,16 +471,16 @@
     .timeline {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin: 24px 0;
+      gap: 2px;
+      margin: 20px 0;
       position: relative;
     }
     .timeline::before {
       content: "";
       position: absolute;
       left: 19px;
-      top: 20px;
-      bottom: 20px;
+      top: 16px;
+      bottom: 16px;
       width: 2px;
       background: linear-gradient(180deg, var(--accent-border), var(--border));
     }
@@ -483,7 +489,7 @@
       grid-template-columns: 40px 1fr;
       gap: 16px;
       align-items: start;
-      padding: 16px 4px;
+      padding: 8px 4px;
       position: relative;
       border-radius: var(--radius);
       transition: background-color 0.15s;
@@ -510,7 +516,7 @@
       font-size: 16px;
       font-weight: 600;
     }
-    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: 75ch; }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: var(--measure); }
     .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .tag {
       display: inline-block;
@@ -536,7 +542,7 @@
       margin: 20px 0;
       font-size: 14.5px;
       line-height: 1.6;
-      max-width: 75ch;
+      max-width: var(--measure);
     }
     .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
     .callout-body { min-width: 0; }
@@ -569,7 +575,7 @@
       margin: 24px 0;
       font-size: 16px;
       line-height: 1.65;
-      max-width: 75ch;
+      max-width: var(--measure);
     }
     .highlight-label {
       display: inline-block;
@@ -794,6 +800,7 @@
        HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
        ============================================================ */
     @media (hover: hover) {
+      .back-to-top:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
       .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
       .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
       .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
@@ -887,10 +894,135 @@
     }
 
     /* ============================================================
+       LAYER HEADINGS (对谈三层结构)
+       ============================================================ */
+    .layer-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .layer-heading::before {
+      flex-shrink: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .layer-insight::before {
+      content: "洞察";
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+    }
+    .layer-analysis::before {
+      content: "解析";
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .layer-dialogue::before {
+      content: "实录";
+      background: var(--info-soft);
+      color: var(--info);
+      border: 1px solid var(--info-border);
+    }
+    .layer-insight { font-size: 0; }
+    .layer-insight::before { font-size: 11px; }
+    .layer-insight .anchor { font-size: 14px; }
+    .layer-analysis { font-size: 0; }
+    .layer-analysis::before { font-size: 11px; }
+    .layer-analysis .anchor { font-size: 14px; }
+    .layer-dialogue { font-size: 0; }
+    .layer-dialogue::before { font-size: 11px; }
+    .layer-dialogue .anchor { font-size: 14px; }
+    .section-insight { margin-top: 12px; margin-bottom: 20px; }
+    .section-insight .callout-body p { margin: 0; }
+
+    /* Section jump pills (injected by JS) */
+    .section-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 20px;
+      max-width: var(--measure);
+    }
+    .section-jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+    }
+    .section-jump a:hover,
+    .section-jump a:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Speaker differentiation in dialogue timeline */
+    .step.speaker-host .step-num {
+      border-color: var(--info);
+      color: var(--info);
+      background: var(--info-soft);
+    }
+    .step.speaker-guest .step-num {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .step.speaker-host .step-body h3 { color: var(--info); }
+    .step.speaker-guest .step-body h3 { color: var(--accent-strong); }
+
+    /* Meta panel + table URL wrap */
+    .meta-panel { margin-bottom: 32px; }
+    .toc-nav .toc-meta-link {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-subtle);
+      font-size: 12.5px;
+    }
+    .table-wrap td a { word-break: break-all; }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: opacity 0.2s, transform 0.2s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .back-to-top .icon { width: 20px; height: 20px; stroke-width: 2; }
+    .back-to-top:not([hidden]) { opacity: 1; transform: translateY(0); }
+    .back-to-top[hidden] { display: inline-flex; opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+    /* ============================================================
        PRINT
        ============================================================ */
     @media print {
-      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress { display: none !important; }
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress, .back-to-top, .section-jump { display: none !important; }
       .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
       body { background: #fff; color: #000; }
       a { color: #000; }
@@ -925,6 +1057,7 @@
     <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
     <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
     <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
   </svg>
 
@@ -936,7 +1069,7 @@
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
         </button>
         <span class="brand-dot" aria-hidden="true"></span>
-        <span>系统设计</span>
+        <span>笔记</span>
       </div>
       <div class="topbar-actions">
         <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
@@ -950,7 +1083,7 @@
   </header>
 
   <!-- TOC drawer backdrop (mobile) -->
-  <div class="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+  <div class="toc-backdrop" id="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
 
   <div class="layout">
     <aside class="toc" id="toc" aria-label="目录">
@@ -961,32 +1094,30 @@
         </button>
       </div>
       <nav class="toc-nav" id="toc-nav">
-        <a href="#meta" class="lvl-2">文章元数据</a>
-        <a href="#intro" class="lvl-2">核心导读</a>
-        <a href="#single-prompt-limit" class="lvl-2">单提示词编码为何触顶</a>
-        <a href="#ruflo-overview" class="lvl-2">Ruflo 是什么</a>
-        <a href="#prerequisites" class="lvl-2">前置条件与环境搭建</a>
-        <a href="#core-concepts" class="lvl-2">核心概念</a>
-        <a href="#dual-agent-setup" class="lvl-2">搭建双 Agent 蜂群</a>
-        <a href="#config-guide" class="lvl-2">分布式蜂群配置指南</a>
-        <a href="#cicd" class="lvl-2">CI/CD 与工作流集成</a>
-        <a href="#checklist" class="lvl-2">上线前实现清单</a>
-        <a href="#conclusion" class="lvl-2">从编排概念到可运行蜂群</a>
-        <a href="#quotes" class="lvl-2">关键语录</a>
-        <a href="#glossary" class="lvl-2">延伸术语表</a>
-        <a href="#qa-report" class="lvl-2">自检报告</a>
+        <a href="#核心导读" class="lvl-2">核心导读</a>
+        <a href="#单提示词编码为何触顶" class="lvl-2">单提示词编码为何触顶</a>
+        <a href="#ruflo-是什么-与单实例-agent-的差异" class="lvl-2">Ruflo 是什么：与单实例 Agent 的差异</a>
+        <a href="#前置条件与环境搭建" class="lvl-2">前置条件与环境搭建</a>
+        <a href="#核心概念-agent-蜂群与任务编排" class="lvl-2">核心概念：Agent、蜂群与任务编排</a>
+        <a href="#搭建双-agent-蜂群-test-writer-+-code-writer" class="lvl-2">搭建双 Agent 蜂群：Test Writer + Code Writer</a>
+        <a href="#分布式蜂群智能的配置指南" class="lvl-2">分布式蜂群智能的配置指南</a>
+        <a href="#ci-cd-与日常开发工作流集成" class="lvl-2">CI/CD 与日常开发工作流集成</a>
+        <a href="#上线前实现清单" class="lvl-2">上线前实现清单</a>
+        <a href="#从编排概念到可运行蜂群" class="lvl-2">从编排概念到可运行蜂群</a>
+        <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
+        <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
       </nav>
     </aside>
 
     <main class="content" id="main">
       <header class="doc-header">
-        <span class="doc-eyebrow">SYSTEM DESIGN</span>
-        <h1 class="doc-title">用 Ruflo 部署多 Agent 蜂群：超越单提示词编码</h1>
-        <p class="doc-subtitle">从单提示词编码的瓶颈出发，用 Ruflo 编排 Test Writer + Code Writer 双 Agent 蜂群，跑通 TDD 工作流——含配置、错误处理、上下文调优与 CI/CD 集成。</p>
+        <span class="doc-eyebrow">对谈笔记</span>
+        <h1 class="doc-title">Windows PowerShell: $env:OPENAI_API_KEY = "..."</h1>
+        <p class="doc-subtitle">跨 10+ 文件、可拆分子任务的项目里，单提示词 Agent 必然触顶——Ruflo 用角色分工、Handoff 与蜂群编排换出路。</p>
         <div class="doc-meta">
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
-            20260302 用Ruflo部署多Agent蜂群超越单提示词编码_整理文档.md
+            Deploying Multi-Agent Swarms with Ruflo: Beyond Single-Prompt Coding
           </span>
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
@@ -994,389 +1125,233 @@
           </span>
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
-            ~7 分钟阅读
+            ~12 分钟阅读
           </span>
         </div>
       </header>
 
       <!-- CONTENT_START -->
+<h2 id="核心导读">核心导读</h2>
 
-      <h2 id="meta">文章元数据</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>项目</th><th>内容</th></tr></thead>
-          <tbody>
-            <tr><td><strong>原标题</strong></td><td>Deploying Multi-Agent Swarms with Ruflo: Beyond Single-Prompt Coding</td></tr>
-            <tr><td><strong>内容链接</strong></td><td><a href="https://www.sitepoint.com/deploying-multiagent-swarms-with-ruflo-beyond-singleprompt-coding/">SitePoint 原文</a></td></tr>
-            <tr><td><strong>发布时间</strong></td><td>2026-03-02</td></tr>
-            <tr><td><strong>元数据抓取时间</strong></td><td>2026-05-25</td></tr>
-            <tr><td><strong>播放量/访问量</strong></td><td>未获取（SitePoint 页面未展示单篇阅读量）</td></tr>
-            <tr><td><strong>时长</strong></td><td>不适用（文稿）</td></tr>
-            <tr><td><strong>讲者</strong></td><td><strong>SitePoint Team</strong>（SitePoint 技术教程）</td></tr>
-            <tr><td><strong>内容来源</strong></td><td>SitePoint 博客；页面抓取 + WebFetch 全文交叉核对</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <aside class="callout callout-info">
-        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-info"/></svg>
-        <div class="callout-body">
-          <p class="callout-title">背景</p>
-          <p>本文为 <strong>SitePoint</strong> 发布的实操型技术教程，以 <strong>Ruflo</strong>（GitHub：<code>ruvnet/ruflo</code>）为编排框架，手把手搭建「测试编写 Agent + 代码编写 Agent」双 Agent 蜂群，演示 TDD 工作流，并覆盖配置、错误处理、上下文共享调优与 CI/CD 集成。</p>
-        </div>
-      </aside>
+<div class="highlight">
+  <p>跨 <strong>10+ 文件</strong>、可拆分子任务的项目里，单提示词 Agent 必然触顶——<strong>Ruflo</strong> 用角色分工、Handoff 与蜂群编排换出路；代价是 <strong>2–3 倍</strong> token 与概率性成功，合并前须人工审阅。</p>
+</div>
 
-      <h2 id="intro">核心导读</h2>
-      <div class="highlight">
-        <span class="highlight-label">要点</span>
-        <p>单 Agent 适合孤立小任务；跨 <strong>10+ 文件</strong>、模块相互依赖、任务可拆成专业化子任务时，<strong>Ruflo 多 Agent 编排</strong>才是使能层——但双 Agent 全量 handoff 的 token 消耗约为单 Agent 的 <strong>2–3 倍</strong>，且成功是概率性的，合并前须人工审阅。</p>
-      </div>
-      <p>最常见的 AI 辅助编码，困在「一条提示词 → 一次回复 → 一个上下文窗口」的窄循环里。<strong>GitHub Copilot</strong>、<strong>ChatGPT</strong>、<strong>Claude Code</strong> 都能当单实例 Agent 用，孤立小任务足够；一旦项目跨多文件、模块相互依赖、任务天然可拆成专业化子任务，单 Agent 就会撞墙。</p>
-      <p><strong>Ruflo</strong> 提供另一套基础设施：配置、部署、管理多个专业化 Agent，让它们通信、交接工作、产出整合结果。教程终点是一个可运行的双 Agent 蜂群——<strong>Test Writer</strong> 先写测试，<strong>Code Writer</strong> 再写实现，全程由 Ruflo 编排。</p>
+<p><strong>单窗瓶颈。</strong> 最常见的 AI 辅助编码困在「一条提示词 → 一次回复 → 一个上下文窗口」：<strong>GitHub Copilot</strong>、<strong>ChatGPT</strong>、<strong>Claude Code</strong> 孤立小任务足够；模块相互依赖、工作流可分解为测试/实现/Lint 等专业化步骤时，单 Agent 必须串行包揽，手动多会话又缺自动衔接。</p>
 
-      <h2 id="single-prompt-limit">单提示词编码为何触顶</h2>
-      <p>AI 辅助编码的主流形态，是「一问一答、单窗口」的交互。<strong>GitHub Copilot</strong>、<strong>ChatGPT</strong>、<strong>Claude Code</strong> 都能以单实例 Agent 身份生成代码或回答问题。</p>
-      <div class="highlight">
-        <span class="highlight-label">要点</span>
-        <p>跨多文件、可拆分子任务的项目里，单 Agent 是瓶颈；多 Agent 蜂群用角色分工、并行与协调协作换出路。</p>
-      </div>
-      <p>孤立任务上，单 Agent 足够快。但当项目涉及 <strong>10 个以上文件</strong>、模块彼此依赖、工作流天然可分解为测试编写、实现、Lint、文档等专业化步骤时，一个 Agent 必须<strong>串行</strong>包揽一切。</p>
-      <p>技术上可以手动开多个会话并行，但输出之间<strong>没有自动衔接</strong>，上下文一致性随输入累积逼近模型窗口上限而恶化——基础 <strong>GPT-4</strong> 约 <strong>8K</strong> token，<strong>GPT-4 Turbo</strong> 可达 <strong>128K</strong>。</p>
-      <p><strong>Ruflo</strong>（<code>ruvnet/ruflo</code>）定位是蜂群编排框架。动手前应用 <code>npm info ruflo</code> 确认包是否已发布、仓库是否公开。</p>
+<p><strong>编排使能层。</strong> <strong>Ruflo</strong> 提供配置、部署、管理多 Agent 的基础设施——教程终点是 <strong>Test Writer</strong> 先写测试、<strong>Code Writer</strong> 再写实现的双 Agent <strong>TDD</strong> 蜂群，全程由 Handoff 与任务编排驱动。</p>
 
-      <h3 id="deploy-overview">八步部署速览</h3>
-      <div class="timeline">
-        <article class="step"><div class="step-num">1</div><div class="step-body"><h3>安装 Node.js v18+</h3><p>克隆 <code>ruvnet/ruflo</code>，<code>npm install</code> 装依赖。</p></div></article>
-        <article class="step"><div class="step-num">2</div><div class="step-body"><h3>配置 LLM 提供商</h3><p>在 <code>ruflo.config.js</code> 配置模型与环境变量中的 API Key。</p></div></article>
-        <article class="step"><div class="step-num">3</div><div class="step-body"><h3>定义 Agent 角色</h3><p>唯一角色、范围化系统提示词、工具绑定与输出格式。</p></div></article>
-        <article class="step"><div class="step-num">4</div><div class="step-body"><h3>设置编排规则</h3><p>在 <code>orchestration</code> 块设置执行顺序与 handoff，控制上下文流。</p></div></article>
-        <article class="step"><div class="step-num">5</div><div class="step-body"><h3>配置错误处理</h3><p>重试次数、抖动、备用 Agent、人工介入断点。</p></div></article>
-        <article class="step"><div class="step-num">6</div><div class="step-body"><h3>编程式运行蜂群</h3><p><code>node run-swarm.js</code>，监听 Agent 生命周期事件。</p></div></article>
-        <article class="step"><div class="step-num">7</div><div class="step-body"><h3>独立验证测试</h3><p>运行 <strong>Jest</strong> 套件，验证生成文件。</p></div></article>
-        <article class="step"><div class="step-num">8</div><div class="step-body"><h3>接入 CI/CD</h3><p>在 <code>package.json</code> 增加脚本条目，自动执行。</p></div></article>
-      </div>
+<p><strong>落地权衡。</strong> 单 Agent 仍适合「补一个函数」或一次性重构；需要协调测试生成 + 实现、多文件脚手架、审查流水线时，Ruflo 编排层才是使能层——并须把错误处理、上下文调优与 <strong>CI/CD</strong> 集成纳入上线前清单。</p>
 
-      <h2 id="ruflo-overview">Ruflo 是什么：与单实例 Agent 的差异</h2>
-      <h3 id="single-agent-limits">单 Agent 模型及其局限</h3>
-      <p>传统单实例 AI 编码工具在<strong>单一提示—回复上下文</strong>里处理请求，<strong>没有内置</strong>多 Agent 编排能力：不能把子任务委派给其他专业化 Agent，也不能同时维护多个角色隔离的上下文。</p>
+<h2 id="单提示词编码为何触顶">单提示词编码为何触顶</h2>
 
-      <h3 id="swarm-architecture">Ruflo 蜂群架构一览</h3>
-      <p><strong>Ruflo</strong>（GitHub：<code>ruvnet/ruflo</code>）是面向多 Agent 工作流的<strong>编排层</strong>。开发者定义多个 Agent——各自有角色、系统提示词、工具集——再组合成执行协调任务的蜂群。</p>
-      <figure class="diagram">
-        <pre class="mermaid">
-flowchart LR
-  Task[任务提交] --> Orch[编排器]
-  Orch --> TW[Test Writer]
-  TW -->|Handoff| CW[Code Writer]
-  Orch --> Mem[(共享上下文)]
-  TW --> Mem
-  CW --> Mem
-  CW --> Out[整合交付物]
-        </pre>
-        <figcaption class="diagram-caption">Ruflo 蜂群：编排器路由任务，Agent 通过 Handoff 与共享上下文协作。</figcaption>
-      </figure>
-      <ul>
-        <li><strong>Agent</strong>：绑定角色的单个 AI 执行体</li>
-        <li><strong>Swarm（蜂群）</strong>：带定义交互模式的 Agent 组合</li>
-        <li><strong>Task（任务）</strong>：提交给蜂群的工作单元</li>
-        <li><strong>Handoff（交接）</strong>：上游 Agent 输出传给下游的机制</li>
-        <li><strong>Shared context（共享上下文）</strong>：蜂群内 Agent 可访问的共享记忆</li>
-      </ul>
-      <p><strong>核心差异在编排层本身</strong>：管理 Agent 生命周期、在 Agent 间路由任务、维护蜂群共享记忆、处理 handoff 与事件驱动消息等通信协议。</p>
+<h3 id="单提示词编码为何触顶-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>跨多文件、可拆分子任务的项目里，单 Agent 是瓶颈；多 Agent 蜂群用角色分工、并行与协调协作换出路。</strong></p></div>
+</div>
+<h3 id="单提示词编码为何触顶-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>AI 辅助编码的主流形态，是「一问一答、单窗口」的交互。<strong>GitHub Copilot</strong>、<strong>ChatGPT</strong>、<strong>Claude Code</strong> 都能以单实例 Agent 身份生成代码或回答问题。</p>
+<p>孤立任务上，单 Agent 足够快。但当项目涉及 <strong>10 个以上文件</strong>、模块彼此依赖、工作流天然可分解为测试编写、实现、Lint、文档等专业化步骤时，一个 Agent 必须<strong>串行</strong>包揽一切。</p>
+<p>技术上可以手动开多个会话并行，但输出之间<strong>没有自动衔接</strong>，上下文一致性随输入累积逼近模型窗口上限而恶化——基础 <strong>GPT-4</strong> 约 <strong>8K</strong> token，<strong>GPT-4 Turbo</strong> 可达 <strong>128K</strong>；任务越复杂，问题越明显。</p>
+<p><strong>Ruflo</strong>（<code>ruvnet/ruflo</code>）定位是蜂群编排框架。动手前应用 <code>npm info ruflo</code> 确认包是否已发布、仓库是否公开。教程承诺读者将得到一个完整实现：双 Agent 蜂群中，Test Writer 生成测试、Code Writer 写满足测试的代码，TDD 流程全由 Ruflo 驱动。</p>
+<h3 id="单提示词编码为何触顶-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>教程导言</h3>
+      <p>「最常见的 AI 辅助编码，困在一个窄循环里：一次 prompt、一次回复、一个上下文窗口。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>可部署性</h3>
+      <p>「这些模式通过重试逻辑、回退路由与人机协同暂停点，让 <strong>Ruflo</strong> 蜂群更可部署——这正是 LLM Agent 在长期运行中会碰到的失败模式。」</p>
+    </div>
+  </article>
+</div>
 
-      <h3 id="when-to-use">何时选 Ruflo、何时留单 Agent</h3>
-      <p>取决于三个因素：工作流里<strong>相互依赖的子任务数量</strong>、这些任务是否受益于<strong>角色隔离的上下文</strong>、是否需要<strong>流水线自动化</strong>。</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>维度</th><th>单 Agent</th><th>Ruflo 蜂群</th></tr></thead>
-          <tbody>
-            <tr><td>任务范围</td><td>一提示一回复</td><td>拆分到专业化 Agent</td></tr>
-            <tr><td>上下文管理</td><td>单窗口、所有关切共享</td><td>按 Agent 隔离，受控共享</td></tr>
-            <tr><td>并行性</td><td>仅串行（手动多 session 无协调）</td><td>可并行或串行（视配置）</td></tr>
-            <tr><td>角色专业化</td><td>无（通才）</td><td>明确区分的角色 + 定制提示词与工具</td></tr>
-            <tr><td>交接与委派</td><td>手动</td><td>编排规则自动完成</td></tr>
-            <tr><td>CI/CD 集成</td><td>临时、零散</td><td>面向流水线设计</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="compare">
-        <div class="compare-card">
-          <h4>单 Agent</h4>
-          <p>快速函数建议、一次性重构——更快、更省 token。</p>
-        </div>
-        <div class="compare-card recommended">
-          <h4>Ruflo 蜂群</h4>
-          <p>协调「测试生成 + 实现」、多文件脚手架、自动化审查流水线——编排层才是使能层。</p>
-        </div>
-      </div>
+<h2 id="ruflo-是什么-与单实例-agent-的差异">Ruflo 是什么：与单实例 Agent 的差异</h2>
 
-      <h2 id="prerequisites">前置条件与环境搭建</h2>
-      <div class="highlight">
-        <span class="highlight-label">要点</span>
-        <p><strong>Node.js 18+</strong>、<strong>Jest 29+</strong>、OpenAI GPT-4 权限与 CommonJS 配置语法，是复现教程 demo 的硬门槛。</p>
-      </div>
-      <ul>
-        <li><strong>Node.js v18+</strong>（推荐 v18 LTS 或 v20 LTS）；教程用 <strong>CommonJS</strong></li>
-        <li><strong>npm</strong> 或 <strong>yarn</strong>、<strong>Git</strong></li>
-        <li><strong>Jest v29+</strong>（<code>npm install --save-dev jest</code>）</li>
-        <li><strong>OpenAI API Key</strong>，且账户已开通 <strong>GPT-4</strong></li>
-      </ul>
-      <p>读者应熟悉 <strong>JavaScript</strong>、<strong>Node.js</strong> 与基础 <strong>React</strong> 概念——demo 任务是生成 React 工具函数。</p>
-      <h3 id="install-ruflo">安装 Ruflo</h3>
-      <pre><code>git clone https://github.com/ruvnet/ruflo.git
-cd ruflo
-npm install</code></pre>
-      <pre><code>./node_modules/.bin/ruflo --version</code></pre>
-      <pre><code>node -e "const { Swarm } = require('ruflo'); console.log(typeof Swarm);"
-# 期望输出: "function"</code></pre>
+<h3 id="ruflo-是什么-与单实例-agent-的差异-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="ruflo-是什么-与单实例-agent-的差异-analysis" class="layer-heading layer-analysis">深度解析</h3>
 
-      <h2 id="core-concepts">核心概念：Agent、蜂群与任务编排</h2>
-      <h3 id="agent-four-elements">定义 Agent 的四要素</h3>
-      <ol>
-        <li><strong>role（角色）</strong>：人类可读的功能标签</li>
-        <li><strong>systemPrompt（系统提示词）</strong>：行为指令</li>
-        <li><strong>tools（工具）</strong>：可调用能力（文件系统、测试运行器等）</li>
-        <li><strong>output contract（输出契约）</strong>：产出物格式</li>
-      </ol>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>工具 ID</th><th>能力</th></tr></thead>
-          <tbody>
-            <tr><td><code>fs</code></td><td>文件系统读写</td></tr>
-            <tr><td><code>testRunner</code></td><td>调用 Jest</td></tr>
-            <tr><td><code>linter</code></td><td>ESLint 风格检查</td></tr>
-            <tr><td><code>dependencyInstaller</code></td><td>npm 包安装</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <aside class="callout callout-warn">
-        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg>
-        <div class="callout-body">
-          <p class="callout-title">安全</p>
-          <p><code>dependencyInstaller</code> 可在自动化流水线中执行 <code>npm install</code>。绑定时应配置 <code>allowedPackages</code> 白名单，并设 <code>denyUnknown: true</code>，防止任意或 typosquat 包被安装。</p>
-        </div>
-      </aside>
+<h3 id="ruflo-是什么-与单实例-agent-的差异-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>架构差异</h3>
+      <p>「核心差异在编排层本身：管理 Agent 生命周期、在 Agent 间路由任务、维护蜂群共享记忆，并处理含 handoff 与事件驱动消息在内的通信协议。」</p>
+    </div>
+  </article>
+</div>
 
-      <h3 id="task-lifecycle">任务生命周期</h3>
-      <figure class="diagram">
-        <pre class="mermaid">
-sequenceDiagram
-  participant O as 编排器
-  participant TW as Test Writer
-  participant CW as Code Writer
-  participant J as Jest
-  O->>TW: 分配子任务
-  TW->>TW: 生成测试文件
-  TW->>CW: Handoff 完整输出
-  CW->>CW: 写实现代码
-  CW->>J: testPass 成功标准
-  O->>O: 整合最终结果
-        </pre>
-        <figcaption class="diagram-caption">双 Agent TDD 流程：Test Writer 先跑，输出作为 Code Writer 上下文；编排器以 Jest 验证结果。</figcaption>
-      </figure>
-      <aside class="callout callout-warn">
-        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-warn"/></svg>
-        <div class="callout-body">
-          <p class="callout-title">注意</p>
-          <p>因测试与实现皆 LLM 生成，成功是<strong>概率性</strong>的——编排器会重试至多 <code>maxRetries</code> 次，<strong>合并前强烈建议人工审阅</strong>。</p>
-        </div>
-      </aside>
+<h2 id="前置条件与环境搭建">前置条件与环境搭建</h2>
 
-      <details class="collapsible">
-        <summary>最小双 Agent 配置示例（ruflo.config.js）</summary>
-        <div class="collapsible-body">
-          <pre><code>// ruflo.config.js — 最小双 Agent 蜂群
-module.exports = {
-  swarm: {
-    name: "tdd-swarm",
-    agents: [
-      {
-        id: "test-writer",
-        role: "Test Writer",
-        systemPrompt: "You are a test-writing specialist. Generate unit tests using Jest for the described functionality. Output only test files.",
-        tools: ["fs", "testRunner"],
-        outputFormat: "file"
-      },
-      {
-        id: "code-writer",
-        role: "Code Writer",
-        systemPrompt: "You are an implementation specialist. Write source code that passes the provided tests. Output only source files.",
-        tools: [
-          "fs",
-          "linter",
-          {
-            name: "dependencyInstaller",
-            options: {
-              allowedPackages: ["lodash", "date-fns", "uuid"],
-              denyUnknown: true
-            }
-          }
-        ],
-        outputFormat: "file"
-      }
-    ],
-    orchestration: {
-      executionOrder: ["test-writer", "code-writer"],
-      handoff: {
-        from: "test-writer",
-        to: "code-writer",
-        contextMode: "full"
-      }
-    }
-  }
-};</code></pre>
-          <p>校验配置：<code>node -e "require('./ruflo.config')"</code> 应无输出无报错。</p>
-        </div>
-      </details>
+<h3 id="前置条件与环境搭建-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Node.js 18+、Jest 29+、OpenAI GPT-4 权限与 CommonJS 配置语法，是复现教程演示的硬门槛。</strong></p></div>
+</div>
+<h3 id="前置条件与环境搭建-analysis" class="layer-heading layer-analysis">深度解析</h3>
 
-      <h2 id="dual-agent-setup">搭建双 Agent 蜂群：Test Writer + Code Writer</h2>
-      <div class="highlight">
-        <span class="highlight-label">要点</span>
-        <p>TDD 蜂群把「先写测试、后写实现」拆成两个 Agent，用 handoff 与 Jest 成功标准把概率性 LLM 输出拴在可验证闭环上。</p>
-      </div>
-      <h3 id="test-writer">Test Writer Agent</h3>
-      <p>遵循 <strong>TDD 优先</strong>：系统提示词要求在任何实现存在<strong>之前</strong>生成单元与集成测试。输出契约：按严格命名约定（<code>*.test.js</code>）产出测试文件。</p>
-      <h3 id="code-writer">Code Writer Agent</h3>
-      <p>以 Test Writer 输出为主上下文。系统提示词要求写<strong>满足已提供测试</strong>的源码；工具含文件系统、linter、dependencyInstaller。</p>
-      <h3 id="run-swarm">编排脚本与端到端运行</h3>
-      <ul>
-        <li><code>require("dotenv").config()</code> 加载环境变量</li>
-        <li><code>withTimeout</code>：默认 <strong>120_000 ms</strong>（可用 <code>SWARM_TIMEOUT_MS</code> 覆盖）</li>
-        <li>事件监听：<code>agent:start</code>、<code>agent:complete</code>、<code>handoff</code>、<code>swarm:complete</code>、<code>error</code></li>
-        <li>样例任务：生成 React <strong>debounce</strong> 工具函数</li>
-        <li><code>successCriteria</code>：<code>type: "testPass"</code>，<code>command: "./node_modules/.bin/jest --no-cache"</code></li>
-      </ul>
-      <pre><code>export OPENAI_API_KEY="your-api-key-here"
-# Windows PowerShell: $env:OPENAI_API_KEY = "..."
-node run-swarm.js</code></pre>
-      <pre><code>[test-writer] Starting task: Create a React utility function called debounce...
-[test-writer] Completed. Output files: src/__tests__/debounce.test.js
-[handoff] test-writer → code-writer (&lt;token count&gt; tokens of context)
-[code-writer] Starting task: ...
-[code-writer] Completed. Output files: src/debounce.js
-Swarm finished. Tests passed: true</code></pre>
-      <aside class="callout callout-tip">
-        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-        <div class="callout-body">
-          <p class="callout-title">提示</p>
-          <p>独立验证：<code>./node_modules/.bin/jest src/__tests__/debounce.test.js</code>。token 数与测试数为<strong>非确定性</strong>，各次运行可能不同——合并前须审阅。</p>
-        </div>
-      </aside>
+<h3 id="前置条件与环境搭建-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
 
-      <h2 id="config-guide">分布式蜂群智能的配置指南</h2>
-      <h3 id="extend-agents">扩展到两个 Agent 以上</h3>
-      <p>双 Agent 模式可自然扩展：<strong>Reviewer Agent</strong>（自动审查）、<strong>Docs Agent</strong>（JSDoc + README）、<strong>Refactor Agent</strong>（测试通过后优化）。编排块可配置串行、并行或混合执行模式。</p>
-      <h3 id="context-tuning">通信与上下文共享调优</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>contextMode</th><th>行为</th></tr></thead>
-          <tbody>
-            <tr><td><code>"full"</code></td><td>传递上游完整输出</td></tr>
-            <tr><td><code>"summary"</code></td><td>编排器生成精简摘要版</td></tr>
-            <tr><td><code>"filtered"</code></td><td>按模式或键转发部分输出</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <aside class="callout callout-warn">
-        <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-warn"/></svg>
-        <div class="callout-body">
-          <p class="callout-title">注意</p>
-          <p><strong>Token 预算</strong>极易失控：五个 Agent 若各自从前序接收全量上下文，五个各 4K token 即 <strong>20K</strong>/轮——已超过 <strong>GPT-4-8K</strong> 窗口。双 Agent 全量 handoff 约为单 Agent 的 <strong>2–3 倍</strong> token 消耗。</p>
-        </div>
-      </aside>
-      <h3 id="error-handling">错误处理与重试策略</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>字段</th><th>含义</th></tr></thead>
-          <tbody>
-            <tr><td><code>onError</code></td><td>初始响应：retry / skip / halt</td></tr>
-            <tr><td><code>maxRetries</code></td><td>最大重试次数（如 3 → 最多额外 3 次 LLM 调用）</td></tr>
-            <tr><td><code>retryDelay</code></td><td>重试间隔（毫秒，如 2000）</td></tr>
-            <tr><td><code>retryJitter</code></td><td>随机抖动（毫秒，如 1000），防惊群重试碰撞</td></tr>
-            <tr><td><code>fallbackAgentId</code></td><td>重试耗尽后接管的备用 Agent</td></tr>
-            <tr><td><code>humanInTheLoop</code></td><td>暂停蜂群、通知开发者，允许人工介入后再执行 fallback</td></tr>
-          </tbody>
-        </table>
-      </div>
+</div>
 
-      <h2 id="cicd">CI/CD 与日常开发工作流集成</h2>
-      <p>Ruflo 蜂群可在 <strong>GitHub Actions</strong>、<strong>GitLab CI</strong> 或任何支持 Node.js 的 CI 中运行。典型用法：在 PR 流水线中作为一步，为 PR 内的新功能描述生成测试与实现。</p>
-      <pre><code>"swarm:tdd": "node run-swarm.js"</code></pre>
-      <p>开发者用 <code>npm run swarm:tdd</code> 触发。配置中的输出目录直接指向项目源码树，生成文件无需手动搬运。</p>
+<h2 id="核心概念-agent-蜂群与任务编排">核心概念：Agent、蜂群与任务编排</h2>
 
-      <h2 id="checklist">上线前实现清单</h2>
-      <div class="timeline">
-        <article class="step done"><div class="step-num">1</div><div class="step-body"><h3>Node.js v18+</h3><p><code>node --version</code> 确认版本。</p></div></article>
-        <article class="step done"><div class="step-num">2</div><div class="step-body"><h3>Ruflo 已克隆</h3><p><code>require("ruflo")</code> 无报错。</p></div></article>
-        <article class="step done"><div class="step-num">3</div><div class="step-body"><h3>Jest v29+</h3><p>devDependency 已安装。</p></div></article>
-        <article class="step done"><div class="step-num">4</div><div class="step-body"><h3>LLM Key 配置</h3><p><code>.env</code> + <code>dotenv</code>，<code>.env</code> 已入 <code>.gitignore</code>。</p></div></article>
-        <article class="step"><div class="step-num">5</div><div class="step-body"><h3>Agent 提示词与工具</h3><p>角色清晰；工具绑定已与注册表核对；<code>dependencyInstaller</code> 白名单已设。</p></div></article>
-        <article class="step"><div class="step-num">6</div><div class="step-body"><h3>Handoff 与错误处理</h3><p>执行顺序、contextMode、重试/抖动/fallback/humanInTheLoop 已配置。</p></div></article>
-        <article class="step"><div class="step-num">7</div><div class="step-body"><h3>端到端验证</h3><p>样例任务通过；<strong>生成文件合并前经人工审阅</strong>。</p></div></article>
-        <article class="step"><div class="step-num">8</div><div class="step-body"><h3>CI/CD 与扩展规划</h3><p>可选接入流水线；规划 Reviewer、Docs、Refactor 等 Agent。</p></div></article>
-      </div>
+<h3 id="核心概念-agent-蜂群与任务编排-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="核心概念-agent-蜂群与任务编排-analysis" class="layer-heading layer-analysis">深度解析</h3>
 
-      <h2 id="conclusion">从编排概念到可运行蜂群</h2>
-      <div class="highlight">
-        <span class="highlight-label">要点</span>
-        <p>角色专业化、受控上下文共享、带明确成功标准的自动编排，是单提示词编码之外的可复制工程路径。</p>
-      </div>
-      <p>教程已构建一个功能完整的双 Agent Ruflo 蜂群：在协调的 TDD 工作流中生成测试与实现代码。架构通过角色分工、上下文 handoff 配置、错误处理、备用 Agent 与 CI/CD 集成，越过了单提示词编码的上限。</p>
-      <p><strong>下一步建议</strong>：向蜂群添加 Reviewer 与 Docs Agent；实验并行执行模式；调优上下文共享模式优化 token 用量。起点仓库：<strong>ruvnet/ruflo</strong>。</p>
+<h3 id="核心概念-agent-蜂群与任务编排-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>概率性成功</h3>
+      <p>「测试与实现都由 LLM 生成，成功是概率性的。编排器最多重试 <strong>maxRetries</strong> 次；合并前强烈建议人工审阅生成物。」</p>
+    </div>
+  </article>
+</div>
 
-      <h2 id="quotes">关键语录</h2>
-      <blockquote><p><em>"AI-assisted coding in its most common form operates within a narrow loop: one prompt, one response, one context window."</em></p></blockquote>
-      <blockquote><p><em>"The core differentiator is the orchestration layer itself: it manages agent lifecycle, routes tasks between agents, maintains shared memory across the swarm, and handles communication protocols including handoffs and event-driven messaging."</em></p></blockquote>
-      <blockquote><p><em>"Because both tests and implementation are LLM-generated, success is probabilistic. The orchestrator will retry up to maxRetries times, and human review of generated artifacts is strongly recommended before merging."</em></p></blockquote>
-      <blockquote><p><em>"Managing token budgets across agents matters more than you might expect: five agents each receiving full context from all predecessors can blow through limits fast."</em></p></blockquote>
-      <blockquote><p><em>"A two-agent swarm with full context handoffs may consume 2-3x the tokens of a single-agent call."</em></p></blockquote>
-      <blockquote><p><em>"These patterns make Ruflo swarms more deployable by adding retry logic, fallback routing, and human-in-the-loop pause points — the failure modes that LLM-based agents will encounter in any sustained use."</em></p></blockquote>
+<h2 id="搭建双-agent-蜂群-test-writer-+-code-writer">搭建双 Agent 蜂群：Test Writer + Code Writer</h2>
 
-      <h2 id="glossary">延伸术语表</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>术语</th><th>解释</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Ruflo</strong></td><td>GitHub <code>ruvnet/ruflo</code> 上的多 Agent 蜂群编排框架</td></tr>
-            <tr><td><strong>Swarm（蜂群）</strong></td><td>多个 Agent 按定义交互模式组成的协调单元</td></tr>
-            <tr><td><strong>Handoff（交接）</strong></td><td>上游输出作为下游输入；<code>contextMode</code> 控制 full / summary / filtered</td></tr>
-            <tr><td><strong>TDD Swarm</strong></td><td>Test Writer 先写 Jest 测试，Code Writer 后写实现，成功标准为 <code>testPass</code></td></tr>
-            <tr><td><strong>contextMode</strong></td><td>Handoff 规则属性：控制跨 Agent 传递的上下文粒度</td></tr>
-            <tr><td><strong>humanInTheLoop</strong></td><td>重试耗尽后暂停蜂群、通知开发者的人工介入配置</td></tr>
-            <tr><td><strong>dependencyInstaller</strong></td><td>内置工具；可自动 <code>npm install</code>，须白名单约束</td></tr>
-            <tr><td><strong>GPT-4 / GPT-4 Turbo</strong></td><td>教程默认模型；上下文窗口约 8K / 128K token</td></tr>
-            <tr><td><strong>Claude Code</strong></td><td>Anthropic 终端/CLI 编码工具；与 Ruflo 编排层属不同层级</td></tr>
-          </tbody>
-        </table>
-      </div>
+<h3 id="搭建双-agent-蜂群-test-writer-+-code-writer-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>TDD 蜂群把「先写测试、后写实现」拆成两个 Agent，用 handoff 与 Jest 成功标准把概率性 LLM 输出拴在可验证闭环上。</strong></p></div>
+</div>
+<h3 id="搭建双-agent-蜂群-test-writer-+-code-writer-analysis" class="layer-heading layer-analysis">深度解析</h3>
 
-      <h2 id="qa-report">自检报告</h2>
-      <details class="collapsible" open>
-        <summary>自检报告（Quality Check）</summary>
-        <div class="collapsible-body">
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>检查项</th><th>结果</th><th>备注</th></tr></thead>
-              <tbody>
-                <tr><td>术语校验</td><td>✅</td><td>OpenAI、ChatGPT、Claude Code、Agent 写法已校准</td></tr>
-                <tr><td>纯净排版校验</td><td>✅</td><td>无文字墙；标题无锚点标签</td></tr>
-                <tr><td>防幻觉与盲区标注</td><td>✅</td><td>概率性成功、token 估算等原文限定已保留</td></tr>
-                <tr><td>原数据快照</td><td>✅</td><td>抓取 2026-05-25；访问量未获取</td></tr>
-                <tr><td>正文中文叙事</td><td>✅</td><td>4c 检索已修正 3 处</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p><em>文档生成时间：2026-05-25</em></p>
-        </div>
-      </details>
+<h3 id="搭建双-agent-蜂群-test-writer-+-code-writer-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
 
+</div>
+
+<h2 id="分布式蜂群智能的配置指南">分布式蜂群智能的配置指南</h2>
+
+<h3 id="分布式蜂群智能的配置指南-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="分布式蜂群智能的配置指南-analysis" class="layer-heading layer-analysis">深度解析</h3>
+
+<h3 id="分布式蜂群智能的配置指南-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Token 预算</h3>
+      <p>「跨 Agent 管理 token 预算比你想的重要得多：五个 Agent 各收齐所有前驱的完整上下文，会很快打穿上限。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>成本</h3>
+      <p>「双 Agent 蜂群若做完整上下文 handoff，token 消耗可能是单次单 Agent 调用的 2–3 倍。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="ci-cd-与日常开发工作流集成">CI/CD 与日常开发工作流集成</h2>
+
+<h3 id="ci-cd-与日常开发工作流集成-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="ci-cd-与日常开发工作流集成-analysis" class="layer-heading layer-analysis">深度解析</h3>
+
+<h3 id="ci-cd-与日常开发工作流集成-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="上线前实现清单">上线前实现清单</h2>
+
+<h3 id="上线前实现清单-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="上线前实现清单-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>教程给出 <strong>18 项</strong>部署就绪检查（摘要）：</p>
+<p>- Node.js v18+（<code>node --version</code>） - Ruflo 已克隆、<code>require("ruflo")</code> 无报错 - Jest v29+ 为 devDependency - LLM Key 经 <code>.env</code> + <code>dotenv</code> 配置，<code>.env</code> 已入 <code>.gitignore</code> - OpenAI 账户已确认 GPT-4（或已换 <code>gpt-3.5-turbo</code>） - Agent 角色与系统提示词清晰具体 - 各 Agent 工具绑定已与 Ruflo 工具注册表核对 - <code>dependencyInstaller</code> 已设 <code>allowedPackages</code> + <code>denyUnknown: true</code> - 输出目录存在（<code>run-swarm.js</code> 可自动创建） - Handoff 规则与执行顺序已指定 - 共享上下文范围按 handoff 定义为 full / summary / filtered - 错误处理含重试、延迟、抖动、fallback Agent - Jest 可独立运行（<code>./node_modules/.bin/jest --version</code>） - 配置文件已校验（<code>node -e "require('./ruflo.config')"</code>） - 样例任务端到端测试通过 - <strong>生成文件合并前经人工审阅</strong> - CI/CD 集成（可选） - 规划未来扩展：Reviewer、Docs、Refactor 等 Agent</p>
+<h3 id="上线前实现清单-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="从编排概念到可运行蜂群">从编排概念到可运行蜂群</h2>
+
+<h3 id="从编排概念到可运行蜂群-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>角色专业化、受控上下文共享、带明确成功标准的自动编排，是单提示词编码之外的可复制工程路径。</strong></p></div>
+</div>
+<h3 id="从编排概念到可运行蜂群-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>教程已构建一个功能完整的双 Agent Ruflo 蜂群：在协调的 TDD 工作流中生成测试与实现代码。架构通过角色分工、上下文 handoff 配置、错误处理、备用 Agent 与 CI/CD 集成，越过了单提示词编码的上限。</p>
+<p><strong>下一步建议</strong>（原文）：</p>
+<p>- 向蜂群添加 Reviewer 与 Docs Agent - 实验并行执行模式 - 调优上下文共享模式，在更大 Agent 组合中优化 token 用量</p>
+<p>起点仓库：<strong>ruvnet/ruflo</strong>；可在仓库 <strong>Discussions</strong> 提 issue 或分享蜂群配置。</p>
+<h3 id="从编排概念到可运行蜂群-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<details class="collapsible meta-panel" id="延伸术语表">
+  <summary>延伸术语表</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>解释</th></tr></thead><tbody><tr><td><strong>Ruflo</strong></td><td>GitHub <code>ruvnet/ruflo</code> 上的多 Agent 蜂群编排框架；提供 Agent 定义、Swarm 组合、Handoff 与任务生命周期管理</td></tr><tr><td><strong>Swarm（蜂群）</strong></td><td>多个 Agent 按定义交互模式组成的协调单元</td></tr><tr><td><strong>Handoff（交接）</strong></td><td>上游 Agent 输出作为下游 Agent 输入的机制；<code>contextMode</code> 控制 full / summary / filtered</td></tr><tr><td><strong>TDD Swarm</strong></td><td>本教程示例：Test Writer 先写 Jest 测试，Code Writer 后写实现，成功标准为 <code>testPass</code></td></tr><tr><td><strong>contextMode</strong></td><td>Handoff 规则属性：控制跨 Agent 传递的上下文粒度</td></tr><tr><td><strong>humanInTheLoop</strong></td><td>重试耗尽后暂停蜂群、通知开发者的人工介入配置</td></tr><tr><td><strong>dependencyInstaller</strong></td><td>Ruflo 内置工具；可自动 <code>npm install</code>，须白名单与 <code>denyUnknown: true</code> 约束</td></tr><tr><td><strong>GPT-4 / GPT-4 Turbo</strong></td><td>教程默认模型；上下文窗口分别约 8K / 128K token（文内口径）</td></tr><tr><td><strong>Claude Code</strong></td><td>Anthropic 终端/CLI 编码工具；与本文 Ruflo 编排层属不同层级（单实例 vs 多 Agent 编排）</td></tr></tbody></table></div>
+  </div>
+</details>
+
+<details class="collapsible meta-panel" id="文章元数据">
+  <summary>文章元数据与来源</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Deploying Multi-Agent Swarms with Ruflo: Beyond Single-Prompt Coding</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.sitepoint.com/deploying-multiagent-swarms-with-ruflo-beyond-singleprompt-coding/">原文链接</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-03-02</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-05-25</td></tr><tr><td><strong>播放量/访问量</strong></td><td>未获取（SitePoint 页面未展示单篇阅读量或互动计数）</td></tr><tr><td><strong>时长</strong></td><td>不适用（文稿）</td></tr><tr><td><strong>讲者</strong></td><td><strong>SitePoint Team</strong>（SitePoint 技术教程；页面署名，无具名个人作者）</td></tr><tr><td><strong>内容来源</strong></td><td>SitePoint 博客；页面抓取（浏览器快照 + WebFetch 全文交叉核对）</td></tr><tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr></tbody></table></div>
+
+<blockquote><strong>讲者背景</strong>：本文为 <strong>SitePoint</strong> 发布的实操型技术教程，署名 <strong>SitePoint Team</strong>。教程以 <strong>Ruflo</strong>（GitHub：<code>ruvnet/ruflo</code>）为编排框架，手把手搭建「测试编写 Agent + 代码编写 Agent」的双 Agent 蜂群，演示测试驱动开发（TDD）工作流，并覆盖配置、错误处理、上下文共享调优与 CI/CD 集成。</blockquote>
+  </div>
+</details>
+
+<h2 id="自检报告" hidden>自检报告</h2>
+
+<details class="collapsible">
+  <summary>展开自检报告详情</summary>
+  <div class="collapsible-body">
+    <div class="table-wrap">
+    <table><thead><tr><th>检查项</th><th>结果</th><th>备注</th></tr></thead><tbody><tr><td>导读论点（v5.26）</td><td>✅</td><td>含 <code>&gt; <strong>全文论点</strong></code> 块；分层段覆盖目录末 2–3 节收束线</td></tr><tr><td>节结构（对谈三层）</td><td>✅</td><td>9 节均为「核心洞察 → 深度解析 → 对谈实录」；原「关键语录」节 quotes 已并入各节对谈</td></tr><tr><td>术语校验（必搜词清单：固定写法 + ASR 语境项）</td><td>✅</td><td>OpenAI、ChatGPT、Claude Code、Agent 写法已校准；无 ASR 误识</td></tr><tr><td>纯净排版</td><td>✅</td><td>✅ 4d 闸门通过；--- 共 5 处（≤5）；正文节间 --- 0；三连空行 0；<code>##</code>→<code>### 核心洞察</code> 仅一行空行；无 emoji/无文字墙/标题无{#锚点}</td></tr><tr><td>说话人对齐校验</td><td>不适用</td><td>单篇教程，无对谈串音</td></tr><tr><td>人称与全名</td><td>✅</td><td>无具名个人作者；机构署名 SitePoint Team；正文未用「讲者」作主语</td></tr><tr><td>防幻觉与盲区标注</td><td>✅</td><td>概率性成功、token 估算、API 属性名「以文档为准」等原文限定已保留；未编造阅读量</td></tr><tr><td>原数据快照（抓取时间+播放量/访问量+时长）</td><td>✅</td><td>抓取 2026-05-25；访问量未获取；时长不适用（文稿）</td></tr><tr><td>浏览器优先抓取（有主 URL 时）</td><td>✅</td><td>已 browser_navigate + snapshot；正文以 WebFetch 全文交叉补全</td></tr><tr><td>主持人引子（代际/范围/主持侧数字）</td><td>不适用</td><td>非访谈体裁</td></tr><tr><td>附着型信息（偏好附句、带主语时间表等）</td><td>✅</td><td>成本 2–3x、maxRetries 额外 LLM 调用、20K token 示例等均已入库</td></tr><tr><td>正文数字 vs 用户逐字转写</td><td>✅</td><td>8K/128K、6000 maxContextTokens、120_000 ms 超时、18 项清单等与原文一致</td></tr><tr><td>正文中文叙事</td><td>✅</td><td>✅ 4c 闸门通过；grep 命中 0→修正后 0；对谈实录已译中文；专名/原标题英文保留</td></tr><tr><td>可读性内化</td><td>✅</td><td>首次补注 <strong>Ruflo/Swarm/Handoff</strong>、<strong>TDD 蜂群</strong>教程语境；客观第三人称；教程体「读者」保留</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
       <!-- CONTENT_END -->
 
       <footer class="doc-footer">
-        <span>Generated by <a href="#">md2html</a></span>
+        <span>Generated by md2html · <a href="https://www.sitepoint.com/deploying-multiagent-swarms-with-ruflo-beyond-singleprompt-coding/" target="_blank" rel="noopener">观看原视频</a></span>
         <span>来源: 20260302 用Ruflo部署多Agent蜂群超越单提示词编码_整理文档.md</span>
       </footer>
     </main>
   </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
 
   <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
   <script>
@@ -1389,7 +1364,11 @@ Swarm finished. Tests passed: true</code></pre>
     }
     (function restoreTheme() {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) document.documentElement.dataset.theme = saved;
+      if (saved) {
+        document.documentElement.dataset.theme = saved;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
     })();
 
     // ---------- Mermaid ----------
@@ -1429,40 +1408,115 @@ Swarm finished. Tests passed: true</code></pre>
     }
 
     // ---------- TOC drawer (mobile) ----------
-    function openToc()  { document.body.classList.add("toc-open"); }
-    function closeToc() { document.body.classList.remove("toc-open"); }
+    const tocEl = () => document.getElementById("toc");
+    const tocToggle = () => document.getElementById("toc-toggle");
+    const isMobileToc = () => window.matchMedia("(max-width: 900px)").matches;
+
+    function syncTocA11y(open) {
+      const toc = tocEl();
+      if (!toc) return;
+      if (isMobileToc()) {
+        toc.setAttribute("role", "dialog");
+        toc.setAttribute("aria-modal", open ? "true" : "false");
+        toc.setAttribute("aria-hidden", open ? "false" : "true");
+      } else {
+        toc.removeAttribute("role");
+        toc.removeAttribute("aria-modal");
+        toc.removeAttribute("aria-hidden");
+      }
+    }
+
+    function openToc() {
+      document.body.classList.add("toc-open");
+      syncTocA11y(true);
+      const closeBtn = tocEl()?.querySelector(".toc-close");
+      closeBtn?.focus();
+    }
+    function closeToc() {
+      document.body.classList.remove("toc-open");
+      syncTocA11y(false);
+      if (isMobileToc()) tocToggle()?.focus();
+    }
     document.addEventListener("keydown", e => {
       if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+    window.addEventListener("resize", () => {
+      if (!document.body.classList.contains("toc-open")) syncTocA11y(false);
     });
 
     // ---------- TOC scrollspy ----------
     function setupTocSpy() {
-      const links = document.querySelectorAll("#toc-nav a[href^='#']");
+      const links = Array.from(document.querySelectorAll("#toc-nav a[href^='#']"));
       if (!links.length) {
         const toc = document.getElementById("toc");
         if (toc) toc.style.display = "none";
         return;
       }
-      const map = new Map();
+      const entries = [];
       links.forEach(a => {
         const id = a.getAttribute("href").slice(1);
         const el = document.getElementById(id);
-        if (el) map.set(el, a);
+        if (el) entries.push({ el, link: a });
         a.addEventListener("click", () => {
-          if (window.matchMedia("(max-width: 900px)").matches) closeToc();
+          if (isMobileToc()) closeToc();
         });
       });
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(en => {
-          const link = map.get(en.target);
-          if (!link) return;
-          if (en.isIntersecting) {
-            links.forEach(l => l.classList.remove("active"));
-            link.classList.add("active");
-          }
+
+      let ticking = false;
+      const setActive = () => {
+        ticking = false;
+        const offset = 96;
+        let current = entries[0]?.link;
+        for (const { el, link } of entries) {
+          if (el.getBoundingClientRect().top <= offset) current = link;
+        }
+        links.forEach(l => l.classList.toggle("active", l === current));
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(setActive);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setActive();
+    }
+
+    // ---------- Section jump pills ----------
+    function injectSectionJumps() {
+      document.querySelectorAll(".content h2[id]").forEach(h2 => {
+        const id = h2.id;
+        const parts = [
+          { suffix: "-insight", label: "洞察" },
+          { suffix: "-analysis", label: "解析" },
+          { suffix: "-dialogue", label: "实录" },
+        ];
+        const items = parts
+          .map(p => ({ el: document.getElementById(id + p.suffix), label: p.label }))
+          .filter(x => x.el);
+        if (!items.length) return;
+        const nav = document.createElement("nav");
+        nav.className = "section-jump";
+        nav.setAttribute("aria-label", "本节导航");
+        items.forEach(({ el, label }) => {
+          const a = document.createElement("a");
+          a.href = "#" + el.id;
+          a.textContent = label;
+          nav.appendChild(a);
         });
-      }, { rootMargin: "-80px 0px -70% 0px", threshold: 0 });
-      map.forEach((_, el) => obs.observe(el));
+        h2.insertAdjacentElement("afterend", nav);
+      });
+    }
+
+    // ---------- Speaker tags in dialogue ----------
+    function tagSpeakers() {
+      document.querySelectorAll(".timeline .step-body h3").forEach(h3 => {
+        const step = h3.closest(".step");
+        if (!step) return;
+        const name = h3.textContent.trim();
+        if (/Harrison/i.test(name)) step.classList.add("speaker-host");
+        else if (/Andrew/i.test(name)) step.classList.add("speaker-guest");
+      });
     }
 
     // ---------- Anchor links on h2/h3 ----------
@@ -1472,7 +1526,7 @@ Swarm finished. Tests passed: true</code></pre>
         const a = document.createElement("a");
         a.className = "anchor";
         a.href = "#" + h.id;
-        a.setAttribute("aria-label", "Permalink");
+        a.setAttribute("aria-label", "段落链接");
         a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
         h.appendChild(a);
       });
@@ -1486,7 +1540,7 @@ Swarm finished. Tests passed: true</code></pre>
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "copy-btn";
-        btn.setAttribute("aria-label", "Copy code");
+        btn.setAttribute("aria-label", "复制代码");
         btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
         btn.addEventListener("click", async () => {
           const code = pre.querySelector("code")?.textContent ?? pre.textContent;
@@ -1502,6 +1556,20 @@ Swarm finished. Tests passed: true</code></pre>
         });
         pre.appendChild(btn);
       });
+    }
+
+    // ---------- Back to top ----------
+    function setupBackToTop() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      const toggle = () => {
+        btn.hidden = window.scrollY < 480;
+      };
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
     }
 
     // ---------- Scroll progress ----------
@@ -1520,11 +1588,14 @@ Swarm finished. Tests passed: true</code></pre>
     // ---------- Boot ----------
     document.addEventListener("DOMContentLoaded", () => {
       applyThemeIcon();
+      syncTocA11y(false);
+      tagSpeakers();
       injectAnchors();
       injectCopyButtons();
       renderMermaid();
       setupTocSpy();
       setupScrollProgress();
+      setupBackToTop();
     });
   </script>
 </body>

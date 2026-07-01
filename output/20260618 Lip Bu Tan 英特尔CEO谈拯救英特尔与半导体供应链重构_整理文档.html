@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light" style="--rec-label: '★ 推荐'">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>66 岁拯救英特尔：Lip Bu Tan 的 crawl-walk-run 与半导体全栈赌注</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FAFAF7;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F0;
+      --surface-3: #EFEEE8;
+      --text: #1A1A1A;
+      --text-muted: #4A4A45;
+      --text-subtle: #6B6B66;
+      --accent: #D97757;
+      --accent-hover: #C56843;
+      --accent-soft: #FBEEE6;
+      --accent-border: #F0D5C4;
+      --accent-strong: #A85533;
+      --border: #E5E4DC;
+      --border-strong: #CDCDC4;
+      --code-bg: #F5F2EC;
+      --code-text: #2A2A2A;
+      --info: #2563EB;
+      --info-soft: #EFF6FF;
+      --info-border: #BFDBFE;
+      --warn: #B45309;
+      --warn-soft: #FFFBEB;
+      --warn-border: #FDE68A;
+      --danger: #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #047857;
+      --success-soft: #ECFDF5;
+      --success-border: #A7F3D0;
+      --decision: #6D28D9;
+      --decision-soft: #F5F3FF;
+      --decision-border: #DDD6FE;
+      --shadow-sm: 0 1px 2px rgba(20, 14, 8, 0.04);
+      --shadow: 0 1px 2px rgba(20, 14, 8, 0.04), 0 4px 12px rgba(20, 14, 8, 0.06);
+      --shadow-lg: 0 8px 24px rgba(20, 14, 8, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --measure: 75ch;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+      --z-progress: 200;
+      --z-topbar: 100;
+      --z-drawer: 300;
+      --z-backdrop: 250;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1714;
+      --surface: #221E1A;
+      --surface-2: #2A2520;
+      --surface-3: #322C26;
+      --text: #F5F0E8;
+      --text-muted: #C8C0B6;
+      --text-subtle: #9A938A;
+      --accent: #E89572;
+      --accent-hover: #F2A87F;
+      --accent-soft: #3A2A22;
+      --accent-border: #5A3D2E;
+      --accent-strong: #F5B493;
+      --border: #2E2924;
+      --border-strong: #463F38;
+      --code-bg: #1E1B17;
+      --code-text: #E8E2D8;
+      --info: #93C5FD;
+      --info-soft: #1E2A3D;
+      --info-border: #2A4365;
+      --warn: #FBBF24;
+      --warn-soft: #332817;
+      --warn-border: #5C4520;
+      --danger: #FCA5A5;
+      --danger-soft: #3A1F1F;
+      --danger-border: #5C2A2A;
+      --success: #6EE7B7;
+      --success-soft: #1A3329;
+      --success-border: #1F5C45;
+      --decision: #C4B5FD;
+      --decision-soft: #2A1F40;
+      --decision-border: #4A3870;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    ::selection { background: var(--accent-soft); color: var(--accent-strong); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 8px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 1000;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* SVG sprite container (hidden) */
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .icon { display: inline-block; flex-shrink: 0; vertical-align: middle; stroke: currentColor; fill: none; }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: var(--z-progress);
+      transition: width 0.05s linear;
+    }
+
+    /* ============================================================
+       TOPBAR
+       ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      background: rgba(250, 250, 247, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .topbar { background: rgba(26, 23, 20, 0.85); }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      animation: brand-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes brand-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft); }
+      50%      { box-shadow: 0 0 0 7px transparent; }
+    }
+    .topbar-actions { display: flex; gap: 6px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      padding: 0;
+    }
+    .icon-btn .icon { width: 18px; height: 18px; stroke-width: 2; }
+    .icon-btn[hidden] { display: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 32px 24px 96px;
+    }
+    .content { min-width: 0; }
+    /* Unified reading measure: every top-level block shares one width so
+       paragraphs, callouts, diagrams, timelines, tables and code align to a
+       single clean column. Opt out with .full-bleed where truly needed. */
+    .content > * { max-width: var(--measure); }
+    .content > .full-bleed { max-width: none; }
+
+    /* ============================================================
+       TOC (desktop + mobile drawer)
+       ============================================================ */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .toc::-webkit-scrollbar { width: 6px; }
+    .toc::-webkit-scrollbar-track { background: transparent; }
+    .toc::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+    .toc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .toc-close { display: none; }
+    .toc-nav { display: flex; flex-direction: column; gap: 2px; }
+    .toc-nav a {
+      display: flex; align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 500;
+    }
+    .toc-nav a.lvl-3 { padding-left: 26px; font-size: 12.5px; }
+    .toc-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: var(--z-backdrop);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ============================================================
+       DOC HEADER
+       ============================================================ */
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-eyebrow {
+      display: inline-flex; align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-size: clamp(28px, 3vw + 16px, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .doc-subtitle {
+      font-size: clamp(15px, 0.6vw + 13px, 18px);
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      max-width: var(--measure);
+      text-wrap: pretty;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+    .doc-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    .doc-meta .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ============================================================
+       CONTENT (typography)
+       ============================================================ */
+    .content h1, .content h2, .content h3, .content h4 {
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+    .content h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 56px 0 16px;
+      padding-top: 8px;
+      position: relative;
+    }
+    .content h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      position: relative;
+    }
+    .content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .content > p,
+    .content > ul,
+    .content > ol,
+    .content > blockquote { max-width: var(--measure); }
+    .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
+    .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
+    .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
+    .content li { margin: 4px 0; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content em { color: var(--text-muted); }
+    .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Anchor links injected by JS on h2/h3 with id */
+    .anchor {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      color: var(--text-subtle);
+      opacity: 0;
+      transform: translateY(-1px);
+      transition: opacity 0.15s, color 0.15s;
+      border-bottom: none !important;
+      border-radius: var(--radius-sm);
+    }
+    .anchor .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* Images */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+    .content figure { margin: 20px 0; }
+    .content figure img { margin: 0; }
+    .content figcaption {
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Task lists (- [ ] / - [x]) */
+    .content .task-list-item { list-style: none; margin-left: -22px; }
+    .content .task-list-item-checkbox {
+      margin-right: 8px;
+      vertical-align: -2px;
+      accent-color: var(--accent);
+    }
+
+    /* Footnotes */
+    .content .footnote-ref a,
+    .content sup a {
+      font-size: 0.75em;
+      vertical-align: super;
+      border-bottom: none;
+      padding: 0 2px;
+    }
+    .content .footnotes {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       CODE
+       ============================================================ */
+    .content code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    .content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      position: relative;
+    }
+    .content pre code {
+      background: none; padding: 0; border: none;
+      color: var(--code-text);
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-subtle);
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .copy-btn .icon { width: 14px; height: 14px; stroke-width: 2; }
+    .copy-btn.copied { color: var(--success); border-color: var(--success-border); opacity: 1; }
+
+    /* ============================================================
+       TIMELINE / STEPS
+       ============================================================ */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-border), var(--border));
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 8px 4px;
+      position: relative;
+      border-radius: var(--radius);
+      transition: background-color 0.15s;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .step.done .step-num { background: var(--accent); color: #fff; }
+    .step-body { padding-top: 6px; min-width: 0; }
+    .step-body h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: var(--measure); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: var(--measure);
+    }
+    .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
+    .callout-body { min-width: 0; }
+    .callout-title { font-weight: 600; margin: 0 0 4px; font-size: 14px; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout-body code { background: rgba(0,0,0,0.04); }
+    [data-theme="dark"] .callout-body code { background: rgba(255,255,255,0.06); }
+
+    .callout-info     { background: var(--info-soft);     border-color: var(--info-border);     color: var(--text); }
+    .callout-info     .callout-title, .callout-info     .callout-icon { color: var(--info); }
+    .callout-warn     { background: var(--warn-soft);     border-color: var(--warn-border);     color: var(--text); }
+    .callout-warn     .callout-title, .callout-warn     .callout-icon { color: var(--warn); }
+    .callout-danger   { background: var(--danger-soft);   border-color: var(--danger-border);   color: var(--text); }
+    .callout-danger   .callout-title, .callout-danger   .callout-icon { color: var(--danger); }
+    .callout-success  { background: var(--success-soft);  border-color: var(--success-border);  color: var(--text); }
+    .callout-success  .callout-title, .callout-success  .callout-icon { color: var(--success); }
+    .callout-decision { background: var(--decision-soft); border-color: var(--decision-border); color: var(--text); }
+    .callout-decision .callout-title, .callout-decision .callout-icon { color: var(--decision); }
+    .callout-tip      { background: var(--accent-soft);   border-color: var(--accent-border);   color: var(--text); }
+    .callout-tip      .callout-title, .callout-tip      .callout-icon { color: var(--accent-strong); }
+
+    /* ============================================================
+       KEY-POINT HIGHLIGHT
+       ============================================================ */
+    .highlight {
+      background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+      border-left: 4px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: var(--measure);
+    }
+    .highlight-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       MERMAID
+       ============================================================ */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .mermaid { text-align: center; min-height: 80px; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .mermaid:not([data-processed]) {
+      opacity: 0.4;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ============================================================
+       PROS / CONS
+       ============================================================ */
+    .proscons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .proscons-col {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .proscons-col h4 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proscons-col ul { margin: 0; padding-left: 18px; }
+    .proscons-col li { margin: 6px 0; }
+    .pros { background: var(--success-soft); border-color: var(--success-border); }
+    .pros h4 { color: var(--success); }
+    .cons { background: var(--danger-soft); border-color: var(--danger-border); }
+    .cons h4 { color: var(--danger); }
+
+    /* ============================================================
+       COMPARISON CARDS
+       ============================================================ */
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .compare-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .compare-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .compare-card.recommended::before {
+      content: var(--rec-label, "★ Recommended");
+      position: absolute; top: -10px; right: 14px;
+      background: var(--accent); color: #fff;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+    }
+    .compare-card h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); text-transform: none; letter-spacing: normal; }
+    .compare-card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+    /* ============================================================
+       COLLAPSIBLE
+       ============================================================ */
+    details.collapsible {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 16px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    details.collapsible[open] { box-shadow: var(--shadow-sm); }
+    details.collapsible > summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 500;
+      color: var(--text);
+      list-style: none;
+      display: flex; align-items: center; gap: 10px;
+      user-select: none;
+      transition: background 0.15s;
+      min-height: 44px;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::before {
+      content: "›";
+      display: inline-block;
+      transition: transform 0.18s;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    details.collapsible[open] > summary::before { transform: rotate(90deg); }
+    .collapsible-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+    .collapsible-body > *:first-child { margin-top: 12px; }
+
+    /* ============================================================
+       TABLES (wrapped via .table-wrap or naturally responsive)
+       ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      margin: 0;
+    }
+    /* Standalone tables (not inside .table-wrap) keep visual border */
+    .content > table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      display: block;
+      overflow-x: auto;
+    }
+    .content th {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .content td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    /* ============================================================
+       BLOCKQUOTE
+       ============================================================ */
+    .content blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-border);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       FOCUS-VISIBLE (a11y)
+       ============================================================ */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .toc-nav a:focus-visible { outline-offset: -2px; }
+    .icon-btn:focus-visible { outline-offset: 2px; }
+    .anchor:focus-visible { opacity: 1; outline-offset: 2px; }
+    details.collapsible > summary:focus-visible { outline-offset: -2px; }
+
+    /* ============================================================
+       HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
+       ============================================================ */
+    @media (hover: hover) {
+      .back-to-top:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+      .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+      .compare-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow); }
+      .compare-card.recommended:hover { border-color: var(--accent); }
+      .content tr:hover td { background: var(--surface-2); }
+      details.collapsible > summary:hover { background: var(--surface-2); }
+      .step:hover { background: var(--surface-2); }
+      .step:hover .step-num { transform: scale(1.05); }
+      .anchor:hover { color: var(--accent); }
+      .content h2:hover .anchor,
+      .content h3:hover .anchor { opacity: 1; }
+      .copy-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+      .content pre:hover .copy-btn { opacity: 1; }
+    }
+    /* On touch devices, copy-btn is always visible at low opacity */
+    @media (hover: none) {
+      .copy-btn { opacity: 0.6; }
+      .anchor { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       MOBILE (≤900px) — TOC becomes off-canvas drawer
+       ============================================================ */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px 80px;
+      }
+      .topbar-inner { padding: 8px 12px; }
+      .doc-header { margin-bottom: 28px; padding-bottom: 20px; }
+
+      .toc-mobile-trigger { display: inline-flex !important; }
+
+      .toc {
+        position: fixed;
+        top: 0; left: 0;
+        width: min(300px, 82vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        background: var(--surface);
+        z-index: var(--z-drawer);
+        padding: 16px 8px 24px 16px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc-head { padding: 4px 4px 12px 8px; }
+      .toc-close {
+        display: inline-flex !important;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+      }
+      .toc-close .icon { width: 18px; height: 18px; stroke-width: 2; }
+      body.toc-open .toc { transform: translateX(0); }
+      body.toc-open .toc-backdrop {
+        display: block;
+        opacity: 1;
+      }
+      .toc-backdrop {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.toc-open .toc-backdrop { pointer-events: auto; }
+      body.toc-open { overflow: hidden; }
+    }
+    @media (min-width: 901px) {
+      .toc-mobile-trigger { display: none !important; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION (a11y)
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html { scroll-behavior: auto; }
+      .brand-dot { animation: none; box-shadow: 0 0 0 4px var(--accent-soft); }
+    }
+
+    /* ============================================================
+       LAYER HEADINGS (对谈三层结构)
+       ============================================================ */
+    .layer-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .layer-heading::before {
+      flex-shrink: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .layer-insight::before {
+      content: "洞察";
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+    }
+    .layer-analysis::before {
+      content: "解析";
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .layer-dialogue::before {
+      content: "实录";
+      background: var(--info-soft);
+      color: var(--info);
+      border: 1px solid var(--info-border);
+    }
+    .layer-insight { font-size: 0; }
+    .layer-insight::before { font-size: 11px; }
+    .layer-insight .anchor { font-size: 14px; }
+    .layer-analysis { font-size: 0; }
+    .layer-analysis::before { font-size: 11px; }
+    .layer-analysis .anchor { font-size: 14px; }
+    .layer-dialogue { font-size: 0; }
+    .layer-dialogue::before { font-size: 11px; }
+    .layer-dialogue .anchor { font-size: 14px; }
+    .section-insight { margin-top: 12px; margin-bottom: 20px; }
+    .section-insight .callout-body p { margin: 0; }
+
+    /* Section jump pills (injected by JS) */
+    .section-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 20px;
+      max-width: var(--measure);
+    }
+    .section-jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+    }
+    .section-jump a:hover,
+    .section-jump a:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Speaker differentiation in dialogue timeline */
+    .step.speaker-host .step-num {
+      border-color: var(--info);
+      color: var(--info);
+      background: var(--info-soft);
+    }
+    .step.speaker-guest .step-num {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .step.speaker-host .step-body h3 { color: var(--info); }
+    .step.speaker-guest .step-body h3 { color: var(--accent-strong); }
+
+    /* Meta panel + table URL wrap */
+    .meta-panel { margin-bottom: 32px; }
+    .toc-nav .toc-meta-link {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-subtle);
+      font-size: 12.5px;
+    }
+    .table-wrap td a { word-break: break-all; }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: opacity 0.2s, transform 0.2s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .back-to-top .icon { width: 20px; height: 20px; stroke-width: 2; }
+    .back-to-top:not([hidden]) { opacity: 1; transform: translateY(0); }
+    .back-to-top[hidden] { display: inline-flex; opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+    /* ============================================================
+       PRINT
+       ============================================================ */
+    @media print {
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress, .back-to-top, .section-jump { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      a { color: #000; }
+      .content pre, .callout, .compare-card, .step, .diagram { break-inside: avoid; }
+      .doc-footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">跳到正文</a>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- SVG icon sprite (Lucide-style) -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-decision" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0 4 4 0 0 1 1.59 2h2.99a4 4 0 0 1 1.6-2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  </svg>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn toc-mobile-trigger" id="toc-toggle" onclick="openToc()" aria-label="目录" title="目录">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>笔记</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-printer"/></svg>
+        </button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use id="theme-icon-use" href="#i-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC drawer backdrop (mobile) -->
+  <div class="toc-backdrop" id="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-head">
+        <p class="toc-title">目录</p>
+        <button class="toc-close" onclick="closeToc()" aria-label="关闭">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#核心导读" class="lvl-2">核心导读</a>
+        <a href="#66-岁为何接掌英特尔" class="lvl-2">66 岁为何接掌英特尔</a>
+        <a href="#拯救英特尔-文化-客户与工程直报" class="lvl-2">拯救英特尔：文化、客户与工程直报</a>
+        <a href="#十年愿景-资产负债表-cpu-复兴与代工全栈" class="lvl-2">十年愿景：资产负债表、CPU 复兴与代工全栈</a>
+        <a href="#terafab-与-elon-musk-的非常规协作" class="lvl-2">Terafab：与 Elon Musk 的非常规协作</a>
+        <a href="#ai-驱动的全球半导体变局与瓶颈" class="lvl-2">AI 驱动的全球半导体变局与瓶颈</a>
+        <a href="#美国代工赌注-在质疑声中加倍下注" class="lvl-2">美国代工赌注：在质疑声中加倍下注</a>
+        <a href="#制程极限-先进封装与新素材路线" class="lvl-2">制程极限、先进封装与新素材路线</a>
+        <a href="#半导体投资-瓶颈-首日客户与以色列韧性" class="lvl-2">半导体投资：瓶颈、首日客户与以色列韧性</a>
+        <a href="#cadence-遗产与-eda-设计的-ai-化" class="lvl-2">Cadence 遗产与 EDA 设计的 AI 化</a>
+        <a href="#ai-时代的人才与「老旧电子表格公司」转型" class="lvl-2">AI 时代的人才与「老旧电子表格公司」转型</a>
+        <a href="#产业政策-主权资本与长期股东" class="lvl-2">产业政策、主权资本与长期股东</a>
+        <a href="#投资者误解-10-倍目标与算力落点" class="lvl-2">投资者误解、10 倍目标与算力落点</a>
+        <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
+        <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main">
+      <header class="doc-header">
+        <span class="doc-eyebrow">对谈笔记</span>
+        <h1 class="doc-title">66 岁拯救英特尔：Lip Bu Tan 的 crawl-walk-run 与半导体全栈赌注</h1>
+        <p class="doc-subtitle">Lip Bu Tan 接 Intel 不是为了退休前再赚一笔，而是用创业文化「先爬、再听客户、再跑」拯救一家对美国与全球半导体生态都至关重要的 标志性 公司——先修资产负债表（美国政府、Nvidia Jensen Huang、SoftBank 等入股），再简化产品线、让工程直报首席执行官，并在代理式 AI 推理时代把 CPU 重新拉回中心。</p>
+        <div class="doc-meta">
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
+            Re-engineering the Semiconductor Supply Chain with Intel CEO Lip Bu Tan
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
+            2026-06-18
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+            ~29 分钟阅读
+          </span>
+        </div>
+      </header>
+
+      <!-- CONTENT_START -->
+<h2 id="核心导读">核心导读</h2>
+
+<div class="highlight">
+  <p><strong>Lip Bu Tan</strong> 接 <strong>Intel</strong> 不是为了退休前再赚一笔，而是用创业文化「先爬、再听客户、再跑」拯救一家对美国与全球半导体生态都至关重要的 标志性 公司——先修资产负债表（美国政府、<strong>Nvidia</strong> <strong>Jensen Huang</strong>、<strong>SoftBank</strong> 等入股），再简化产品线、让工程直报首席执行官，并在代理式 AI 推理时代把 <strong>CPU</strong> 重新拉回中心；代工是慢工出信任的长线赌注，与 <strong>Elon Musk</strong> 的 <strong>Terafab</strong> 协作则是产能与非常规创新的并线实验；半导体投资与运营都要盯瓶颈（互连、光互连、材料、封装、电力），十年后赢家是聚焦细分、能全栈交付、找对伙伴又能规模化的玩家——<strong>Intel</strong> 要靠 <strong>XPU</strong>、先进封装与代工拼出面向不同负载的定制硅。</p>
+</div>
+
+<p><strong>接掌动机与「拯救」定义。</strong> 66 岁接最难的 <strong>CEO</strong> 岗位，因 <strong>Intel</strong> 对半导体生态与美国战略都不可替代；上任最大意外之一是特朗普清晨要求其因利益冲突辞职——<strong>Lip Bu Tan</strong> 说服自己「不需要这份工作、纯粹为救 <strong>Intel</strong>」，再向总统陈述马来西亚出生、新加坡成长、<strong>MIT</strong>、终身住美等经历后获准留任。拯救 <strong>Intel</strong> = 改文化（问责、更快决策、听客户）、工程全线汇报首席执行官、简化产品并画出 <strong>5–10</strong> 年路线图。</p>
+
+<p><strong>十年双引擎与 Terafab。</strong> 资产负债表类比 <strong>TSMC</strong> 早期有台湾政府股东；<strong>Jensen Huang</strong> 投资 <strong>50</strong> 亿美元（后市值效应约 <strong>250</strong> 亿美元量级）与 <strong>SoftBank</strong> 孙正义援手后，重心回到产品与领导性下一代芯片——训练时代 <strong>CPU:GPU</strong> 约 <strong>1:8</strong>，代理式 AI 与推理负载下 <strong>CPU</strong> 重要性上升（<strong>1:4</strong> 甚至 <strong>1:1</strong> 方向），强化学习场景下编排大量 agent 时 <strong>CPU</strong> 往往更优。代工是资本密集、信任生意：良率、缺陷密度、周期时间决定客户敢不敢下单；终局要全栈到机架。<strong>Terafab</strong> 上 <strong>Elon Musk</strong> 自建 fab、<strong>Intel</strong> 输出工艺与产能协作，每周碰面，非常规到「洁净室能否抽烟」都敢问。</p>
+
+<p><strong>供应链、物理极限与投资框架。</strong> AI 影响将深于互联网；瓶颈包括电力、氦气（半导体制造）、存储器短缺及 <strong>CPU/GPU</strong> 产能。<strong>Intel</strong> 在质疑声中加倍下注美国代工（<strong>14A</strong> 约 <strong>1.4</strong> 纳米，规划 <strong>1</strong> 纳米与 <strong>0.7</strong> 纳米），与 <strong>TSMC</strong> 既竞争也需共扩产能。制程路径可见 <strong>18A→14A→10→7</strong> 纳米，但愈贵愈难；先进封装（对标 <strong>TSMC CoWoS</strong>）与新素材（氮化镓、碳化硅、磷化铟、玻璃、人造钻石等）是绕墙路径。<strong>Walden</strong> 式投资：找瓶颈、找首日标客户（愿付数百万美元的超大规模客户）、找能共渡难关的个体投资人；<strong>159</strong> 次 <strong>IPO</strong>、<strong>126</strong> 次并购背后，<strong>10</strong> 家里 <strong>9</strong> 家中途改商业计划。</p>
+
+<p><strong>组织、资本与算力终局。</strong> <strong>Intel</strong> 从「老旧电子表格公司」转向全面拥抱 AI；团队平均年龄 <strong>40</strong> 岁后期，需补软件与开源前沿模型人才——<strong>Lip Bu Tan</strong> 笑称儿子成其 AI 老师。资本密集赛道要政府、主权基金、长期成长股东；投资者常低估 <strong>Intel</strong> 仍在 crawl 阶段但 <strong>2030–2032</strong> 年代工与产品潜力。算力建设不会因供给约束而停，但终局看谁的应用够大、够可持续——边缘/端侧对机器人、国防等仍关键，<strong>Lip Bu Tan</strong> 以 <strong>10</strong> 倍股东回报（相对更大基数）自勉，<strong>14</strong> 个月已约 <strong>6</strong> 倍只是开始。</p>
+
+<h2 id="66-岁为何接掌英特尔">66 岁为何接掌英特尔</h2>
+
+<h3 id="66-岁为何接掌英特尔-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>66 岁接 <strong>Intel</strong> 首席执行官，是为 标志性 公司与美国国家利益再干一票，不是为退休镀金。</p></div>
+</div>
+<h3 id="66-岁为何接掌英特尔-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Sarah Guo</strong> 开门见山：执掌这家对美国半导体至关重要的公司，是业内最难的工作之一——为何还要接？</p>
+<p><strong>Lip Bu Tan</strong> 承认外界看法：66 岁本该退休，而非揽下「行业最烫手的 <strong>CEO</strong>」。理由有二：<strong>Intel</strong> 是标志性公司，对半导体生态与美国都极其重要；在 <strong>Cadence</strong> 之后，他决定「再来一次」。</p>
+<p>上任约一年来最出乎意料的，是任何前职或训练都未覆盖的经历：某天清晨，特朗普总统要求他因利益冲突辞职，且「没有例外」。<strong>Lip Bu Tan</strong> 先说服自己：不需要这份工作，纯粹为拯救 <strong>Intel</strong>——把个人得失拿开，再想还能做什么。周四早上接到会面，周一与总统面谈；他讲述生于马来西亚、在新加坡长大、就读 <strong>MIT</strong>、 lifelong 住在美国、从未长期移居海外。<strong>Lip Bu Tan</strong> 称对方听得很认真，最终给他机会——「我很欣慰」。</p>
+<h3 id="66-岁为何接掌英特尔-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「这是 incredibly important 的美国半导体公司 <strong>CEO</strong>，工作非常难——你为什么要接？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「好问题。我 66 岁了，大家会觉得该退休，不该接行业最热的 <strong>CEO</strong>。几个原因：一是 标志性 公司；对半导体生态、对美国都太重要。我决定在 <strong>Cadence</strong> 之后再干一次。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「过去一年发生了很多事——什么最让你意外？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「最意外是我以前工作、训练里没学过的：某天清晨总统让我辞职，利益冲突，没有例外。我先说服自己：我不需要这份工作，纯粹为救 <strong>Intel</strong>。把个人问题拿开，再想我能帮什么。好消息是周四早上有会面，周一又谈——我讲我生在马来西亚、新加坡长大、<strong>MIT</strong>、住在美国、从没离开过这个国家。不知怎么他听进去了，给了我机会。我很高兴。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="拯救英特尔-文化-客户与工程直报">拯救英特尔：文化、客户与工程直报</h2>
+
+<h3 id="拯救英特尔-文化-客户与工程直报-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>拯救 <strong>Intel</strong> 先改文化：更快决策、客户导向、工程全线对 <strong>CEO</strong> 负责。</p></div>
+</div>
+<h3 id="拯救英特尔-文化-客户与工程直报-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Sarah Guo</strong> 追问：「拯救 <strong>Intel</strong>」具体长什么样？<strong>Intel</strong> 怎样算赢、算兴旺？</p>
+<p><strong>Lip Bu Tan</strong> 称上任约 <strong>14</strong> 个月，变化集中在几件事：</p>
+<p><strong>文化</strong>：提高问责；决策必须更快——他习惯创业文化「光速移动」，<strong>Intel</strong> 曾层层会议、官僚。<strong>Lip Bu Tan</strong> 强调谦逊、听客户、让客户满意；他本人也以此自勉。</p>
+<p><strong>组织</strong>：从第一天起，<strong>全部工程团队向他汇报</strong>。工程师出身的 <strong>CEO</strong> 要亲自知道哪里出错、该改什么。</p>
+<p><strong>产品</strong>：听客户、让客户满意；简化产品线；制定清晰 <strong>5–10</strong> 年路线图与愿景。</p>
+<h3 id="拯救英特尔-文化-客户与工程直报-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「你说工作是『拯救 <strong>Intel</strong>』——对你而言，<strong>Intel</strong> 怎样算赢、算兴旺？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「我刚过 <strong>14</strong> 个月。几件事：改文化——更多问责，决策更快。我习惯创业文化光速前进，这里曾一层层会议。我改问责、听客户、让客户满意——我也得谦逊、愿意听、解决他们问题。还有：从第一天起所有工程向我汇报。我是工程师出身，要知道哪里错了、该改什么。听客户、让客户满意，确保产品对路；简化产品线，有 <strong>5–10</strong> 年路线图和愿景。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十年愿景-资产负债表-cpu-复兴与代工全栈">十年愿景：资产负债表、CPU 复兴与代工全栈</h2>
+
+<h3 id="十年愿景-资产负债表-cpu-复兴与代工全栈-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>先爬、再走、再跑：先修资产负债表，再简化产品；代理式 AI 让 <strong>CPU</strong> 重回舞台中央，代工则要赚信任。</p></div>
+</div>
+<h3 id="十年愿景-资产负债表-cpu-复兴与代工全栈-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Elad Gil</strong> 问 <strong>10</strong> 年后 <strong>Intel</strong> 应在何处。<strong>Lip Bu Tan</strong> 再次用 <strong>Cadence</strong> 与 <strong>Intel</strong> 共通的节奏：<strong>先爬</strong>、谦逊、听客户 → <strong>再走</strong> → <strong>春天再跑</strong>。</p>
+<p><strong>第一步：资产负债表。</strong> 上任时资产负债表「相当难看」。他欣慰美国政府成为大股东——他向特朗普解释，<strong>TSMC</strong> 起步时台湾政府也是股东；日本、新加坡亦然，基础设施需要政府支持。<strong>Jensen Huang</strong>（老友）投资 <strong>50</strong> 亿美元支持；<strong>Lip Bu Tan</strong> 称至少做了一些正确的事——这笔投资随股价已约 <strong>250</strong> 亿美元或更多。<strong>SoftBank</strong> 孙正义（他曾任 <strong>SoftBank</strong> 董事）也伸手相助。</p>
+<p><strong>第二步：产品。</strong> 简化产品线、听客户、驱动下一代领导性产品。时机上颇为幸运：代理式 AI（agentic AI）与<strong>推理</strong>负载下 <strong>CPU</strong> 需求高涨。训练时代 <strong>CPU</strong> 与 <strong>GPU</strong> 配比约 <strong>1:8</strong>；现在他看见 <strong>1:4</strong>，甚至向 <strong>1:1</strong> 靠拢——<strong>CPU</strong> 重新重要，他为此高兴。</p>
+<p>他与 AI 模型开发者交流：在<strong>强化学习</strong>、以及<strong>编排大量 agent 并调优</strong>的场景，<strong>CPU</strong> 实际上往往更好。数据中心服务器产品线要在此基础上继续建。</p>
+<p><strong>代工（Foundry）</strong>：资本密集、不易。须具备完整 <strong>IP</strong>——例如移动端要有低功耗 <strong>IP</strong> 组合，否则无法服务客户。这是<strong>服务业、信任生意</strong>：客户把晶圆订单交给你，良率不行就会在营收上遭受重创。因此聚焦良率、缺陷密度、周期时间，高质量可靠交付。终局要<strong>全栈</strong>：不只硅片，还要软件；有客户要「整柜机架」——系统级能力必须跟上。</p>
+<p>他一步步低调建设，亲自招募最好的人——<strong>所有招聘自己谈，不用猎头</strong>；有时「人脉通讯录」知道该打给谁很重要。</p>
+<p><strong>Elad Gil</strong> 插话：<strong>Cadence</strong> 跑了 <strong>12</strong> 年？<strong>Lip Bu Tan</strong> 纠正 <strong>13</strong> 年，再加 <strong>2</strong> 年执行董事长，共 <strong>15</strong> 年——本只签 <strong>3</strong> 个月，「现在我很小心，一说只干三个月，结果干了 <strong>15</strong> 年」。</p>
+<h3 id="十年愿景-资产负债表-cpu-复兴与代工全栈-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Elad Gil</h3>
+      <p>「<strong>10</strong> 年后 <strong>Intel</strong> 的愿景是什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「几件事。在 <strong>Cadence</strong> 和 <strong>Intel</strong> 我都相信：先爬、谦逊、听客户；再走；春天再跑。第一步是强化资产负债表——当时很难看。美国政府成大股东我很高兴——我跟总统说 <strong>TSMC</strong> 起步时台湾政府也是股东，日本、新加坡亦然，基础设施要政府支持。<strong>Jensen Huang</strong> 老友投了 <strong>50</strong> 亿支持我，很高兴我至少做了一些对的事——<strong>50</strong> 亿现在约 <strong>250</strong> 亿或更多。<strong>SoftBank</strong> 孙正义，我曾在董事会，也帮忙。资产负债表强化后，聚焦产品、简化、听客户、驱动下一代领导产品。很幸运：代理式 AI 和推理 <strong>CPU</strong> 需求很高。训练时 <strong>CPU:GPU</strong> 约 <strong>1:8</strong>，现在看到 <strong>1:4</strong>、甚至 <strong>1:1</strong>——<strong>CPU</strong> 又重要了。我和模型开发者聊：强化学习、编排 agent 调优，<strong>CPU</strong> 往往更好。需求很高，我很高兴。数据中心服务器要建在这上面。还有代工：资本密集，要有对 <strong>IP</strong>，移动要低功耗 <strong>IP</strong>，否则服务不了。服务业、信任生意——良率不行客户营收就完。我聚焦良率、缺陷密度、周期时间，可靠高质量交付。最终要全栈：不只硅，还要软件；有人要整柜机架。我一步步低调建设，招最好的人——招聘全是我自己谈，不用猎头；有时人脉通讯录知道该找谁。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Elad Gil</h3>
+      <p>「<strong>Cadence</strong> 你跑了 <strong>12</strong> 年？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「<strong>13</strong> 年，抱歉。再加 <strong>2</strong> 年执行董事长，<strong>15</strong> 年——我签的是三个月。现在我很小心：一说只干三个月，结果 <strong>15</strong> 年。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="terafab-与-elon-musk-的非常规协作">Terafab：与 Elon Musk 的非常规协作</h2>
+
+<h3 id="terafab-与-elon-musk-的非常规协作-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Terafab</strong> 是马斯克自建 fab 与 <strong>Intel</strong> 工艺协作的双轨加速——半导体基建跟不上 AI 增速。</p></div>
+</div>
+<h3 id="terafab-与-elon-musk-的非常规协作-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Elad Gil</strong> 转向热议项目：<strong>Terafab</strong> 及与 <strong>Elon Musk</strong> 的合作如何成形？</p>
+<p><strong>Lip Bu Tan</strong> 评价 <strong>Elon Musk</strong> 是「本世纪最好、若非最好也是最好的创业者之一」。二人共识：半导体基础设施<strong>跟不上 AI 增长</strong>——需要产能、生产率、<strong>晶圆效率</strong>（字幕或为 dry efficiency 误识），中间缺了一环。</p>
+<p>合作令人愉快：<strong>Elon Musk</strong> 非常「非常规」——步步质疑传统做法，令人耳目一新；<strong>Lip Bu Tan</strong> 喜欢不同意见的人一起找最佳路径，双方都会学到很多。<strong>Elon Musk</strong> 的机器人、汽车需要大量硅片。</p>
+<p><strong>Terafab</strong> 是什么？<strong>Sarah Guo</strong> 请向不熟悉者解释。<strong>Lip Bu Tan</strong>：<strong>Elon Musk</strong> 决定<strong>自建 fab（晶圆厂）</strong>；<strong>Intel</strong> 乐意协作，用部分技术与制程帮他<strong>更快、更早量产</strong>。双方每周工作组碰面，团队很好。</p>
+<p><strong>Sarah Guo</strong> 提到马斯克曾说要能在洁净室抽烟等通常禁忌的事。<strong>Lip Bu Tan</strong>：他不会走那么远，「也许洁净室某些区域可以」——关键是开放心态，他们也倾听，看能否做到。</p>
+<h3 id="terafab-与-elon-musk-的非常规协作-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Elad Gil</h3>
+      <p>「另一个大项目是 <strong>Terafab</strong>、和 <strong>Elon Musk</strong> 合作——怎么走到一起、你怎么参与？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「<strong>Elon Musk</strong> 是我们都同意：本世纪最好创业者之一。我们共识：半导体基础设施跟不上 AI 增长——要产能、生产率、晶圆效率，中间缺了一环。第二，和他合作很愉快——做法非常 非常规，步步追问为什么必须按传统方式来，令人耳目一新。我喜欢和持不同意见的人一起找最佳路线，双方都会学到很多。他的愿景很清楚：机器人、汽车需要大量硅片。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「<strong>Terafab</strong> 对不熟悉的人是什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「他决定自建 fab；我们乐意合作，用我们一些技术、制程，让他更快、更早量产。我们每周协作，团队很好。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「他说过洁净室里要能抽烟之类……」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「我不会走那么远——也许部分洁净室可以。关键是开放心态，我们也倾听，看能不能做。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="ai-驱动的全球半导体变局与瓶颈">AI 驱动的全球半导体变局与瓶颈</h2>
+
+<h3 id="ai-驱动的全球半导体变局与瓶颈-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>AI 重塑格局深于互联网；电力、氦气、存储与算力产能是增长刹车，不拥抱 AI 的企业最受伤。</p></div>
+</div>
+<h3 id="ai-驱动的全球半导体变局与瓶颈-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Sarah Guo</strong> 把镜头拉宏：AI 按国家如何改变半导体供应链？AI 宣称的裁员是否夸大？她观察：多数裁员更像 <strong>2020</strong> 疫情期过度招聘后的回调；先被砍的多是<strong>外包</strong>——外部客服、外部 <strong>IT</strong>，对菲律宾、印度等 <strong>BPO（业务流程外包）</strong> 大国短期冲击更大。各国参与 AI 的方式几乎要「一国一策」：便宜能源国做数据中心；能训练模型的可能只有美国与少数地区。</p>
+<p><strong>Lip Bu Tan</strong> 回应：AI 改变整个产业格局，影响<strong>大于互联网</strong>、更深远。起初 AI 提效；大量 agent 接手琐碎工作更快。半导体设计也可提效——时序、上市速度、成本。</p>
+<p><strong>AI 需求增长的瓶颈</strong>：</p>
+<p>1. <strong>电力</strong>——一些国家电力不足，直接受限。 2. <strong>氦气</strong>——很多人没意识到对半导体制造影响可能相当大。 3. <strong>存储器</strong>——当前严重短缺，争抢存储器；建新 fab 扩产能要<strong>数年</strong>；<strong>CPU/GPU</strong> 同样高需求；成本上涨会转嫁给客户。</p>
+<p><strong>企业层面</strong>：最受冲击的是<strong>不拥抱 AI</strong> 的公司——AI 可在企业各职能提效，应全面拥抱并更好用于预测、设计等各工作负载。</p>
+<p><strong>Elad Gil</strong> 侧：反对 <strong>Terafab</strong> / <strong>Intel</strong> 代工竞争力的简化论，常指向厂外因素——<strong>Sarah Guo</strong> 已谈若干宏观因素，还有<strong>劳动力成本</strong>与制造产能；既然 <strong>Lip Bu Tan</strong> 与 <strong>Elon Musk</strong> 都下注本土制造，劳动力约束有多现实？</p>
+<p>（本节实录见下一节「美国代工赌注」接续。）</p>
+<h3 id="ai-驱动的全球半导体变局与瓶颈-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「从全球 AI 与半导体供应链看——按国家 AI 怎么变？AI 裁员我觉得很多被夸大，多是 <strong>2020</strong> 新冠期间过度招聘。先砍外包：外部客服、外部 IT，对菲律宾、印度等 BPO 大国短期冲击更大。各国怎么积极参与 AI？便宜能源做数据中心；训练模型可能只有美国加一两个地方。半导体供应链该怎么变？以色列有 <strong>Mellanox</strong>、<strong>Nvidia</strong>、<strong>Intel</strong> 布局，该加码吗？菲律宾该回制造吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「AI 改变整个产业格局，影响比互联网大、更深远。起初提效；很多 agent 做琐碎工作更快。半导体设计也能提效——时序、多快出来、成本。AI 需求瓶颈：一是电力，一些国家不够；二是氦气，对半导体影响可能很大；三是存储器短缺，争抢存储器，建 fab 要几年，<strong>CPU/GPU</strong> 都高需求，价格会上传给客户。整体：最受冲击是不拥抱 AI 的——AI 能在企业各职能提效，应全面拥抱，更好用于预测、设计等工作负载。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="美国代工赌注-在质疑声中加倍下注">美国代工赌注：在质疑声中加倍下注</h2>
+
+<h3 id="美国代工赌注-在质疑声中加倍下注-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>代工贵、难、被唱衰，但供应链韧性与美国先进制程能力让 <strong>Intel</strong> 选择咬紧牙关留下。</p></div>
+</div>
+<h3 id="美国代工赌注-在质疑声中加倍下注-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Lip Bu Tan</strong> 曾站在十字路口：<strong>加倍下注代工，还是退出？</strong> 市场声音很多——「非常贵」「走不通」。他最终决定：对美国、对行业都<strong>非常重要</strong>。</p>
+<p>论据：大家都经历过供应链挑战；任何半导体大公司都必须思考<strong>稳健、有韧性</strong> 供应链，不能依赖一两个地理区域的玩家。越来越多人会意识到<strong>美国制造</strong>至关重要。<strong>Intel</strong> 先进制程例如 <strong>14A</strong> 约 <strong>1.4</strong> 纳米，已在规划 <strong>1</strong> 纳米与 <strong>0.7</strong> 纳米——线宽像头发一样细，复杂度极高，一步错就可能前功尽弃，制造愈来愈是瓶颈。</p>
+<p>对 <strong>TSMC</strong> 高度尊重，是优秀伙伴；更重要的是<strong>双方都需要更多产能服务客户</strong>——长期咬牙坚持才能为行业创造更大价值。</p>
+<p><strong>Sarah Guo</strong> 问：微缩何时撞墙？线宽小到无法继续？</p>
+<p><strong>Lip Bu Tan</strong>：现况 <strong>18A</strong>，<strong>14A</strong> 在推量产；看得见 <strong>10</strong> 纳米、<strong>7</strong> 纳米路径——能到，但愈贵愈难，不能单打独斗，要与设备商、材料商合作，驱动良率与性能。</p>
+<h3 id="美国代工赌注-在质疑声中加倍下注-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Elad Gil</h3>
+      <p>「很多人简化反对 <strong>Terafab</strong> / <strong>Intel</strong> 代工：厂内有 <strong>IP</strong>、业务速度；厂外有劳动力成本等。<strong>Sarah</strong> 谈了很多——你显然相信美国能制造，<strong>Elon Musk</strong> 也是。劳动力约束有多现实？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「我决定加倍代工还是退出时——市场很多声音：非常贵、走不通。我最终决定对美国、对行业非常重要。我们都经历供应链挑战；半导体大公司要有稳健、有韧性的供应链，不能靠一两个地区的玩家。越来越多人会发现美国制造至关重要。我们 <strong>14A</strong> 约 <strong>1.4</strong> 纳米，已在规划 <strong>1</strong> 纳米、<strong>0.7</strong> 纳米——像头发一样细，很复杂，一步错就前功尽弃，制造愈来愈是瓶颈。我们尊重 <strong>TSMC</strong>、是优秀伙伴；更重要的是双方都要更多产能服务客户——我们决定咬牙坚持，长期至关重要，能为行业创造更大价值。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「人们谈很久最终会碰到分辨率极限、线宽太小无法继续——何时撞墙？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「现在有 <strong>18A</strong>，<strong>14A</strong> 在推量产；看得见 <strong>10</strong>、<strong>7</strong> 纳米——路径能到，但愈贵愈难。要合作伙伴，不能单打独斗——与材料、设备厂商合作，驱动良率、性能。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="制程极限-先进封装与新素材路线">制程极限、先进封装与新素材路线</h2>
+
+<h3 id="制程极限-先进封装与新素材路线-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>摩尔定律式性能翻倍换不来成本面积同倍；先进封装与新素材（玻璃、钻石等）是下一战场。</p></div>
+</div>
+<h3 id="制程极限-先进封装与新素材路线-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>先进封装</strong>已成瓶颈：<strong>TSMC CoWoS</strong> 众人皆知；<strong>Intel</strong> 有下一代封装能力 <strong>[编者注：字幕口播为 e-ip，或为 </strong>EMIB<strong>/</strong>Foveros<strong> 等产品线 ASR 误识]</strong>，须把量产良率做到满足客户。传统路径「跑不动」时，<strong>Lip Bu Tan</strong> 回到元素周期表：<strong>氮化镓（gallium nitride）</strong>、<strong>碳化硅（silicon carbide）</strong>、<strong>磷化铟（indium phosphide，字幕 Indian fastfite）</strong>——他三家都投；封装侧投资<strong>玻璃</strong>——良热绝缘体；投 venture <strong>3DGS</strong>。<strong>Intel</strong> 模块上约 <strong>1000</strong> 种 pattern，要考虑材料与模块如何组装；刚宣布与<strong>印度政府</strong>大项目，印度加美国新墨西哥州制造。亦看<strong>人造钻石</strong>作绝缘体，投资 <strong>Diamond Foundry</strong> 等——新素材、新设计方法论并行。</p>
+<p>工程师特质：撞墙就跳过去或绕过去——他从 <strong>EDA</strong> 工具到设计到制造一路走过，现在希望小贡献帮行业。</p>
+<p><strong>Sarah Guo</strong> 追问：绕墙之外有物理极限；到 <strong>7</strong> 纳米节点等限制后，会否出现<strong>性能渐近线</strong>，使各代工厂性能趋同？</p>
+<p><strong>Lip Bu Tan</strong> 谈<strong>摩尔定律</strong>：性能可翻倍，但<strong>功耗、成本、面积</strong>无法同倍翻倍——除非新素材、新设计，走向<strong>材料科学</strong>；他正在多招材料科学人才。</p>
+<p><strong>半导体投资热度变迁</strong>：约 <strong>18</strong> 年前他讲半导体，一线 <strong>VC</strong> 合伙人会议一半找理由离场，另一半问「有软件服务业务吗？」——只剩同情听他讲的人。如今 <strong>Jensen Huang</strong>（<strong>Nvidia</strong>）约 <strong>5.3</strong> 万亿美元市值，<strong>Broadcom</strong> 与 <strong>TSMC</strong> 约 <strong>2</strong> 万亿，<strong>AMD</strong> 的 <strong>Lisa Su</strong> 近 <strong>8000</strong> 亿，<strong>Intel</strong> 近 <strong>6000</strong> 亿——半导体又热、又不可或缺。<strong>15–20</strong> 年前投半导体几乎没有 <strong>VC</strong> 跟，除 <strong>Samsung</strong>、<strong>ARM</strong>、<strong>SoftBank</strong> 等大机构；现在很多 <strong>VC</strong> 愿意进来，他很高兴。</p>
+<p><strong>Sarah Guo</strong> 列行业恐惧：<strong>资本密集</strong>、流片结果难预测、须懂工作负载、客户切换风险高、设计中标后放量仍不确定、<strong>周期性</strong>（建产能后需求年际波动）；再加存储器短缺下的盲目追涨与不愿碰 <strong>10</strong> 年周期的材料科学——<strong>Lip Bu Tan</strong> 如何看风险与建议投哪里？</p>
+<p>（投资框架见下一节。）</p>
+<h3 id="制程极限-先进封装与新素材路线-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「另一瓶颈是先进封装——<strong>TSMC CoWoS</strong> 大家知道；我们有很好的下一代 <strong>[e-ip]</strong>，要确保量产良率满足客户。传统路径跑不动了，我看新素材：氮化镓、碳化硅、磷化铟，三家都投。封装投玻璃——很好的热绝缘体；投 <strong>3DGS</strong>。<strong>Intel</strong> 模块约 <strong>1000</strong> 种图案，材料与模块怎么组装；刚宣布与印度政府大项目，印度加美国新墨西哥州。先进封装很重要；也看人造钻石——很好绝缘体，投 <strong>Diamond Foundry</strong>——下一代要看。新素材、新设计方法论。工程师好处：撞墙就跳或绕——我长期从 <strong>EDA</strong> 到设计到制造，现在希望小贡献帮行业。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「有物理极限——到 <strong>7</strong> 纳米 whatever 限制，要找新素材或绕行方案。会否出现渐近线，不同代工厂性能趋同？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「摩尔定律：性能能翻倍，但功耗、成本、面积不能同倍翻倍——要让步，除非新素材、新设计，变成材料科学——我在招更多材料科学的人。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="半导体投资-瓶颈-首日客户与以色列韧性">半导体投资：瓶颈、首日客户与以色列韧性</h2>
+
+<h3 id="半导体投资-瓶颈-首日客户与以色列韧性-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>投半导体先找瓶颈与真实痛点；首日客户要够大、愿付钱；团队要开放心态，<strong>10</strong> 家里 <strong>9</strong> 家会改计划。</p></div>
+</div>
+<h3 id="半导体投资-瓶颈-首日客户与以色列韧性-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Lip Bu Tan</strong> 投资履历（非炫耀）：<strong>159</strong> 次 <strong>IPO</strong>、<strong>126</strong> 次并购（含半导体）；半导体投资约 <strong>200</strong> 家，<strong>38%</strong> 在美国。</p>
+<p><strong>投资机制</strong>：</p>
+<p>1. <strong>瓶颈在哪、解决什么？</strong> 例：互连成瓶颈 → 投 <strong>Ayar Labs</strong>（字幕 cradle/australa lab 误识）；<strong>Celestial AI</strong> 做光互连——集群里速度更重要，光学很重要；<strong>Jensen Huang</strong> 几乎投遍光子学相关公司。 2. <strong>设计复杂度与成本</strong> → 用 AI/ML 改进设计的 <strong>EDA</strong> 相关初创是「金矿」。 3. <strong>新素材</strong> → 磷化铟等；<strong>氮化镓</strong>、<strong>碳化硅</strong>；电源管理公司被收购——<strong>ADI</strong> 买 <strong>Empower</strong> 等。<strong>IVR（集成电压调节）</strong> 极好：从 <strong>40V</strong> 降到 <strong>1V</strong> 转换损功耗，<strong>功耗/散热</strong> 是瓶颈。</p>
+<p><strong>筛选公式</strong>：问题是否真实、客户是否在急迫呼唤；<strong>从第一天就要锁定第一个客户</strong>——最好是超大规模云厂商：有能力，喜欢你方案就愿在未来几年付<strong>数百万美元</strong>，甚至认股权证也值得，因为一个大客户能规模化。人才：美国、硅谷、奥斯汀、<strong>以色列</strong>——他在以色列投了不少；颠覆式创业者战时仍开电话会，「有警报我得下地道，网可能不好，有时用语音」—— 很有韧性的 创业精神，他欣赏。</p>
+<p><strong>AI 前沿</strong>：除代理式 AI，下一重大前沿是<strong>物理 AI</strong>——要看全栈；仍参与很多前沿模型，支持面向物理 AI 的开源前沿技术。</p>
+<p><strong>十年后赢家（个人看法）</strong>：表达清晰、<strong>激光聚焦一个细分</strong>；找对伙伴；能规模化；<strong>全栈方案</strong>。大公司可学 <strong>Jensen Huang</strong>：<strong>CUDA</strong> 生态、要做平台型公司——做到了；或像 <strong>Anthropic</strong>、<strong>OpenAI</strong> 等初创更优雅地改游戏规则、光速成 主导型玩家。<strong>Intel</strong> 希望扮演角色：<strong>XPU</strong>、先进封装、代工组合 → 为不同工作负载做定制硅——这是他要去的地方。</p>
+<h3 id="半导体投资-瓶颈-首日客户与以色列韧性-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「这领域现在兴趣极高，以前被认为过于资本密集……资本密集、流片难预测、要懂工作负载、客户切换风险、周期性；还有存储器短缺下的盲目追涨、不愿碰 <strong>10</strong> 年材料科学——你怎么看风险、建议投供应链哪段？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「问题很广。创业投资在我血脉里。<strong>159</strong> 次 <strong>IPO</strong>、<strong>126</strong> 次并购——半导体约 <strong>200</strong> 家，<strong>38%</strong> 在美国。投资侧：先看瓶颈、解决什么——互连瓶颈投 <strong>Ayar Labs</strong>；<strong>Celestial AI</strong> 光学，集群里速度重要，光学很重要，<strong>Jensen Huang</strong> 几乎投光子学。<strong>EDA</strong> 用 AI/ML 提设计——金矿。新素材：磷化铟等；氮化镓、碳化硅；电源 <strong>ADI</strong> 买 <strong>Empower</strong>。<strong>IVR</strong> 极好：40V 到 1V 转换损功耗，功耗/散热是瓶颈。始终问：问题真实吗？客户在急迫要吗？第一天就锁定第一个客户——最好超大规模云厂商，有能力，喜欢就愿付数百万几年，认股权证也值得，一个大客户能规模化。人才：美国、硅谷、奥斯汀、以色列——我投不少以色列；颠覆式创业者战时仍电话会，『有警报下地道，网不好用语音』——很有韧性，我欣赏。AI 机会大；除代理式 AI，下一前沿是物理 AI——要看全栈；我仍参与前沿模型，支持面向物理 AI 的开源前沿技术。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「<strong>10</strong> 年后的赢家——个人看法：表达清晰、激光聚焦一个细分；找对伙伴；能规模化；全栈。<strong>Jensen Huang</strong> 我佩服——<strong>CUDA</strong>、要做平台型公司，做到了。或像 <strong>Anthropic</strong>、<strong>OpenAI</strong> 这类初创更优雅地改写规则、光速成为 主导型玩家。<strong>Intel</strong> 希望能参与：<strong>XPU</strong>、先进封装、代工放在一起，为不同工作负载做定制硅——这就是我要去的地方。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="cadence-遗产与-eda-设计的-ai-化">Cadence 遗产与 EDA 设计的 AI 化</h2>
+
+<h3 id="cadence-遗产与-eda-设计的-ai-化-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Cadence</strong> 接班人已拥抱代理式 AI；<strong>Synopsys</strong> 获 <strong>Nvidia 20</strong> 亿美元投资并收购 <strong>Ansys</strong>——大厂与颠覆式初创共存。</p></div>
+</div>
+<h3 id="cadence-遗产与-eda-设计的-ai-化-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Sarah Guo</strong> 问：以 <strong>Cadence</strong> 经验，芯片设计/测试哪块用 AI 最快、最便宜、最有创意？是否已有成效？</p>
+<p><strong>Lip Bu Tan</strong>：近 <strong>15</strong> 年 <strong>Cadence</strong> 高光之一是在路上找到接班人、培养成极优秀的 <strong>CEO</strong>——对方<strong>拥抱 AI</strong>，用代理式 AI 提效。<strong>Synopsys</strong> 的 <strong>Sassine Ghazi</strong> 也在做，<strong>Nvidia</strong> <strong>20</strong> 亿美元投资帮很多；收购 <strong>Ansys</strong> 进入整机系统设计。大厂各尽所能；仍有初创做更颠覆式创新，最终 <strong>IPO</strong> 或被 <strong>Cadence</strong>/<strong>Synopsys</strong> 或 <strong>Siemens</strong> 收购——机会取决于创业者愿景。</p>
+<p>他的哲学：创业者想卖公司、更快退出——不锁定期、不必纠结季度盈利；有人从第一天就要 <strong>IPO</strong>——三位主持人都是 <strong>VC</strong>，支持创业者梦想。</p>
+<p><strong>Sarah Guo</strong> 再问：<strong>Intel</strong> 或半导体公司 <strong>10</strong> 年后会否根本不同？<strong>Lip Bu Tan</strong> 在上节已答资本密集、周期性要纳入考量；早期组队有趣；找<strong>个体</strong>合伙人，知识深、困难时不会一走了之——「好时光人人都愿意合作，公司陷入困境就一走了之」的不要；要找多次成功、几乎「破圈俱乐部」级别的伙伴。战略投资者能在制造、存储、互连等增值；成长期基金、对冲基金朋友给公开市场视角，告诉创业者<strong>哪里别去</strong>。创业像一步步解题；触发突破就进入下一前沿。</p>
+<h3 id="cadence-遗产与-eda-设计的-ai-化-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「设计/测试用 AI 更快更便宜——以 <strong>Cadence</strong> 经验看哪块潜力最大？是否已有成效？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「近 <strong>15</strong> 年 <strong>Cadence</strong>，亮点是找到接班人、培养成极优秀的 <strong>CEO</strong>——拥抱 AI，用代理式 AI 提效。<strong>Synopsys</strong> <strong>Sassine Ghazi</strong> 也在做，<strong>Nvidia 20</strong> 亿美元帮他；收购 <strong>Ansys</strong> 进入整机系统设计。大厂各尽所能；初创更颠覆，最终 <strong>IPO</strong> 或被 <strong>Cadence</strong>/<strong>Synopsys</strong>/<strong>Siemens</strong> 收购——看创业者愿景。哲学：想卖就卖，快退出，不锁定期；想 <strong>IPO</strong> 就支持梦想。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="ai-时代的人才与「老旧电子表格公司」转型">AI 时代的人才与「老旧电子表格公司」转型</h2>
+
+<h3 id="ai-时代的人才与「老旧电子表格公司」转型-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Intel</strong> 从「老旧电子表格公司」文化转向 AI 赋能；补年轻软件人才，连儿子都成了 <strong>CEO</strong> 的 AI 老师。</p></div>
+</div>
+<h3 id="ai-时代的人才与「老旧电子表格公司」转型-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Sarah Guo</strong> 延伸：软件界正巨变——雇 <strong>30–50</strong> 岁、习惯带团队的人，因为管团队技能可迁移到<strong>管多个 agent</strong>（复杂度、质量保障）。物理世界/晶圆厂里会是缓慢演进还是颠覆式跃迁——例如材料是否「大模型 + 化学」？</p>
+<p><strong>Lip Bu Tan</strong>：回到先爬、再走、再跑。<strong>爬</strong>的阶段先招半导体最好的人才；现在看需要哪些<strong>软件人才</strong>建全栈。团队平均年龄 <strong>40</strong> 岁后期到 <strong>50</strong>——要带新血，懂工作负载、前沿模型、开源。发现<strong>儿子成老师</strong>——去儿子家看孙辈，顺便向他学 AI/ML，「他比我更跟得上」；学投资、带人才进来。</p>
+<p><strong>Intel</strong> 曾是「非常老旧的电子表格公司」——正转型成 AI 公司，不只 AI 赋能设计，<strong>全组织</strong>拥抱 AI，少依赖电子表格；<strong>半导体人才 + 最好 AI 工具</strong>组合——不只组织内部、销售，现在令人兴奋的是市场、<strong>设计</strong>都要拥抱 AI。</p>
+<h3 id="ai-时代的人才与「老旧电子表格公司」转型-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「软件界大变化：雇 <strong>30–50</strong> 岁会带团队的人——管团队可迁移到管 agents、质量保障、复杂度。fab/物理世界是缓慢演进还是颠覆式——材料用大模型加化学？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「先爬、再走、再跑。<strong>爬</strong>：招半导体最好人才；现在看要什么软件人才建全栈。团队平均 <strong>40</strong> 岁后期、<strong>50</strong>——要带新人才，懂工作负载、前沿模型、开源。发现儿子成老师——去他家看孙辈，向他学 AI/ML，他比我更跟得上；学投资、带人才。<strong>Intel</strong> 曾是老旧电子表格公司——转型成 AI，不只 AI 赋能设计，全组织拥抱 AI，少依赖电子表格；半导体人才 + 最好 AI 工具——销售、市场、<strong>设计</strong> 都要拥抱 AI。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="产业政策-主权资本与长期股东">产业政策、主权资本与长期股东</h2>
+
+<h3 id="产业政策-主权资本与长期股东-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>资本密集赛道要靠政府、主权基金与巨型基金；早期 <strong>VC</strong> 也在变「超资本密集」。</p></div>
+</div>
+<h3 id="产业政策-主权资本与长期股东-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Sarah Guo</strong>：她做基金后学到资本密集公司的资金来源多样——软件时代「凑 <strong>1.5</strong> 亿美元」压力小；<strong>Lip Bu Tan</strong> 长期经历这些，又有<strong>政府大股东</strong>的独特经验。产业政策造就 <strong>TSMC</strong> 等巨兽，在美国商业文化长期曾受冷眼——现在该怎么变、哪些环节仍适用？</p>
+<p><strong>Lip Bu Tan</strong>：资本密集业务、基础设施投资需要资金通道。早期 <strong>VC</strong> 投资现在也变资本密集——有些 <strong>VC</strong> 机构愿对单公司投 <strong>10</strong> 亿美元，过去闻所未闻，现在却正在发生。他偏好「钟形曲线」策略：要么极早进入——如今 <strong>A</strong> 轮估值常超 <strong>10</strong> 亿美元，有时要在 <strong>200–300</strong> 亿美元估值的罕见标的里极早轮（pre-seed）押注；要么找能支撑规模的资本——一些共同基金进入上市前早期阶段与他同投，他乐于见到——它们对是否拿到 <strong>20%</strong> 股权不那么敏感（可出让的 <strong>20%</strong> 份额本就不多），关键是找对投资人。</p>
+<p>AI 工厂、代工等需要政府资金、主权基金，以及专门支持基础设施的大型基金。<strong>Intel</strong> 作为上市公司，也刻意聚焦<strong>长期成长型</strong>股东，帮助业务增长——而非短期只问资本配置、股票回购；那些问题也重要，但还要把业务建起来——平衡很关键。</p>
+<h3 id="产业政策-主权资本与长期股东-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「资本密集公司的资金来源教育很大——做软件前『要 <strong>1.5</strong> 亿』压力小；你有政府大股东经验。产业政策造就 <strong>TSMC</strong>，美国商业文化长期曾受冷眼——现在该怎么变？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「资本密集、基础设施要资金通道。早期 <strong>VC</strong> 现在也资本密集——<strong>VC</strong> 愿 <strong>10</strong> 亿投单公司，过去闻所未闻，现在有。钟形曲线：要么极早——<strong>A</strong> 轮过 <strong>10</strong> 亿估值，有时极早轮（pre-seed）进 <strong>200–300</strong> 亿，押对标的；要么找规模资本——共同基金进上市前早期跟我投，我对 <strong>20%</strong> 股权不那么敏感，要找对投资人。AI 工厂、代工要政府、主权基金、大型基础设施基金。<strong>Intel</strong> 上市公司，刻意聚焦长期成长股东帮增长——不是短期只问回购；也要把业务建起来——平衡。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="投资者误解-10-倍目标与算力落点">投资者误解、10 倍目标与算力落点</h2>
+
+<h3 id="投资者误解-10-倍目标与算力落点-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>市场仍低估 <strong>Intel</strong> 仍在「爬」阶段的潜力；算力建设终看应用大小，边缘/端侧对机器人等仍不可替代。</p></div>
+</div>
+<h3 id="投资者误解-10-倍目标与算力落点-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Sarah Guo</strong>：投资者此刻最误解 <strong>Intel</strong> 什么？</p>
+<p><strong>Lip Bu Tan</strong>：不少。<strong>先爬、再走、再跑</strong>：过去约<strong>四个月</strong>在「爬」，但人们开始看到潜力。须拿出最好产品——<strong>PC</strong> 客户端仍有份额，但要更好性能；低调组建 <strong>CPU/GPU/软件架构师</strong> 团队，实现跨越式追赶；要让 <strong>Intel</strong> 像「多家创业文化叠加」——行动快、用更好技术。</p>
+<p>产品侧新能量：<strong>代理式 AI</strong>、<strong>物理 AI</strong>，市场巨大。<strong>代工</strong>与 <strong>TSMC</strong> 性能距离仍远——要谦逊地搭积木：<strong>IP</strong>、良率、缺陷密度、周期时间；这是信任生意，客户交晶圆前要先信任你——耗时更长，但 <strong>2030–2032</strong> 年潜力可能浮现，人们还不懂产品端有多大空间。</p>
+<p><strong>PC</strong> 客户端是基本盘，向上到边缘、物理 AI、代理式 AI。过去主要是给<strong>人类</strong>提供服务器与个人电脑；新维度：<strong>数百万 agent</strong> 需要访问算力、进入软件栈——仍有机会，游戏未结束。AI 才刚开始：<strong>Jensen Huang</strong> 占训练；边缘、代理式、物理 AI 是更大战场，人人都有机会。</p>
+<p><strong>14</strong> 个月股东回报约 <strong>6</strong> 倍——「只是开始，还有很多空间」。<strong>Elad Gil</strong>：「从这里还有风投级回报吗？」<strong>Lip Bu Tan</strong>：风投心态要 <strong>10</strong> 倍。<strong>Cadence</strong> 卸任 <strong>CEO</strong> 约 <strong>76</strong> 倍、退休执行董事长约 <strong>85</strong> 倍；<strong>Intel</strong> 基数更大，目标 <strong>10</strong> 倍——<strong>5–10</strong> 年 <strong>10</strong> 倍对风投心态是好回报。</p>
+<p><strong>Sarah Guo</strong> 最后大问：算力终局——有人信越建越大数据中心、千兆瓦只是开始，集中式推理占主导；对比边缘/客户端。<strong>Lip Bu Tan</strong> 怎么看均衡点？</p>
+<p><strong>Lip Bu Tan</strong>：大规模 AI 基建是对的，看不到放缓——工作负载增很多；问号在「怎么建」——<strong>供给约束</strong>；任何放缓都是供给约束。但基建终要看<strong>解决方案/应用</strong>：找到巨大应用，或几个加总成有意义，聚焦那个——不是人人建都赢；像互联网，<strong>Amazon</strong>、<strong>Netflix</strong> 很大，有些横盘/消失/被收购。行业大增长→整合→也许一两个真赢家——「电影看过」。聚焦应用：<strong>Netflix</strong> 是应用，<strong>Amazon</strong> 是真实应用。</p>
+<p><strong>Sarah Guo</strong>：「你假设有些应用更适合客户端/边缘，而非只有数据中心？」<strong>Lip Bu Tan</strong>：「正是。」<strong>Sarah Guo</strong> 举例投机器人、国防——设备端算力很重要；家庭机器人取决于家里有什么、连接如何，决定能做什么；<strong>SaaS</strong> 时代有点被淡忘。<strong>Lip Bu Tan</strong> 投资框架：找真正需要解决的问题 → 谁能合作 → 应用多大、是否可持续 → 信就加倍/三倍下注——<strong>包括</strong>尚未大规模部署的应用。</p>
+<h3 id="投资者误解-10-倍目标与算力落点-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「投资者最误解 <strong>Intel</strong> 什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「不少。先爬、再走、再跑——过去约四个月在爬，但人们看到潜力。要最好产品——<strong>PC</strong> 客户端有份额但要更好性能；低调建 CPU/GPU/软件架构师，跨越式追赶；<strong>Intel</strong> 要多创业文化、行动快。<strong>代理式 AI</strong>、<strong>物理 AI</strong> 是新动能，市场巨大。代工离 <strong>TSMC</strong> 还远——谦逊建 <strong>IP</strong>、良率、缺陷密度、周期时间；信任生意——<strong>2030–2032</strong> 可能浮现潜力。<strong>PC</strong> 基本盘，到边缘、物理 AI、代理式 AI。过去给人类提供服务器与个人电脑；现在数百万 agent 要算力、进软件栈——有机会，游戏未结束。AI 才刚开始：训练 <strong>Jensen Huang</strong>；边缘、代理式、物理 AI 是大战场。<strong>14</strong> 个月 <strong>6</strong> 倍回报——只是开始。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Elad Gil</h3>
+      <p>「从这里还有风投级回报吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「风投心态要 <strong>10</strong> 倍。<strong>Cadence</strong> 卸任 <strong>CEO</strong> 约 <strong>76</strong> 倍，退休执行董事长 <strong>85</strong> 倍；<strong>Intel</strong> 基数大，目标 <strong>10</strong> 倍，<strong>5–10</strong> 年 <strong>10</strong> 倍是好回报。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「你描述里隐含信念：工作负载在哪——有人信越建越大数据中心、集中式推理占主导 vs 边缘/客户端。有均衡点吗，还是看工作负载？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「大规模建设对，看不到放缓——工作负载增；问题是怎建——<strong>供给约束</strong>，放缓就是供给。<strong>应用</strong>导向：找巨大或几个有意义应用——不是人人赢；像互联网 <strong>Amazon</strong>、<strong>Netflix</strong> 很大，有些横盘。大增长→整合→一两个赢家——电影看过。聚焦应用。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「你假设有些应用更适合客户端/边缘？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">8</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「正是。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">9</div>
+    <div class="step-body">
+      <h3>Sarah Guo</h3>
+      <p>「我投机器人、国防——设备端算力很重要；家庭机器人看家里有什么、连接；<strong>SaaS</strong> 时代有点被淡忘。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">10</div>
+    <div class="step-body">
+      <h3>Lip Bu Tan</h3>
+      <p>「投资框架：找真正要解决的问题 → 伙伴是谁 → 应用多大、可持续 → 信就加倍/三倍下注——包括还没大规模部署的。」</p>
+    </div>
+  </article>
+</div>
+
+<details class="collapsible meta-panel" id="延伸术语表">
+  <summary>延伸术语表</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>说明</th></tr></thead><tbody><tr><td><strong>Terafab</strong></td><td><strong>Elon Musk</strong> 推动的自建晶圆厂计划；与 <strong>Intel</strong> 在制程与产能上协作</td></tr><tr><td><strong>18A / 14A</strong></td><td><strong>Intel</strong> 先进制程节点命名；<strong>14A</strong> 口播约 <strong>1.4</strong> 纳米量级</td></tr><tr><td><strong>CoWoS</strong></td><td><strong>TSMC</strong> 封装技术（Chip on Wafer on Substrate），AI 加速器常见</td></tr><tr><td><strong>Agentic AI</strong></td><td>代理式 AI：多 agent 协作、编排与推理负载</td></tr><tr><td><strong>Physical AI</strong></td><td>物理 AI：机器人、自动驾驶等嵌入物理世界的 AI</td></tr><tr><td><strong>XPU</strong></td><td><strong>Intel</strong> 产品线统称（CPU/GPU 等异构计算）</td></tr><tr><td><strong>EDA</strong></td><td>电子设计自动化（Electronic Design Automation）；<strong>Cadence</strong>、<strong>Synopsys</strong> 为主力</td></tr><tr><td><strong>Hyperscaler</strong></td><td>超大规模云/互联网厂商，常作芯片首批大客户</td></tr><tr><td><strong>BPO</strong></td><td>业务流程外包（Business Process Outsourcing）</td></tr><tr><td><strong>IVR</strong></td><td>集成电压调节（Integrated Voltage Regulator）；电源管理瓶颈环节</td></tr></tbody></table></div>
+  </div>
+</details>
+
+<details class="collapsible meta-panel" id="文章元数据">
+  <summary>文章元数据与来源</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Re-engineering the Semiconductor Supply Chain with Intel CEO Lip Bu Tan</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.youtube.com/watch?v=asCgCv2XB4s">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-06-18</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-06-25</td></tr><tr><td><strong>播放量/访问量</strong></td><td>YouTube 观看次数：32,177（页面显示 32.2K）</td></tr><tr><td><strong>时长</strong></td><td>45:00</td></tr><tr><td><strong>主持人</strong></td><td><strong>Elad Gil</strong>、<strong>Sarah Guo</strong>（*No Priors* 播客）</td></tr><tr><td><strong>嘉宾</strong></td><td><strong>Lip Bu Tan</strong>（<strong>Intel</strong> 首席执行官；前 <strong>Cadence</strong> 首席执行官；<strong>Walden International</strong> 传奇半导体投资人）</td></tr><tr><td><strong>内容来源</strong></td><td>YouTube 频道 No Priors + 用户提供的完整字幕转写；元数据经 WebFetch 核对</td></tr><tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr></tbody></table></div>
+
+<blockquote><strong>人物背景</strong>：<strong>Lip Bu Tan</strong> 生于马来西亚、在新加坡长大，<strong>MIT</strong> 毕业，长期定居美国。他先以 <strong>Walden International</strong> 投资人身份深耕半导体（累计投资约 <strong>200</strong> 家半导体相关公司，其中 <strong>38%</strong> 在美国），后执掌 <strong>Cadence</strong> 逾 <strong>13</strong> 年并任执行董事长 <strong>2</strong> 年——本打算只干 <strong>3</strong> 个月，一干就是 <strong>15</strong> 年。卸任 <strong>Cadence</strong> 首席执行官时，股东回报约 <strong>76</strong> 倍（自 interim 首席执行官起 <strong>242</strong> 美元计）至执行董事长退休时约 <strong>85</strong> 倍。2024 年前后接掌 <strong>Intel</strong> 时 <strong>66</strong> 岁，上任约 <strong>14</strong> 个月至本播客录制时。</blockquote>
+  </div>
+</details>
+
+<h2 id="自检报告" hidden>自检报告</h2>
+
+<details class="collapsible">
+  <summary>展开自检报告详情</summary>
+  <div class="collapsible-body">
+    <div class="table-wrap">
+    <table><thead><tr><th>检查项</th><th>结果</th></tr></thead><tbody><tr><td>素材覆盖</td><td>✅ 用户字幕 + YouTube 元数据（WebFetch）；章节 <strong>00:00–44:59</strong> 主干全覆盖</td></tr><tr><td>节结构（对谈三层）</td><td>✅ 12 节均含核心洞察+深度解析；11 节含对谈实录；「Cadence 遗产」节实录与解析合并略短，投资/算力节实录较长</td></tr><tr><td>导读论点（v5.26）</td><td>✅ 全文论点块 + 4 段分层；覆盖产业政策、投资者误解、算力落点等末段收束</td></tr><tr><td>术语校准</td><td>✅ Lip Bu Tan / Elad Gil / Sarah Guo / Jensen Huang / Ayar Labs / Ansys / indium phosphide 等 ASR 已校正；e-ip、infi 标 <code>[编者注]</code>/<code>[ASR不确定]</code></td></tr><tr><td>防幻觉</td><td>✅ 数字均来自口播/描述（5B→25B、159 IPO、6x/10x/76x/85x、14 个月等）；无画面数据未捏造</td></tr><tr><td>主持人引子</td><td>✅ Sarah 的 BPO/layoff、edge vs datacenter、软件 hiring 30–50 岁等已入库</td></tr><tr><td>正文中文叙事</td><td>✅ 4c 闸门通过；grep 命中 45→修正后 3（pre-seed、<strong>A</strong> 轮专名、术语表英文括注）；对谈实录已中文化</td></tr><tr><td>纯净排版（4d 节间空白）</td><td>✅ 4d 闸门通过；--- 共 4 处（≤5）；正文节间 --- 0；三连空行 0</td></tr><tr><td>可读性内化</td><td>不适用（默认通识读者）</td></tr><tr><td>多源一致性</td><td>不适用（单源）</td></tr><tr><td>首现缩写注释</td><td>✅ BPO、IVR、EDA 等首现已注；MCP/LLM 等未出现</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+      <!-- CONTENT_END -->
+
+      <footer class="doc-footer">
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=asCgCv2XB4s" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260618 Lip Bu Tan 英特尔CEO谈拯救英特尔与半导体供应链重构_整理文档.md</span>
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    // ---------- Theme ----------
+    const STORAGE_KEY = "md2html-theme";
+    function currentTheme() { return document.documentElement.dataset.theme || "light"; }
+    function applyThemeIcon() {
+      const use = document.getElementById("theme-icon-use");
+      if (use) use.setAttribute("href", currentTheme() === "dark" ? "#i-sun" : "#i-moon");
+    }
+    (function restoreTheme() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        document.documentElement.dataset.theme = saved;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+
+    // ---------- Mermaid ----------
+    const diagramSources = new Map();
+    function initMermaid() {
+      const isDark = currentTheme() === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        themeVariables: {
+          primaryColor: isDark ? "#3A2A22" : "#FBEEE6",
+          primaryTextColor: isDark ? "#F5F0E8" : "#1A1A1A",
+          primaryBorderColor: isDark ? "#E89572" : "#D97757",
+          lineColor: isDark ? "#9A938A" : "#6B6B66",
+          secondaryColor: isDark ? "#2A2520" : "#F5F5F0",
+          tertiaryColor: isDark ? "#221E1A" : "#FFFFFF",
+          fontFamily: "Inter, system-ui, sans-serif",
+        },
+      });
+    }
+    async function renderMermaid() {
+      initMermaid();
+      const els = document.querySelectorAll(".mermaid");
+      els.forEach(el => {
+        if (!diagramSources.has(el)) diagramSources.set(el, el.textContent.trim());
+        el.textContent = diagramSources.get(el);
+        el.removeAttribute("data-processed");
+      });
+      try { await mermaid.run({ nodes: els }); } catch (e) { console.error(e); }
+    }
+    function toggleTheme() {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(STORAGE_KEY, next);
+      applyThemeIcon();
+      renderMermaid();
+    }
+
+    // ---------- TOC drawer (mobile) ----------
+    const tocEl = () => document.getElementById("toc");
+    const tocToggle = () => document.getElementById("toc-toggle");
+    const isMobileToc = () => window.matchMedia("(max-width: 900px)").matches;
+
+    function syncTocA11y(open) {
+      const toc = tocEl();
+      if (!toc) return;
+      if (isMobileToc()) {
+        toc.setAttribute("role", "dialog");
+        toc.setAttribute("aria-modal", open ? "true" : "false");
+        toc.setAttribute("aria-hidden", open ? "false" : "true");
+      } else {
+        toc.removeAttribute("role");
+        toc.removeAttribute("aria-modal");
+        toc.removeAttribute("aria-hidden");
+      }
+    }
+
+    function openToc() {
+      document.body.classList.add("toc-open");
+      syncTocA11y(true);
+      const closeBtn = tocEl()?.querySelector(".toc-close");
+      closeBtn?.focus();
+    }
+    function closeToc() {
+      document.body.classList.remove("toc-open");
+      syncTocA11y(false);
+      if (isMobileToc()) tocToggle()?.focus();
+    }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+    window.addEventListener("resize", () => {
+      if (!document.body.classList.contains("toc-open")) syncTocA11y(false);
+    });
+
+    // ---------- TOC scrollspy ----------
+    function setupTocSpy() {
+      const links = Array.from(document.querySelectorAll("#toc-nav a[href^='#']"));
+      if (!links.length) {
+        const toc = document.getElementById("toc");
+        if (toc) toc.style.display = "none";
+        return;
+      }
+      const entries = [];
+      links.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) entries.push({ el, link: a });
+        a.addEventListener("click", () => {
+          if (isMobileToc()) closeToc();
+        });
+      });
+
+      let ticking = false;
+      const setActive = () => {
+        ticking = false;
+        const offset = 96;
+        let current = entries[0]?.link;
+        for (const { el, link } of entries) {
+          if (el.getBoundingClientRect().top <= offset) current = link;
+        }
+        links.forEach(l => l.classList.toggle("active", l === current));
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(setActive);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setActive();
+    }
+
+    // ---------- Section jump pills ----------
+    function injectSectionJumps() {
+      document.querySelectorAll(".content h2[id]").forEach(h2 => {
+        const id = h2.id;
+        const parts = [
+          { suffix: "-insight", label: "洞察" },
+          { suffix: "-analysis", label: "解析" },
+          { suffix: "-dialogue", label: "实录" },
+        ];
+        const items = parts
+          .map(p => ({ el: document.getElementById(id + p.suffix), label: p.label }))
+          .filter(x => x.el);
+        if (!items.length) return;
+        const nav = document.createElement("nav");
+        nav.className = "section-jump";
+        nav.setAttribute("aria-label", "本节导航");
+        items.forEach(({ el, label }) => {
+          const a = document.createElement("a");
+          a.href = "#" + el.id;
+          a.textContent = label;
+          nav.appendChild(a);
+        });
+        h2.insertAdjacentElement("afterend", nav);
+      });
+    }
+
+    // ---------- Speaker tags in dialogue ----------
+    function tagSpeakers() {
+      document.querySelectorAll(".timeline .step-body h3").forEach(h3 => {
+        const step = h3.closest(".step");
+        if (!step) return;
+        const name = h3.textContent.trim();
+        if (/Harrison/i.test(name)) step.classList.add("speaker-host");
+        else if (/Andrew/i.test(name)) step.classList.add("speaker-guest");
+      });
+    }
+
+    // ---------- Anchor links on h2/h3 ----------
+    function injectAnchors() {
+      document.querySelectorAll(".content h2[id], .content h3[id]").forEach(h => {
+        if (h.querySelector(".anchor")) return;
+        const a = document.createElement("a");
+        a.className = "anchor";
+        a.href = "#" + h.id;
+        a.setAttribute("aria-label", "段落链接");
+        a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
+        h.appendChild(a);
+      });
+    }
+
+    // ---------- Copy-to-clipboard on <pre> ----------
+    function injectCopyButtons() {
+      document.querySelectorAll(".content pre").forEach(pre => {
+        if (pre.classList.contains("mermaid")) return;
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "复制代码");
+        btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent ?? pre.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.classList.add("copied");
+            btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+            }, 1500);
+          } catch (e) { console.error(e); }
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    // ---------- Back to top ----------
+    function setupBackToTop() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      const toggle = () => {
+        btn.hidden = window.scrollY < 480;
+      };
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+    }
+
+    // ---------- Scroll progress ----------
+    function setupScrollProgress() {
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = h > 0 ? (document.documentElement.scrollTop / h * 100) : 0;
+        bar.style.width = p + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    // ---------- Boot ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      applyThemeIcon();
+      syncTocA11y(false);
+      tagSpeakers();
+      injectAnchors();
+      injectCopyButtons();
+      renderMermaid();
+      setupTocSpy();
+      setupScrollProgress();
+      setupBackToTop();
+    });
+  </script>
+</body>
+</html>

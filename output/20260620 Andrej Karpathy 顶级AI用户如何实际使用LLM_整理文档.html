@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
-  <title>编码代理加速一切，瓶颈却在别处：Andrew Ng 在 Interrupt 26 的炉边对谈</title>
+  <title>没有四十行系统提示词：Andrej Karpathy 的 LLM 实战地图</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1095,16 +1095,17 @@
       </div>
       <nav class="toc-nav" id="toc-nav">
         <a href="#核心导读" class="lvl-2">核心导读</a>
-        <a href="#过去一年的-ai-节奏-炒作-末日叙事与编码代理" class="lvl-2">过去一年的 AI 节奏：炒作、末日叙事与编码代理</a>
-        <a href="#编码代理重塑软件工程-产品管理瓶颈与全能小队" class="lvl-2">编码代理重塑软件工程：产品管理瓶颈与全能小队</a>
-        <a href="#通才从哪来-工程底色与跨职能扩张" class="lvl-2">通才从哪来：工程底色与跨职能扩张</a>
-        <a href="#进入-ai-软件工程-积木式组合与-context-hub" class="lvl-2">进入 AI 软件工程：积木式组合与 Context Hub</a>
-        <a href="#deeplearningai-langchain-与教育实验" class="lvl-2">DeepLearning.AI、LangChain 与教育实验</a>
-        <a href="#企业-ai-落地-自下而上失灵与贷款审批案例" class="lvl-2">企业 AI 落地：自下而上失灵与贷款审批案例</a>
-        <a href="#省成本还是促增长-roi-与本垒打组合" class="lvl-2">省成本还是促增长：ROI 与本垒打组合</a>
-        <a href="#前线部署工程师-供应商锁定与-langsmith" class="lvl-2">前线部署工程师、供应商锁定与 LangSmith</a>
-        <a href="#开源模型-数据战略与非结构化重构" class="lvl-2">开源模型、数据战略与非结构化重构</a>
-        <a href="#mongodb-与快速迭代-编码代理改变技术选型" class="lvl-2">MongoDB 与快速迭代：编码代理改变技术选型</a>
+        <a href="#工具调用-python-解释器与各-llm-的差异" class="lvl-2">工具调用：Python 解释器与各 LLM 的差异</a>
+        <a href="#chatgpt-高级数据分析-初级分析师的双面性" class="lvl-2">ChatGPT 高级数据分析：初级分析师的双面性</a>
+        <a href="#claude-artifacts-浏览器里的定制应用与概念图" class="lvl-2">Claude Artifacts：浏览器里的定制应用与概念图</a>
+        <a href="#cursor-与氛围编程-专业编码的真实工作流" class="lvl-2">Cursor 与氛围编程：专业编码的真实工作流</a>
+        <a href="#语音模态-伪音频-真音频与-grok-的性格" class="lvl-2">语音模态：伪音频、真音频与 Grok 的性格</a>
+        <a href="#notebooklm-任意素材的按需播客" class="lvl-2">NotebookLM：任意素材的按需播客</a>
+        <a href="#图像输入-转写-核对-再追问" class="lvl-2">图像输入：转写—核对—再追问</a>
+        <a href="#图像与视频生成-dall-e-镜头与-sora-们" class="lvl-2">图像与视频生成：DALL-E、镜头与 Sora 们</a>
+        <a href="#记忆-自定义指令与-custom-gpt" class="lvl-2">记忆、自定义指令与 Custom GPT</a>
+        <a href="#生态选型-你在跟「压缩包」说话" class="lvl-2">生态选型：你在跟「压缩包」说话</a>
+        <a href="#关键语录与交锋时刻" class="lvl-2">关键语录与交锋时刻</a>
         <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
         <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
       </nav>
@@ -1112,21 +1113,21 @@
 
     <main class="content" id="main">
       <header class="doc-header">
-        <span class="doc-eyebrow">对谈笔记</span>
-        <h1 class="doc-title">编码代理加速一切，瓶颈却在别处：Andrew Ng 在 Interrupt 26 的炉边对谈</h1>
-        <p class="doc-subtitle">编码代理正以「每三个月变一次前沿能力」的速度改写个人与团队交付方式，但把软件造快 10–100 倍并不会消灭瓶颈，只会把约束挪到产品管理、法务、营销与数据架构。</p>
+        <span class="doc-eyebrow">整理笔记</span>
+        <h1 class="doc-title">没有四十行系统提示词：Andrej Karpathy 的 LLM 实战地图</h1>
+        <p class="doc-subtitle">顶级 AI 用户的秘密比外界想象更简单——用大白话说清楚要什么、让模型跑起来即可，不必堆砌四十行系统提示词。</p>
         <div class="doc-meta">
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
-            Interrupt 26 · Andrew Ng × Harrison Chase
+            Andrej Karpathy spent 70 minutes breaking down how top AI users actually work with LLMs
           </span>
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
-            2026-06-17
+            2026-06-20
           </span>
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
-            ~19 分钟阅读
+            ~14 分钟阅读
           </span>
         </div>
       </header>
@@ -1135,367 +1136,180 @@
 <h2 id="核心导读">核心导读</h2>
 
 <div class="highlight">
-  <p>编码代理正以「每三个月变一次前沿能力」的速度改写个人与团队交付方式，但<strong>把软件造快 10–100 倍并不会消灭瓶颈，只会把约束挪到产品管理、法务、营销与数据架构</strong>；企业若只做单点提效而缺少自上而下重设计工作流，就换不来 AI 承诺的转型——<strong>增长型用例、保留供应商选择权、以及面向代理的非结构化数据重构</strong>，才是下一阶段的硬功课。</p>
+  <p>顶级 AI 用户的秘密比外界想象更简单——用大白话说清楚要什么、让模型跑起来即可，不必堆砌四十行系统提示词；但 2026 年的分水岭在于<strong>会不会为不同 LLM 配置工具、模态与护栏</strong>：模型本质是「压缩包式」下一词预测，复杂任务要靠 Python 解释器、搜索、Artifacts 或 <strong>Cursor</strong> 等外挂；<strong>ChatGPT</strong> 功能最全可作默认，各产品在搜索、Artifacts、语音性格上各有长短，用户须像管「有点走神的初级分析师」一样审代码、核转写、盯隐含假设。</p>
 </div>
 
-<p><strong>快慢错位的一年。</strong> 炒作与末日叙事（含「工作末日」）都超出 <strong>Andrew Ng</strong> 预期；真正快于预期的是<strong>编码代理</strong>——他六个月前几乎只用 <strong>Claude Code</strong>，如今已混用 <strong>OpenAI Codex</strong>、<strong>Gemini CLI</strong> 与 <strong>OpenCode</strong>，甚至在手机上写代码。<strong>代理式工作流</strong>也开始进入企业，节奏「感觉不错」。</p>
+<p><strong>工具层：别心算，别盲信。</strong> 大乘法一类问题，<strong>ChatGPT</strong> 会调 <strong>Python 解释器</strong>写程序再回传结果；<strong>Grok 3</strong> 无解释器时在「脑子里」硬算，结果接近但错（末位应为 120 却给出 060）；<strong>Claude</strong> 用 <strong>JavaScript</strong> 算对；<strong>Gemini 2.0 Pro</strong> 简单题看似心算正确，加难度后与计算器不符——<strong>不同 LLM 工具集不同，没有工具就会幻觉式硬答</strong>。</p>
 
-<p><strong>小团队、宽护栏、多角色一人扛。</strong> 软件交付变快后，<strong>产品管理瓶颈</strong>恶化成「全面瓶颈」：营销跟不上功能解释、法务跟不上日级发布、设计同样滞后。<strong>Andrew Ng</strong> 倾向 1–10 人的高上下文通才小队，在宽护栏内狂奔，甚至用 AI 起草服务条款再交律师定稿——工程背景者最常见，但产品经理、营销、运营也在学编码参与。</p>
+<p><strong>代码与界面：从图表到整 app。</strong> <strong>ChatGPT 高级数据分析</strong> 能搜 <strong>OpenAI</strong> 历年估值、对数坐标绘图、拟合外推，却会在 <strong>2015</strong> 年 <strong>NA</strong> 处偷偷填 <strong>0.1</strong>（隐含 1 亿美元），又把 <strong>2030</strong> 年外推变量 <strong>2271</strong>（约 20 万亿美元）口述成 <strong>1.7 万亿美元</strong>。<strong>Claude Artifacts</strong> 可把亚当·斯密词条变成闪卡 <strong>React</strong> 小应用，或用 <strong>Mermaid</strong> 画《国富论》章节概念图；专业写码则走 <strong>Cursor</strong> + <strong>Claude 3.7 Sonnet</strong>，<strong>Andrej Karpathy</strong> 用五句话搭井字棋，再一句加 confetti、音效、<strong>git commit</strong>——即 <strong>氛围编程</strong>。</p>
 
-<p><strong>积木、文档与教育。</strong> 未来工程师像拼 <strong>LEGO</strong>：掌握 <strong>检索增强生成（RAG）</strong>、代理框架、评测、<strong>护栏（guardrails）</strong> 与 UI/身份/数据库等积木，组合式快速组装；新积木常超出模型知识截止日期——<strong>Context Hub（chub）</strong> 为代理提供最新 API 文档。<strong>DeepLearning.AI</strong> 与 <strong>LangChain</strong> 长期合作短课；<strong>CodeDream.ai</strong> 用「对话式一对一视频 + 可点击交互 JavaScript」试探教育形态，但 <strong>Andrew Ng</strong> 认为教育大转型仍被过度炒作。</p>
+<p><strong>模态与生态：语音、图、视频、记忆。</strong> 输入侧一半查询靠 <strong>Super Whisper</strong> 等系统级听写；<strong>高级语音模式</strong> 是真·音频 token 往返，比「听写→文本→朗读」的伪音频强，但 <strong>OpenAI</strong> 极保守，<strong>Grok</strong> 则有浪漫/失控/阴谋等娱乐模式。<strong>NotebookLM</strong> 可把 PDF 生成定制播客；图像上传先让模型<strong>转写进表格再追问</strong>（营养标签、验血、牙膏成分、梗图）；<strong>DALL-E 3</strong> 与 <strong>ideogram.ai</strong> 做缩略图。<strong>记忆</strong>、<strong>自定义指令</strong>、韩语学习用 <strong>Custom GPT</strong>（少样本提示词 + 示例）省重复 prompt 时间——生态像「动物园」，<strong>ChatGPT</strong> 仍是功能最全的默认，但 <strong>Perplexity</strong> 搜索、<strong>Claude Artifacts</strong> 图表等需按场景切换。</p>
 
-<p><strong>企业：自下而上不够，要重画贷款流程。</strong> 「千花齐放」式自下而上创新大多只产出<strong>点状提效</strong>；以银行贷款为例，只自动化审批中间一小时是增量，<strong>「10 分钟获批」</strong> 产品才需要营销、路由、数据基建与尽调全链路重设计。<strong>ROI</strong> 难有一刀切公式；他更兴奋于<strong>可衡量且真正改变业务</strong>的「挥棒打本垒打」项目组合——原型成本已暴跌，但资源分配仍常需自上而下。<strong>前线部署工程师（FDE）</strong> 有价值但炒作大于现实；<strong>LangSmith</strong> 等<strong>供应商中立</strong>观测层与<strong>一年期合同</strong>保留选择权同样关键。<strong>开源/开放权重模型</strong> 落后前沿约六至九个月却足够实用；<strong>非结构化数据</strong> 的治理、权限与碎片化，将催生数千万至数亿美元级重构项目——<strong>MongoDB</strong> 等 <strong>NoSQL</strong> 则因模式灵活而契合代理时代的快速原型。</p>
+<h2 id="工具调用-python-解释器与各-llm-的差异">工具调用：Python 解释器与各 LLM 的差异</h2>
 
-<h2 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理">过去一年的 AI 节奏：炒作、末日叙事与编码代理</h2>
-
-<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="工具调用-python-解释器与各-llm-的差异-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>炒作与「工作末日」叙事都超预期；真正快于预期的是编码代理前沿与手机端工作流。</p></div>
+  <div class="callout-body"><p>复杂算术不能靠「下一词预测」硬算；有无 Python 解释器决定会不会在接近正确答案处翻车。</p></div>
 </div>
-<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>Harrison Chase</strong> 开场点出：距去年 <strong>Interrupt</strong> 一年间 AI 变化极多；去年 <strong>Andrew Ng</strong> 炉边对谈是大会回放中<strong>最受喜欢、观看最多</strong>的一场。<strong>Andrew Ng</strong> 被问「什么比预期更快、什么更慢」时，先划两条线：<strong>炒作超出预期</strong>；<strong>末日叙事</strong>（含工作末日，他认为不会发生）也比预期更有市场——这是「慢于期望的理性共识」一侧。</p>
-<p>积极侧：<strong>编码代理</strong> 起飞速度超出他原先猜测。虽「AI 每三个月变天」并不完全成立，<strong>对编码代理而言接近真实</strong>——前沿能力竞争激烈。约六个月前他几乎全用 <strong>Claude Code</strong>；如今仍大量 <strong>Claude Code</strong>，也越来越多用 <strong>OpenAI Codex</strong>，并混用 <strong>Gemini CLI</strong> 与 <strong>OpenCode</strong>（因其开源）。工具组合切换极快；他亦未料到一年前会<strong>在手机上写这么多代码</strong>——办公室 <strong>Mac Mini</strong> 等工作流都在变。</p>
-<p><strong>代理式工作流</strong> 也开始进入企业，「感觉相当不错」。</p>
-<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「过去一年 AI 空间发生太多——什么比您预期更快，什么更慢？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「炒作超出预期；末日叙事也传得更广，包括工作末日——我不认为会发生。积极一面，编码代理比我猜的还快；『每三个月变天』的说法不全是真的，但对编码代理几乎属实——竞争太激烈。六个月前我几乎全是 Claude Code，现在还有 Codex、Gemini CLI、OpenCode……工作流变得极快，我也没想到会在手机上写这么多代码。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="工具调用-python-解释器与各-llm-的差异-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Andrej Karpathy</strong> 从基础机制讲起：语言模型（LLM）本质是<strong>下一词预测</strong>——简单心算尚可，遇到超大整数乘法，人类会放弃心算去找计算器，<strong>OpenAI</strong> 也已训练 <strong>ChatGPT</strong> 识别「脑子里算不了」的问题并<strong>转向工具</strong>。</p>
+<p>演示流程：用户提问大数相乘 → <strong>ChatGPT</strong> 打开 <strong>Python 解释器</strong> → 模型写程序 → 应用通过特殊 token 触发执行 → Python 算出结果以文本回传 → 模型再用自然语言回答。人类标注员通过示例数据教会模型<strong>何时、如何</strong>依赖工具；乘法只是入口，编程语言能做的事远不止此。</p>
+<p><strong>跨模型对比</strong>（同一道难题）：</p>
+<p>| 模型 | 行为 | 结果 | |------|------|------| | <strong>ChatGPT</strong> | 调用 Python | 正确 | | <strong>Grok 3</strong> | 无解释器，心算 | 接近但错（末三位应为 <strong>120</strong>，给出 <strong>060</strong>） | | <strong>Claude</strong> | 写 <strong>JavaScript</strong> 执行 | 正确 | | <strong>Gemini 2.0 Pro</strong> | 未见工具痕迹，简单题看似正确 | 加更难题目后与 <strong>MacBook</strong> 计算器不符，仍幻觉式硬答 |</p>
+<p><strong>Andrej Karpathy</strong> 的教训很直白：必须跟踪<strong>各 LLM 可用工具清单</strong>；没有解释器或不愿用时，模型会「尽力而为」——即<strong>可能幻觉出一个看起来合理的错数</strong>。这是 2026 年使用 LLM 的第一条护栏。</p>
 
-<h2 id="编码代理重塑软件工程-产品管理瓶颈与全能小队">编码代理重塑软件工程：产品管理瓶颈与全能小队</h2>
+<h2 id="chatgpt-高级数据分析-初级分析师的双面性">ChatGPT 高级数据分析：初级分析师的双面性</h2>
 
-<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="chatgpt-高级数据分析-初级分析师的双面性-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>软件快 10–100 倍后，瓶颈从 PM 扩散到营销、法务、设计——未来团队可能是 2 人扛 5 种职能。</p></div>
+  <div class="callout-body"><p>能搜、能画、能拟合，也会在代码里偷偷填数、在口头总结里撒谎——必须会读代码。</p></div>
 </div>
-<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>Andrew Ng</strong> 约一年前提出 <strong>产品管理瓶颈（product management bottleneck）</strong>：若构建变快，<strong>决定做什么、定范围、收客户反馈</strong> 的产品管理工作成约束。过去一年该瓶颈「以好的方式变得更糟」——因为交付确实更快了。</p>
-<p>但现象更广：当写软件快 <strong>10 倍或 100 倍</strong>，<strong>几乎一切</strong> 都成了瓶颈。他的团队已见 <strong>营销瓶颈</strong>——功能太多，营销难以弄清新功能是什么、如何对外讲。法务同理：以前三个月做一个需合规的产品，等法务一周尚可；<strong>现在一天造完却等法务一周</strong>，即成 <strong>法务合规瓶颈</strong>。设计亦然。</p>
-<p>他常思考未来软件团队如何组织——<strong>尚无定论</strong>。趋势是极小规模编制：<strong>1–10 名工程师</strong> 的团队，成员多为<strong>高上下文、高授权通才</strong>，在<strong>很宽的护栏</strong>内狂奔交付，甚至写传统上不属于工程的 <strong>营销文案</strong>。若一个团队需要工程、产品、服务条款、营销文案、设计五种职能，却只有<strong>两名人类</strong>，由<strong>抽屉原理（鸽巢原理）</strong> 每人必兼多职。</p>
-<p>好消息：AI 不会让他变成好营销人，但「<strong>没那么烂</strong>」——高上下文、深度技术、又能用前沿工具兼一点其他角色的通才，流程明显加速。工程师已用 AI 起草 <strong>服务条款</strong> 初稿，再交律师润色后发布。</p>
-<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「软件工程的未来在您脑中是什么样？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「我写产品管理瓶颈时观察到：构建变快，决定做什么就成瓶颈——过去一年这瓶颈以好的方式恶化了。但快 10 或 100 倍时，几乎一切都成瓶颈——营销、法务、设计……我在设 1–10 人的高上下文通才小队，宽护栏内狂奔，甚至写营销文案。两人团队要代表五种职能，每人必兼多职。AI 没让我变成好营销，但没那么烂——这些流程让团队快很多。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="chatgpt-高级数据分析-初级分析师的双面性-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>ChatGPT 高级数据分析（Advanced Data Analysis）</strong> 据 <strong>Andrej Karpathy</strong> 所知相当独特：把 <strong>ChatGPT</strong> 变成可协作的<strong>初级数据分析师</strong>——上传表格、拉数据、可视化。</p>
+<p><strong>案例一：OpenAI 估值时间序列</strong></p>
+<p>1. 明确要求使用<strong>搜索工具</strong>，避免幻觉编造；得到历年<strong>开盘估值</strong>表，<strong>2015</strong> 年为 <strong>NA</strong>（未知）。 2. 要求「画这张图，纵轴用对数刻度」→ 生成对数坐标图，流程顺畅。 3. <strong>隐藏假设</strong>：写绘图代码时把 <strong>2015</strong> 的 <strong>NA</strong> 填成 <strong>0.1</strong>——在代码语境下隐含估值 <strong>1 亿美元</strong>，且<strong>未告知用户</strong>。<strong>Andrej Karpathy</strong> 强调：他熟悉代码、总会读；若读者读不懂代码，他会迟疑是否推荐此类工具。 4. 「fit a trend line and extrapolate until 2030」→ 用 <strong>scipy</strong> 的 <strong>curve_fit</strong> 线性外推；口头称 <strong>2030</strong> 年约 <strong>1.7 万亿美元</strong>。 5. <strong>自相矛盾</strong>：图上 <strong>2030</strong> 标注为 <strong>20271.7B</strong> 量级；要求「print this variable directly」后，变量实为 <strong>2271…</strong>，即外推约 <strong>20 万亿美元</strong>——模型承认「对不起，我搞错了」。</p>
+<p><strong>Andrej Karpathy</strong> 喜欢这个例子恰因两面性：展示工具威力（搜数、作图、外推），也展示<strong>初级分析师式不可靠</strong>——隐含假设、数字总结与代码输出不一致。<strong>强大，但要盯紧</strong>；更多教程视频可自行延伸，本篇不展开全部高级数据分析细节。</p>
 
-<h2 id="通才从哪来-工程底色与跨职能扩张">通才从哪来：工程底色与跨职能扩张</h2>
+<h2 id="claude-artifacts-浏览器里的定制应用与概念图">Claude Artifacts：浏览器里的定制应用与概念图</h2>
 
-<h3 id="通才从哪来-工程底色与跨职能扩张-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="claude-artifacts-浏览器里的定制应用与概念图-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>工程背景者最常见，但产品、营销、运营也能学编码加入——方向不限，工程理解前沿略占优势。</p></div>
+  <div class="callout-body"><p>Artifacts 让 Claude 为「你一个人」写 app 并在浏览器里跑——无后端，但可很够用；图解是 Karpathy 的高频自用场景。</p></div>
 </div>
-<h3 id="通才从哪来-工程底色与跨职能扩张-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>Andrew Ng</strong> 密切合作者多为<strong>深厚工程与技术背景</strong>，又是高授权、略通才、可跨入他岗并借 AI 补技能缺口的人。成功路径<strong>不限方向</strong>：产品经理加强编码后参与这类团队；营销人员有效学编码；运营人员开始造更多产品——<strong>任何背景都可能</strong>，但当前<strong>人数上工程出身最多</strong>，因 AI 编码与理解前沿技术天然略占优。</p>
-<p>团队仍鼓励各背景尝试扮演该角色。</p>
-<h3 id="通才从哪来-工程底色与跨职能扩张-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「这些人该有什么背景？工程师？还是别的学科第一次学编码？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「密切合作者多深工程背景，又是高授权通才，AI 帮补没受过的技能。任何方向都能成功——PM 加强编码、营销学编码、运营造产品都行。但眼下做得最好的人数里，工程背景最多；我们仍鼓励各背景尝试。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="claude-artifacts-浏览器里的定制应用与概念图-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Claude Artifacts</strong> 是 <strong>Anthropic</strong> 侧与 <strong>ChatGPT</strong> 高级数据分析平行的能力：对话中生成可运行界面。</p>
+<p><strong>闪卡 app 流程</strong>：</p>
+<p>1. 从维基复制亚当·斯密简介 → 要求生成 20 张闪卡 → 得到受洗日期、国籍等问答。 2. 要求用 <strong>Artifacts</strong> 写闪卡测验应用 → <strong>Claude</strong> 写 <strong>React</strong> 组件，硬编码问答，在 <strong>Claude</strong> 界面内嵌加载 → 点击翻面、自评对错、洗牌/重置。</p>
+<p><strong>范式对比</strong>：传统是工程师发布 <strong>Anki</strong> 等通用 app 再导入卡片；这里是 <strong>Claude</strong> <strong>仅为当前用户</strong>写 app 并<strong>就地部署</strong>——无数据库、无后端，纯浏览器本地应用，但可相当复杂。<strong>Andrej Karpathy</strong> 非 Artifacts 日常重度用户，但社区展示案例（计时器、小游戏）很多。</p>
+<p><strong>他个人最常用：Mermaid 概念图</strong></p>
+<p>- 读《国富论》某章 → 要求生成本章概念图 → <strong>Claude</strong> 写 <strong>Mermaid</strong> 代码渲染图：分工与市场范围、陆运与水运、早期文明与水路贸易、地理因素等节点关系。 - 对「视觉型思考者」，空间化 argument layout 帮助记忆章节骨架；书、章、源码皆可成图。</p>
+<p><strong>Andrej Karpathy</strong> 小结：LLM 不仅能<strong>输出</strong>代码，<strong>ChatGPT</strong> 能展示图，<strong>Claude Artifacts</strong> 能内嵌 <strong>React</strong> 直接用——但专业编码不会停在网页里要代码片段（太慢、无仓库上下文），下一节转向 <strong>Cursor</strong>。</p>
 
-<h2 id="进入-ai-软件工程-积木式组合与-context-hub">进入 AI 软件工程：积木式组合与 Context Hub</h2>
+<h2 id="cursor-与氛围编程-专业编码的真实工作流">Cursor 与氛围编程：专业编码的真实工作流</h2>
 
-<h3 id="进入-ai-软件工程-积木式组合与-context-hub-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="cursor-与氛围编程-专业编码的真实工作流-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>掌握足够「积木」并组合式组装，比从零写一切更快；新 API 需 Context Hub 给代理最新文档。</p></div>
+  <div class="callout-body"><p>网页 LLM 缺文件上下文；Cursor Composer 是自主代理，Karpathy 自造「氛围编程」描述放手让它改全库。</p></div>
 </div>
-<h3 id="进入-ai-软件工程-积木式组合与-context-hub-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>Andrew Ng</strong> 用 <strong>LEGO 积木</strong> 比喻：若只有白色砖只能搭无聊东西；黑白黄棕绿加曲线件，<strong>组合空间指数级增长</strong>。计算机科学一直有优秀积木；<strong>代理式编码</strong> 时代 AI 与非 AI 积木都在激增——<strong>检索增强生成（RAG）</strong>、代理框架、<strong>评测（evals）</strong>、<strong>护栏（guardrails）</strong>，以及 UI 组件、身份机制、前后端持久化等。</p>
-<p>精通足够多积木的开发者，可<strong>组合式</strong>极快造软件。<strong>DeepLearning.AI</strong> 提供大量短课帮人们掌握各供应商积木；另一挑战是用编码代理<strong>快速组装</strong>积木成目标软件。</p>
-<p>痛点：许多积木太新，代理不知如何调用——例如 <strong>Nano Banana</strong> 在不少领先模型 <strong>知识截止日期之后</strong> 发布，代理甚至不知存在、更不知 API 语法。<strong>Context Hub（chub）</strong> 是他与 <strong>Rohit Prasad</strong> 推动的项目：像「<strong>给 AI 代理用的 Stack Overflow</strong>」，让代理获取最新 API、SDK、积木文档，并可<strong>反馈文档</strong>以改进。<strong>Andrew Ng</strong> 个人对一些 API 语法嫌烦，用 Context Hub 加载最新文档后让代理代劳调用，显著加速自己的编码。</p>
-<p><strong>Harrison Chase</strong> 插话：<strong>LangChain</strong> 也有名叫 Context Hub 的产品，但是不同东西——<strong>Andrew Ng</strong> 的 chub <strong>对编码代理更有用</strong>，应去用那个。另：<strong>LangChain</strong> 是 <strong>DeepLearning.AI</strong> 课程合作方中<strong>仅次于 OpenAI 的第二家</strong>；许多人通过 DeepLearning 课程认识 LangChain。</p>
-<h3 id="进入-ai-软件工程-积木式组合与-context-hub-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「想进入新软件工程的人该试什么工具、什么心态？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「我脑中有积木模型——检索增强生成、框架、评测、护栏，还有 UI、身份、数据库……精通足够积木就能组合式快速搭建，像 LEGO：颜色越多组合指数增长。DeepLearning.AI 有很多短课；还要用编码代理组装。问题是新积木代理不会用——Nano Banana 在知识截止后才发布，代理不知道。Context Hub 是 Rohit 和我做的：代理版 Stack Overflow，拿最新文档还能反馈改进。LangChain 也有 Context Hub 名字，但是不同东西——他的对编码代理更有用。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="cursor-与氛围编程-专业编码的真实工作流-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Andrej Karpathy</strong> 大部分工作与休闲时间在写代码，却<strong>不去 ChatGPT 要代码片段</strong>——所有网页 LLM 都缺乏与本地工程协作的上下文。行业普遍改用 <strong>VS Code</strong>、<strong>Windsurf</strong>、<strong>Cursor</strong> 等独立应用：下载到本机，索引文件系统，通过 API 远程调用 <strong>Claude</strong> 等，无需打开网页复制粘贴。</p>
+<p><strong>井字棋 demo</strong>：</p>
+<p>- 全新 <strong>React</strong> 仓库，对 <strong>Composer</strong>（<strong>Cmd+I</strong>）说：删掉脚手架、做简单 tic-tac-toe → 约一分钟写完，本地运行可玩。 - 底层模型：<strong>Claude 3.7 Sonnet</strong>（<strong>Anthropic API</strong>）。 - 演进：<strong>Cmd+K</strong> 改单行 → <strong>Cmd+L</strong> 解释代码块 → <strong>Composer</strong> + Agent 集成：执行命令、跨文件编辑、自主改库。</p>
+<p><strong>氛围编程（Vibe Coding）</strong>：<strong>Andrej Karpathy</strong> 称此名可能由他创造——把控制权交给 <strong>Composer</strong>，用自然语言下指令，<strong>希望它能跑通</strong>；最坏情况仍可回落传统编程：所有文件在手，CSS/TS 可人工改。</p>
+<p><strong>现场加功能</strong>：「X 或 O 赢时要有 confetti」→ 安装 <strong>react-confetti</strong>、改 <strong>app.tsx</strong>、加获胜格 CSS；又提议胜利音效 → 需确认命令、下载 <strong>victory.mp3</strong>（来源不明，可能来自常见仓库 URL）、加备用方案、<strong>git add</strong> + <strong>git commit</strong>。<strong>Andrej Karpathy</strong> 坦言没全程跟踪每一行，但效果「相当惊艳」——这正是氛围编程的取舍。</p>
 
-<h2 id="deeplearningai-langchain-与教育实验">DeepLearning.AI、LangChain 与教育实验</h2>
+<h2 id="语音模态-伪音频-真音频与-grok-的性格">语音模态：伪音频、真音频与 Grok 的性格</h2>
 
-<h3 id="deeplearningai-langchain-与教育实验-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="语音模态-伪音频-真音频与-grok-的性格-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>该学什么在变（积木+PM 通识），但教育「大转型」仍被过度炒作——CodeDream.ai 在试对话式交互课。</p></div>
+  <div class="callout-body"><p>一半查询靠嘴：系统听写是伪音频；高级语音模式才是真·音频 token，OpenAI 极保守，Grok 极敢玩。</p></div>
 </div>
-<h3 id="deeplearningai-langchain-与教育实验-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>DeepLearning.AI</strong> 在训练内容与<strong>交付方式</strong>两侧实验。开发者要学：<strong>编码代理</strong>、积木、一点 <strong>产品管理</strong> 等通识技能——「学什么」已显著变化；<strong>Coursera</strong> 与 DeepLearning 已提供大量相关训练。</p>
-<p>「怎么学」的变革则<strong>尚未真正到来</strong>——他们几周前预览上线 <strong>CodeDream.ai</strong>：愿景不是上网课，而是<strong>来对话</strong>。体验是模拟与 <strong>Andrew Ng</strong> 一对一视频：可后仰听他讲 <strong>Context Hub</strong> 与编码代理，也可随时打断 AI 提问。他个人大量实验用 <strong>JavaScript 替代视频与幻灯片</strong>——演示区可点击、可输入自己的提示词或查询，<strong>静态视频变交互区</strong>（已上线：不是录屏而是 <strong>JavaScript 共享</strong>，可交互运行）。</p>
-<p>教育大转型<strong>被过度炒作</strong>；变革在路上，但今天上网课仍希望有更好形态——比十年前课程更互动（如当天刚上线 <strong>AMD Sharon Jo</strong> 的 <strong>Transformers</strong> 新课，可视化与可玩组件增多），<strong>更大跃迁</strong>他仍在深思。</p>
-<h3 id="deeplearningai-langchain-与教育实验-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「AI 新世界下教育怎么变？DeepLearning 课程有没有融入新做法？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「学什么变了——学编码代理、积木、一点产品管理。DeepLearning 和 Coursera 在补训练。但怎么学的大转型还没真正到——我们几周前预览 CodeDream.ai：不是课，是对话；模拟跟我视频，可打断。我用 JavaScript 替视频——演示区能点、能输提示词，已上线。教育转型被过度炒作；变革在路上，但今天上网课我还想要更好的——比十年前互动多了，比如今早刚上的 Transformers 课，但更大变革我还在想。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">3</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「点进视频输入——今天就有还是未来方向？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">4</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「今天就有。不是录屏共享，是 JavaScript 共享——你能交互我『屏幕共享』里跑的代码。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="语音模态-伪音频-真音频与-grok-的性格-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>输入：别硬打字</strong></p>
+<p>- <strong>Andrej Karpathy</strong> 约 <strong>50%</strong> 查询用键盘、<strong>50%</strong> 语音；手机上约 <strong>80%</strong> 语音。 - <strong>ChatGPT</strong> 手机 app 有两种：<strong>麦克风</strong> = 语音转文字（仍走文本对话）；<strong>音频图标</strong> = <strong>高级语音模式（Advanced Voice Mode）</strong>。 - 桌面 <strong>ChatGPT</strong> 无麦克风转文字 → 他用 <strong>Super Whisper</strong>（亦有人用 <strong>Whisper Flow</strong>、<strong>Mac Whisper</strong>）：<strong>F5</strong> 录音 → 再按 <strong>F5</strong> 转写进输入框。产品名、库名常转写差，重要时仍手打。 - 输出：<strong>朗读（Read aloud）</strong> = 文本转语音，仍是伪音频链。</p>
+<p><strong>真音频：高级语音模式</strong></p>
+<p>- 文本 token 之外，音频可切成频谱小块、量化成约 <strong>10 万</strong> 词表里的<strong>音频块</strong>，模型直接理解/生成<strong>音频 token</strong>——<strong>无文本中介</strong>。 - 演示：闲聊、用<strong>瑞利散射</strong>解释天空为何呈蓝、模仿 <strong>Yoda</strong> / 海盗、讲故事、快速数数、动物叫声（部分请求会被拒，<strong>Andrej Karpathy</strong> 吐槽高级语音模式<strong>过于拘谨</strong>，拒绝多、略觉尴尬）。 - 对话结束后界面会显示转写，但那是<strong>事后文本</strong>，实际交互是<strong>音频 token</strong> 往返。 - <strong>定价档位</strong>与功能推送变化快（录制时「高级语音向免费用户开放」的消息已可能过时）——须跟踪定价与功能边界。</p>
+<p><strong>Grok 高级语音</strong></p>
+<p>- <strong>grok.com</strong> / app 右上角语音；多种人格模式：<strong>默认</strong>、<strong>浪漫</strong>、<strong>失控</strong>、<strong>阴谋论</strong>、<strong>性感</strong> 等——<strong>OpenAI</strong> 极谨慎，<strong>Grok</strong> 则什么都敢做，娱乐向更强。<strong>Andrej Karpathy</strong> 建议：要正经用 <strong>ChatGPT</strong> 高级语音；要娱乐可试 <strong>Grok</strong>。</p>
+<p><strong>核心结论</strong>：别死磕键盘，语音输入已足够好用，<strong>Andrej Karpathy</strong> 已普遍采用。</p>
 
-<h2 id="企业-ai-落地-自下而上失灵与贷款审批案例">企业 AI 落地：自下而上失灵与贷款审批案例</h2>
+<h2 id="notebooklm-任意素材的按需播客">NotebookLM：任意素材的按需播客</h2>
 
-<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="notebooklm-任意素材的按需播客-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>「千花齐放」自下而上创新大多只产点状提效；贷款案例说明须自上而下重设计全链路才换增长。</p></div>
+  <div class="callout-body"><p>上传 PDF/网页进上下文，一键生成约 30 分钟「深度播客」——适合小众兴趣、散步开车时的被动学习。</p></div>
 </div>
-<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>AI Aspire</strong>（<strong>Andrew Ng</strong> 与 <strong>Chris Tann</strong> 共创的 AI 顾问公司）常对话 <strong>Fortune 50/500、G2000</strong> 级企业。一致主题：大家都投过<strong>自下而上创新</strong>、「千花齐放」，<strong>大多未见回报</strong>——CEO 与董事会问 <strong>AI 的 ROI 在哪</strong>。他仍主张继续自下而上，但这类创新常产出<strong>点状方案</strong>、带来<strong>增量效率</strong>——好事，却不是 AI 承诺的<strong>更广转型</strong>。</p>
-<p><strong>银行贷款承销</strong> 例：流程五步——营销产品、收申请、审批准、最终尽调、执行放款。多团队发现中间<strong>审批</strong>可用 AI：人审一小时变 AI，值得做。但若<strong>整条承销流程不变</strong>、只省一小时人工，只是<strong>小增量效率</strong>。</p>
-<p>部分银行转向：不做这点效率，而<strong>重想工作流</strong>，营销 <strong>「10 分钟获批」</strong> 贷款——不必等一周才有人空出一小时审件，申请可<strong>立刻</strong>送 AI 决策。落地难在需<strong>更广范围</strong> 的人重设计：要营销新产品、申请立刻路由审批、<strong>营销与数据基建</strong>介入、AI 做初判、尽调与执行也要扩容。<strong>自下而上</strong> 产创意，须配 <strong>自上而下</strong> 推动改全链路步骤才能<strong>促增长</strong>。</p>
-<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「企业采用 AI 比您预期快还是慢？正确做法是什么？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「AI Aspire 跟 Fortune 50/500 谈策略。一致的是：大家都投自下而上、千花齐放，大多未见回报——CEO 问 ROI。仍要继续，但常是点状提效，不是更广转型。银行贷款五步骤——若只自动化中间审批一小时，流程不变，只是小增量。有的银行改做『10 分钟获批』——要重设计营销、路由、数据基建、尽调扩容。自下而上很有价值，但要配自上而下改全链路才能促增长。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="notebooklm-任意素材的按需播客-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>NotebookLM</strong>（<strong>notebooklm.google.com</strong>）：左侧<strong>素材区</strong>上传文本、网页、PDF；进入模型上下文后可聊天，右侧 <strong>Deep Dive</strong> 深度播客点生成，等待数分钟得到定制播客。</p>
+<p><strong>Andrej Karpathy</strong> 示例：上传 <strong>Arc Institute</strong> 基因组基础模型 <strong>Evo2</strong> / <strong>OpenGenome 2</strong> 论文 PDF → 生成约 <strong>30 分钟</strong> 双人对话式播客，讲 DNA 预测、蛋白到生物体层级影响等。可自定义指令、重新生成、<strong>互动模式</strong>下播到一半插问。</p>
+<p><strong>使用场景</strong>：对非专长、仅浅层兴趣的文档，散步或长途开车时听；人类播客不会覆盖的任意小众主题。<strong>Andrej Karpathy</strong> 还在 <strong>Spotify</strong> 发布用 <strong>NotebookLM</strong> 生成的 <strong>Histories of Mysteries</strong> 一季，供听众定性感受能力上限。</p>
 
-<h2 id="省成本还是促增长-roi-与本垒打组合">省成本还是促增长：ROI 与本垒打组合</h2>
+<h2 id="图像输入-转写-核对-再追问">图像输入：转写—核对—再追问</h2>
 
-<h3 id="省成本还是促增长-roi-与本垒打组合-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="图像输入-转写-核对-再追问-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>省钱有顶、增长无顶；本垒打项目可测但更需创意——300 条想法表格里筛少数大注常靠自上而下。</p></div>
+  <div class="callout-body"><p>上传图后先让模型转写进表格核对视觉 OCR，再分析——尤其医疗、成分、梗图场景。</p></div>
 </div>
-<h3 id="省成本还是促增长-roi-与本垒打组合-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p>许多企业谈 <strong>降本</strong>——可以做，但 <strong>Andrew Ng</strong> 更推动 <strong>更有想象力的增长</strong>：钱只能省那么多，<strong>增长几乎无上限</strong>。<strong>10 分钟贷款</strong>（银行真实推进）、<strong>客服/联络中心</strong>——不只省钱，自动化后可<strong>更快服务更多客户</strong>、体验更好从而促增长；<strong>汽车餐厅语音点餐</strong> 自动化亦带来更愉悦体验与增长。更多案例在不同行业涌现，部分因权限未公开。</p>
-<p><strong>ROI 怎么量？</strong> 他坦言「我也给不出一刀切答案」——企业太多元，像量整个业务，难有一刀切公式。最让他兴奋的项目<strong>应测、值得测</strong>；也有些 <strong>挥棒打本垒打</strong> 式项目创造巨大价值——不是争论磁盘驱动 2% 增长减 1% 实施成本，而是<strong>一目了然在转型</strong>（上市公司仍须量，但性质不同）。</p>
-<p>反直觉：<strong>驱动增量有时比驱动转型更难</strong>——老板要明年 <strong>2%</strong> 改善，大家只能更努力一点；若要 <strong>20% 或 50%</strong> 增长，不能全员多干 50%，必须更有创意。</p>
-<p><strong>AI Aspire</strong> 经验：企业常寄来<strong>数百条想法</strong> 的电子表格——一家金融机构 <strong>300+</strong> 条，请帮忙筛该投哪些。分析极难；面对这么多想法，要技术可行性 + 业务影响双重分析，缩到<strong>少数值得重仓</strong>的下注。<strong>挥棒打本垒打</strong> 型多为 <strong>自上而下</strong>；他建议<strong>组合</strong>几笔深思熟虑的大注，而非一次孤注一掷。</p>
-<p><strong>代理式编码</strong> 让实验与原型成本<strong>暴跌</strong>——他们不断做原型；但 <strong>10 万美元预算</strong> 也无法全做，重仓仍需资源分配，故常需略 <strong>自上而下</strong> 推动。</p>
-<h3 id="省成本还是促增长-roi-与本垒打组合-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「有没有特别兴奋的增长案例？ROI 怎么量？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「银行 10 分钟贷款是真实案例；客服中心不只为省钱——服务更多人更快、体验更好促增长；汽车餐厅语音点餐也是。ROI？我也给不出一刀切答案——企业太多元。让我兴奋的项目要测；也有挥棒打本垒打型，一目了然在转型。有趣的是：增量 2% 有时比 50% 增长更难——后者逼你想更有创意的方案。AI Aspire 有人寄 300+ 条想法表格让我们筛——技术分析加业务分析缩到少数大注。本垒打型常自上而下；组合几笔深思熟虑的下注。原型成本暴跌，我们不断做原型，但重仓仍要自上而下分配资源。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">3</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「本垒打型多是自上而下？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">4</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「对——组合几笔深思熟虑的下注；别只孤注一掷一次。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="图像输入-转写-核对-再追问-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>通用两步法</strong>：<strong>Andrej Karpathy</strong> 倾向先把图中相关信息<strong>转写进文本</strong>，确认模型<strong>看对数值</strong>，再追问——因不完全确定视觉识别是否可靠。</p>
+<p><strong>案例摘要</strong>：</p>
+<p>1. <strong>Brian Johnson longevity mix 营养标签</strong>：转表格 → 按成分分组、按「可能安全程度」排序，区分基础维生素与可疑/研究不足添加物；作为后续研究的初稿。 2. <strong>验血 PDF（约 20 页无用）</strong>：分段截图 lipid panel 等 → 确认数值 → 迭代解读；<strong>Mac</strong> <strong>Ctrl+Shift+Cmd+4</strong> 截图进剪贴板再粘贴。<strong>Andrej Karpathy</strong> 对常规验血指标较信 <strong>ChatGPT</strong>（训练语料里此类文档极多），但仍建议与医生讨论。 3. <strong>论文里的 tricky 数学式</strong>：先要 text 形式再求 <strong>π</strong> 处取值等。 4. <strong>Colgate 牙膏成分</strong>：转写 → 哪些更安全/更可疑 → 若只关心清洁功能，哪些色素等可删——结论：多数添加物非功能必需，令他 upset。 5. <strong>梗图（murder of crows / attempted murder）</strong>：<strong>ChatGPT</strong> 解释双关，帮朋友 decode meme。</p>
+<p><strong>图像输出简述</strong>（详见下节）：<strong>DALL-E 3</strong>、<strong>ideogram.ai</strong> 生成缩略图；<strong>ChatGPT</strong> 搜当日头条再「generate an image that summarizes today」。<strong>DALL-E 3</strong> 当前为<strong>独立文生图模型</strong> + caption 拼接，非全在单一 LLM 内完成——了解即可。</p>
 
-<h2 id="前线部署工程师-供应商锁定与-langsmith">前线部署工程师、供应商锁定与 LangSmith</h2>
+<h2 id="图像与视频生成-dall-e-镜头与-sora-们">图像与视频生成：DALL-E、镜头与 Sora 们</h2>
 
-<h3 id="前线部署工程师-供应商锁定与-langsmith-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="图像与视频生成-dall-e-镜头与-sora-们-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>FDE 有价值但炒作被放大；多数公司仍是内部工程师为主、少量 FDE——合同与工具层要保留模型选择权。</p></div>
+  <div class="callout-body"><p>高级语音手机端可开摄像头「指物问话」；AI 视频生成进化极快，Karpathy 工作里用得少。</p></div>
 </div>
-<h3 id="前线部署工程师-供应商锁定与-langsmith-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>前线部署工程师（Forward Deployed Engineer，FDE）</strong> 在硅谷热议中很火（<strong>Aaron Levie</strong> 一两天前亦上台分享）。<strong>Andrew Ng</strong> 认为 FDE <strong>是好主意</strong>，多数公司未来仍是<strong>大量内部 AI 工程师 + 较小嵌入式 FDE 团队</strong>——比例上内部远多于 FDE；炒作 <strong>略大于现实</strong>，但仍是好事，应多创造 FDE 就业。</p>
-<p>构建代理工作流 <strong>很难</strong>：懂业务、面向客户、可靠性、<strong>可观测性</strong>、<strong>评测</strong>、对客户反驳不可行方案、与利益相关方定自动化范围、<strong>变更管理</strong>——需深度技术判断；嵌入式 FDE 能加速。</p>
-<p>另一难题：<strong>能否供应商中立的 FDE？</strong> AI 领先模型 <strong>变化极快</strong>——他不知一年后领先模型或领先 <strong>编码代理</strong> 是谁；不确定期 <strong>选择权极有价值</strong>。许多供应商给 <strong>20–30% 折扣</strong> 但要 <strong>三年合同</strong>——他个人<strong>几乎从不签超过一年</strong>，不论折扣，以保留一年后选最好供应商的权利。</p>
-<p>企业亦问：若让某家供应商的少数 FDE 嵌入并深度绑定单一模型，<strong>一两年后选择权损失多少？</strong> 这是他个人常用 <strong>LangSmith</strong> 的原因——<strong>Harrison Chase</strong> 把它做得易用；这类 <strong>供应商中立</strong> 工具对观测、长期保留选择权很有价值。供应商很好，要合作，但<strong>长期保留选择权</strong>也重要。</p>
-<h3 id="前线部署工程师-供应商锁定与-langsmith-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「FDE 最近谈很多——每家公司都会有吗？为何影响这么大？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「硅谷热议，Aaron 前几天也讲了——FDE 是好主意。未来多数公司内部工程师远多于嵌入式 FDE 小团队；炒作略大于现实，但是好事。建代理工作流很难——业务、客户、可观测性、评测、变更管理……嵌入式 FDE 能加速。难的是供应商中立的 FDE 吗？领先模型变化快——我不知道一年后领先编码代理是谁；选择权很有价值。供应商给 20–30% 折扣要三年合同——我几乎从不签超过一年。FDE 嵌入单一模型会损选择权。LangSmith 我用很多——Harrison 做得易用；供应商中立工具对观测和选择权很有价值。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="图像与视频生成-dall-e-镜头与-sora-们-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>多模态统一视角</strong>：图像与音频一样可切成小块、量化进 token 流；<strong>Transformer</strong> 本身不区分文本/音频/图像 token，编解码器才负责模态。<strong>全模态（Omni）</strong> 模型可在 LLM 内原生处理；也可像 <strong>DALL-E</strong> 那样外挂专用生成器。</p>
+<p><strong>高级语音 + 视频（手机 app）</strong></p>
+<p>- 非网页端；连接 advanced voice 后点视频图标，持续看摄像头。 - 演示：声学 foam 面板、<strong>Genghis Khan and the Making of the Modern World</strong>、<strong>Surely You're Joking, Mr. Feynman</strong>、<strong>Aranet 4</strong> CO₂ <strong>713 ppm</strong>（室内一般可，理想 <strong>&lt;800</strong>，<strong>&gt;1000</strong> 需通风）、<strong>Middle-earth</strong> 地图等——指物即答，<strong>Andrej Karpathy</strong> 认为给长辈演示很自然。 - 底层可能仍是<strong>每秒抽帧</strong>而非真连续视频消费——用户体感像视频流。</p>
+<p><strong>AI 视频生成</strong></p>
+<p>- 不深度展开；展示推文对比多模型「丛林里的老虎」：<strong>VO2</strong> 近 SOTA，<strong>OpenAI Sora</strong> 等风格各异——进化快，非 <strong>Andrej Karpathy</strong> 日常工具（非创意职业）。</p>
 
-<h2 id="开源模型-数据战略与非结构化重构">开源模型、数据战略与非结构化重构</h2>
+<h2 id="记忆-自定义指令与-custom-gpt">记忆、自定义指令与 Custom GPT</h2>
 
-<h3 id="开源模型-数据战略与非结构化重构-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="记忆-自定义指令与-custom-gpt-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>开放权重模型落后前沿约六至九个月却够用；代理之前应先修数据——非结构化重构将是巨额项目。</p></div>
+  <div class="callout-body"><p>新对话 token 窗口清零；Memory 跨会话；Custom GPT 只是把常用少样本 prompt 存起来省时间。</p></div>
 </div>
-<h3 id="开源模型-数据战略与非结构化重构-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>开源/开放权重模型</strong> 持续保持这一格局：约 <strong>六至九个月</strong> 落后前沿，但前沿模型够贵，他的团队大量用开放权重模型（有时微调有时不）。希望持续支持；近两周白宫关于<strong>发布前审查模型</strong> 的声音令他 <strong>相当担忧</strong>，已与政府朋友沟通——<strong>开源/开放权重之战</strong> 仍在，有时以美中竞争等名义出现；保护开源会让世界更丰富，也帮大家保留选择权。</p>
-<p><strong>先修数据战略再建代理</strong>：<strong>AI Aspire</strong> 见大型企业最常见痛点之一是 <strong>重思数据架构</strong>。过去 10–20 年精力在<strong>结构化数据</strong>（表、关系型、电子表格）——仍重要；但 AI 能处理<strong>非结构化</strong>（文本、图像、PDF、音频、视频），<strong>在正确时间地点把非结构化数据组织好交给代理</strong> 突然比过去有价值得多。</p>
-<p>市场很多供应商谈非结构化，但他<strong>找不到从政治上满意的单一好方案</strong>——<strong>AI Fund / AI Aspire</strong> 内部在做「疯狂实验」自建重构；若成功会多谈。他预见：像当年结构化 <strong>数据架构</strong> 大工程一样，未来数年许多企业会有 <strong>数千万至数亿美元级</strong> 项目，让数据更 <strong>AI 就绪 / 代理就绪</strong>。</p>
-<p>现有架构为何未就绪？<strong>碎片化</strong>、<strong>治理</strong>、数据散落、<strong>无共识模式</strong>、数据在某人笔记本、<strong>权限为人类设计非为代理</strong>——代理继承我的权限吗？治理与可观测性怎么管？金融服务业大量 PDF <strong>合规保留 20 年无人读</strong>——现在 AI 能看，整理极有价值。</p>
-<p><strong>Harrison Chase</strong> 提到 <strong>CJ</strong> 稍后讲链接技术；<strong>Andrew Ng</strong> 顺带编码小经验：他个人大量用 <strong>MongoDB</strong>——关系库虽好，但快速原型时 <strong>重设计数据库模式</strong> 太烦；虽 AI 做迁移 <strong>几乎从不</strong> 删库，「几乎从不但不是从不」仍烦。<strong>NoSQL</strong> 可写入任意数据、读时再定模式，迭代快；不一定撑最大生产负载，超大企业终用关系库，但 <strong>NoSQL 比多数人想更可扩展</strong>，支撑代理时代节奏。</p>
-<h3 id="开源模型-数据战略与非结构化重构-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「开源模型相对前沿怎么看？建代理前数据战略？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「开放权重持续落后六至九个月，前沿模型贵，我们大量用开放权重。白宫最近要发布前审查模型让我担忧——要保护开源。AI Aspire 见最多痛点是重思数据架构：结构化做了 20 年，非结构化突然有价值——文本 PDF 音频在正确时间给代理。供应商很多，我找不到满意的单一方案——我们在自建实验。预见数千万到数亿美元级重构项目。问题：碎片化、治理、权限为人类非代理、PDF 合规存 20 年没人看——AI 看很有价值。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">3</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「编码代理不仅改变做什么，还改变什么技术栈合适。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">4</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「MongoDB 我用很多——原型时改模式烦，AI 迁移几乎从不删库但不是从不。NoSQL 写入数据读时再定模式，迭代快——别被模式重构拖慢，代理已经很快了。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="记忆-自定义指令与-custom-gpt-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>ChatGPT Memory</strong></p>
+<p>- 每开新 chat，上下文从零开始；<strong>Memory</strong> 需触发（有时自动，常说「remember this」）。 - 例：讨论好莱坞黄金年代 → 用户认同 <strong>1990 年代末—2000 年代初</strong>  peak → 「can you please remember this」→ <strong>memory updated</strong>；系统写入关于用户的文本摘要，<strong>prepend 到后续所有对话</strong>。 - <strong>Andrej Karpathy</strong> 起初不确定是否有用，现已改观：自然使用越久越「懂你」，电影推荐等更贴个人；可编辑/删记忆列表（他称内容太 personal 未在片中展示）。据其所知 <strong>Memory</strong> 当时为 <strong>ChatGPT</strong> 较独特功能。</p>
+<p><strong>Custom Instructions（自定义指令）</strong></p>
+<p>- 设置 → Customize：<strong>别像企业人力伙伴那样说话，正常交流</strong>；多给解释与教育性内容。 - 身份实验字段；学韩语时指定默认敬语等级，避免过 informal 或过 formal。</p>
+<p><strong>Custom GPT（以韩语学习为例）</strong></p>
+<p>| GPT | 作用 | 要点 | |-----|------|------| | <strong>Korean vocabulary extractor</strong> | 句子 → 「韩文;英文」词典行，可导入 <strong>Anki</strong> | 指令 + <strong>4 个 concrete examples</strong> = <strong>少样本提示词（few-shot prompt）</strong>，比零样本准 | | <strong>Korean detailed translator</strong> | 整句翻译 + 逐词拆解，可追问 | 示例用类 XML 标签框 input/output | | <strong>KoreanCap</strong> | 综艺截图 OCR → 翻译 → 拆解（如 *Singles Inferno*） | 三步流水线写进 instructions |</p>
+<p><strong>本质</strong>：Custom GPT <strong>没有新魔法</strong>，只是<strong>节省重复 prompt 时间</strong>——固定任务描述与示例存一次，每次只改变输入句或截图。<strong>Andrej Karpathy</strong> 认为 <strong>ChatGPT</strong> 翻译（含俚语、语气）已显著优于 <strong>Google Translate</strong> / <strong>Papago</strong> 等；「不懂为何独立翻译器还存在」——强观点，读者自行验证。</p>
+<p><strong>Few-shot 教学类比</strong>：像教人类任务，<strong>示范几例</strong>比纯文字描述效率高——人类也擅长少样本学习。</p>
 
-<h2 id="mongodb-与快速迭代-编码代理改变技术选型">MongoDB 与快速迭代：编码代理改变技术选型</h2>
+<h2 id="生态选型-你在跟「压缩包」说话">生态选型：你在跟「压缩包」说话</h2>
 
-<h3 id="mongodb-与快速迭代-编码代理改变技术选型-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="生态选型-你在跟「压缩包」说话-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>代理编码极快时，别让数据库模式重构成为新瓶颈——NoSQL 换迭代速度。</p></div>
+  <div class="callout-body"><p>LLM 生态像动物园：<strong>ChatGPT</strong> 默认最全，但 <strong>Perplexity</strong> 搜索、<strong>Claude Artifacts</strong>、<strong>Grok</strong> 语音性格各擅胜场；选型看定价档位、工具、模态与端差异。</p></div>
 </div>
-<h3 id="mongodb-与快速迭代-编码代理改变技术选型-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p>本节承接数据与工具链讨论：<strong>编码代理</strong> 改变的不只是「写什么软件」，还有「什么底层技术利于快速试」。<strong>Andrew Ng</strong> 的 <strong>MongoDB</strong> 偏好是工作流层面的务实选择，与企业级非结构化数据架构大工程形成对照——前者服务个人/小团队原型迭代速度，后者服务代理规模化接入公司知识库。</p>
-<p>大会在 <strong>Andrew Ng</strong> 感谢生态贡献中收尾；观众鼓掌。<strong>CJ</strong> 将讲链接技术（大会议程引用，正文未展开）。</p>
-<h3 id="mongodb-与快速迭代-编码代理改变技术选型-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「代表大家感谢你来、分享思考、为生态所做一切。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「谢谢，谢谢大家。」</p>
-    </div>
-  </article>
-</div>
+<h3 id="生态选型-你在跟「压缩包」说话-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Andrej Karpathy</strong> 收束框架——你本质上在跟<strong>「压缩包」</strong>说话：注意<strong>定价档位</strong>与背后<strong>模型大小</strong>；大模型世界知识多、写作更有创造力；小模型易错、易幻觉。</p>
+<p><strong>推理模型（强化学习训练）</strong>：数学、代码、推理类问题先试普通模型，不行再切<strong>推理模型</strong>（在界面里切换）。</p>
+<p><strong>工具层 checklist</strong>：</p>
+<p>- 新鲜信息 → <strong>internet search</strong>（并非所有 app 都有） - 作图、数据分析 → <strong>Python 解释器</strong> / <strong>Advanced Data Analysis</strong> - 原型 web app、内联图表 → <strong>Claude Artifacts</strong> - 专业编程 → <strong>Cursor</strong> / <strong>Composer</strong> 等</p>
+<p><strong>多模态层</strong>：</p>
+<p>- 输入输出：text、audio、image、video - <strong>原生全模态</strong>与<strong>外挂模型经文本拼接</strong>——能力边界不同</p>
+<p><strong>体验层</strong>：文件上传、<strong>Memory</strong>、自定义指令、<strong>GPTs</strong></p>
+<p><strong>端差异</strong>：同一产品<strong>网页端与手机 app</strong> 功能常不一致（如高级语音的视频能力仅手机端、<strong>Grok</strong> 语音在 app 不在桌面端）——须自行跟踪。</p>
+<p><strong>产品偏好举例</strong>：</p>
+<p>- 默认：<strong>ChatGPT</strong>（先发者、功能最全） - 搜索仍常用 <strong>Perplexity</strong>（搜索做得久、模型好） - 简单 web 原型与 diagram → <strong>Claude Artifacts</strong> - 语音 → <strong>ChatGPT Advanced Voice</strong>；太保守则 <strong>Grok</strong> - 各家有长有短，<strong>实验并跟踪</strong>即可</p>
+<p><strong>片末态度</strong>：比人们预期更简单——用大白话说清楚、正确配置即可；到 <strong>2026</strong> 年，轻视大语言模型的工程师可能输给把工具配对的初级同事。<strong>70 分钟免费</strong>，来自 <strong>OpenAI 联合创始人</strong> 的一次直白分享。</p>
+
+<h2 id="关键语录与交锋时刻">关键语录与交锋时刻</h2>
+
 
 <details class="collapsible meta-panel" id="延伸术语表">
   <summary>延伸术语表</summary>
   <div class="collapsible-body">
-<div class="table-wrap"><table><thead><tr><th>术语</th><th>说明</th></tr></thead><tbody><tr><td><strong>Interrupt 26</strong></td><td>LangChain 主办的 Agent 主题年度大会（2026 第二届）</td></tr><tr><td><strong>产品管理瓶颈（product management bottleneck）</strong></td><td>构建加速后，「决定做什么、定范围、收反馈」成为系统约束</td></tr><tr><td><strong>Context Hub（chub）</strong></td><td>Andrew Ng 与 Rohit Prasad 开源的 CLI；为编码代理提供最新 API/SDK 文档与反馈闭环</td></tr><tr><td><strong>AI Aspire</strong></td><td>Andrew Ng 与 Chris Tann 共创的企业 AI 战略顾问机构</td></tr><tr><td><strong>CodeDream.ai</strong></td><td>DeepLearning.AI 预览中的对话式交互学习实验站</td></tr><tr><td><strong>前线部署工程师（FDE）</strong></td><td>嵌入客户现场、兼具业务与技术、推动 agent 工作流落地的角色</td></tr><tr><td><strong>LangSmith</strong></td><td>LangChain 推出的 agent 可观测与调试平台，强调多模型/供应商中立</td></tr><tr><td><strong>开放权重模型（open-weight models）</strong></td><td>权重可获取、可本地部署或微调的开源或半开源大模型</td></tr><tr><td><strong>Nano Banana</strong></td><td>Google 多模态/图像相关模型产品；常晚于 LLM 训练截止日期发布</td></tr><tr><td><strong>OpenCode</strong></td><td>开源编码代理工具（Andrew Ng 个人工作流之一）</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>全称/解释</th></tr></thead><tbody><tr><td><strong>LLM</strong></td><td>大语言模型；本文默认读者已知，未重复括注</td></tr><tr><td><strong>Python 解释器（工具）</strong></td><td><strong>ChatGPT</strong> 等内置代码执行环境，模型写程序后由应用运行</td></tr><tr><td><strong>Advanced Data Analysis</strong></td><td><strong>ChatGPT</strong> 高级数据分析（原 Code Interpreter 能力演进）</td></tr><tr><td><strong>Artifacts</strong></td><td><strong>Claude</strong> 在对话侧边栏渲染 <strong>React</strong> / <strong>Mermaid</strong> 等可交互产物</td></tr><tr><td><strong>Composer</strong></td><td><strong>Cursor</strong> 中 <strong>Cmd+I</strong> 触发的多文件自主编码代理</td></tr><tr><td><strong>氛围编程（Vibe Coding）</strong></td><td><strong>Andrej Karpathy</strong> 提出的说法：自然语言驱动代理改代码，少逐行审查</td></tr><tr><td><strong>Advanced Voice Mode</strong></td><td><strong>ChatGPT</strong> 原生音频 token 对话，非 STT/TTS 链</td></tr><tr><td><strong>NotebookLM</strong></td><td><strong>Google</strong> 基于上传素材的对话 + <strong>Deep Dive</strong> 深度播客生成</td></tr><tr><td><strong>Mermaid</strong></td><td>用文本语法定义流程图/概念图的库</td></tr><tr><td><strong>少样本提示词（few-shot prompt）</strong></td><td>在指令中加入若干 input/output 示例以提高任务稳定性</td></tr><tr><td><strong>DALL-E 3</strong></td><td><strong>OpenAI</strong> 文生图产品；当前常与 caption + 独立生成模型拼接</td></tr><tr><td><strong>Rayleigh scattering</strong></td><td>瑞利散射；天空呈蓝色的物理原因（非反射海洋）</td></tr></tbody></table></div>
   </div>
 </details>
 
 <details class="collapsible meta-panel" id="文章元数据">
   <summary>文章元数据与来源</summary>
   <div class="collapsible-body">
-<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>The Future of AI Agents with Andrew NG | Interrupt 26</td></tr><tr><td><strong>内容链接（主）</strong></td><td><a href="https://www.youtube.com/watch?v=OaRhpwz_TGM">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-06-17</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-06-23</td></tr><tr><td><strong>播放量/访问量</strong></td><td>21,080 次（用户提供）</td></tr><tr><td><strong>时长</strong></td><td>约 31 分 22 秒（章节末段 31:22）</td></tr><tr><td><strong>核心人物</strong></td><td><strong>Andrew Ng</strong>（DeepLearning.AI 创始人、AI Fund / AI Aspire 联合创始人）；<strong>Harrison Chase</strong>（LangChain 创始人，Interrupt 大会主办）</td></tr><tr><td><strong>活动</strong></td><td><strong>Interrupt 26</strong>——LangChain 主办的代理（Agent）主题大会</td></tr><tr><td><strong>内容来源</strong></td><td>用户提供的完整字幕转写；YouTube 页面元数据（标题、日期、播放量、章节）</td></tr><tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Andrej Karpathy spent 70 minutes breaking down how top AI users actually work with LLMs</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.youtube.com/watch?v=DkQdzc3fqaE">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-06-20</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-06-23</td></tr><tr><td><strong>播放量/访问量</strong></td><td>YouTube 观看次数：66</td></tr><tr><td><strong>时长</strong></td><td>YouTube 片长：01:10:03</td></tr><tr><td><strong>讲者</strong></td><td><strong>Andrej Karpathy</strong>（OpenAI 联合创始人、前 Tesla AI 总监、前 OpenAI 研究科学家）</td></tr><tr><td><strong>内容来源</strong></td><td>YouTube 频道 AI News &amp; Podcast；用户提供的完整字幕转写 + YouTube 页面元数据（WebFetch）</td></tr></tbody></table></div>
 
-<blockquote><strong>讲者背景</strong>：<strong>Andrew Ng</strong> 是 <strong>DeepLearning.AI</strong> 与 <strong>Coursera</strong> 联合创始人，<strong>AI Fund</strong> 与 <strong>AI Aspire</strong>（AI 战略咨询）联合创始人；长期推动 AI 教育与产业落地。<strong>Harrison Chase</strong> 创办 <strong>LangChain</strong> 并主办 <strong>Interrupt</strong>；去年 <strong>Andrew Ng</strong> 的炉边对谈是该大会 YouTube 回放中点赞与观看量最高的一场，今年回归第二场。</blockquote>
+<blockquote><strong>讲者背景</strong>：<strong>Andrej Karpathy</strong> 是深度学习教育普及者之一，曾联合创办 <strong>OpenAI</strong>，在 <strong>Tesla</strong> 领导计算机视觉团队，后重返 <strong>OpenAI</strong> 再离职独立创作。他以「把复杂 AI 概念讲清楚」著称，并自承创造了 <strong>氛围编程（Vibe Coding）</strong> 一词——指把编码控制权交给 <strong>Cursor Composer</strong> 等代理，用自然语言指挥、结果靠运气。</blockquote>
   </div>
 </details>
 
@@ -1505,15 +1319,15 @@
   <summary>展开自检报告详情</summary>
   <div class="collapsible-body">
     <div class="table-wrap">
-    <table><thead><tr><th>检查项</th><th>结果</th></tr></thead><tbody><tr><td><strong>节结构（对谈三层）</strong></td><td>✅ 10 节均含核心洞察+深度解析+对谈实录（末节实录较短）</td></tr><tr><td><strong>导读论点（v5.26）</strong></td><td>✅ 含 <code>&gt; <strong>全文论点</strong></code>；分层段覆盖企业落地、FDE/供应商、数据架构收束线</td></tr><tr><td><strong>元数据</strong></td><td>✅ 标题/链接/2026-06-17/21080 播放/31:22 时长/抓取时间</td></tr><tr><td><strong>术语校准</strong></td><td>✅ guardrails（原 God rails）、FDE（原 FBE）、CodeDream.ai、Nano Banana、OpenCode、Chris Tann</td></tr><tr><td><strong>主持人引子</strong></td><td>✅ 去年最受欢迎回放、LangChain Context Hub 同名区分、CJ links、Aaron Levie stage</td></tr><tr><td><strong>附着型信息</strong></td><td>✅ 手机编码/Mac Mini、20–30% 三年折扣、300+ ideas 表格、almost never 删库</td></tr><tr><td><strong>多源一致性</strong></td><td>不适用（单源字幕）</td></tr><tr><td><strong>可读性内化</strong></td><td>不适用</td></tr><tr><td><strong>正文中文叙事</strong></td><td>✅ 4c 闸门通过；grep 命中 48→修正后 0；对谈实录已译中文；专名/原标题英文保留</td></tr><tr><td><strong>首现缩写注释</strong></td><td>✅ RAG、FDE、evals（评测）首现已注或上下文释义</td></tr><tr><td><strong>纯净排版（4d 节间空白）</strong></td><td>✅ 4d 闸门通过；--- 共 4 处（≤5）；正文节间 --- 0；三连空行 0</td></tr><tr><td><strong>防幻觉</strong></td><td>✅ 数字均来自用户字幕；无 URL 浏览器二次抓取（用户已供完整转写）</td></tr><tr><td><strong>文档生成时间</strong></td><td>2026-06-23</td></tr></tbody></table>
+    <table><thead><tr><th>检查项</th><th>结果</th><th>备注</th></tr></thead><tbody><tr><td>素材覆盖</td><td>✅</td><td>用户完整字幕 + YouTube WebFetch 元数据；主链接 https://www.youtube.com/watch?v=DkQdzc3fqaE</td></tr><tr><td>术语校验</td><td>✅</td><td>ChachiPT/Chash→ChatGPT；clause→Claude；Grok 3；Gemini 2.0 Pro；Claude 3.7 Sonnet；Advanced Data Analysis；Tulu→工具链语境未误留</td></tr><tr><td>口播数字</td><td>✅</td><td>观看 66、片长 01:10:03、Grok 060 vs 120、2015 NA/0.1、2030 1.7T vs 2271、CO₂ 713 ppm、50%/80% 语音占比、Evo2 约 30 分钟播客</td></tr><tr><td>防幻觉</td><td>✅</td><td>无不可核实新增数据；高级 voice 免费 tier 变动已注可能过时；DALL-E 3 架构按讲者口径</td></tr><tr><td>节结构（对谈三层）</td><td>不适用</td><td>单人演示/教程，采用通用深度文章模板</td></tr><tr><td>导读论点（v5.26）</td><td>✅</td><td>全文论点块 + 三层展开；覆盖记忆/Custom GPT/生态选型收束</td></tr><tr><td>纯净排版（4d 节间空白）</td><td>✅</td><td><code>---</code> 共 5 处（元数据后、导读后、目录后、术语表前、自检前）；正文节间 --- 0</td></tr><tr><td>正文中文叙事</td><td>✅</td><td>4c 闸门通过；grep 命中 28→修正后 0；关键语录已译中文；专名/原标题英文保留</td></tr><tr><td>首现缩写注释</td><td>✅</td><td>LLM 免注；few-shot、RAG 未出现需注项</td></tr><tr><td>多源一致性</td><td>不适用</td><td>单源</td></tr><tr><td>可读性内化</td><td>不适用</td><td>未指定跨文化受众</td></tr><tr><td>视觉盲区</td><td>✅</td><td>演示画面依赖讲者口述；未声称看到未描述 UI 细节</td></tr></tbody></table>
     </div>
   </div>
 </details>
       <!-- CONTENT_END -->
 
       <footer class="doc-footer">
-        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=OaRhpwz_TGM" target="_blank" rel="noopener">观看原视频</a></span>
-        <span>来源: 20260617 Andrew_Ng_AI代理未来_Interrupt26_Harrison_Chase_整理文档.md</span>
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=DkQdzc3fqaE" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260620 Andrej Karpathy 顶级AI用户如何实际使用LLM_整理文档.md</span>
       </footer>
     </main>
   </div>

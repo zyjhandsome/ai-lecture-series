@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
-  <title>编码代理加速一切，瓶颈却在别处：Andrew Ng 在 Interrupt 26 的炉边对谈</title>
+  <title>在公司内部造超级智能：YC 如何把 Agent 做成组织操作系统</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1095,16 +1095,21 @@
       </div>
       <nav class="toc-nav" id="toc-nav">
         <a href="#核心导读" class="lvl-2">核心导读</a>
-        <a href="#过去一年的-ai-节奏-炒作-末日叙事与编码代理" class="lvl-2">过去一年的 AI 节奏：炒作、末日叙事与编码代理</a>
-        <a href="#编码代理重塑软件工程-产品管理瓶颈与全能小队" class="lvl-2">编码代理重塑软件工程：产品管理瓶颈与全能小队</a>
-        <a href="#通才从哪来-工程底色与跨职能扩张" class="lvl-2">通才从哪来：工程底色与跨职能扩张</a>
-        <a href="#进入-ai-软件工程-积木式组合与-context-hub" class="lvl-2">进入 AI 软件工程：积木式组合与 Context Hub</a>
-        <a href="#deeplearningai-langchain-与教育实验" class="lvl-2">DeepLearning.AI、LangChain 与教育实验</a>
-        <a href="#企业-ai-落地-自下而上失灵与贷款审批案例" class="lvl-2">企业 AI 落地：自下而上失灵与贷款审批案例</a>
-        <a href="#省成本还是促增长-roi-与本垒打组合" class="lvl-2">省成本还是促增长：ROI 与本垒打组合</a>
-        <a href="#前线部署工程师-供应商锁定与-langsmith" class="lvl-2">前线部署工程师、供应商锁定与 LangSmith</a>
-        <a href="#开源模型-数据战略与非结构化重构" class="lvl-2">开源模型、数据战略与非结构化重构</a>
-        <a href="#mongodb-与快速迭代-编码代理改变技术选型" class="lvl-2">MongoDB 与快速迭代：编码代理改变技术选型</a>
+        <a href="#首次公开-yc-为何现在谈内部-ai" class="lvl-2">首次公开：YC 为何现在谈内部 AI</a>
+        <a href="#起点-财务团队与「用英文写工作流」" class="lvl-2">起点：财务团队与「用英文写工作流」</a>
+        <a href="#只读-sql-打破过窄工具边界的转折点" class="lvl-2">只读 SQL：打破过窄工具边界的转折点</a>
+        <a href="#单一数据库-yc-的上下文垄断优势" class="lvl-2">单一数据库：YC 的上下文垄断优势</a>
+        <a href="#杰文斯悖论-问题越多-而不是越少" class="lvl-2">杰文斯悖论：问题越多，而不是越少</a>
+        <a href="#为-agent-反范式-大表-gbrain-与检索栈" class="lvl-2">为 Agent 反范式：大表、GBrain 与检索栈</a>
+        <a href="#单人-agent-时代与「多人-harness」缺口" class="lvl-2">单人 Agent 时代与「多人 Harness」缺口</a>
+        <a href="#350+-工具与共享注册表-把-agent-变成「能在-yc-上班」" class="lvl-2">350+ 工具与共享注册表：把 Agent 变成「能在 YC 上班」</a>
+        <a href="#技能化-dry-mece-与解析器原语" class="lvl-2">技能化、DRY、MECE 与解析器原语</a>
+        <a href="#梦境循环-夜间自我改进与两句描述-skill" class="lvl-2">梦境循环：夜间自我改进与两句描述 Skill</a>
+        <a href="#组织超级智能如何复合-对一切重复上述过程" class="lvl-2">组织超级智能如何复合：对一切重复上述过程</a>
+        <a href="#记录-artifact-与共享组织大脑" class="lvl-2">记录 artifact 与共享组织大脑</a>
+        <a href="#信任默认-平等主义与-token-时间扭曲" class="lvl-2">信任默认、平等主义与 Token 时间扭曲</a>
+        <a href="#抬高新人地板-《无马车厢》与聊天界面" class="lvl-2">抬高新人地板：《无马车厢》与聊天界面</a>
+        <a href="#即时软件-gary's-list-20-与中心化之争" class="lvl-2">即时软件、Gary's List 2.0 与中心化之争</a>
         <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
         <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
       </nav>
@@ -1113,20 +1118,20 @@
     <main class="content" id="main">
       <header class="doc-header">
         <span class="doc-eyebrow">对谈笔记</span>
-        <h1 class="doc-title">编码代理加速一切，瓶颈却在别处：Andrew Ng 在 Interrupt 26 的炉边对谈</h1>
-        <p class="doc-subtitle">编码代理正以「每三个月变一次前沿能力」的速度改写个人与团队交付方式，但把软件造快 10–100 倍并不会消灭瓶颈，只会把约束挪到产品管理、法务、营销与数据架构。</p>
+        <h1 class="doc-title">在公司内部造超级智能：YC 如何把 Agent 做成组织操作系统</h1>
+        <p class="doc-subtitle">在公司里造「超级智能」，不是给软件加 AI 功能，而是让 AI 成为组织操作系统——单一 Postgres、350+ 工具、梦境循环与工作产物（artifact）记录，叠加信任默认与每年 1 万–10 万美元级 Token 投入，才是 YC 把 Agent 变成「能在公司上班」的路径。</p>
         <div class="doc-meta">
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
-            Interrupt 26 · Andrew Ng × Harrison Chase
+            Inside YC's AI Playbook
           </span>
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
-            2026-06-17
+            2026-05-27
           </span>
           <span class="doc-meta-item">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
-            ~19 分钟阅读
+            ~15 分钟阅读
           </span>
         </div>
       </header>
@@ -1135,350 +1140,311 @@
 <h2 id="核心导读">核心导读</h2>
 
 <div class="highlight">
-  <p>编码代理正以「每三个月变一次前沿能力」的速度改写个人与团队交付方式，但<strong>把软件造快 10–100 倍并不会消灭瓶颈，只会把约束挪到产品管理、法务、营销与数据架构</strong>；企业若只做单点提效而缺少自上而下重设计工作流，就换不来 AI 承诺的转型——<strong>增长型用例、保留供应商选择权、以及面向代理的非结构化数据重构</strong>，才是下一阶段的硬功课。</p>
+  <p>在公司里造「超级智能」，不是给软件加 <strong>AI</strong> 功能，而是让 <strong>AI</strong> 成为组织操作系统——<strong>单一 Postgres</strong>、<strong>350+</strong> 工具、梦境循环与工作产物（artifact）记录，叠加<strong>信任默认</strong>与每年 <strong>1 万–10 万美元</strong>级 <strong>Token</strong> 投入，才是 <strong>YC</strong> 把 Agent 变成「能在公司上班」的路径。</p>
 </div>
 
-<p><strong>快慢错位的一年。</strong> 炒作与末日叙事（含「工作末日」）都超出 <strong>Andrew Ng</strong> 预期；真正快于预期的是<strong>编码代理</strong>——他六个月前几乎只用 <strong>Claude Code</strong>，如今已混用 <strong>OpenAI Codex</strong>、<strong>Gemini CLI</strong> 与 <strong>OpenCode</strong>，甚至在手机上写代码。<strong>代理式工作流</strong>也开始进入企业，节奏「感觉不错」。</p>
+<p><strong>从财务立项到只读 SQL。</strong> 约一年前财务侧仍是「讲流程 → 写死软件 → 交还」慢循环；<strong>Jared</strong> 接入只读 <strong>SQL</strong> 后，非技术同事也能用自然语言问过去要数小时写 <strong>SQL</strong> 才敢问的问题。</p>
 
-<p><strong>小团队、宽护栏、多角色一人扛。</strong> 软件交付变快后，<strong>产品管理瓶颈</strong>恶化成「全面瓶颈」：营销跟不上功能解释、法务跟不上日级发布、设计同样滞后。<strong>Andrew Ng</strong> 倾向 1–10 人的高上下文通才小队，在宽护栏内狂奔，甚至用 AI 起草服务条款再交律师定稿——工程背景者最常见，但产品经理、营销、运营也在学编码参与。</p>
+<p><strong>基建滚雪球。</strong> <strong>350+</strong> 团队工具、共享注册表、夜间读全员对话改进 <strong>Skill</strong> 的梦境循环，以及「两句公司描述」Skill 的微观机制；<strong>GBrain</strong> 与反范式大表支撑 Agent 检索。</p>
 
-<p><strong>积木、文档与教育。</strong> 未来工程师像拼 <strong>LEGO</strong>：掌握 <strong>检索增强生成（RAG）</strong>、代理框架、评测、<strong>护栏（guardrails）</strong> 与 UI/身份/数据库等积木，组合式快速组装；新积木常超出模型知识截止日期——<strong>Context Hub（chub）</strong> 为代理提供最新 API 文档。<strong>DeepLearning.AI</strong> 与 <strong>LangChain</strong> 长期合作短课；<strong>CodeDream.ai</strong> 用「对话式一对一视频 + 可点击交互 JavaScript」试探教育形态，但 <strong>Andrew Ng</strong> 认为教育大转型仍被过度炒作。</p>
+<p><strong>组织前提。</strong> <strong>Gary Tan</strong> 补充：对话<strong>默认对全员可见</strong>、<strong>信任默认</strong>、愿意在 <strong>Token</strong> 上「时间扭曲」式投入——抬高新人地板的《无马车厢》与 <strong>Gary's List 2.0</strong> 中心化之争，是同一套文化的延伸。</p>
 
-<p><strong>企业：自下而上不够，要重画贷款流程。</strong> 「千花齐放」式自下而上创新大多只产出<strong>点状提效</strong>；以银行贷款为例，只自动化审批中间一小时是增量，<strong>「10 分钟获批」</strong> 产品才需要营销、路由、数据基建与尽调全链路重设计。<strong>ROI</strong> 难有一刀切公式；他更兴奋于<strong>可衡量且真正改变业务</strong>的「挥棒打本垒打」项目组合——原型成本已暴跌，但资源分配仍常需自上而下。<strong>前线部署工程师（FDE）</strong> 有价值但炒作大于现实；<strong>LangSmith</strong> 等<strong>供应商中立</strong>观测层与<strong>一年期合同</strong>保留选择权同样关键。<strong>开源/开放权重模型</strong> 落后前沿约六至九个月却足够实用；<strong>非结构化数据</strong> 的治理、权限与碎片化，将催生数千万至数亿美元级重构项目——<strong>MongoDB</strong> 等 <strong>NoSQL</strong> 则因模式灵活而契合代理时代的快速原型。</p>
+<h2 id="首次公开-yc-为何现在谈内部-ai">首次公开：YC 为何现在谈内部 AI</h2>
 
-<h2 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理">过去一年的 AI 节奏：炒作、末日叙事与编码代理</h2>
-
-<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="首次公开-yc-为何现在谈内部-ai-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>炒作与「工作末日」叙事都超预期；真正快于预期的是编码代理前沿与手机端工作流。</p></div>
+  <div class="callout-body"><p>投资人与被投公司之间的「共生」在于：孵化器必须亲自把 Agent、Harness 与组织大脑做出来，而不是只写支票讲方法论。</p></div>
 </div>
-<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>Harrison Chase</strong> 开场点出：距去年 <strong>Interrupt</strong> 一年间 AI 变化极多；去年 <strong>Andrew Ng</strong> 炉边对谈是大会回放中<strong>最受喜欢、观看最多</strong>的一场。<strong>Andrew Ng</strong> 被问「什么比预期更快、什么更慢」时，先划两条线：<strong>炒作超出预期</strong>；<strong>末日叙事</strong>（含工作末日，他认为不会发生）也比预期更有市场——这是「慢于期望的理性共识」一侧。</p>
-<p>积极侧：<strong>编码代理</strong> 起飞速度超出他原先猜测。虽「AI 每三个月变天」并不完全成立，<strong>对编码代理而言接近真实</strong>——前沿能力竞争激烈。约六个月前他几乎全用 <strong>Claude Code</strong>；如今仍大量 <strong>Claude Code</strong>，也越来越多用 <strong>OpenAI Codex</strong>，并混用 <strong>Gemini CLI</strong> 与 <strong>OpenCode</strong>（因其开源）。工具组合切换极快；他亦未料到一年前会<strong>在手机上写这么多代码</strong>——办公室 <strong>Mac Mini</strong> 等工作流都在变。</p>
-<p><strong>代理式工作流</strong> 也开始进入企业，「感觉相当不错」。</p>
-<h3 id="过去一年的-ai-节奏-炒作-末日叙事与编码代理-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<h3 id="首次公开-yc-为何现在谈内部-ai-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Gary Tan</strong> 开场点明：过去几年 <strong>YC</strong> 主要投资 <strong>AI</strong> 公司，并随批次迭代「如何打造 <strong>AI 原生</strong> 产品公司」的建议；外界常忽略的是，<strong>YC</strong> 自身也在用同一套东西改造一家<strong>远早于 AI 时代</strong>创立的机构——而 <strong>Pete Koomen</strong> 是这项内部转型的牵头人。这是 <strong>Lightcone</strong> 第一次系统对外讲内部基建。</p>
+<p><strong>Gary Tan</strong> 将 <strong>Pete Koomen</strong> 介绍为 <strong>Optimizely</strong> 创造者，并强调其负责 <strong>YC</strong>「字面意义上」的全部 <strong>Agent</strong> 基础设施与 <strong>Harness</strong> 用法。内部实践与对外辅导的 <strong>AI</strong> 公司形成闭环：<strong>Pete Koomen</strong> 同意叙事应从约一年前、财务侧项目真正启动的时刻讲起。</p>
+<h3 id="首次公开-yc-为何现在谈内部-ai-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
 <div class="timeline">
   <article class="step">
     <div class="step-num">1</div>
     <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「过去一年 AI 空间发生太多——什么比您预期更快，什么更慢？」</p>
+      <h3>Gary Tan</h3>
+      <p>「这就像一个共享的组织大脑——最接近让我们彼此连接大脑的东西。」</p>
     </div>
   </article>
   <article class="step">
     <div class="step-num">2</div>
     <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「炒作超出预期；末日叙事也传得更广，包括工作末日——我不认为会发生。积极一面，编码代理比我猜的还快；『每三个月变天』的说法不全是真的，但对编码代理几乎属实——竞争太激烈。六个月前我几乎全是 Claude Code，现在还有 Codex、Gemini CLI、OpenCode……工作流变得极快，我也没想到会在手机上写这么多代码。」</p>
-    </div>
-  </article>
-</div>
-
-<h2 id="编码代理重塑软件工程-产品管理瓶颈与全能小队">编码代理重塑软件工程：产品管理瓶颈与全能小队</h2>
-
-<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-insight" class="layer-heading layer-insight">核心洞察</h3>
-<div class="callout callout-tip section-insight">
-  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>软件快 10–100 倍后，瓶颈从 PM 扩散到营销、法务、设计——未来团队可能是 2 人扛 5 种职能。</p></div>
-</div>
-<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>Andrew Ng</strong> 约一年前提出 <strong>产品管理瓶颈（product management bottleneck）</strong>：若构建变快，<strong>决定做什么、定范围、收客户反馈</strong> 的产品管理工作成约束。过去一年该瓶颈「以好的方式变得更糟」——因为交付确实更快了。</p>
-<p>但现象更广：当写软件快 <strong>10 倍或 100 倍</strong>，<strong>几乎一切</strong> 都成了瓶颈。他的团队已见 <strong>营销瓶颈</strong>——功能太多，营销难以弄清新功能是什么、如何对外讲。法务同理：以前三个月做一个需合规的产品，等法务一周尚可；<strong>现在一天造完却等法务一周</strong>，即成 <strong>法务合规瓶颈</strong>。设计亦然。</p>
-<p>他常思考未来软件团队如何组织——<strong>尚无定论</strong>。趋势是极小规模编制：<strong>1–10 名工程师</strong> 的团队，成员多为<strong>高上下文、高授权通才</strong>，在<strong>很宽的护栏</strong>内狂奔交付，甚至写传统上不属于工程的 <strong>营销文案</strong>。若一个团队需要工程、产品、服务条款、营销文案、设计五种职能，却只有<strong>两名人类</strong>，由<strong>抽屉原理（鸽巢原理）</strong> 每人必兼多职。</p>
-<p>好消息：AI 不会让他变成好营销人，但「<strong>没那么烂</strong>」——高上下文、深度技术、又能用前沿工具兼一点其他角色的通才，流程明显加速。工程师已用 AI 起草 <strong>服务条款</strong> 初稿，再交律师润色后发布。</p>
-<h3 id="编码代理重塑软件工程-产品管理瓶颈与全能小队-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「软件工程的未来在您脑中是什么样？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「我写产品管理瓶颈时观察到：构建变快，决定做什么就成瓶颈——过去一年这瓶颈以好的方式恶化了。但快 10 或 100 倍时，几乎一切都成瓶颈——营销、法务、设计……我在设 1–10 人的高上下文通才小队，宽护栏内狂奔，甚至写营销文案。两人团队要代表五种职能，每人必兼多职。AI 没让我变成好营销，但没那么烂——这些流程让团队快很多。」</p>
-    </div>
-  </article>
-</div>
-
-<h2 id="通才从哪来-工程底色与跨职能扩张">通才从哪来：工程底色与跨职能扩张</h2>
-
-<h3 id="通才从哪来-工程底色与跨职能扩张-insight" class="layer-heading layer-insight">核心洞察</h3>
-<div class="callout callout-tip section-insight">
-  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>工程背景者最常见，但产品、营销、运营也能学编码加入——方向不限，工程理解前沿略占优势。</p></div>
-</div>
-<h3 id="通才从哪来-工程底色与跨职能扩张-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>Andrew Ng</strong> 密切合作者多为<strong>深厚工程与技术背景</strong>，又是高授权、略通才、可跨入他岗并借 AI 补技能缺口的人。成功路径<strong>不限方向</strong>：产品经理加强编码后参与这类团队；营销人员有效学编码；运营人员开始造更多产品——<strong>任何背景都可能</strong>，但当前<strong>人数上工程出身最多</strong>，因 AI 编码与理解前沿技术天然略占优。</p>
-<p>团队仍鼓励各背景尝试扮演该角色。</p>
-<h3 id="通才从哪来-工程底色与跨职能扩张-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「这些人该有什么背景？工程师？还是别的学科第一次学编码？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「密切合作者多深工程背景，又是高授权通才，AI 帮补没受过的技能。任何方向都能成功——PM 加强编码、营销学编码、运营造产品都行。但眼下做得最好的人数里，工程背景最多；我们仍鼓励各背景尝试。」</p>
-    </div>
-  </article>
-</div>
-
-<h2 id="进入-ai-软件工程-积木式组合与-context-hub">进入 AI 软件工程：积木式组合与 Context Hub</h2>
-
-<h3 id="进入-ai-软件工程-积木式组合与-context-hub-insight" class="layer-heading layer-insight">核心洞察</h3>
-<div class="callout callout-tip section-insight">
-  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>掌握足够「积木」并组合式组装，比从零写一切更快；新 API 需 Context Hub 给代理最新文档。</p></div>
-</div>
-<h3 id="进入-ai-软件工程-积木式组合与-context-hub-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>Andrew Ng</strong> 用 <strong>LEGO 积木</strong> 比喻：若只有白色砖只能搭无聊东西；黑白黄棕绿加曲线件，<strong>组合空间指数级增长</strong>。计算机科学一直有优秀积木；<strong>代理式编码</strong> 时代 AI 与非 AI 积木都在激增——<strong>检索增强生成（RAG）</strong>、代理框架、<strong>评测（evals）</strong>、<strong>护栏（guardrails）</strong>，以及 UI 组件、身份机制、前后端持久化等。</p>
-<p>精通足够多积木的开发者，可<strong>组合式</strong>极快造软件。<strong>DeepLearning.AI</strong> 提供大量短课帮人们掌握各供应商积木；另一挑战是用编码代理<strong>快速组装</strong>积木成目标软件。</p>
-<p>痛点：许多积木太新，代理不知如何调用——例如 <strong>Nano Banana</strong> 在不少领先模型 <strong>知识截止日期之后</strong> 发布，代理甚至不知存在、更不知 API 语法。<strong>Context Hub（chub）</strong> 是他与 <strong>Rohit Prasad</strong> 推动的项目：像「<strong>给 AI 代理用的 Stack Overflow</strong>」，让代理获取最新 API、SDK、积木文档，并可<strong>反馈文档</strong>以改进。<strong>Andrew Ng</strong> 个人对一些 API 语法嫌烦，用 Context Hub 加载最新文档后让代理代劳调用，显著加速自己的编码。</p>
-<p><strong>Harrison Chase</strong> 插话：<strong>LangChain</strong> 也有名叫 Context Hub 的产品，但是不同东西——<strong>Andrew Ng</strong> 的 chub <strong>对编码代理更有用</strong>，应去用那个。另：<strong>LangChain</strong> 是 <strong>DeepLearning.AI</strong> 课程合作方中<strong>仅次于 OpenAI 的第二家</strong>；许多人通过 DeepLearning 课程认识 LangChain。</p>
-<h3 id="进入-ai-软件工程-积木式组合与-context-hub-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「想进入新软件工程的人该试什么工具、什么心态？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「我脑中有积木模型——检索增强生成、框架、评测、护栏，还有 UI、身份、数据库……精通足够积木就能组合式快速搭建，像 LEGO：颜色越多组合指数增长。DeepLearning.AI 有很多短课；还要用编码代理组装。问题是新积木代理不会用——Nano Banana 在知识截止后才发布，代理不知道。Context Hub 是 Rohit 和我做的：代理版 Stack Overflow，拿最新文档还能反馈改进。LangChain 也有 Context Hub 名字，但是不同东西——他的对编码代理更有用。」</p>
-    </div>
-  </article>
-</div>
-
-<h2 id="deeplearningai-langchain-与教育实验">DeepLearning.AI、LangChain 与教育实验</h2>
-
-<h3 id="deeplearningai-langchain-与教育实验-insight" class="layer-heading layer-insight">核心洞察</h3>
-<div class="callout callout-tip section-insight">
-  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>该学什么在变（积木+PM 通识），但教育「大转型」仍被过度炒作——CodeDream.ai 在试对话式交互课。</p></div>
-</div>
-<h3 id="deeplearningai-langchain-与教育实验-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>DeepLearning.AI</strong> 在训练内容与<strong>交付方式</strong>两侧实验。开发者要学：<strong>编码代理</strong>、积木、一点 <strong>产品管理</strong> 等通识技能——「学什么」已显著变化；<strong>Coursera</strong> 与 DeepLearning 已提供大量相关训练。</p>
-<p>「怎么学」的变革则<strong>尚未真正到来</strong>——他们几周前预览上线 <strong>CodeDream.ai</strong>：愿景不是上网课，而是<strong>来对话</strong>。体验是模拟与 <strong>Andrew Ng</strong> 一对一视频：可后仰听他讲 <strong>Context Hub</strong> 与编码代理，也可随时打断 AI 提问。他个人大量实验用 <strong>JavaScript 替代视频与幻灯片</strong>——演示区可点击、可输入自己的提示词或查询，<strong>静态视频变交互区</strong>（已上线：不是录屏而是 <strong>JavaScript 共享</strong>，可交互运行）。</p>
-<p>教育大转型<strong>被过度炒作</strong>；变革在路上，但今天上网课仍希望有更好形态——比十年前课程更互动（如当天刚上线 <strong>AMD Sharon Jo</strong> 的 <strong>Transformers</strong> 新课，可视化与可玩组件增多），<strong>更大跃迁</strong>他仍在深思。</p>
-<h3 id="deeplearningai-langchain-与教育实验-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「AI 新世界下教育怎么变？DeepLearning 课程有没有融入新做法？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「学什么变了——学编码代理、积木、一点产品管理。DeepLearning 和 Coursera 在补训练。但怎么学的大转型还没真正到——我们几周前预览 CodeDream.ai：不是课，是对话；模拟跟我视频，可打断。我用 JavaScript 替视频——演示区能点、能输提示词，已上线。教育转型被过度炒作；变革在路上，但今天上网课我还想要更好的——比十年前互动多了，比如今早刚上的 Transformers 课，但更大变革我还在想。」</p>
+      <h3>Pete Koomen</h3>
+      <p>「当你对安全没那么担心时，你会想：天啊，这些东西强大到不可思议。」</p>
     </div>
   </article>
   <article class="step">
     <div class="step-num">3</div>
     <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「点进视频输入——今天就有还是未来方向？」</p>
+      <h3>Gary Tan</h3>
+      <p>「组织内就是这样诞生超级智能的……对你做的每一件事都这么做。」</p>
     </div>
   </article>
   <article class="step">
     <div class="step-num">4</div>
     <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「今天就有。不是录屏共享，是 JavaScript 共享——你能交互我『屏幕共享』里跑的代码。」</p>
+      <h3>Pete Koomen</h3>
+      <p>「随着我们更会做 AI 原生软件，会更像是 Agent 包裹确定性的软件工具，而不是确定性软件包裹 AI。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Pete Koomen</h3>
+      <p>「我一看到 AI 被说成用来替代人，就很不舒服……它是要让我们做成更多事。」</p>
     </div>
   </article>
 </div>
 
-<h2 id="企业-ai-落地-自下而上失灵与贷款审批案例">企业 AI 落地：自下而上失灵与贷款审批案例</h2>
+<h2 id="起点-财务团队与「用英文写工作流」">起点：财务团队与「用英文写工作流」</h2>
 
-<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="起点-财务团队与「用英文写工作流」-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>「千花齐放」自下而上创新大多只产点状提效；贷款案例说明须自上而下重设计全链路才换增长。</p></div>
+  <div class="callout-body"><p>旧模式是「业务口述 → 工程固化」；新模式是让财务用<strong>自然语言提示词</strong>自己编码工作流，而不是写 <strong>Ruby</strong>。</p></div>
 </div>
-<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>AI Aspire</strong>（<strong>Andrew Ng</strong> 与 <strong>Chris Tann</strong> 共创的 AI 顾问公司）常对话 <strong>Fortune 50/500、G2000</strong> 级企业。一致主题：大家都投过<strong>自下而上创新</strong>、「千花齐放」，<strong>大多未见回报</strong>——CEO 与董事会问 <strong>AI 的 ROI 在哪</strong>。他仍主张继续自下而上，但这类创新常产出<strong>点状方案</strong>、带来<strong>增量效率</strong>——好事，却不是 AI 承诺的<strong>更广转型</strong>。</p>
-<p><strong>银行贷款承销</strong> 例：流程五步——营销产品、收申请、审批准、最终尽调、执行放款。多团队发现中间<strong>审批</strong>可用 AI：人审一小时变 AI，值得做。但若<strong>整条承销流程不变</strong>、只省一小时人工，只是<strong>小增量效率</strong>。</p>
-<p>部分银行转向：不做这点效率，而<strong>重想工作流</strong>，营销 <strong>「10 分钟获批」</strong> 贷款——不必等一周才有人空出一小时审件，申请可<strong>立刻</strong>送 AI 决策。落地难在需<strong>更广范围</strong> 的人重设计：要营销新产品、申请立刻路由审批、<strong>营销与数据基建</strong>介入、AI 做初判、尽调与执行也要扩容。<strong>自下而上</strong> 产创意，须配 <strong>自上而下</strong> 推动改全链路步骤才能<strong>促增长</strong>。</p>
-<h3 id="企业-ai-落地-自下而上失灵与贷款审批案例-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<h3 id="起点-财务团队与「用英文写工作流」-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>约一年多前，<strong>Pete Koomen</strong> 与几名工程师正为财务团队规划工具：记账分录、记录定价轮次等——<strong>YC</strong> 历来大量依赖自研软件，这在非 <strong>AI</strong> 时代已是优势。</p>
+<p>当时内部循环是：财务向工程师解释复杂财务流程 → 工程师做<strong>确定性、封装完备</strong>的专用软件 → 交还财务。<strong>Pete Koomen</strong> 同时在个人环境感受 <strong>Agent 编码工具</strong> 的爆发（<strong>Windsurf</strong>、<strong>Cursor</strong> 已成熟，<strong>Claude Code</strong> 刚出现），与 <strong>YC</strong> 古典交付方式之间的裂缝越来越大。</p>
+<p>最初动机明确：<strong>Pete Koomen</strong> 希望财务团队能<strong>自己掌控软件</strong>，把工程师从「必须听懂每一道财务工作流」的循环里解放出来——不是用 <strong>Ruby</strong>，而是用<strong>英文 + 提示词</strong>。</p>
+<p><strong>Gary Tan</strong> 插入主持引子：两三年前 <strong>LLM</strong> 已能写 <strong>SQL</strong>，<strong>YC</strong> 曾投资过多家「自然语言查数」创业公司，不少并未跑通；但在 <strong>YC</strong> 内部，<strong>Pete Koomen</strong> 第一版就<strong>真的好用</strong>，让无工程背景的财务同事能问<strong>真问题</strong>——<strong>Pete Koomen</strong> 坦言自己也曾意外。</p>
+<p>随后系统从财务专用形态<strong>重写为更通用的 Agent 循环</strong>——今天市场上已随处可见，但 <strong>Pete Koomen</strong> 的第一个「魔法时刻」是：<strong>Agent 循环 + 共享工具注册表</strong>，而注册表里第一个真正解锁能力的工具，来自 <strong>Jared</strong>。</p>
+<h3 id="起点-财务团队与「用英文写工作流」-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="只读-sql-打破过窄工具边界的转折点">只读 SQL：打破过窄工具边界的转折点</h2>
+
+<h3 id="只读-sql-打破过窄工具边界的转折点-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>过度担心安全与隐私，才是阻碍 Agent 发挥能力的常见枷锁；适度放开只读库访问，往往立刻见效。</p></div>
+</div>
+<h3 id="只读-sql-打破过窄工具边界的转折点-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Jared</strong> 做了两个工具：对生产库跑<strong>只读 SQL</strong>，以及读取<strong>模型文件</strong>。<strong>Pete Koomen</strong> 回忆自己有点像「违规」——起初工具域极窄，他因不够用而沮丧，于是设想：若给 Agent <strong>完整访问生产数据库</strong>、任其「践踏」会怎样？他<strong>悄悄</strong>在深夜推上线。</p>
+<p>结果：<strong>极其有效</strong>。这与后续 <strong>OpenClaw</strong> 等实践同构——真正拖慢世界的，常是对「可能出错」的过度焦虑；个人机器上的 <strong>Claude Code</strong> / <strong>OpenClaw</strong> 几乎什么都能做，而公司环境却把人关在窄盒子里。<strong>Pete Koomen</strong> 的目标之一是缩小「上班」与「在家」之间的能力差。</p>
+<p>为何只读 <strong>SQL</strong> 如此简单却如此有用？因为 <strong>YC</strong> 自研软件全部落在<strong>一个 Postgres</strong> 上：被投公司表、创始人表、财务交易、内部 <strong>CRM</strong> 笔记等——许多公司外包给第三方 <strong>SaaS</strong> 的上下文，在 <strong>YC</strong> 是自建并入库的。配上 schema 说明后，Agent 可回答关于业务的<strong>任意</strong>问题。</p>
+<p><strong>Gary Tan</strong> 确认：第一次看到时确实是魔法时刻——不仅更容易答，还<strong>大幅</strong>增加了<strong>敢问的问题数量与复杂度</strong>；旧日用 <strong>BI</strong> 工具问「过去四期里投过太空相关公司的投资人」可能要<strong>数小时写 SQL</strong>，不重要就不问。这是<strong>杰文斯悖论（Jevons Paradox）</strong> 的又一例：跨团队来回成本下降后，总需求量上升。</p>
+<h3 id="只读-sql-打破过窄工具边界的转折点-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="单一数据库-yc-的上下文垄断优势">单一数据库：YC 的上下文垄断优势</h2>
+
+<h3 id="单一数据库-yc-的上下文垄断优势-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>对组织 Agent 而言，「单一 schema 的上下文层」至少不亚于工程上的单体仓库（monorepo）对编码 Agent 的价值。</p></div>
+</div>
+<h3 id="单一数据库-yc-的上下文垄断优势-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Pete Koomen</strong> 将 <strong>YC</strong> 进入实验时的结构性优势归结为：<strong>自研软件 + 单一 Postgres</strong>。编码 Agent 在 <strong>monorepo</strong> 里更高效；<strong>YC</strong> 的 Agent 在「什么都在一张库」上得到同样结论。</p>
+<p>对更老、上下文散落在 <strong>SaaS</strong> 孤岛的组织，<strong>Pete Koomen</strong> 建议优先建设：<strong>尽量把内部重要上下文收进数据仓库或统一层</strong>；再配<strong>内部工具注册表</strong>——下文详述。</p>
+<h3 id="单一数据库-yc-的上下文垄断优势-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="杰文斯悖论-问题越多-而不是越少">杰文斯悖论：问题越多，而不是越少</h2>
+
+<h3 id="杰文斯悖论-问题越多-而不是越少-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="杰文斯悖论-问题越多-而不是越少-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>当获取答案的摩擦从「敲数据科学团队门、排队 backlog」降到近乎零，人们会问<strong>更多、更难</strong>的问题——这不是效率幻觉，而是组织学习曲线变陡。</p>
+<p><strong>Gary Tan</strong> 补刀：2026 年仍有多数公司活在旧世界，「有点不可思议」；但这也意味着改造空间巨大。</p>
+<h3 id="杰文斯悖论-问题越多-而不是越少-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="为-agent-反范式-大表-gbrain-与检索栈">为 Agent 反范式：大表、GBrain 与检索栈</h2>
+
+<h3 id="为-agent-反范式-大表-gbrain-与检索栈-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>Agent 需要的是为检索优化的「大表」，而不是把企业所有 MCP 端点原样暴露；CLI 往往比 MCP 更顺手，但前提仍是数据形态要对。</p></div>
+</div>
+<h3 id="为-agent-反范式-大表-gbrain-与检索栈-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Gary Tan</strong> 把历史类比拉到 <strong>Google Bigtable</strong>：用「一张大表 + MapReduce」替代复杂 join 的时代，正在 <strong>Agent</strong> 侧重演——他个人用 <strong>OpenClaw</strong> 接多系统，再<strong>反范式（denormalize）</strong> 成与自己相关的 schema，供 <strong>OpenClaw</strong> / <strong>Hermes</strong> 类 <strong>Harness</strong> 检索。</p>
+<p><strong>Gary Tan</strong> 的 <strong>GBrain</strong> 栈包含 <strong>RAG</strong>、图 <strong>RAG</strong>、混合 <strong>RRF</strong>、重排序等——给 Agent「灵魂」+ 懂你关心的数据后，能力会「绕角」预判问题。对「数据到处都是」的抱怨，他的答案是：<strong>必须反范式，放进为 Agent 检索与理解优化的格式</strong>；可包一层 <strong>MCP</strong>，但他仍倾向先做好 denormalization。</p>
+<p>这与 <strong>Karpathy</strong> 式知识 <strong>LLM Wiki</strong>、<strong>GBrain</strong> 的「梦境循环」Skill 改进并行——并可把 transcript 写回内部 <strong>CRM</strong>，沉淀对人/公司的认知。</p>
+<h3 id="为-agent-反范式-大表-gbrain-与检索栈-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="单人-agent-时代与「多人-harness」缺口">单人 Agent 时代与「多人 Harness」缺口</h2>
+
+<h3 id="单人-agent-时代与「多人-harness」缺口-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>YC</strong> 基建的探索价值，在于哪些原语能让<strong>团队与全组织</strong>复用个人 Agent 的超能力。</p></div>
+</div>
+<h3 id="单人-agent-时代与「多人-harness」缺口-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>过去一年半，<strong>Pete Koomen</strong> 认为仍处<strong>单人 Agent 时代</strong>：<strong>Claude Code</strong>、<strong>Codex</strong>、<strong>Pi</strong>、<strong>OpenClaw</strong>、<strong>Hermes</strong> 等，都是<strong>单人单机</strong>超级个体工具——好玩、极强，但<strong>组织级多人 Harness</strong> 尚未被很好解决。</p>
+<p>对成立超过两年的「遗产组织」，<strong>Pete Koomen</strong> 归纳可聚焦的三件事：<strong>统一上下文层</strong>、<strong>内部工具注册表</strong>、以及（在 <strong>YC</strong> 已验证的）<strong>单一数据库</strong> 路径。许多工具可把个人 <strong>Harness</strong> 接到 <strong>MCP</strong> 与其他真相源，但 <strong>monorepo</strong> / 单库的经验表明：<strong>上下文集中</strong> 的边际收益极高。</p>
+<h3 id="单人-agent-时代与「多人-harness」缺口-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="350+-工具与共享注册表-把-agent-变成「能在-yc-上班」">350+ 工具与共享注册表：把 Agent 变成「能在 YC 上班」</h2>
+
+<h3 id="350+-工具与共享注册表-把-agent-变成「能在-yc-上班」-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>工具注册表是组织特异性的注入点；从约 20 个工具滚到 350+，每一团队都能把自己的工作流「工具化」。</p></div>
+</div>
+<h3 id="350+-工具与共享注册表-把-agent-变成「能在-yc-上班」-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>早期极简：<strong>Agent 循环 + 简单工具注册表 + 模型路由</strong>。注册表承载 <strong>YC</strong> 特有能力——把通用模型变成「能在 <strong>YC</strong> 上班」的 Agent。</p>
+<p>最初约 <strong>20</strong> 个工具，含神奇的只读 <strong>SQL</strong>。此后每次发现某块工作可被 Agent 改进，就<strong>加工具</strong>——<strong>Pete Koomen</strong> 现场核对：<strong>已超过 350 个</strong>，各团队持续贡献。</p>
+<p>举例：管理 <strong>office hours</strong>、财务记账分录、活动运营等。工具集中后，既服务内部 <strong>Agent</strong>，也可给个人机器上的 <strong>Claude Code</strong> 调用。</p>
+<p>若 <strong>Pete Koomen</strong> 去其他组织，他会优先复制：<strong>统一上下文 + 内部工具注册表</strong>——并直言受 <strong>YC</strong> 实践启发，才有 <strong>OpenClaw</strong> 侧的 <strong>技能化</strong> 等元技能思路。</p>
+<h3 id="350+-工具与共享注册表-把-agent-变成「能在-yc-上班」-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="技能化-dry-mece-与解析器原语">技能化、DRY、MECE 与解析器原语</h2>
+
+<h3 id="技能化-dry-mece-与解析器原语-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Claude Code</strong> 的 Skill 注册表、<strong>YC</strong> 的工具注册表、<strong>OpenClaw</strong> 的 resolver，本质是同一原语；上面再叠 <strong>DRY</strong> 与 <strong>MECE</strong> 检查，可避免 Skill 爆炸。</p></div>
+</div>
+<h3 id="技能化-dry-mece-与解析器原语-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Gary Tan</strong> 在 <strong>OpenClaw</strong> / <strong>Hermes</strong> 上实践 <strong>技能化</strong>（元技能：把任意顺手操作固化成 <strong>Skill</strong>），并强调要接到<strong>解析器（resolver）</strong>——类似 <strong>agents.mmd</strong> 列出 Agent 能做什么，再链到 <strong>Markdown</strong> 入口。</p>
+<p><strong>Gary Tan</strong> 常用流程：做一件新的、喜欢的事 → 说「<strong>技能化</strong>」→ 变成工具/方法调用 → 再跑 <strong>检查可解析项</strong>，对照已有 <strong>Skill</strong>/<strong>工具</strong>，要求<strong>不重复（DRY）</strong>且<strong>互斥穷尽（MECE，麦肯锡幻灯片术语）</strong>——模型似乎「懂」这些词；<strong>DRY + MECE</strong> 的 resolver 表被他认为接近最优。</p>
+<p><strong>Pete Koomen</strong> 感慨：像应用计算机科学家见证 <strong>Unix</strong> 时代发现栈与堆——今天大家在 <strong>Claude Code</strong>、内部 <strong>Harness</strong>、<strong>OpenClaw</strong>、<strong>Hermes</strong> 里<strong>并行 reinvent</strong> 同一套有用概念。</p>
+<p><strong>YC</strong> 侧 <strong>Skill</strong> 是工具之上的薄抽象；全员共享少量 <strong>Skill</strong>，并已进入<strong>自主自我改进循环</strong>——与 <strong>Karpathy</strong> 的 <strong>AutoResearch</strong>、<strong>Codex</strong> 纳入的 <strong>SLG goal</strong> 等同族。</p>
+<h3 id="技能化-dry-mece-与解析器原语-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
 <div class="timeline">
   <article class="step">
     <div class="step-num">1</div>
     <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「企业采用 AI 比您预期快还是慢？正确做法是什么？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「AI Aspire 跟 Fortune 50/500 谈策略。一致的是：大家都投自下而上、千花齐放，大多未见回报——CEO 问 ROI。仍要继续，但常是点状提效，不是更广转型。银行贷款五步骤——若只自动化中间审批一小时，流程不变，只是小增量。有的银行改做『10 分钟获批』——要重设计营销、路由、数据基建、尽调扩容。自下而上很有价值，但要配自上而下改全链路才能促增长。」</p>
+      <h3>Pete Koomen</h3>
+      <p>「今天已有超过 350 个[工具]。我刚查过。」</p>
     </div>
   </article>
 </div>
 
-<h2 id="省成本还是促增长-roi-与本垒打组合">省成本还是促增长：ROI 与本垒打组合</h2>
+<h2 id="梦境循环-夜间自我改进与两句描述-skill">梦境循环：夜间自我改进与两句描述 Skill</h2>
 
-<h3 id="省成本还是促增长-roi-与本垒打组合-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="梦境循环-夜间自我改进与两句描述-skill-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>省钱有顶、增长无顶；本垒打项目可测但更需创意——300 条想法表格里筛少数大注常靠自上而下。</p></div>
+  <div class="callout-body"><p>组织超级智能的针尖案例：一个看似微小的「两句公司描述」Skill，因会议 transcript 的 meta-prompt 而在一个月内超越任何单个合伙人。</p></div>
 </div>
-<h3 id="省成本还是促增长-roi-与本垒打组合-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p>许多企业谈 <strong>降本</strong>——可以做，但 <strong>Andrew Ng</strong> 更推动 <strong>更有想象力的增长</strong>：钱只能省那么多，<strong>增长几乎无上限</strong>。<strong>10 分钟贷款</strong>（银行真实推进）、<strong>客服/联络中心</strong>——不只省钱，自动化后可<strong>更快服务更多客户</strong>、体验更好从而促增长；<strong>汽车餐厅语音点餐</strong> 自动化亦带来更愉悦体验与增长。更多案例在不同行业涌现，部分因权限未公开。</p>
-<p><strong>ROI 怎么量？</strong> 他坦言「我也给不出一刀切答案」——企业太多元，像量整个业务，难有一刀切公式。最让他兴奋的项目<strong>应测、值得测</strong>；也有些 <strong>挥棒打本垒打</strong> 式项目创造巨大价值——不是争论磁盘驱动 2% 增长减 1% 实施成本，而是<strong>一目了然在转型</strong>（上市公司仍须量，但性质不同）。</p>
-<p>反直觉：<strong>驱动增量有时比驱动转型更难</strong>——老板要明年 <strong>2%</strong> 改善，大家只能更努力一点；若要 <strong>20% 或 50%</strong> 增长，不能全员多干 50%，必须更有创意。</p>
-<p><strong>AI Aspire</strong> 经验：企业常寄来<strong>数百条想法</strong> 的电子表格——一家金融机构 <strong>300+</strong> 条，请帮忙筛该投哪些。分析极难；面对这么多想法，要技术可行性 + 业务影响双重分析，缩到<strong>少数值得重仓</strong>的下注。<strong>挥棒打本垒打</strong> 型多为 <strong>自上而下</strong>；他建议<strong>组合</strong>几笔深思熟虑的大注，而非一次孤注一掷。</p>
-<p><strong>代理式编码</strong> 让实验与原型成本<strong>暴跌</strong>——他们不断做原型；但 <strong>10 万美元预算</strong> 也无法全做，重仓仍需资源分配，故常需略 <strong>自上而下</strong> 推动。</p>
-<h3 id="省成本还是促增长-roi-与本垒打组合-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<h3 id="梦境循环-夜间自我改进与两句描述-skill-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>YC</strong> 有一个通用 <strong>Agent</strong>，<strong>每晚</strong>读取员工当日 <strong>Agent 对话</strong>，寻找本可做得更好之处，以及若提前拥有哪些上下文会更高效——即 <strong>OpenClaw</strong> / <strong>GBrain</strong> 的 <strong>梦境循环（梦境循环（dream cycle））</strong>；也可把 transcript 写回内部库。</p>
+<p>共享 <strong>Skill</strong> 之一：帮被投公司写 <strong>two-sentence description（两句描述）</strong>——用任何人都能懂的自然语言说明公司做什么、为何有趣；看似简单，资深创始人也常忘写，因脑中上下文过满。</p>
+<p><strong>Gary Tan</strong> 教学框架：第一句——<strong>我是否知道这是啥</strong>？不知道就无法提问，只剩「跟电脑有关吧，午饭几点」。第二句——<strong>是否值得我花时间</strong>？若屋里已有 20 家做 X，必须说清为何<strong>值得一提</strong>，否则听众脑子回到三明治。</p>
+<p><strong>Tom</strong>（<strong>YC</strong> 合伙人）先手写 <strong>Skill</strong>；近一两个月，其他合伙人在春季批次 <strong>group office hours</strong> 让每位创始人练两句描述并给反馈——这些<strong>活在合伙人头脑里的诀窍</strong>，进入<strong>会议 transcript</strong>，再交给 <strong>Agent</strong>：「Given 你读到的上下文，改进两句描述 <strong>Skill</strong>」——结果 <strong>Skill</strong> 明显变好；<strong>Pete Koomen</strong> 认为现已<strong>强于</strong>任何单人。</p>
+<p><strong>Gary Tan</strong> 将其连接到 <strong>Jack Dorsey</strong> 在 <strong>Block</strong> 的叙事：把公司做成围绕「让人彼此付款」的迷你 <strong>AGI</strong>——<strong>YC</strong> 的两句描述只是成千上万 founder 服务中的一例，但机制是通用的：<strong>写 prompt → 多人用 → 产生 artifact（含 transcript）→ 每日自动 meta-prompt 改进 → 该 Skill 超越个人上限</strong>。对组织里<strong>每一件事</strong>重复此过程，即「在公司内部造超级智能」——并不更复杂。</p>
+<p><strong>Gary Tan</strong> 警告：不愿相信此道的在位者会把上下文锁死（「不安全」）；创业者反而应趁窗口期行动。不愿开放上下文的大公司与资源丰富却 <strong>AI</strong> 迟钝的 在位者，可能被「时间扭曲」甩开。</p>
+<h3 id="梦境循环-夜间自我改进与两句描述-skill-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="组织超级智能如何复合-对一切重复上述过程">组织超级智能如何复合：对一切重复上述过程</h2>
+
+<h3 id="组织超级智能如何复合-对一切重复上述过程-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="组织超级智能如何复合-对一切重复上述过程-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Pete Koomen</strong> 与 <strong>Gary Tan</strong> 共识：<strong>AI 原生组织</strong>的关键不是 <strong>Copilot</strong>（<strong>Gary Tan</strong> 称这很 <strong>2023–2024</strong>），而是把 <strong>AI</strong> 当作<strong>一切工作的建筑层</strong>，并<strong>记录所有 artifact</strong>——会议录音火爆，不只因为「教练式复盘」，更因为可反哺邮件、沟通、规划等全链路产出。</p>
+<p><strong>Gary Tan</strong> 引用 <strong>Dario</strong> 文章：部分 blocker 非技术，而是社会文化——两年前录会议还尴尬，如今 <strong>Zoom</strong> 上近乎默认；若把录音框架为「用同事集体技能让自己更强」，力量巨大。</p>
+<p><strong>Pete Koomen</strong> 强调：canonical 两句描述 <strong>Skill</strong> 不只是生成文案，更是让每人接入 <strong>Diana</strong>、<strong>Harj Taggar</strong> 等人多年练出的沟通直觉——<strong>共享组织大脑（shared organizational brain）</strong>，最接近「把脑子连在一起」的隐喻；还可与 <strong>Agent</strong> 做练习、被 critique。</p>
+<h3 id="组织超级智能如何复合-对一切重复上述过程-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
 <div class="timeline">
   <article class="step">
     <div class="step-num">1</div>
     <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「有没有特别兴奋的增长案例？ROI 怎么量？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「银行 10 分钟贷款是真实案例；客服中心不只为省钱——服务更多人更快、体验更好促增长；汽车餐厅语音点餐也是。ROI？我也给不出一刀切答案——企业太多元。让我兴奋的项目要测；也有挥棒打本垒打型，一目了然在转型。有趣的是：增量 2% 有时比 50% 增长更难——后者逼你想更有创意的方案。AI Aspire 有人寄 300+ 条想法表格让我们筛——技术分析加业务分析缩到少数大注。本垒打型常自上而下；组合几笔深思熟虑的下注。原型成本暴跌，我们不断做原型，但重仓仍要自上而下分配资源。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">3</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「本垒打型多是自上而下？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">4</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「对——组合几笔深思熟虑的下注；别只孤注一掷一次。」</p>
+      <h3>Pete Koomen</h3>
+      <p>「关键之一，不只是把 AI 当 Copilot 用——而是把它当作一切事物的基础设施层，并且开始记录所有产物。」</p>
     </div>
   </article>
 </div>
 
-<h2 id="前线部署工程师-供应商锁定与-langsmith">前线部署工程师、供应商锁定与 LangSmith</h2>
+<h2 id="记录-artifact-与共享组织大脑">记录 artifact 与共享组织大脑</h2>
 
-<h3 id="前线部署工程师-供应商锁定与-langsmith-insight" class="layer-heading layer-insight">核心洞察</h3>
+<h3 id="记录-artifact-与共享组织大脑-insight" class="layer-heading layer-insight">核心洞察</h3>
 <div class="callout callout-tip section-insight">
   <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>FDE 有价值但炒作被放大；多数公司仍是内部工程师为主、少量 FDE——合同与工具层要保留模型选择权。</p></div>
+  <div class="callout-body"><p>默认全员可查看任何全职员工的 Agent 对话，是用透明换安全、用示范换培训的杠杆。</p></div>
 </div>
-<h3 id="前线部署工程师-供应商锁定与-langsmith-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>前线部署工程师（Forward Deployed Engineer，FDE）</strong> 在硅谷热议中很火（<strong>Aaron Levie</strong> 一两天前亦上台分享）。<strong>Andrew Ng</strong> 认为 FDE <strong>是好主意</strong>，多数公司未来仍是<strong>大量内部 AI 工程师 + 较小嵌入式 FDE 团队</strong>——比例上内部远多于 FDE；炒作 <strong>略大于现实</strong>，但仍是好事，应多创造 FDE 就业。</p>
-<p>构建代理工作流 <strong>很难</strong>：懂业务、面向客户、可靠性、<strong>可观测性</strong>、<strong>评测</strong>、对客户反驳不可行方案、与利益相关方定自动化范围、<strong>变更管理</strong>——需深度技术判断；嵌入式 FDE 能加速。</p>
-<p>另一难题：<strong>能否供应商中立的 FDE？</strong> AI 领先模型 <strong>变化极快</strong>——他不知一年后领先模型或领先 <strong>编码代理</strong> 是谁；不确定期 <strong>选择权极有价值</strong>。许多供应商给 <strong>20–30% 折扣</strong> 但要 <strong>三年合同</strong>——他个人<strong>几乎从不签超过一年</strong>，不论折扣，以保留一年后选最好供应商的权利。</p>
-<p>企业亦问：若让某家供应商的少数 FDE 嵌入并深度绑定单一模型，<strong>一两年后选择权损失多少？</strong> 这是他个人常用 <strong>LangSmith</strong> 的原因——<strong>Harrison Chase</strong> 把它做得易用；这类 <strong>供应商中立</strong> 工具对观测、长期保留选择权很有价值。供应商很好，要合作，但<strong>长期保留选择权</strong>也重要。</p>
-<h3 id="前线部署工程师-供应商锁定与-langsmith-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<h3 id="记录-artifact-与共享组织大脑-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Gary Tan</strong> 指出一个细微但关键的决定：<strong>Agent 对话默认对全体全职员工可见</strong>——当初争议很大（「大家岂不是什么都看得见？」），最终保留开放；收益包括：从 <strong>Gary Tan</strong> 等高用量者的创意用法中学习（「原来还能这样用」）。</p>
+<p>每条对话还<strong>广播到内部 Slack 频道</strong>，任何人可订阅观摩——在<strong>高信任环境</strong>里，这形成社会性约束，使「给 Agent 大量上下文」与「隐私」取得折中；<strong>Pete Koomen</strong> 认为在 <strong>YC</strong> 相当有效。</p>
+<p><strong>Gary Tan</strong> 总结：真正 <strong>Agentic</strong>、追求 <strong>1000x</strong> 的组织，必须具备<strong>相对平等主义</strong>与<strong>信任默认</strong>——多数公司两者皆缺；创始人若要做这种组织，须把它写进核心文化。环境上，<strong>初创小团队高信任</strong>最合拍。</p>
+<h3 id="记录-artifact-与共享组织大脑-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="信任默认-平等主义与-token-时间扭曲">信任默认、平等主义与 Token 时间扭曲</h2>
+
+<h3 id="信任默认-平等主义与-token-时间扭曲-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="信任默认-平等主义与-token-时间扭曲-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>组织还须在 <strong>Token</strong> 上愿意每年花 <strong>约 1 万–10 万美元</strong>（<strong>Gary Tan</strong> 口播亦提到极端可到 <strong>百万美元</strong> 量级，但强调价格曲线会陡降）：现在花 <strong>10 万–100 万</strong>，两三年后可能变成 <strong>1 万</strong>、再后 <strong>几百</strong>——所有人都会这么做；当下是<strong>一次性时间扭曲</strong>，可 leapfrog 所有 <strong>Fortune 500</strong> 与迟钝初创。</p>
+<p><strong>Gary Tan</strong> 类比九十年代公司给员工买电脑：贵、脆，但有电脑者对无电脑者是超能力——<strong>Pete Koomen</strong> 用「抬高地板（raising the floor）」描述 <strong>YC</strong> 内部感受：新人过去可能要六个月 ramp；现在通过 <strong>Agent</strong> 自动获得公司上下文，并<strong>学徒式</strong>观察明星合伙人（如 <strong>Pete Koomen</strong> 辅导销售、<strong>Gary Tan</strong> 给具体建议）——类似个人编码 Agent 让羞于问的「蠢问题」敢问，组织级亦然，<strong>问题总量与 ramp 速度</strong>双升。</p>
+<h3 id="信任默认-平等主义与-token-时间扭曲-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="抬高新人地板-《无马车厢》与聊天界面">抬高新人地板：《无马车厢》与聊天界面</h2>
+
+<h3 id="抬高新人地板-《无马车厢》与聊天界面-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>未来 <strong>AI 原生</strong>软件更像「Agent 包裹确定性工具」，而非「确定性软件包裹一点 AI」；聊天界面足够好，因为最接近人类语言与思维的外化。</p></div>
+</div>
+<h3 id="抬高新人地板-《无马车厢》与聊天界面-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Pete Koomen</strong> 在基建成型后写下 viral 文 <strong>《Horseless Carriages（无马车厢）》</strong>：批判当时大量 <strong>AI</strong> 软件仍把 <strong>AI</strong> 当小功能塞进旧壳（如 <strong>Gmail</strong> 写信助手）——潜力在于把软件<strong>控制权从开发者移给用户</strong>；开发者把 prompt 上下文锁死是「安全主义」，他反感。</p>
+<p>结论方向：<strong>Agent 包工具</strong> 而非 <strong>工具包 Agent</strong>。<strong>YC</strong> 用原语向内部员工暴露了这一面，但路还长。</p>
+<p>关于「是否需要全新 <strong>AI UI</strong>」：<strong>Pete Koomen</strong> 与 <strong>Gary Tan</strong> 都已转向拥护<strong>聊天</strong>——信任 Agent 做更多决策后，不必厚重 UI 逐项审批；偶发需要再生成<strong>即时视图</strong>。<strong>Just-in-time software（即时软件）</strong>：单页 <strong>JavaScript</strong> 当场为你生成，或固化成随时调用的 <strong>Skill</strong> 文件。</p>
+<p><strong>Gary Tan</strong> 曾怀疑聊天是否终局；反思后认为聊天最接近<strong>清晰智能（clear intelligence）</strong>的表达，硬塞固定盒子反而约束。<strong>Telegram</strong> + 语音备忘录等多模态也被认为「挺好」。</p>
+<p><strong>Pete Koomen</strong> 观察：最好用的 <strong>AI</strong> 软件往往<strong>代码量极小</strong>，只加最少先验，让模型发光——可写数万行，但上手理解成本极低。</p>
+<p><strong>Pi</strong>（极简开源编码 <strong>Agent</strong>）被 <strong>Gary Tan</strong> 点名为 <strong>OpenClaw</strong> 底座之一：可用 <strong>Pi</strong> 改 <strong>Pi</strong>，自指、自扩展软件；<strong>OpenClaw</strong> 走同路。商业软件未来或默认带「用 Agent 扩展」能力。</p>
+<h3 id="抬高新人地板-《无马车厢》与聊天界面-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+
+</div>
+
+<h2 id="即时软件-gary's-list-20-与中心化之争">即时软件、Gary's List 2.0 与中心化之争</h2>
+
+<h3 id="即时软件-gary's-list-20-与中心化之争-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p></p></div>
+</div>
+<h3 id="即时软件-gary's-list-20-与中心化之争-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Gary Tan</strong> 自述：一月至二月用 <strong>Claude Code</strong> 为 <strong>Gary's List</strong> 写了约 <strong>50 万行</strong> <strong>Rails</strong>（首周博客，后续一个半月搭 <strong>Agentic</strong> 框架：自研深度研究、事实核查等）——按 <strong>2013</strong> 年 <strong>Web 2.0</strong> 方式建站；最近三天为 <strong>GBrain</strong> 又写约 <strong>4 万行</strong>，相当于 <strong>Gary's List 2.0</strong> 开源版，含检索、语音抽取、事实核查等，昨日交给团队作 <strong>OpenClaw</strong> 实例 + <strong>Telegram</strong> + 同一检索数据 + <strong>MCP</strong>，告别臃肿单体聊天 UI 与 <strong>OpenClaw/Telegram</strong> 已解决的问题。</p>
+<p><strong>Rails</strong> 半百万行 vs <strong>TypeScript</strong> 约 <strong>1 万行</strong> + <strong>Markdown</strong> 约 <strong>2000 行</strong>——后者更动态；第二段想加政治家传记，在 <strong>OpenClaw</strong> 里不必改 <strong>Rails</strong> 或复杂 <strong>eval</strong> 基础设施，<strong>主编 Agent</strong> 用 <strong>eval Skill</strong> 即可现场改。</p>
+<p><strong>Gary Tan</strong> 将 <strong>AI</strong> 分叉为<strong>中心化</strong> vs <strong>去中心化</strong>未来（<strong>18–24 个月</strong>内抉择，或拖 <strong>五年</strong>）：<strong>1984</strong> 式——少数「国王」掌控最强 <strong>AI</strong>、算力、太空数据中心，且<strong>不让用户改 prompt</strong>（<strong>Gmail</strong> 式锁死放大到整个数字生活），如同只有主机没有个人电脑；<strong>白丸</strong>路径则像 <strong>Homebrew Computer Club</strong> / <strong>Apple I</strong> 时刻——<strong>OpenClaw</strong>、<strong>Hermes</strong>、<strong>GBrain</strong> 让你跑自己的软件、改自己的 prompt、私有仓库、自选模型（含开源权重）。</p>
+<p><strong>ChatGPT</strong> 十亿用户但 <strong>MCP</strong> 收紧；<strong>Claude</strong> 稍开放仍有限；<strong>Perplexity Computer</strong> 被 <strong>Gary Tan</strong> 评为较好但仍不及 <strong>OpenClaw</strong>/<strong>Hermes</strong>。<strong>Pete Koomen</strong> 反对把 <strong>AI</strong> 框架为「取代人」——他经历的是<strong>赋能</strong>；从主机到 <strong>PC</strong> 到互联网发布，主线是<strong>个体赋能</strong>，<strong>AI</strong> 将消灭大量「苦工式」工作，但须<strong>主动选择</strong>开放组织与开放计算——观看者是未来建设者，「我们最好选对」。</p>
+<p>节目中段穿插 <strong>YC Startup School</strong> 广告：选拔 builder <strong>7 月 25–26 日</strong> 飞 <strong>旧金山</strong> 参加；申请与招聘链接见视频说明。</p>
+<h3 id="即时软件-gary's-list-20-与中心化之争-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
 <div class="timeline">
   <article class="step">
     <div class="step-num">1</div>
     <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「FDE 最近谈很多——每家公司都会有吗？为何影响这么大？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「硅谷热议，Aaron 前几天也讲了——FDE 是好主意。未来多数公司内部工程师远多于嵌入式 FDE 小团队；炒作略大于现实，但是好事。建代理工作流很难——业务、客户、可观测性、评测、变更管理……嵌入式 FDE 能加速。难的是供应商中立的 FDE 吗？领先模型变化快——我不知道一年后领先编码代理是谁；选择权很有价值。供应商给 20–30% 折扣要三年合同——我几乎从不签超过一年。FDE 嵌入单一模型会损选择权。LangSmith 我用很多——Harrison 做得易用；供应商中立工具对观测和选择权很有价值。」</p>
-    </div>
-  </article>
-</div>
-
-<h2 id="开源模型-数据战略与非结构化重构">开源模型、数据战略与非结构化重构</h2>
-
-<h3 id="开源模型-数据战略与非结构化重构-insight" class="layer-heading layer-insight">核心洞察</h3>
-<div class="callout callout-tip section-insight">
-  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>开放权重模型落后前沿约六至九个月却够用；代理之前应先修数据——非结构化重构将是巨额项目。</p></div>
-</div>
-<h3 id="开源模型-数据战略与非结构化重构-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p><strong>开源/开放权重模型</strong> 持续保持这一格局：约 <strong>六至九个月</strong> 落后前沿，但前沿模型够贵，他的团队大量用开放权重模型（有时微调有时不）。希望持续支持；近两周白宫关于<strong>发布前审查模型</strong> 的声音令他 <strong>相当担忧</strong>，已与政府朋友沟通——<strong>开源/开放权重之战</strong> 仍在，有时以美中竞争等名义出现；保护开源会让世界更丰富，也帮大家保留选择权。</p>
-<p><strong>先修数据战略再建代理</strong>：<strong>AI Aspire</strong> 见大型企业最常见痛点之一是 <strong>重思数据架构</strong>。过去 10–20 年精力在<strong>结构化数据</strong>（表、关系型、电子表格）——仍重要；但 AI 能处理<strong>非结构化</strong>（文本、图像、PDF、音频、视频），<strong>在正确时间地点把非结构化数据组织好交给代理</strong> 突然比过去有价值得多。</p>
-<p>市场很多供应商谈非结构化，但他<strong>找不到从政治上满意的单一好方案</strong>——<strong>AI Fund / AI Aspire</strong> 内部在做「疯狂实验」自建重构；若成功会多谈。他预见：像当年结构化 <strong>数据架构</strong> 大工程一样，未来数年许多企业会有 <strong>数千万至数亿美元级</strong> 项目，让数据更 <strong>AI 就绪 / 代理就绪</strong>。</p>
-<p>现有架构为何未就绪？<strong>碎片化</strong>、<strong>治理</strong>、数据散落、<strong>无共识模式</strong>、数据在某人笔记本、<strong>权限为人类设计非为代理</strong>——代理继承我的权限吗？治理与可观测性怎么管？金融服务业大量 PDF <strong>合规保留 20 年无人读</strong>——现在 AI 能看，整理极有价值。</p>
-<p><strong>Harrison Chase</strong> 提到 <strong>CJ</strong> 稍后讲链接技术；<strong>Andrew Ng</strong> 顺带编码小经验：他个人大量用 <strong>MongoDB</strong>——关系库虽好，但快速原型时 <strong>重设计数据库模式</strong> 太烦；虽 AI 做迁移 <strong>几乎从不</strong> 删库，「几乎从不但不是从不」仍烦。<strong>NoSQL</strong> 可写入任意数据、读时再定模式，迭代快；不一定撑最大生产负载，超大企业终用关系库，但 <strong>NoSQL 比多数人想更可扩展</strong>，支撑代理时代节奏。</p>
-<h3 id="开源模型-数据战略与非结构化重构-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「开源模型相对前沿怎么看？建代理前数据战略？」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「开放权重持续落后六至九个月，前沿模型贵，我们大量用开放权重。白宫最近要发布前审查模型让我担忧——要保护开源。AI Aspire 见最多痛点是重思数据架构：结构化做了 20 年，非结构化突然有价值——文本 PDF 音频在正确时间给代理。供应商很多，我找不到满意的单一方案——我们在自建实验。预见数千万到数亿美元级重构项目。问题：碎片化、治理、权限为人类非代理、PDF 合规存 20 年没人看——AI 看很有价值。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">3</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「编码代理不仅改变做什么，还改变什么技术栈合适。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">4</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「MongoDB 我用很多——原型时改模式烦，AI 迁移几乎从不删库但不是从不。NoSQL 写入数据读时再定模式，迭代快——别被模式重构拖慢，代理已经很快了。」</p>
-    </div>
-  </article>
-</div>
-
-<h2 id="mongodb-与快速迭代-编码代理改变技术选型">MongoDB 与快速迭代：编码代理改变技术选型</h2>
-
-<h3 id="mongodb-与快速迭代-编码代理改变技术选型-insight" class="layer-heading layer-insight">核心洞察</h3>
-<div class="callout callout-tip section-insight">
-  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
-  <div class="callout-body"><p>代理编码极快时，别让数据库模式重构成为新瓶颈——NoSQL 换迭代速度。</p></div>
-</div>
-<h3 id="mongodb-与快速迭代-编码代理改变技术选型-analysis" class="layer-heading layer-analysis">深度解析</h3>
-<p>本节承接数据与工具链讨论：<strong>编码代理</strong> 改变的不只是「写什么软件」，还有「什么底层技术利于快速试」。<strong>Andrew Ng</strong> 的 <strong>MongoDB</strong> 偏好是工作流层面的务实选择，与企业级非结构化数据架构大工程形成对照——前者服务个人/小团队原型迭代速度，后者服务代理规模化接入公司知识库。</p>
-<p>大会在 <strong>Andrew Ng</strong> 感谢生态贡献中收尾；观众鼓掌。<strong>CJ</strong> 将讲链接技术（大会议程引用，正文未展开）。</p>
-<h3 id="mongodb-与快速迭代-编码代理改变技术选型-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
-<div class="timeline">
-  <article class="step">
-    <div class="step-num">1</div>
-    <div class="step-body">
-      <h3>Harrison Chase</h3>
-      <p>「代表大家感谢你来、分享思考、为生态所做一切。」</p>
-    </div>
-  </article>
-  <article class="step">
-    <div class="step-num">2</div>
-    <div class="step-body">
-      <h3>Andrew Ng</h3>
-      <p>「谢谢，谢谢大家。」</p>
+      <h3>Gary Tan</h3>
+      <p>「我们现在就在 Apple I 时刻——正在定义底层原语。」</p>
     </div>
   </article>
 </div>
@@ -1486,16 +1452,16 @@
 <details class="collapsible meta-panel" id="延伸术语表">
   <summary>延伸术语表</summary>
   <div class="collapsible-body">
-<div class="table-wrap"><table><thead><tr><th>术语</th><th>说明</th></tr></thead><tbody><tr><td><strong>Interrupt 26</strong></td><td>LangChain 主办的 Agent 主题年度大会（2026 第二届）</td></tr><tr><td><strong>产品管理瓶颈（product management bottleneck）</strong></td><td>构建加速后，「决定做什么、定范围、收反馈」成为系统约束</td></tr><tr><td><strong>Context Hub（chub）</strong></td><td>Andrew Ng 与 Rohit Prasad 开源的 CLI；为编码代理提供最新 API/SDK 文档与反馈闭环</td></tr><tr><td><strong>AI Aspire</strong></td><td>Andrew Ng 与 Chris Tann 共创的企业 AI 战略顾问机构</td></tr><tr><td><strong>CodeDream.ai</strong></td><td>DeepLearning.AI 预览中的对话式交互学习实验站</td></tr><tr><td><strong>前线部署工程师（FDE）</strong></td><td>嵌入客户现场、兼具业务与技术、推动 agent 工作流落地的角色</td></tr><tr><td><strong>LangSmith</strong></td><td>LangChain 推出的 agent 可观测与调试平台，强调多模型/供应商中立</td></tr><tr><td><strong>开放权重模型（open-weight models）</strong></td><td>权重可获取、可本地部署或微调的开源或半开源大模型</td></tr><tr><td><strong>Nano Banana</strong></td><td>Google 多模态/图像相关模型产品；常晚于 LLM 训练截止日期发布</td></tr><tr><td><strong>OpenCode</strong></td><td>开源编码代理工具（Andrew Ng 个人工作流之一）</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>解释</th></tr></thead><tbody><tr><td><strong>Harness</strong></td><td>包裹模型、工具与上下文的 Agent 运行时/外壳；<strong>YC</strong> 内部自建，类似 <strong>Claude Code</strong> / <strong>OpenClaw</strong> 角色</td></tr><tr><td><strong>工具注册表（Tool Registry）</strong></td><td>组织可向 Agent 暴露的能力清单；<strong>YC</strong> 现 350+ 条，亦可供个人 <strong>Claude Code</strong> 调用</td></tr><tr><td><strong>Skill / Skillify</strong></td><td>比工具更薄的提示词+流程抽象；<strong>Skillify</strong> 指把一次成功操作固化并接入 resolver</td></tr><tr><td><strong>Dream cycle</strong></td><td>夜间批处理：读当日对话、改进 <strong>Skill</strong> 或写回 <strong>CRM</strong>；<strong>OpenClaw</strong> / <strong>GBrain</strong> 同名概念</td></tr><tr><td><strong>Two-sentence description</strong></td><td><strong>YC</strong> 要求创始人用两句通俗话说明「做什么 + 为何有趣」</td></tr><tr><td><strong>Jevons Paradox</strong></td><td>效率提升导致资源总消耗上升；此处指「问数据的问题」因摩擦降低而暴增</td></tr><tr><td><strong>Denormalization / Big table</strong></td><td>为 Agent 检索把多源数据打成宽表/大表，而非仅接原始 <strong>MCP</strong></td></tr><tr><td><strong>MECE</strong></td><td>Mutually Exclusive, Collectively Exhaustive；用于 <strong>Skill</strong> 去重与完备性检查</td></tr><tr><td><strong>Horseless Carriages</strong></td><td><strong>Pete Koomen</strong> 文章：批判把 <strong>AI</strong> 当旧软件小插件的「无马车厢」思维</td></tr><tr><td><strong>Just-in-time software</strong></td><td>按需生成一次性 UI/逻辑，而非预先固化全部功能</td></tr><tr><td><strong>GBrain</strong></td><td><strong>Gary Tan</strong> 开源 Agent 检索与知识栈，含 <strong>RAG</strong>、梦境循环等</td></tr><tr><td><strong>Optimizely</strong></td><td><strong>Pete Koomen</strong> 联合创立的 <strong>A/B 测试</strong> 平台</td></tr></tbody></table></div>
   </div>
 </details>
 
 <details class="collapsible meta-panel" id="文章元数据">
   <summary>文章元数据与来源</summary>
   <div class="collapsible-body">
-<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>The Future of AI Agents with Andrew NG | Interrupt 26</td></tr><tr><td><strong>内容链接（主）</strong></td><td><a href="https://www.youtube.com/watch?v=OaRhpwz_TGM">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-06-17</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-06-23</td></tr><tr><td><strong>播放量/访问量</strong></td><td>21,080 次（用户提供）</td></tr><tr><td><strong>时长</strong></td><td>约 31 分 22 秒（章节末段 31:22）</td></tr><tr><td><strong>核心人物</strong></td><td><strong>Andrew Ng</strong>（DeepLearning.AI 创始人、AI Fund / AI Aspire 联合创始人）；<strong>Harrison Chase</strong>（LangChain 创始人，Interrupt 大会主办）</td></tr><tr><td><strong>活动</strong></td><td><strong>Interrupt 26</strong>——LangChain 主办的代理（Agent）主题大会</td></tr><tr><td><strong>内容来源</strong></td><td>用户提供的完整字幕转写；YouTube 页面元数据（标题、日期、播放量、章节）</td></tr><tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Inside YC's AI Playbook</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.youtube.com/watch?v=B246K_G7mHU">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-05-27</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-05-29</td></tr><tr><td><strong>播放量/访问量</strong></td><td>YouTube 观看次数：37,694（用户提供）；浏览器快照未展示观看数，点赞约 918+</td></tr><tr><td><strong>时长</strong></td><td>YouTube 片长：00:46:29（浏览器播放器）；由字幕末条推算：00:46:14</td></tr><tr><td><strong>主持人</strong></td><td><strong>Gary Tan</strong>（<strong>Y Combinator</strong> 总裁兼 CEO；<strong>Lightcone Podcast</strong> 主持）</td></tr><tr><td><strong>嘉宾</strong></td><td><strong>Pete Koomen</strong>（<strong>YC</strong> 普通合伙人；<strong>Optimizely</strong> 联合创始人；主导 <strong>YC</strong> 内部 Agent 基建）</td></tr><tr><td><strong>内容来源</strong></td><td>用户提供完整英文字幕转写 + 浏览器页面元数据（标题、片长、章节）</td></tr><tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr></tbody></table></div>
 
-<blockquote><strong>讲者背景</strong>：<strong>Andrew Ng</strong> 是 <strong>DeepLearning.AI</strong> 与 <strong>Coursera</strong> 联合创始人，<strong>AI Fund</strong> 与 <strong>AI Aspire</strong>（AI 战略咨询）联合创始人；长期推动 AI 教育与产业落地。<strong>Harrison Chase</strong> 创办 <strong>LangChain</strong> 并主办 <strong>Interrupt</strong>；去年 <strong>Andrew Ng</strong> 的炉边对谈是该大会 YouTube 回放中点赞与观看量最高的一场，今年回归第二场。</blockquote>
+<blockquote><strong>人物背景</strong>：<strong>Pete Koomen</strong> 联合创立 <strong>Optimizely</strong>，曾是应用与网站 <strong>A/B 测试</strong> 领域的早期标杆产品之一；加入 <strong>YC</strong> 后牵头搭建内部 <strong>Agent</strong> 基础设施——包括 <strong>Harness</strong>、共享工具注册表与夜间自我改进循环。本场为 <strong>Lightcone Podcast</strong> 首次系统公开 <strong>YC</strong> 内部如何把 <strong>AI</strong> 从「副驾驶」升级为「组织操作系统」，并与 <strong>Gary Tan</strong> 等人讨论 <strong>GBrain</strong>、<strong>OpenClaw</strong>、信任文化与个人 <strong>AI</strong> 革命等平行实践。</blockquote>
   </div>
 </details>
 
@@ -1505,15 +1471,15 @@
   <summary>展开自检报告详情</summary>
   <div class="collapsible-body">
     <div class="table-wrap">
-    <table><thead><tr><th>检查项</th><th>结果</th></tr></thead><tbody><tr><td><strong>节结构（对谈三层）</strong></td><td>✅ 10 节均含核心洞察+深度解析+对谈实录（末节实录较短）</td></tr><tr><td><strong>导读论点（v5.26）</strong></td><td>✅ 含 <code>&gt; <strong>全文论点</strong></code>；分层段覆盖企业落地、FDE/供应商、数据架构收束线</td></tr><tr><td><strong>元数据</strong></td><td>✅ 标题/链接/2026-06-17/21080 播放/31:22 时长/抓取时间</td></tr><tr><td><strong>术语校准</strong></td><td>✅ guardrails（原 God rails）、FDE（原 FBE）、CodeDream.ai、Nano Banana、OpenCode、Chris Tann</td></tr><tr><td><strong>主持人引子</strong></td><td>✅ 去年最受欢迎回放、LangChain Context Hub 同名区分、CJ links、Aaron Levie stage</td></tr><tr><td><strong>附着型信息</strong></td><td>✅ 手机编码/Mac Mini、20–30% 三年折扣、300+ ideas 表格、almost never 删库</td></tr><tr><td><strong>多源一致性</strong></td><td>不适用（单源字幕）</td></tr><tr><td><strong>可读性内化</strong></td><td>不适用</td></tr><tr><td><strong>正文中文叙事</strong></td><td>✅ 4c 闸门通过；grep 命中 48→修正后 0；对谈实录已译中文；专名/原标题英文保留</td></tr><tr><td><strong>首现缩写注释</strong></td><td>✅ RAG、FDE、evals（评测）首现已注或上下文释义</td></tr><tr><td><strong>纯净排版（4d 节间空白）</strong></td><td>✅ 4d 闸门通过；--- 共 4 处（≤5）；正文节间 --- 0；三连空行 0</td></tr><tr><td><strong>防幻觉</strong></td><td>✅ 数字均来自用户字幕；无 URL 浏览器二次抓取（用户已供完整转写）</td></tr><tr><td><strong>文档生成时间</strong></td><td>2026-06-23</td></tr></tbody></table>
+    <table><thead><tr><th>检查项</th><th>结果</th><th>备注</th></tr></thead><tbody><tr><td>导读论点（v5.26）</td><td>✅</td><td>含 <code>&gt; <strong>全文论点</strong></code> 块；分层段覆盖目录末 2–3 节收束线</td></tr><tr><td>节结构（对谈三层）</td><td>✅</td><td>15 节均为「核心洞察 → 深度解析 → 对谈实录」；原「关键语录」节 quotes 已并入各节对谈</td></tr><tr><td>术语校验（必搜词清单：固定写法 + ASR 语境项）</td><td>✅ 修正多处</td><td><code>cloud code</code>→<strong>Claude Code</strong>；<code>light code</code>→<strong>Lightcone</strong>；<code>Gvon's</code>→<strong>Jevons</strong>；<code>two cents</code>→<strong>two-sentence</strong>；<code>Pete Kumman</code>→<strong>Pete Koomen</strong>；<code>Harge</code>→<strong>Harj Taggar</strong>；<code>Mackenzie</code>→<strong>McKinsey</strong></td></tr><tr><td>纯净排版</td><td>✅</td><td>✅ 4d 闸门通过；--- 共 5 处（≤5）；正文节间 --- 0；三连空行 0；<code>##</code>→<code>### 核心洞察</code> 仅一行空行；无 emoji/无文字墙/标题无{#锚点}</td></tr><tr><td>说话人对齐校验</td><td>✅</td><td>主持 <strong>Gary Tan</strong> 引子（SQL 创业、<strong>GBrain</strong>、<strong>Block</strong>、token 成本等）已入库</td></tr><tr><td>人称与全名</td><td>✅</td><td>正文 <strong>Pete Koomen</strong>、<strong>Gary Tan</strong>、<strong>Jared</strong>、<strong>Tom</strong>、<strong>Harj Taggar</strong>、<strong>Diana</strong>（仅语录并列处）、<strong>Jack Dorsey</strong> 等</td></tr><tr><td>防幻觉与盲区标注</td><td>✅</td><td>无未口播图表数据；<strong>Startup School</strong> 日期来自口播</td></tr><tr><td>原数据快照（抓取时间+播放量/访问量+时长）</td><td>✅</td><td>播放 37,694（用户）；片长 00:46:29（浏览器）</td></tr><tr><td>浏览器优先抓取（有主 URL 时）</td><td>✅</td><td>已抓取标题 <strong>Inside YC's AI Playbook</strong>、片长、章节列表；说明正文依赖用户转写</td></tr><tr><td>主持人引子（代际/范围/主持侧数字）</td><td>✅</td><td><strong>350</strong> 工具、<strong>50 万/4 万</strong> 行代码、<strong>1 万–10 万</strong> token 等已对齐口播</td></tr><tr><td>附着型信息（偏好附句、带主语时间表等）</td><td>✅</td><td><strong>18–24 个月</strong>抉择窗口、<strong>1990s</strong> 电脑类比、<strong>playful</strong> 等已写入或金句</td></tr><tr><td>正文数字 vs 用户逐字转写</td><td>✅</td><td>观看 <strong>37,694</strong>、工具 <strong>350+</strong>、时长 <strong>46:29</strong> 等与用户提供/浏览器一致</td></tr><tr><td>正文中文叙事</td><td>✅</td><td>✅ 4c 闸门通过；grep 命中 0→修正后 0；对谈实录已译中文；专名/原标题英文保留</td></tr><tr><td>可读性内化</td><td>✅</td><td>播客/访谈体裁：首次补行业专名与文化语境；客观第三人称；第二人称仅存引语；无元叙述与国内硬类比</td></tr></tbody></table>
     </div>
   </div>
 </details>
       <!-- CONTENT_END -->
 
       <footer class="doc-footer">
-        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=OaRhpwz_TGM" target="_blank" rel="noopener">观看原视频</a></span>
-        <span>来源: 20260617 Andrew_Ng_AI代理未来_Interrupt26_Harrison_Chase_整理文档.md</span>
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=B246K_G7mHU" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260527 YC内部AI操作系统与组织级Agent基建_Pete Koomen_Lightcone播客_整理文档.md</span>
       </footer>
     </main>
   </div>

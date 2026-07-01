@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light" style="--rec-label: '★ 推荐'">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>进攻、编排与电力：Aravind Srinivas 眼中的 Perplexity 与 AI 价值链</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FAFAF7;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F0;
+      --surface-3: #EFEEE8;
+      --text: #1A1A1A;
+      --text-muted: #4A4A45;
+      --text-subtle: #6B6B66;
+      --accent: #D97757;
+      --accent-hover: #C56843;
+      --accent-soft: #FBEEE6;
+      --accent-border: #F0D5C4;
+      --accent-strong: #A85533;
+      --border: #E5E4DC;
+      --border-strong: #CDCDC4;
+      --code-bg: #F5F2EC;
+      --code-text: #2A2A2A;
+      --info: #2563EB;
+      --info-soft: #EFF6FF;
+      --info-border: #BFDBFE;
+      --warn: #B45309;
+      --warn-soft: #FFFBEB;
+      --warn-border: #FDE68A;
+      --danger: #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #047857;
+      --success-soft: #ECFDF5;
+      --success-border: #A7F3D0;
+      --decision: #6D28D9;
+      --decision-soft: #F5F3FF;
+      --decision-border: #DDD6FE;
+      --shadow-sm: 0 1px 2px rgba(20, 14, 8, 0.04);
+      --shadow: 0 1px 2px rgba(20, 14, 8, 0.04), 0 4px 12px rgba(20, 14, 8, 0.06);
+      --shadow-lg: 0 8px 24px rgba(20, 14, 8, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --measure: 75ch;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+      --z-progress: 200;
+      --z-topbar: 100;
+      --z-drawer: 300;
+      --z-backdrop: 250;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1714;
+      --surface: #221E1A;
+      --surface-2: #2A2520;
+      --surface-3: #322C26;
+      --text: #F5F0E8;
+      --text-muted: #C8C0B6;
+      --text-subtle: #9A938A;
+      --accent: #E89572;
+      --accent-hover: #F2A87F;
+      --accent-soft: #3A2A22;
+      --accent-border: #5A3D2E;
+      --accent-strong: #F5B493;
+      --border: #2E2924;
+      --border-strong: #463F38;
+      --code-bg: #1E1B17;
+      --code-text: #E8E2D8;
+      --info: #93C5FD;
+      --info-soft: #1E2A3D;
+      --info-border: #2A4365;
+      --warn: #FBBF24;
+      --warn-soft: #332817;
+      --warn-border: #5C4520;
+      --danger: #FCA5A5;
+      --danger-soft: #3A1F1F;
+      --danger-border: #5C2A2A;
+      --success: #6EE7B7;
+      --success-soft: #1A3329;
+      --success-border: #1F5C45;
+      --decision: #C4B5FD;
+      --decision-soft: #2A1F40;
+      --decision-border: #4A3870;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    ::selection { background: var(--accent-soft); color: var(--accent-strong); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 8px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 1000;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* SVG sprite container (hidden) */
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .icon { display: inline-block; flex-shrink: 0; vertical-align: middle; stroke: currentColor; fill: none; }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: var(--z-progress);
+      transition: width 0.05s linear;
+    }
+
+    /* ============================================================
+       TOPBAR
+       ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      background: rgba(250, 250, 247, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .topbar { background: rgba(26, 23, 20, 0.85); }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      animation: brand-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes brand-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft); }
+      50%      { box-shadow: 0 0 0 7px transparent; }
+    }
+    .topbar-actions { display: flex; gap: 6px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      padding: 0;
+    }
+    .icon-btn .icon { width: 18px; height: 18px; stroke-width: 2; }
+    .icon-btn[hidden] { display: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 32px 24px 96px;
+    }
+    .content { min-width: 0; }
+    /* Unified reading measure: every top-level block shares one width so
+       paragraphs, callouts, diagrams, timelines, tables and code align to a
+       single clean column. Opt out with .full-bleed where truly needed. */
+    .content > * { max-width: var(--measure); }
+    .content > .full-bleed { max-width: none; }
+
+    /* ============================================================
+       TOC (desktop + mobile drawer)
+       ============================================================ */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .toc::-webkit-scrollbar { width: 6px; }
+    .toc::-webkit-scrollbar-track { background: transparent; }
+    .toc::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+    .toc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .toc-close { display: none; }
+    .toc-nav { display: flex; flex-direction: column; gap: 2px; }
+    .toc-nav a {
+      display: flex; align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 500;
+    }
+    .toc-nav a.lvl-3 { padding-left: 26px; font-size: 12.5px; }
+    .toc-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: var(--z-backdrop);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ============================================================
+       DOC HEADER
+       ============================================================ */
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-eyebrow {
+      display: inline-flex; align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-size: clamp(28px, 3vw + 16px, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .doc-subtitle {
+      font-size: clamp(15px, 0.6vw + 13px, 18px);
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      max-width: var(--measure);
+      text-wrap: pretty;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+    .doc-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    .doc-meta .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ============================================================
+       CONTENT (typography)
+       ============================================================ */
+    .content h1, .content h2, .content h3, .content h4 {
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+    .content h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 56px 0 16px;
+      padding-top: 8px;
+      position: relative;
+    }
+    .content h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      position: relative;
+    }
+    .content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .content > p,
+    .content > ul,
+    .content > ol,
+    .content > blockquote { max-width: var(--measure); }
+    .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
+    .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
+    .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
+    .content li { margin: 4px 0; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content em { color: var(--text-muted); }
+    .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Anchor links injected by JS on h2/h3 with id */
+    .anchor {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      color: var(--text-subtle);
+      opacity: 0;
+      transform: translateY(-1px);
+      transition: opacity 0.15s, color 0.15s;
+      border-bottom: none !important;
+      border-radius: var(--radius-sm);
+    }
+    .anchor .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* Images */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+    .content figure { margin: 20px 0; }
+    .content figure img { margin: 0; }
+    .content figcaption {
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Task lists (- [ ] / - [x]) */
+    .content .task-list-item { list-style: none; margin-left: -22px; }
+    .content .task-list-item-checkbox {
+      margin-right: 8px;
+      vertical-align: -2px;
+      accent-color: var(--accent);
+    }
+
+    /* Footnotes */
+    .content .footnote-ref a,
+    .content sup a {
+      font-size: 0.75em;
+      vertical-align: super;
+      border-bottom: none;
+      padding: 0 2px;
+    }
+    .content .footnotes {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       CODE
+       ============================================================ */
+    .content code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    .content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      position: relative;
+    }
+    .content pre code {
+      background: none; padding: 0; border: none;
+      color: var(--code-text);
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-subtle);
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .copy-btn .icon { width: 14px; height: 14px; stroke-width: 2; }
+    .copy-btn.copied { color: var(--success); border-color: var(--success-border); opacity: 1; }
+
+    /* ============================================================
+       TIMELINE / STEPS
+       ============================================================ */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-border), var(--border));
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 8px 4px;
+      position: relative;
+      border-radius: var(--radius);
+      transition: background-color 0.15s;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .step.done .step-num { background: var(--accent); color: #fff; }
+    .step-body { padding-top: 6px; min-width: 0; }
+    .step-body h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: var(--measure); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: var(--measure);
+    }
+    .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
+    .callout-body { min-width: 0; }
+    .callout-title { font-weight: 600; margin: 0 0 4px; font-size: 14px; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout-body code { background: rgba(0,0,0,0.04); }
+    [data-theme="dark"] .callout-body code { background: rgba(255,255,255,0.06); }
+
+    .callout-info     { background: var(--info-soft);     border-color: var(--info-border);     color: var(--text); }
+    .callout-info     .callout-title, .callout-info     .callout-icon { color: var(--info); }
+    .callout-warn     { background: var(--warn-soft);     border-color: var(--warn-border);     color: var(--text); }
+    .callout-warn     .callout-title, .callout-warn     .callout-icon { color: var(--warn); }
+    .callout-danger   { background: var(--danger-soft);   border-color: var(--danger-border);   color: var(--text); }
+    .callout-danger   .callout-title, .callout-danger   .callout-icon { color: var(--danger); }
+    .callout-success  { background: var(--success-soft);  border-color: var(--success-border);  color: var(--text); }
+    .callout-success  .callout-title, .callout-success  .callout-icon { color: var(--success); }
+    .callout-decision { background: var(--decision-soft); border-color: var(--decision-border); color: var(--text); }
+    .callout-decision .callout-title, .callout-decision .callout-icon { color: var(--decision); }
+    .callout-tip      { background: var(--accent-soft);   border-color: var(--accent-border);   color: var(--text); }
+    .callout-tip      .callout-title, .callout-tip      .callout-icon { color: var(--accent-strong); }
+
+    /* ============================================================
+       KEY-POINT HIGHLIGHT
+       ============================================================ */
+    .highlight {
+      background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+      border-left: 4px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: var(--measure);
+    }
+    .highlight-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       MERMAID
+       ============================================================ */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .mermaid { text-align: center; min-height: 80px; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .mermaid:not([data-processed]) {
+      opacity: 0.4;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ============================================================
+       PROS / CONS
+       ============================================================ */
+    .proscons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .proscons-col {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .proscons-col h4 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proscons-col ul { margin: 0; padding-left: 18px; }
+    .proscons-col li { margin: 6px 0; }
+    .pros { background: var(--success-soft); border-color: var(--success-border); }
+    .pros h4 { color: var(--success); }
+    .cons { background: var(--danger-soft); border-color: var(--danger-border); }
+    .cons h4 { color: var(--danger); }
+
+    /* ============================================================
+       COMPARISON CARDS
+       ============================================================ */
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .compare-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .compare-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .compare-card.recommended::before {
+      content: var(--rec-label, "★ Recommended");
+      position: absolute; top: -10px; right: 14px;
+      background: var(--accent); color: #fff;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+    }
+    .compare-card h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); text-transform: none; letter-spacing: normal; }
+    .compare-card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+    /* ============================================================
+       COLLAPSIBLE
+       ============================================================ */
+    details.collapsible {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 16px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    details.collapsible[open] { box-shadow: var(--shadow-sm); }
+    details.collapsible > summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 500;
+      color: var(--text);
+      list-style: none;
+      display: flex; align-items: center; gap: 10px;
+      user-select: none;
+      transition: background 0.15s;
+      min-height: 44px;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::before {
+      content: "›";
+      display: inline-block;
+      transition: transform 0.18s;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    details.collapsible[open] > summary::before { transform: rotate(90deg); }
+    .collapsible-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+    .collapsible-body > *:first-child { margin-top: 12px; }
+
+    /* ============================================================
+       TABLES (wrapped via .table-wrap or naturally responsive)
+       ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      margin: 0;
+    }
+    /* Standalone tables (not inside .table-wrap) keep visual border */
+    .content > table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      display: block;
+      overflow-x: auto;
+    }
+    .content th {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .content td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    /* ============================================================
+       BLOCKQUOTE
+       ============================================================ */
+    .content blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-border);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       FOCUS-VISIBLE (a11y)
+       ============================================================ */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .toc-nav a:focus-visible { outline-offset: -2px; }
+    .icon-btn:focus-visible { outline-offset: 2px; }
+    .anchor:focus-visible { opacity: 1; outline-offset: 2px; }
+    details.collapsible > summary:focus-visible { outline-offset: -2px; }
+
+    /* ============================================================
+       HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
+       ============================================================ */
+    @media (hover: hover) {
+      .back-to-top:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+      .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+      .compare-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow); }
+      .compare-card.recommended:hover { border-color: var(--accent); }
+      .content tr:hover td { background: var(--surface-2); }
+      details.collapsible > summary:hover { background: var(--surface-2); }
+      .step:hover { background: var(--surface-2); }
+      .step:hover .step-num { transform: scale(1.05); }
+      .anchor:hover { color: var(--accent); }
+      .content h2:hover .anchor,
+      .content h3:hover .anchor { opacity: 1; }
+      .copy-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+      .content pre:hover .copy-btn { opacity: 1; }
+    }
+    /* On touch devices, copy-btn is always visible at low opacity */
+    @media (hover: none) {
+      .copy-btn { opacity: 0.6; }
+      .anchor { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       MOBILE (≤900px) — TOC becomes off-canvas drawer
+       ============================================================ */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px 80px;
+      }
+      .topbar-inner { padding: 8px 12px; }
+      .doc-header { margin-bottom: 28px; padding-bottom: 20px; }
+
+      .toc-mobile-trigger { display: inline-flex !important; }
+
+      .toc {
+        position: fixed;
+        top: 0; left: 0;
+        width: min(300px, 82vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        background: var(--surface);
+        z-index: var(--z-drawer);
+        padding: 16px 8px 24px 16px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc-head { padding: 4px 4px 12px 8px; }
+      .toc-close {
+        display: inline-flex !important;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+      }
+      .toc-close .icon { width: 18px; height: 18px; stroke-width: 2; }
+      body.toc-open .toc { transform: translateX(0); }
+      body.toc-open .toc-backdrop {
+        display: block;
+        opacity: 1;
+      }
+      .toc-backdrop {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.toc-open .toc-backdrop { pointer-events: auto; }
+      body.toc-open { overflow: hidden; }
+    }
+    @media (min-width: 901px) {
+      .toc-mobile-trigger { display: none !important; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION (a11y)
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html { scroll-behavior: auto; }
+      .brand-dot { animation: none; box-shadow: 0 0 0 4px var(--accent-soft); }
+    }
+
+    /* ============================================================
+       LAYER HEADINGS (对谈三层结构)
+       ============================================================ */
+    .layer-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .layer-heading::before {
+      flex-shrink: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .layer-insight::before {
+      content: "洞察";
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+    }
+    .layer-analysis::before {
+      content: "解析";
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .layer-dialogue::before {
+      content: "实录";
+      background: var(--info-soft);
+      color: var(--info);
+      border: 1px solid var(--info-border);
+    }
+    .layer-insight { font-size: 0; }
+    .layer-insight::before { font-size: 11px; }
+    .layer-insight .anchor { font-size: 14px; }
+    .layer-analysis { font-size: 0; }
+    .layer-analysis::before { font-size: 11px; }
+    .layer-analysis .anchor { font-size: 14px; }
+    .layer-dialogue { font-size: 0; }
+    .layer-dialogue::before { font-size: 11px; }
+    .layer-dialogue .anchor { font-size: 14px; }
+    .section-insight { margin-top: 12px; margin-bottom: 20px; }
+    .section-insight .callout-body p { margin: 0; }
+
+    /* Section jump pills (injected by JS) */
+    .section-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 20px;
+      max-width: var(--measure);
+    }
+    .section-jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+    }
+    .section-jump a:hover,
+    .section-jump a:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Speaker differentiation in dialogue timeline */
+    .step.speaker-host .step-num {
+      border-color: var(--info);
+      color: var(--info);
+      background: var(--info-soft);
+    }
+    .step.speaker-guest .step-num {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .step.speaker-host .step-body h3 { color: var(--info); }
+    .step.speaker-guest .step-body h3 { color: var(--accent-strong); }
+
+    /* Meta panel + table URL wrap */
+    .meta-panel { margin-bottom: 32px; }
+    .toc-nav .toc-meta-link {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-subtle);
+      font-size: 12.5px;
+    }
+    .table-wrap td a { word-break: break-all; }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: opacity 0.2s, transform 0.2s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .back-to-top .icon { width: 20px; height: 20px; stroke-width: 2; }
+    .back-to-top:not([hidden]) { opacity: 1; transform: translateY(0); }
+    .back-to-top[hidden] { display: inline-flex; opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+    /* ============================================================
+       PRINT
+       ============================================================ */
+    @media print {
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress, .back-to-top, .section-jump { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      a { color: #000; }
+      .content pre, .callout, .compare-card, .step, .diagram { break-inside: avoid; }
+      .doc-footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">跳到正文</a>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- SVG icon sprite (Lucide-style) -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-decision" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0 4 4 0 0 1 1.59 2h2.99a4 4 0 0 1 1.6-2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  </svg>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn toc-mobile-trigger" id="toc-toggle" onclick="openToc()" aria-label="目录" title="目录">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>笔记</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-printer"/></svg>
+        </button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use id="theme-icon-use" href="#i-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC drawer backdrop (mobile) -->
+  <div class="toc-backdrop" id="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-head">
+        <p class="toc-title">目录</p>
+        <button class="toc-close" onclick="closeToc()" aria-label="关闭">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#核心导读" class="lvl-2">核心导读</a>
+        <a href="#进攻型创始人-从零到-200-亿美元-ai-公司" class="lvl-2">进攻型创始人：从零到 200 亿美元 AI 公司</a>
+        <a href="#倒逼-google-重写搜索-答案引擎只是引流" class="lvl-2">倒逼 Google 重写搜索：答案引擎只是引流</a>
+        <a href="#openai-仍主导消费搜索-但钱在代理前沿" class="lvl-2">OpenAI 仍主导消费搜索，但钱在代理前沿</a>
+        <a href="#模型不是产品-编排层与-token-经济学" class="lvl-2">模型不是产品：编排层与 token 经济学</a>
+        <a href="#代理收入能否超越-google-广告" class="lvl-2">代理收入能否超越 Google 广告</a>
+        <a href="#24-7-代理-编排四维与本地计算" class="lvl-2">24/7 代理：编排四维与本地计算</a>
+        <a href="#perplexity-要做终极-ai-编排者" class="lvl-2">Perplexity 要做终极 AI 编排者</a>
+        <a href="#电力与内存-micron-会比-meta-更贵吗" class="lvl-2">电力与内存：Micron 会比 Meta 更贵吗</a>
+        <a href="#推理与-neocloud-能否诞生百亿美元独立公司" class="lvl-2">推理与 Neocloud：能否诞生百亿美元独立公司</a>
+        <a href="#数据中心阻力-出口管制与中国栈" class="lvl-2">数据中心阻力、出口管制与中国栈</a>
+        <a href="#ai-就业叙事-小团队独角兽与能动性" class="lvl-2">AI 就业叙事、小团队独角兽与能动性</a>
+        <a href="#财富不平等-自训模型与-ipo-2028" class="lvl-2">财富不平等、自训模型与 IPO 2028</a>
+        <a href="#曾被票选「最可能失败」与-agi-化公司" class="lvl-2">曾被票选「最可能失败」与 AGI 化公司</a>
+        <a href="#快问快答-十年押注-职业建议与永不退休" class="lvl-2">快问快答：十年押注、职业建议与永不退休</a>
+        <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
+        <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main">
+      <header class="doc-header">
+        <span class="doc-eyebrow">整理笔记</span>
+        <h1 class="doc-title">进攻、编排与电力：Aravind Srinivas 眼中的 Perplexity 与 AI 价值链</h1>
+        <p class="doc-subtitle">Aravind Srinivas 把 Perplexity 定位为 AI 时代的编排者而非模型转售商：答案引擎只是引流，真正付费在前沿「替你干活」的代理。</p>
+        <div class="doc-meta">
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
+            Perplexity CEO: Micron Will Be More Valuable Than Meta &amp; How Export Controls Helped Not Hurt China
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
+            2026-06-15
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+            ~29 分钟阅读
+          </span>
+        </div>
+      </header>
+
+      <!-- CONTENT_START -->
+<h2 id="核心导读">核心导读</h2>
+
+<div class="highlight">
+  <p><strong>Aravind Srinivas</strong> 把 <strong>Perplexity</strong> 定位为 AI 时代的<strong>编排者</strong>而非模型转售商：答案引擎只是引流，真正付费在前沿「替你干活」的代理；<strong>Google</strong> 首页已被倒逼成 <strong>Perplexity</strong> 式体验，但钱不在被商品化的消费搜索，而在<strong>代理编排层</strong>把模型智力转成高价值输出 token——核心指标是<strong>每用户每瓦 token 价值</strong>。长期赢家是不绑单一模型栈、能在本地与云端之间智能路由的公司；短期与中期真正卡脖子的是<strong>电力、许可与公众阻力</strong>，而非模型本身；出口管制短期护住美国前沿，却可能逼出中国在物理栈上的更强对手。</p>
+</div>
+
+<p><strong>进攻心态与产品叙事。</strong> 出身印度中下阶层，<strong>Aravind Srinivas</strong> 选「赢的快感」：相对「进 <strong>Google</strong> 就算成功」的旧目标，已远超预期，故应<strong>全线进攻</strong>，而非防守避败。早期在社媒高调对比 <strong>Perplexity</strong> 与 <strong>Google</strong> 并不后悔，只是叙事陈旧；搜索战役已写入行业：<strong>Google AI Mode</strong> 在字体、引用、内联加粗与追问上「几乎就是 <strong>Perplexity</strong>」，只是质量仍差一截——这既是验证也是提醒：前沿已转向代理、深度研究与 <strong>Computer</strong>。</p>
+
+<p><strong>模型不是产品，编排才是。</strong> <strong>Greg Brockman</strong> 称「模型不再是产品」——<strong>Codex</strong>、<strong>Claude Code</strong>、<strong>Perplexity Computer</strong> 本质是模型 + <strong>代理编排层</strong>（代理循环规则、技能、子代理、连接器）。只转售模型 token 没有生意；<strong>Perplexity</strong> 差异化在于<strong>跨模型编排</strong>（<strong>GPT</strong> 与 <strong>Claude</strong> 可同处一套编排层，而 <strong>OpenAI</strong>/<strong>Anthropic</strong> 互不通融）。高价值用户跑<strong>定时任务</strong>式持续代理，而非一次性深度研究；这类高用量用户月耗可达 <strong>1 万美元</strong> 且物有所值——代理收入总量<strong>将超过 </strong>Google<strong>/</strong>Meta<strong> 广告</strong>（非广告订阅/用量维度）。</p>
+
+<p><strong>24/7 代理、基础设施与地缘。</strong> 编排要在<strong>准确、智能、隐私、成本</strong>四维找平衡：全云端前沿 <strong>24/7</strong> 无人负担得起，需本地模型 + 芯片 + 编排层持续学习。<strong>Micron</strong>（高带宽内存 HBM 供应商）<strong>6–12 个月内市值可能超过 </strong>Meta<strong>**——瓶颈定价权在内存、CPU（代理循环吃 CPU）与电力；约 </strong>40%<strong> 数据中心项目因公众阻力停滞。</strong>DeepSeek<strong> 在华为栈与内存效率上的垂直整合，使出口管制有 </strong>20%–30%<strong> 概率触发「过度建设后遭效率颠覆」；长期仍须严肃对待中国物理栈优势。就业叙事应转向「小团队也能建十亿美元公司」与 </strong>能动性<strong>，而非 </strong>Anthropic** 式「工作末日」营销。</p>
+
+<p><strong>公司路径与快问快答。</strong> <strong>Perplexity</strong> 自训模型降前沿 token 成本；IPO 目标 <strong>2028</strong>（希望更早），当前 ARR 已「远超 <strong>5 亿</strong>」且增速快。曾被旧金山聚会票选「最可能失败」，此后收入翻三倍、烧钱降超 <strong>50%</strong>。十年持仓首选 <strong>SpaceX</strong>（太空基建独一份）；给弟妹建议：<strong>保持好奇</strong>；<strong>Elon Musk</strong> 的极限聚焦与 <strong>Jensen Huang</strong> 的「每天觉得自己很烂」值得学——<strong>永不退休</strong>。</p>
+
+<h2 id="进攻型创始人-从零到-200-亿美元-ai-公司">进攻型创始人：从零到 200 亿美元 AI 公司</h2>
+
+<h3 id="进攻型创始人-从零到-200-亿美元-ai-公司-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>动机来自「赢的快感」而非怕失败——相对出身，已远超预期，故应全线进攻。</p></div>
+</div>
+<h3 id="进攻型创始人-从零到-200-亿美元-ai-公司-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry Stebbings</strong> 开场问：<strong>Aravind Srinivas</strong> 更被「怕失败」还是「赢的兴奋」驱动？答案明确是后者——「<strong>我没什么可输的</strong>」。他在印度中下阶层长大，本科时用实验室显卡训练神经网络「纯属好玩」，从未想象今日局面；对全家而言，「在 <strong>Google</strong> 当工程师」曾是成功天花板，相较之下现状已是「超出任何想象的人生」。</p>
+<p>因此，一旦发现自己用「避免失败」的心态做决策，他会立刻纠正：防守是最蠢的策略，应<strong>全力进攻、始终处于攻势</strong>——口头禅是 <strong>attack, attack, attack</strong>。财富数字（<strong>200</strong> 亿美元估值、<strong>4500</strong> 万用户、月 <strong>10</strong> 亿+搜索、<strong>400</strong> 人三年建成）<strong>并不激励他</strong>——「很难被财富激励，你想被<strong>影响力</strong>激励」。</p>
+<p>回顾今日仍不够「激进」之处：早期他在社媒亲自高调宣传 <strong>Perplexity vs Google</strong>，招一些人反感；如今对产品与竞品的表述更克制，并非攻击性下降，而是「<strong>那套话术已经无聊</strong>，大家听够了」。被问是否后悔时：<strong>不后悔</strong>——不是成熟到变圆滑，而是 framing 不再 relevant，需要新叙事。</p>
+<h3 id="进攻型创始人-从零到-200-亿美元-ai-公司-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「你更被失败恐惧还是胜利兴奋驱动？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「胜利兴奋。因为我没什么可输。我出身一无所有，从没想过能走到今天。在印度读本科，用别人打游戏用的显卡训神经网络，纯属乐趣——对我妈那一代，能在 <strong>Google</strong> 找到工程师工作就算成功。我们属于印度中下阶层，跟英美语境里的中下阶层还不是一回事。相较那个目标，我已经好到离谱，所以真没什么可输。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「这些数字并不激励你？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「对。很难被财富激励——你想被影响力激励。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="倒逼-google-重写搜索-答案引擎只是引流">倒逼 Google 重写搜索：答案引擎只是引流</h2>
+
+<h3 id="倒逼-google-重写搜索-答案引擎只是引流-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>Perplexity 改写了 Google 路线图；AI Mode 几乎复刻其 UI，但前沿已转向代理。</p></div>
+</div>
+<h3 id="倒逼-google-重写搜索-答案引擎只是引流-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Perplexity</strong> 从搜索起家，仍是公众心智里的「答案引擎」；此后陆续推出浏览器代理、深度研究、<strong>Computer</strong> 等，但第一印象未变。 <strong>Aravind Srinivas</strong> 的大胆论断：<strong>Perplexity</strong>（或他个人）对 <strong>Google.com</strong> 的改变，<strong>超过 Google 历史上任何一位产品经理</strong>——因为 Google 内部从未有人愿意动每年 <strong>2500</strong> 亿美元广告生意所依赖的界面。</p>
+<p>2024 年底他已预判 Google 会跟进；今天 <strong>Google AI Mode</strong> 在字体、引用格式、内联加粗、超链接、建议追问等体验上「<strong>简直就像 Perplexity</strong>」，只是质量仍不够好——他定期测所有竞品，对 Google 质量滞后略感意外。这对 <strong>Perplexity</strong> <strong>好坏参半</strong>：Google 把搜索做成「本该有的样子」是好事，但<strong>前沿与钱</strong>已不在「回答问题」，而在「<strong>替你去干活</strong>」。</p>
+<p>公司仍拥有全球领先的深度研究能力；用户订阅 <strong>Pro/Max</strong> 主要为复杂研究报告与能执行任务的代理，而非传统 Q&amp;A。<strong>答案引擎从来都是前沿产品的引流</strong>——AI 领域没人能舒服地认为「搜索搞定了就躺平」，包括 <strong>Anthropic</strong>：若以为 <strong>Claude Code</strong> 已经赢了，<strong>6–12 个月</strong>后可能连牌桌都坐不住。</p>
+<h3 id="倒逼-google-重写搜索-答案引擎只是引流-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「帮我把『你们比 Google 任何 PM 都更改变 Google.com』这个论点讲透。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「Google 从来没人想上线答案引擎——没人敢动那个每年赚 <strong>2500</strong> 亿的界面。现在你看 AI Mode，跟 <strong>Perplexity</strong> 几乎没区别：字体、引用、内联加粗、内链、建议追问——整个体验就是 <strong>Perplexity</strong>，只是还没我们好。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="openai-仍主导消费搜索-但钱在代理前沿">OpenAI 仍主导消费搜索，但钱在代理前沿</h2>
+
+<h3 id="openai-仍主导消费搜索-但钱在代理前沿-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>OpenAI 在消费搜索仍占主导，但该层已商品化；Codex、Computer、Claude Code 才是收钱前沿。</p></div>
+</div>
+<h3 id="openai-仍主导消费搜索-但钱在代理前沿-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>录前 <strong>Aravind Srinivas</strong> 对 <strong>Harry Stebbings</strong> 表示 <strong>OpenAI</strong> <strong>尚未准备好 IPO</strong>——<strong>Harry</strong> 追问：两年前 ChatGPT 一家独大时，能否想象今日 <strong>Perplexity CEO</strong> 敢如此评价？<strong>Aravind</strong> 将「财务就绪」与「是否仍像王者」拆开：财务上 <strong>OpenAI</strong> 可能尚未就绪，但<strong>感知上仍是行业龙头</strong>——在<strong>消费搜索</strong>维度。</p>
+<p>然而消费搜索<strong>没钱</strong>：已商品化，只是引流。<strong>OpenAI</strong> 全力 <strong>Codex</strong>、<strong>Perplexity</strong> 押 <strong>Computer</strong>、<strong>Anthropic</strong> 押 <strong>Claude Code</strong>、<strong>Google</strong> 尚未有对标产品、<strong>Meta</strong> 推 <strong>Hatch</strong>（<strong>200</strong> 美元/月）——大家都在抢「前沿」。<strong>Harry</strong> 问非广告领域是否只有 coding 有钱；<strong>Aravind</strong> 强调<strong>不是关于 code 本身</strong>，而是非广告订阅/用量收入总在<strong>当前前沿能力</strong>上——今天是「走出去替用户做事」。</p>
+<p><strong>OpenAI</strong> 能否有 <strong>1000–2000</strong> 亿广告生意？<strong>Aravind</strong> <strong>看跌</strong>：Google 最大广告主是 <strong>Amazon</strong>，其次 <strong>Booking.com</strong>（年 Google 投放约 <strong>160</strong> 亿量级）、<strong>Expedia</strong> 等——订酒店航班仍发生在 <strong>Google</strong> 而非 ChatGPT，因为决策需要<strong>浏览选项、探索式界面</strong>，而非对话式客观答案。直销消费品、时尚广告主要在 <strong>Meta/Instagram</strong> 的「刷信息流」行为里；聊天界面<strong>抓不到</strong>这类意图，还会<strong>腐蚀信任</strong>（问最好蛋白粉却插广告）。<strong>Meta</strong> 等在消息应用里插广告历来失败；<strong>微信</strong> 在中国能成因生态不同，美国用户行为不支撑。<strong>Harry</strong> 再质疑「前沿=前沿模型」是否被高估；<strong>Aravind</strong> 澄清：<strong>前沿指当前 AI 能交付的最佳结果</strong>，不等于前沿模型。</p>
+<h3 id="openai-仍主导消费搜索-但钱在代理前沿-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「录前你说 <strong>OpenAI</strong> 没准备好 IPO——两年前你敢这么说吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「想想这行：再大的优势也可能沦为追赶者。这跟 <strong>Perplexity</strong>/<strong>Anthropic</strong>/<strong>OpenAI</strong> 有没有 modes 无关——是场的状态。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「你现在仍视他们为行业龙头吗？在哪？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「是。在<strong>消费搜索</strong>。但那里没钱——已商品化，只是引流。<strong>OpenAI</strong> 为何全力押 <strong>Codex</strong>？因为钱在那。我们押 <strong>Computer</strong>，<strong>Anthropic</strong> 押 <strong>Claude Code</strong>，<strong>Google</strong> 还没有这类产品，<strong>Meta</strong> 推 <strong>Hatch</strong> <strong>200</strong> 美元/月——你看发生了什么。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>OpenAI</strong> 会有 <strong>1000–2000</strong> 亿广告生意吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「尚未证明。Google 最大广告主是 <strong>Amazon</strong>，<strong>Booking.com</strong> 年花 <strong>Google</strong> 约 <strong>160</strong> 亿——你今天在 ChatGPT 还是 <strong>Google</strong> 订酒店？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Google</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">8</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「因为你要<strong>看选项、探索</strong>。主观、凭感觉型决策不需要客观答案引擎。直销与时尚广告在 <strong>Meta</strong>——刷信息流，聊天界面<strong>承接不了</strong>那种行为，还会伤害『准确答案』的信任。我<strong>看跌</strong>聊天界面广告，但欢迎被证明错。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="模型不是产品-编排层与-token-经济学">模型不是产品：编排层与 token 经济学</h2>
+
+<h3 id="模型不是产品-编排层与-token-经济学-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>价值在编排层把模型智力转成输出 token；Perplexity 跨模型编排是 Anthropic/OpenAI 做不到的。</p></div>
+</div>
+<h3 id="模型不是产品-编排层与-token-经济学-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Greg Brockman</strong> 推文「模型不再是产品」——作为前沿实验室领袖，他本有动机说相反的话；<strong>Google</strong> 也有人坚持「模型即产品」。<strong>Aravind Srinivas</strong> 认同 <strong>Greg</strong>：<strong>Codex</strong>、<strong>Perplexity Computer</strong>、<strong>Claude Code</strong> 都是<strong>编排系统</strong>——模型 + <strong>代理编排层（agent harness）</strong>（代理循环怎么跑、技能、子代理、连接器、工具）。没有编排层，模型内在智力<strong>转化不成</strong>有价值的输出 token。</p>
+<p>若只是模型 token 转售商，<strong>没有生意</strong>——模型会商品化；模型厂商若没有界面产生高价值 token，同样难存续；基础设施层 serving token 有一点生意，应用层必须会<strong> grounding（落地上下文）</strong>、<strong>编排</strong>、接对个人/企业连接器，在统一系统里交付体验。</p>
+<p><strong>Perplexity</strong> 差异化：<strong>不只跨工具/文件/连接器编排，还跨模型编排</strong>——<strong>Anthropic</strong>/<strong>OpenAI</strong> 不能把 <strong>GPT-5</strong> 放进 <strong>Claude Code</strong> harness，也不能把 <strong>Claude Opus</strong> 放进 <strong>Codex</strong> harness；<strong>Perplexity Computer</strong> 可以两者兼有，从而提升<strong>每瓦每用户 token 价值</strong>。若假设定价底层是<strong>电力（瓦特）</strong>，谁能用最少电力产出最有价值 token，谁有定价权——<strong>AI 最重要指标：token value per watt per user</strong>。</p>
+<p>人人以为在比模型层，其实在比<strong>界面层谁产生最有价值 token</strong>；建模型甚至是「留在前沿」的手段，但必须<strong>拥有</strong>产生高价值 token 的界面。旧思维「十亿用户才成功」必须改——少数 <strong>高用量用户</strong> 正驱动 token 经济：传闻某工程师让 <strong>Amazon</strong> 月烧 <strong>5</strong> 亿（<strong>Claude Code</strong> 代理循环配置不当）；<strong>Meta</strong> 等公司工程师年耗 <strong>1000</strong> 万级编程工具不罕见；<strong>Perplexity Computer</strong> 有用户月耗 <strong>1</strong> 万+ 且非浪费——业务跑在编排层里的代理循环上。</p>
+<p>公司内部有人搭<strong>多代理层级</strong>，像独立软件架构；<strong>Aravind</strong> 常请他们给全公司演示。<strong>高用量 vs 低用量</strong>最大分水岭：是否跑<strong>重复性定时任务</strong>——一次性委派（深度研究）vs <strong>AI 持续监控、事件触发、工作流常开</strong>（每封 inbound 邮件分拣、延迟尖峰时根因分析并找对口工程师）。</p>
+<h3 id="模型不是产品-编排层与-token-经济学-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「『前沿』是否被高估？很多基础工作不需要前沿模型。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「前沿不是前沿模型，是<strong>当前 AI 能给出的最好结果</strong>。<strong>Greg Brockman</strong> 说『模型不再是产品』——他作为实验室领袖本可说相反话。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="代理收入能否超越-google-广告">代理收入能否超越 Google 广告</h2>
+
+<h3 id="代理收入能否超越-google-广告-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>非广告维度上，前沿代理产品用户虽少，总收入将超过 Google/Meta 广告规模。</p></div>
+</div>
+<h3 id="代理收入能否超越-google-广告-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>回到主线：<strong>Aravind Srinivas</strong> 断言这类产品不会各 <strong>1</strong> 亿用户，但产生的收入 <strong>将高于 Google 或 Meta 的广告收入</strong>——在非广告订阅/用量维度，<strong>一定会发生</strong>。</p>
+<p><strong>Harry Stebbings</strong> 追问高用量用户经济学：<strong>Marc Benioff</strong> 称 <strong>Salesforce</strong> 在 <strong>Anthropic</strong> 上花 <strong>3</strong> 亿（开发者口径约 <strong>3.8%</strong> 开发者薪资）；<strong>24</strong> 个月后开发者薪资里多少比例会变成 token 支出？若仍 <strong>3.8%</strong>，<strong>OpenAI/Anthropic</strong> 成不了 <strong>5</strong> 万亿公司；若 <strong>100%</strong>（<strong>McCor</strong> 的 <strong>Brandon</strong> 称一年内），则 <strong>10</strong> 万亿。<strong>Aravind</strong> 认为可以超过 <strong>1000</strong> 万级公司规模，且非开发者工作更大——<strong>Perplexity Computer</strong> <strong>不打开发者市场</strong>，打「开发者不做的事」：财务、企业战略、销售、数据科学、研究分析师——市场大约是 <strong>Claude Code 的十倍</strong>。</p>
+<p>成本会降吗？<strong>Harry</strong> 指出从聊天到代理成本反升；<strong>Aravind</strong> 说<strong>眼下</strong>如此，但软件业愿意为<strong>前沿</strong>付溢价——类比：同样 <strong>100</strong> 万预算，雇 <strong>5</strong> 个中等工程师还是 <strong>1</strong> 个 <strong>Jeff Dean</strong> 级？选后者。12 个月后若开源模型媲美 <strong>Opus</strong> 且推理便宜 <strong>10</strong> 倍，配上编排层，<strong>同样工作的 token 支出不会仍高</strong>——但会出现<strong>今天想不到的新前沿用法</strong>。</p>
+<p>预测：完全自主的软件工程师式软代理将至；许多人因开源模型够用而看跌前沿实验室，<strong>Aravind</strong> 认为<strong>不矛盾</strong>——仍会付前沿费，但「前沿」会迁移到<strong>极少数人甚至少数公司</strong>才需要的任务：AI 设计芯片、药物、机器人、治癌——用户不多，影响人类生命极广。<strong>Anthropic</strong> 收购湿实验室等动作，是把 token 投入中期训练而不仅是 <strong>GitHub</strong> 代码。</p>
+<p><strong>Harry</strong> 问前沿问题有无渐近上限；<strong>Aravind</strong> 引用 <strong>Elon Musk</strong>：后 AGI 经济里能源与劳动极大丰富，钱失去意义；人类会像探索量子、黑洞一样<strong>永远好奇</strong>——<strong>David Deutsch</strong> 说人类是唯一能对熟悉之物再问一个新问题的物种。<strong>Aravind</strong> 认为前沿经济价值 <strong>没有数学上限</strong>。</p>
+<h3 id="代理收入能否超越-google-广告-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「这些产品不会有 <strong>1</strong> 亿人用，但收入会<strong>高于 </strong>Google<strong> 或 </strong>Meta<strong> 广告</strong>——在非广告订阅/用量上，一定会。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Benioff</strong> 说 <strong>Salesforce</strong> 花 <strong>3</strong> 亿在 <strong>Anthropic</strong>，约 <strong>3.8%</strong> 开发者薪资。24 个月后占多少？若仍 <strong>3.8%</strong>，它们成不了 <strong>5</strong> 万亿；若 <strong>100%</strong> 呢？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「成本会降——所以难说。软件业愿意为<strong>前沿</strong>付溢价：同样预算你雇五个中等工程师还是一个 <strong>Jeff Dean</strong>？选 <strong>Jeff Dean</strong>。12 个月后若有开源 <strong>Opus</strong> 级模型便宜 <strong>10</strong> 倍 + 编排层，<strong>今天这类工作的</strong> token 支出不会还高——但会有<strong>新前沿</strong>你今想不到。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「前沿问题有渐近线吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「对 AGI/ASI 创造的经济价值 <strong>没有数学上限</strong>。<strong>Elon</strong> 说后 AGI 时代钱没意义——能源与劳动极大丰富。<strong>David Deutsch</strong>：人类能对熟悉的事物再问一个新问题。我们不会没事可做。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="24-7-代理-编排四维与本地计算">24/7 代理：编排四维与本地计算</h2>
+
+<h3 id="24-7-代理-编排四维与本地计算-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>24/7 前沿 AI 的瓶颈是成本与编排；需本地模型 + 云端按需，而非永远烧服务端 token。</p></div>
+</div>
+<h3 id="24-7-代理-编排四维与本地计算-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Sam Altman</strong> 谈 <strong>24/7 AI</strong> 与硬件；<strong>Aravind Srinivas</strong> 认为持续运行的代理 <strong>会来</strong>，且印证编排问题——要最大化 token 价值。</p>
+<p>编排四目标相互竞争：<strong>准确、智能、隐私、成本</strong>。全押巨型数据中心 → 智能/准确拉满，隐私与成本差；全本地 → 隐私/成本好，可能非前沿智能。解法是<strong>最佳平衡点</strong>：必要时本地、必要时服务端，跨本地与服务端模型编排，落地个人上下文；有时智力够但编排层没接对工具——要世界级编排层让「还行的模型」显得很强，<strong>总编排路由器</strong>选对模型、子任务、子代理，并利用设备端算力。</p>
+<p>实现 <strong>24/7</strong> 愿景而不破产：没人付得起<strong>永远开着</strong>的服务端前沿 AI——真实担忧是<strong>成本</strong>，不是「AI 发疯」。秒级精度的定时任务全天跑，瓶颈在<strong>编排 + 本地算力</strong>。需建<strong>持续学习的本地模型</strong>，节省上下文压缩，尽量本地算、仅必要时调云端前沿，且<strong>不断适应</strong>——那是模型 + 编排层 + 本地芯片 + 设备生态，等于「<strong>数据中心搬到你的设备</strong>」，你拥有、控制，敏感交易备忘录的 token 不必躺在前沿实验室服务器上（被黑即泄密）。</p>
+<p><strong>Harry Stebbings</strong> 自嘲伦敦 VC 没什么可偷；<strong>Aravind</strong> 称每人都有敏感层级——<strong>24/7 常开代理</strong> 将由<strong>编排者</strong>而非模型厂商实现。</p>
+<h3 id="24-7-代理-编排四维与本地计算-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Sam</strong> 说会有 <strong>24/7 AI</strong>——持续运行的代理会来吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「会。这也是我相信编排问题的原因。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「你说的编排问题具体指什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「四个目标在打架：<strong>准确、智能、隐私、成本</strong>。全云端巨型数据中心：智能准确拉满，隐私成本差。全本地：隐私成本好，可能不够前沿。解法：<strong>本地与服务端模型按需编排</strong>，落地个人上下文，世界级编排层让普通模型也显得强——<strong>总编排路由器</strong>选对模型、子代理、还用你设备上的算力。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="perplexity-要做终极-ai-编排者">Perplexity 要做终极 AI 编排者</h2>
+
+<h3 id="perplexity-要做终极-ai-编排者-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>Computer 是指挥：子代理是乐手，模型/工具/芯片是指乐器；谁受益于全栈进步谁赢编排战。</p></div>
+</div>
+<h3 id="perplexity-要做终极-ai-编排者-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Perplexity Computer</strong> 明确定位为 <strong>AI 代理编排者</strong>：子代理是乐手，模型/工具/连接器/芯片是乐器，产出是交响乐，<strong>Computer</strong> 是<strong>指挥</strong>——编排对象从模型扩展到文件、工具、芯片、设备，只要最大化 <strong>每用户每瓦 token 价值</strong>，长期捕获 AI 最大经济价值。短期别家收入指数增长可能更炫，<strong>长期这一指标才真正重要</strong>。</p>
+<p>谁最有资格？<strong>Aravind Srinivas</strong> 押 <strong>Perplexity</strong>：激励不是堆 token 用量，而是<strong>给用户最大价值</strong>——栈上任何一层进步都让用户产品更好：2026 年初至今 <strong>Anthropic</strong> 模型大进步 → <strong>Perplexity</strong> 收入 <strong>翻三倍+</strong>；<strong>OpenAI</strong> 竞争压价同能力 token；开源与本地芯片进步 → 部分推理回迁设备降本。<strong>Jensen Huang</strong> 造更好芯片、<strong>Dario Amodei</strong> 造更好模型、<strong>Apple</strong> 造更好设备——都对 <strong>Perplexity</strong> 有利；不必赌单一赢家。</p>
+<p><strong>Harry Stebbings</strong> 问 AI 基础设施泡沫与数据中心供给；<strong>Aravind</strong> 称最大问题是<strong>电力</strong>。数据中心 ≠ 买 <strong>Dell/Super Micro</strong> 机柜：要拿地/租地、涡轮/电网、冷却、许可——交付周期远长于芯片。<strong>Hopper</strong> 代训练的模型已在用；<strong>Blackwell</strong> 代首波模型已令市场紧张；<strong>Rubin</strong> 明年满负荷后更强——物理建设时间永远制约前沿能力，故基础设施垂直整合（GPU+网络+电力+冷却+软件）有价值，市场给基础设施更高市盈率而非纯软件 <strong>Meta</strong>。</p>
+<h3 id="perplexity-要做终极-ai-编排者-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「谁最适合做终极编排者？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「我相信是我们——激励是交付最大用户价值，不是堆 token 用量。今年 <strong>Anthropic</strong> 模型进步巨大，我们收入 <strong>翻三倍+</strong>；<strong>OpenAI</strong> 竞争还压低了同能力 token 成本；开源和本地芯片会让我们把推理迁回设备。<strong>Jensen Huang</strong> 造更好芯片、<strong>Dario Amodei</strong> 更好模型、<strong>Apple</strong> 更好设备——都对我们要。<strong>栈上每一层进步，我们都赢</strong>——编排者该是<strong>受益于他人进步</strong>的那家。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="电力与内存-micron-会比-meta-更贵吗">电力与内存：Micron 会比 Meta 更贵吗</h2>
+
+<h3 id="电力与内存-micron-会比-meta-更贵吗-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>瓶颈定价：HBM/内存、CPU 与电力决定谁贵；Micron 6–12 月内市值或超 Meta。</p></div>
+</div>
+<h3 id="电力与内存-micron-会比-meta-更贵吗-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Meta</strong> 大举资本支出换广告精度几个百分点提升，<strong>Aravind</strong> 理解 <strong>OpenAI/Anthropic</strong> 因 AI 产品赚钱而资本支出，但对 <strong>Meta</strong> 叙事存疑——<strong>Meta</strong> 或在推订阅代理、甚至 <strong>Meta 云</strong> 租服务器（学 <strong>Elon Musk</strong> <strong>SpaceX</strong> 路径）以改写叙事。</p>
+<p><strong>Micron</strong>（HBM 等）<strong>6–12 个月内市值可能超过 </strong>Meta<strong>**——已约 </strong>1<strong> 万亿 vs </strong>Meta<strong> </strong>1.3–1.4<strong> 万亿。内存已是巨大瓶颈，销货成本里内存价 </strong>5<strong> 倍涨幅，但「</strong>瓶颈永远定价<strong>」。</strong>AMD/Intel<strong> 因代理循环吃 </strong>CPU<strong> 再成瓶颈——</strong>Claude<strong> 生成脚本下载 </strong>500<strong> 文件、处理、画图、托管，</strong>CPU<strong> 工作量远超人类时代；企业 </strong>CPU** 需求上升。</p>
+<p><strong>Nebius</strong>、<strong>CoreWeave</strong>、<strong>Crusoe</strong>、<strong>Firebird</strong> 等能否可持续？<strong>Aravind</strong> 认为可以——关键在资源：从电力便宜地区拿电、许可、供应链、可靠性；有人创新自发电降利润率。纯 <strong>GPU</strong> 机架按时出租 <strong>价值有限</strong>，须像 <strong>AWS</strong> 一样有<strong>软件编排</strong>拿软件利润率——<strong>Nebius</strong> 等向推理托管走（开源/托管模型）是方向。</p>
+<h3 id="电力与内存-micron-会比-meta-更贵吗-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Micron</strong> 会比 <strong>Meta</strong> 更有价值？内存已涨 <strong>5</strong> 倍，不是已经充分定价了吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「因为<strong>仍是瓶颈</strong>——瓶颈定价。<strong>Agent</strong> 编排层跑在 <strong>CPU</strong> 上，token 在 <strong>GPU</strong> 上产；<strong>Claude</strong> 拉 <strong>500</strong> 文件、处理、画图、托管——全吃 <strong>CPU</strong>。<strong>Agent</strong> 比人类更吃 <strong>CPU</strong>，<strong>AMD/Intel</strong> 又成瓶颈。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Nebius</strong>/<strong>CoreWeave</strong> 长期可持续还是短期供给生意？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「可持续——但要会找资源：拿便宜电力、许可、可靠交付。纯租 <strong>GPU</strong> 机架价值低，要有 <strong>AWS</strong> 式软件层。<strong>OpenAI</strong> 想做 <strong>Stargate</strong> 自建数据中心，但 <strong>CoreWeave</strong> 更成功因为<strong>运营极难</strong>——许可、电力、供应链、总拥有成本。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="推理与-neocloud-能否诞生百亿美元独立公司">推理与 Neocloud：能否诞生百亿美元独立公司</h2>
+
+<h3 id="推理与-neocloud-能否诞生百亿美元独立公司-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>推理与新云厂商可达百亿美元，但依赖开源未断层；纯路由器成不了巨头。</p></div>
+</div>
+<h3 id="推理与-neocloud-能否诞生百亿美元独立公司-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry Stebbings</strong> 刚访 <strong>Nebius</strong> 联合创始人 <strong>Roman</strong>：大量资金只要算力容量，但长期须全栈产品——与 <strong>Aravind</strong> 判断一致。百亿美元公司倒推：<strong>100</strong> 亿收入、<strong>30%–40%</strong> 毛利率、健康现金流——同时做托管推理 + 数据中心建设且运营强，<strong>100</strong> 亿收入 <strong>并非不可想象</strong>；变量包括开源是否持续强劲——若开源与前沿差距 <strong>&gt;12–15</strong> 个月，新云厂商只能租容量给 <strong>OpenAI/Anthropic</strong>，<strong>Roman</strong> 称行业整合是最大威胁，<strong>Aravind</strong> 同意；需赌中国模型、<strong>Nvidia Nemotron</strong> 等维持市场分散，但<strong>命运不在自己手里</strong>。</p>
+<p><strong>OpenRouter</strong>、<strong>Factory AI</strong> 等模型路由能否百亿美元？<strong>大概不能</strong>——不能只是路由器，要用路由器产出有意义的产品。<strong>OpenRouter</strong> 生意本质多是<strong>同一模型多端点的可靠 token 供给</strong>（<strong>Bedrock</strong>/<strong>Azure</strong>/<strong>OpenAI</strong> 故障转移、预买容量、速率限制），不是「这 prompt 该给 <strong>GPT</strong> 还是 <strong>Claude</strong> 省钱」；对中国开源模型还有<strong>合规/token 不流向中国</strong>价值。模式是向供应商保证采购量拿折扣、向用户收 API 标价差——<strong>利润率不高</strong>。</p>
+<h3 id="推理与-neocloud-能否诞生百亿美元独立公司-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「独立 <strong>1000</strong> 亿推理公司存在吗，还是大宗商品化？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「倒推 <strong>100</strong> 亿收入、<strong>30–40%</strong> 毛利率——托管推理 + 数据中心运营好，<strong>100</strong> 亿收入可想象。但靠开源继续强——若开源与前沿差 <strong>12–18</strong> 个月，你只能租给 <strong>OpenAI/Anthropic</strong>，<strong>Roman</strong> 说的整合威胁是对的。赌中国模型、<strong>Nvidia</strong> 等让市场别整合——但你<strong>不掌控命运</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>OpenRouter</strong> 那种模型选择有 <strong>1000</strong> 亿吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「大概没有。不能只是路由器——<strong>OpenRouter</strong> 主要是<strong>可靠 token 供给</strong>（多端点、故障转移、预买速率限制），不是智能选便宜模型。利润来自批量折扣 vs 用户 API 标价——有价值，但不是高毛利率生意。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="数据中心阻力-出口管制与中国栈">数据中心阻力、出口管制与中国栈</h2>
+
+<h3 id="数据中心阻力-出口管制与中国栈-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>电力与公众阻力是 3 年主瓶颈；出口管制短期护住前沿、长期或强化中国物理栈。</p></div>
+</div>
+<h3 id="数据中心阻力-出口管制与中国栈-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>3</strong> 年后最大瓶颈？<strong>电力</strong>，且<strong>数据中心建设阻力会加剧</strong>——公众误以为数据中心耗水耗电网（<strong>Satya Nadella</strong> 称效率可到「一罐汽水」级用水），真实动机常是<strong>失业符号、财富不平等、环境、电网/RAM 涨价</strong>等被转嫁的焦虑；<strong>约 40/100</strong> 项目因公众阻力未推进。各国仍会有建设（<strong>Elon Musk</strong> 上太空利用太阳能等），但美国可能更慢。</p>
+<p><strong>DeepSeek 时刻</strong> 风险 <strong>20%–30%</strong>：效率高一个数量级的模型 + 垂直架构，若已过度建设容量会恐慌——尤其模型能在 <strong>MacBook/PC</strong> 本地跑。因<strong>出口管制</strong>，<strong>DeepSeek</strong> 用<strong>华为栈</strong>而非 <strong>Nvidia</strong>；HBM 等受限逼出<strong>内存高效架构</strong>（KV cache 创新、SSD 推理、不同存储架构——无法用 <strong>3D NAND</strong> 等），全栈垂直整合，与美国路线 <strong>不同</strong>。</p>
+<p>出口管制短期 <strong>有帮助</strong>——开源与前沿 <strong>~12</strong> 个月差距 <strong>主要靠管制</strong>；<strong>Anthropic</strong> 等大力游说。但长期可能逼中国把物理层练到极强：数据中心建更快、电力/许可/人力不是问题，<strong>转成更强对手</strong>。<strong>Aravind</strong> 认为外界<strong>仍低估中国</strong>——AI 不只有数字层，还有晶圆厂、机器人、芯片、能源、本地设备；中国优势可能多于美国。</p>
+<p>美国如何保持竞争力？<strong>严肃对待物理基础设施</strong>、持续资助；<strong>别传播数据中心假新闻</strong>（污染水源等），用事实驱动公共教育——<strong>Perplexity</strong> 可事实核查；别一边恐吓「<strong>90%</strong> 工作没了」一边抱怨建不了数据中心。<strong>Dario Amodei</strong> 式末日营销 <strong>帮倒忙</strong>；<strong>Anthropic</strong> 自己消息也矛盾（最近又说无证据 AI 接管工作）。应多讲 AI 如何让人用代理 <strong>建完全不同形态的公司</strong>——<strong>Perplexity</strong> 启动时有 <strong>~20</strong> 万 <strong>Amazon/GCP/Azure</strong> 算力额度，今等价 <strong>~100</strong> 万；推 <strong>Billion Dollar Build</strong> 给可信团队 <strong>100</strong> 万算力额度，目标 <strong>1000</strong> 家十亿美元路径公司。<strong>Sam Altman</strong> 给 <strong>YC</strong> <strong>200</strong> 万 token——<strong>应更多</strong>。</p>
+<h3 id="数据中心阻力-出口管制与中国栈-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「3 年后最大瓶颈是什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「<strong>电力</strong>。且<strong>建数据中心阻力会更糟</strong>——有人以为耗水耗电网，其实是<strong>失业与不平等符号</strong>等。<strong>40/100</strong> 项目因公众阻力没建。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「出口管制帮了还是害了美国？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「短期<strong>帮</strong>——开源与前沿 <strong>12</strong> 个月差距主要靠管制。<strong>Anthropic</strong> 游说很用力。但长期可能逼中国在物理层极强：数据中心建得飞快、电力许可人力都不是问题——<strong>更强对手</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Dario Amodei</strong> 的『工作末日』营销是否伤害行业？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「是。他们自己还矛盾——最近又说没证据 AI 接管工作。应多讲：<strong>Amazon</strong> 当年给我们 <strong>20</strong> 万算力额度，今等价 <strong>100</strong> 万；我们 <strong>Billion Dollar Build</strong> 给可信团队 <strong>100</strong> 万算力额度，要 <strong>1000</strong> 家十亿美元公司。<strong>Sam Altman</strong> 给 <strong>YC</strong> <strong>200</strong> 万 token——<strong>该多做</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="ai-就业叙事-小团队独角兽与能动性">AI 就业叙事、小团队独角兽与能动性</h2>
+
+<h3 id="ai-就业叙事-小团队独角兽与能动性-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>未来公司更高效：400 人可做 200 亿；就业应拆成更多小团队创业，而非末日叙事。</p></div>
+</div>
+<h3 id="ai-就业叙事-小团队独角兽与能动性-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Perplexity</strong> 今 <strong>~400</strong> 人，<strong>2</strong> 年后大概 <strong>800–1000</strong>——不会走传统人数增长曲线；<strong>效率会高得多</strong>。<strong>400</strong> 人 <strong>200</strong> 亿 → <strong>40</strong> 人可做 <strong>10–20</strong> 亿「完全可行」；<strong>4000</strong> 人或可 <strong>2000</strong> 亿、<strong>1</strong> 万人 <strong>2</strong> 万亿——不是说那 <strong>10</strong> 万未雇的人消失，而是拆成 <strong>1000</strong> 组各建几 <strong>10</strong> 亿公司更好；需更多 <strong>创业型</strong> 人——「难搞、不听指令」的特质有时是创始人料。</p>
+<p>非 AI 原生大众建议：<strong>先动手</strong>，把好奇心导向 AI——若现有工作无聊，即使用 AI 做也无聊；他澄清病毒式传播标题误读：说的是「<strong>很多人不喜欢自己的工作</strong>」（与贫富无关，富人也可能抑郁地浪费巅峰年），若因「不会从零建公司、要雇人租办公室」而不敢离开——<strong>现在</strong>可和 <strong>1–2</strong> 位好友认真尝试 <strong>10</strong> 亿公司路径。</p>
+<p><strong>Uber/Microsoft</strong> 等对生产力提升动摇、<strong>1500</strong> 美元 token 预算——<strong>Aravind</strong> 承认会有波折；需 <strong>混合式代理推理</strong> + <strong>本地不计费智能</strong> 部分。未来最好公司不必自己管 token 预算，由 <strong>编排者</strong> 代劳。<strong>Google</strong> 能否最低成本 token？全栈 <strong>TPU/数据中心/网络/电力</strong> 有优势，但<strong>低估编程模型</strong>，今非前沿，可追赶。<strong>Cloudflare</strong> 代理流量已超人类——<strong>Aravind</strong> 不意外（<strong>Harry</strong> 以为要 <strong>2</strong> 年）；世界变化是<strong>更多能动性</strong>，不是网站消失——<strong>主观判断</strong>（家具审美）仍广告驱动，<strong>客观判断</strong>（买麦克风）代理驱动。</p>
+<p>没人问的问题：<strong>假设你有大量能动性，你要做什么？</strong> 给 <strong>Harry</strong> <strong>1</strong> 万代理 + <strong>1</strong> 亿代理推理预算会做什么？——建 AI 基础设施找项目、 outreach、赢投资，媒体在上层——即 <strong>10–100×</strong> 基金目标。<strong>Elon Musk</strong> 式问法：任务说 <strong>10</strong> 年，问如何 <strong>10</strong> 个月做完——未必可行但比默认 <strong>10</strong> 年走更远。</p>
+<h3 id="ai-就业叙事-小团队独角兽与能动性-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>400</strong> 人，2 年后多大？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「大概 <strong>800–1000</strong>——会<strong>高效得多</strong>。<strong>400</strong> 人 <strong>200</strong> 亿，<strong>40</strong> 人 <strong>10–20</strong> 亿完全可行。我宁可 <strong>10</strong> 万未雇的人拆成 <strong>1000</strong> 组各建几 <strong>10</strong> 亿公司。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「非 AI 原生的人怎么办？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「<strong>先动手</strong>。我没说『所有人恨工作』——我说<strong>很多人不喜欢</strong>（因说中了真相而疯传）。若你因不会建公司而不敢离开——<strong>第一次</strong>你可以和一两个朋友认真试 <strong>10</strong> 亿。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「该问而没人问的问题？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「<strong>假设你有大量能动性，你要做什么？</strong> 给你 <strong>1</strong> 万代理，你干嘛？<strong>Harry</strong> 你会用 <strong>1</strong> 亿推理预算扩基金——那问<strong>目标该是什么</strong>、<strong>多快能到</strong>。<strong>Elon Musk</strong>：说 <strong>10</strong> 年的事，问 <strong>10</strong> 个月能否做完。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="财富不平等-自训模型与-ipo-2028">财富不平等、自训模型与 IPO 2028</h2>
+
+<h3 id="财富不平等-自训模型与-ipo-2028-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>缩小不平等靠更广分发 AI 红利与正面叙事；自训模型降本，IPO 瞄准 2028。</p></div>
+</div>
+<h3 id="财富不平等-自训模型与-ipo-2028-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry Stebbings</strong> 问财富不平等；<strong>Aravind Srinivas</strong> 答：<strong>更广泛分发红利</strong>——旧金山 <strong>Uber</strong> 司机看他 YouTube 学用 AI 从零做 web app、接 billing，被动收入超开车，减少 Uber 时间——<strong>能动性 + 正面展望</strong> 则一切皆可能；若媒体只写末日/不平等，会自我实现。<strong>Harry</strong> 更悲观：很多人 <strong>受害者心态</strong>；<strong>Aravind</strong> 称需 <strong>榜样</strong> 让人想「我要像这人」——像健身要自律。</p>
+<p>毕业典礼演讲：<strong>提出更好的问题</strong> 是时代技能。万亿公司？<strong>SK</strong>、<strong>Samsung</strong> 刚万亿——<strong>Samsung</strong> 起始于杂货、<strong>SK</strong> 纺织，任何人可 <strong>一步步做大</strong>；<strong>Carta</strong> 数据称从 <strong>10</strong> 亿到 <strong>100</strong> 亿概率更高（对人亦：<strong>1</strong> 亿流动净资产变 billionaire 比 <strong>1000</strong> 万容易）。</p>
+<p>IPO：<strong>2028</strong>（希望更早）；<strong>ARR</strong> 已 <strong>远超 5 亿</strong>、增长极快，暂不便披露精确数。公开市场今要 <strong>收入增长</strong> 多于利润效率，但须<strong>有路径</strong>未来做效率。<strong>成本偏高</strong>处：<strong>自训模型</strong>——在优秀开源上继续训练，降当前前沿 token 支出；新体验仍用前沿，<strong>现有产品能力</strong>逐步切到自有模型自托管——提利润率。最大企业都会 <strong>微调开源模型</strong>——激励降本；对前沿模型提供商坏消息，除非<strong>持续 6 个月出新能力</strong>——<strong>无人可高枕</strong>，包括模型厂商。</p>
+<h3 id="财富不平等-自训模型与-ipo-2028-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「你不担心财富不平等吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「靠<strong>更广分发红利</strong>。真实例子：SF <strong>Uber</strong> 司机看我 YouTube，用 AI 从零做 app、接 billing，被动收入超开车。有<strong>能动性</strong>的人，一切皆可能。若只沟通负面，会恶性循环——已成功的人要讲<strong>什么能变好</strong>，给希望。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「IPO <strong>2028</strong>？现在 ARR <strong>5 亿</strong>？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「<strong>远超</strong>——不便说，增长很快。公开市场今要收入增长。成本上我们在<strong>自训模型</strong>：在开源上继续训练，降前沿 token；新能力仍用前沿，现有产品切自有模型——最佳利润率路径。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="曾被票选「最可能失败」与-agi-化公司">曾被票选「最可能失败」与 AGI 化公司</h2>
+
+<h3 id="曾被票选「最可能失败」与-agi-化公司-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>旧金山聚会曾票选 Perplexity「最可能失败」；此后收入翻三倍、烧钱降半。</p></div>
+</div>
+<h3 id="曾被票选「最可能失败」与-agi-化公司-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>今年初约三个月旧金山聚会：<strong>Perplexity</strong>「<strong>最可能失败</strong>」第一，<strong>Cursor</strong> 第二，<strong>OpenAI</strong> 第三——<strong>Aravind Srinivas</strong> 仍关注但不太在意；<strong>Cursor</strong> 将被收购、<strong>SpaceX/OpenAI</strong> IPO——「我们都挺好」。自投票后 <strong>收入翻三倍</strong>、<strong>烧钱降超 50%</strong>；投票者「大多不造有用东西」。</p>
+<p>快问快答：<strong>广泛错误信念</strong>——创业 <strong>1–2</strong> 年痴迷找 <strong>护城河</strong>；真正机会是 <strong>快速行动</strong>（速度即谦逊，与世界接触、质疑假设）。内部仍慢处：<strong>更 AI 化</strong>——自家产品内部采用率可更高；愿景把公司几乎变成 <strong>AGI</strong>，半自主运行各部门（人类提供脚手架），像 <strong>10 倍工程师</strong> 管板块，会很快成为常态。</p>
+<p><strong>无限资金</strong> 做什么？<strong>建数据中心</strong>——从地球土地开始（太空暂无专长），在各国灵活拿许可与电力；物理基础设施是工业时代回归，须转化为有价值的输出 token——<strong>Perplexity</strong> 已会后者。</p>
+<h3 id="曾被票选「最可能失败」与-agi-化公司-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「旧金山那次『最可能失败』你在意吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「在意但——自那之后 <strong>收入翻三倍</strong>，<strong>烧钱</strong>降 <strong>50%+</strong>。<strong>Cursor</strong> 要卖、<strong>OpenAI</strong> 要 IPO——我们都好。投票的人大多不造有用的东西。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「内部还慢在哪？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「还能<strong>更 AI</strong>。希望公司几乎变成 <strong>AGI</strong>——半自主跑各部门，人类给脚手架——会像 <strong>10 倍工程师</strong> 管业务，很快成为常态。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「无限钱今天做什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「<strong>建数据中心</strong>。从地球开始——许可、电力。物理基础设施是工业时代回归；不能只建基础设施，要产出有价值的 token——我们已会后者。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="快问快答-十年押注-职业建议与永不退休">快问快答：十年押注、职业建议与永不退休</h2>
+
+<h3 id="快问快答-十年押注-职业建议与永不退休-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>十年持仓选 SpaceX；保持好奇；向 Elon 学极限聚焦、向 Jensen 学「30 天倒闭」心态。</p></div>
+</div>
+<h3 id="快问快答-十年押注-职业建议与永不退休-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>10</strong> 年买入持有：<strong>SpaceX</strong>——<strong>独一无二</strong>；<strong>Anthropic/OpenAI</strong> 互可抄袭，<strong>SpaceX</strong> 独建太空连接基础设施。<strong>Starlink</strong> 机上体验「上了就回不去」；还有澳–旧金山 <strong>30</strong> 分钟等科幻可能。</p>
+<p><strong>5</strong> 年后常见新职业？<strong>前沿部署工程师</strong> 已在兴起；多数「新职业」是旧职能 <strong>换皮重生</strong>。<strong>CS</strong> 应届弟妹一条建议：<strong>保持好奇</strong>，别因 <strong>错失恐惧</strong> 看 <strong>Twitter</strong> 上前沿实验室员工暴富就绝望——应用层与基础设施建设 <strong>才刚开始</strong>，分拆很多，但<strong>别为做实验室而做实验室</strong>，要 <strong>差异化押注</strong>（质疑 transformer、<strong>Nvidia</strong> GPU、机器人等）；纯垂直新实验室分拆 <strong>不看好</strong>。</p>
+<p><strong>Perplexity</strong> 万亿路径？继续 <strong>准确 + 编排</strong>，跨设备/芯片/模型/工具——到了再规划 <strong>10 万亿</strong>。<strong>快乐吗？</strong> 享受过程；<strong>2 万亿/20 万亿</strong> 令人兴奋但<strong>不被财富激励</strong>——<strong>影响力</strong>。<strong>最聪明的人？</strong> 各有聪明之法；见 <strong>Jensen Huang</strong>、<strong>Elon Musk</strong>、<strong>Jeff Bezos</strong>。<strong>Elon Musk</strong> 见面：<strong>Twitter</strong> 外极 <strong>激光聚焦</strong>于当下瓶颈问题，忽视其他——<strong>Aravind Srinivas</strong> 难做到，想学。<strong>Jensen Huang</strong> 比想象更好——<strong>极度求真</strong>；每天对自己说 <strong>很烂</strong>、告诉团队 <strong>30 天后倒闭</strong>——<strong>5</strong> 万亿、两年 <strong>5000</strong> 亿收入板上钉钉仍如此心态。</p>
+<p><strong>永不退休</strong>：<strong>Elon Musk</strong> <strong>SpaceX</strong> 薪酬包绑火星百万殖民 + 太空算力；<strong>Jensen Huang</strong> 希望 <strong>工作至死</strong>——赢了就卖公司退休，孩子看爸爸打 paddle 无法 <strong>倍增财富</strong>；须一直 <strong>做点什么</strong>。</p>
+<h3 id="快问快答-十年押注-职业建议与永不退休-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>SpaceX</strong>、<strong>Anthropic</strong>、<strong>OpenAI</strong> 三个 IPO，<strong>10</strong> 年持哪个？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「<strong>SpaceX</strong>——<strong>独一无二</strong>。<strong>Anthropic/OpenAI</strong> 互抄，<strong>SpaceX</strong> 独建太空连接。<strong>Starlink</strong> 飞机上用了就回不去。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「给刚毕业的 CS 弟妹一条建议？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「<strong>保持好奇</strong>。别因错失恐惧看 <strong>Twitter</strong> 觉得绝望——我们才刚开始。但别为做实验室而做实验室，要 <strong>差异化基础押注</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「见 <strong>Elon Musk</strong> 怎样？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「太震撼了——<strong>Twitter</strong> 外对当下 <strong>瓶颈问题</strong> <strong>激光般聚焦</strong>，忽略其他。我想学那能力：真正忽略即使重要的事。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Jensen Huang</strong> 符合预期吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">8</div>
+    <div class="step-body">
+      <h3>Aravind Srinivas</h3>
+      <p>「<strong>远超预期</strong>——<strong>极度求真</strong>，简直到了离谱程度。每天觉得自己 <strong>很烂</strong>，跟团队说 <strong>30 天后倒闭</strong>——<strong>5</strong> 万亿、板上钉钉 <strong>5000</strong> 亿收入还这样。」</p>
+    </div>
+  </article>
+</div>
+
+<details class="collapsible meta-panel" id="延伸术语表">
+  <summary>延伸术语表</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>说明</th></tr></thead><tbody><tr><td><strong>20VC</strong></td><td><strong>Harry Stebbings</strong> 主持的创投播客 *The Twenty Minute VC*，常访创始人与投资人</td></tr><tr><td><strong>ARR</strong></td><td>Annual Recurring Revenue，年化经常性收入</td></tr><tr><td><strong>Agent harness</strong></td><td>代理编排层：规定 agent loop 如何运行、接入哪些技能/子代理/工具/连接器</td></tr><tr><td><strong>HBM（高带宽内存）</strong></td><td>High Bandwidth Memory；AI 训练/推理关键瓶颈，<strong>Micron</strong> 等为供应商</td></tr><tr><td><strong>Neocloud</strong></td><td>新兴 AI 专用云/推理托管商（<strong>Nebius</strong>、<strong>CoreWeave</strong>、<strong>Crusoe</strong> 等）</td></tr><tr><td><strong>Token value per watt per user</strong></td><td><strong>Aravind Srinivas</strong> 提出的 AI 核心经济指标：每用户每瓦电力产出的 token 价值</td></tr><tr><td><strong>Lead gen</strong></td><td>引流/获客入口；此处指答案引擎为代理产品导流</td></tr><tr><td><strong>Cron job</strong></td><td>定时重复任务；喻指 AI 持续监控而非一次性委派</td></tr><tr><td><strong>TCO</strong></td><td>Total Cost of Ownership，总拥有成本</td></tr><tr><td><strong>Post-train</strong></td><td>在基座模型之上继续训练（相对 pre-train）</td></tr><tr><td><strong>Wet lab</strong></td><td>湿实验室，实体生物/化学实验设施</td></tr><tr><td><strong>Forward deployed engineer</strong></td><td>派驻客户现场、贴近交付的工程师角色（近年兴起）</td></tr><tr><td><strong>Vibe coding</strong></td><td>氛围编程：用自然语言指挥 AI 写代码，<strong>Andrej Karpathy</strong> 推广的说法</td></tr></tbody></table></div>
+  </div>
+</details>
+
+<details class="collapsible meta-panel" id="文章元数据">
+  <summary>文章元数据与来源</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Perplexity CEO: Micron Will Be More Valuable Than Meta &amp; How Export Controls Helped Not Hurt China</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.youtube.com/watch?v=OxFyVcO1Yow">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-06-15</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-06-24</td></tr><tr><td><strong>播放量/访问量</strong></td><td>YouTube 观看次数：约 144,000（页面显示 144.0K）</td></tr><tr><td><strong>时长</strong></td><td>01:35:16</td></tr><tr><td><strong>主持人</strong></td><td><strong>Harry Stebbings</strong>（<strong>20VC</strong> 播客主理人）</td></tr><tr><td><strong>嘉宾</strong></td><td><strong>Aravind Srinivas</strong>（<strong>Perplexity</strong> 联合创始人兼 CEO）</td></tr><tr><td><strong>内容来源</strong></td><td><strong>20VC</strong> YouTube 频道 Full Episodes；用户提供的完整字幕转写 + YouTube 页面元数据（WebFetch）</td></tr></tbody></table></div>
+
+<blockquote><strong>嘉宾背景</strong>：<strong>Aravind Srinivas</strong> 在印度中下阶层家庭长大，本科时在实验室用显卡「玩着」训练神经网络，曾把「进 <strong>Google</strong> 当工程师」视为家庭层面的成功。<strong>Perplexity</strong> 约 <strong>400</strong> 人、三年建成月搜索超 <strong>10</strong> 亿次的产品；2026 年初至今年化 recurring revenue（ARR）已<strong>翻三倍</strong>，超过 <strong>5 亿美元</strong>；累计融资超 <strong>10</strong> 亿美元，报道估值约 <strong>200</strong> 亿美元。他自称动机来自「赢的快感」而非怕失败——因为相对出身，「已经没什么可输」。</blockquote>
+  </div>
+</details>
+
+<h2 id="自检报告" hidden>自检报告</h2>
+
+<details class="collapsible">
+  <summary>展开自检报告详情</summary>
+  <div class="collapsible-body">
+    <div class="table-wrap">
+    <table><thead><tr><th>检查项</th><th>结果</th></tr></thead><tbody><tr><td><strong>节结构（对谈三层）</strong></td><td>✅ 14 节均为 核心洞察 → 深度解析 → 对谈实录；无空壳实录节</td></tr><tr><td><strong>导读论点（v5.26）</strong></td><td>✅ 含 <code>&gt; <strong>全文论点</strong></code>；分层段覆盖编排/基础设施/就业/IPO 收束线</td></tr><tr><td><strong>纯净排版（4d 节间空白）</strong></td><td>✅ 4d 闸门通过；<code>---</code> 共 4 处；正文节间 <code>---</code> 0；三连空行 0（normalize_spacing.py 校验通过）</td></tr><tr><td><strong>正文中文叙事</strong></td><td>✅ 4c 闸门通过；grep 命中 52→修正后 0；对谈实录已译中文；专名/原标题英文保留</td></tr><tr><td><strong>首现缩写注释</strong></td><td>✅ ARR、HBM、TCO 等首现已注；MCP/API/LLM 等未强制重复</td></tr><tr><td><strong>AI/DevTools 行话簇</strong></td><td>✅ harness/wrapper/cron/dogfood 等已中文化或括注；Claude Code/Codex/Computer 保留专名</td></tr><tr><td><strong>多源一致性</strong></td><td>不适用（单源 <strong>20VC</strong> 访谈）</td></tr><tr><td><strong>防幻觉</strong></td><td>✅ 数字来自用户转写与 YouTube 描述；<strong>mitos</strong> Blackwell 模型名 ASR 不清未强行写死；<strong>Betski</strong> 未展开（转写人名不确定）</td></tr><tr><td><strong>原数据快照</strong></td><td>✅ 144.0K views / 01:35:16 / 2026-06-15 与 WebFetch 一致</td></tr><tr><td><strong>可读性内化</strong></td><td>不适用（默认通识读者）</td></tr><tr><td><strong>主来源与降级</strong></td><td>YouTube WebFetch 元数据 + 用户完整字幕；未用浏览器 MCP（WebFetch 已获标题/章节/播放量）</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+      <!-- CONTENT_END -->
+
+      <footer class="doc-footer">
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=OxFyVcO1Yow" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260615 Perplexity CEO Aravind Srinivas 进攻编排与 AI 基础设施瓶颈_整理文档.md</span>
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    // ---------- Theme ----------
+    const STORAGE_KEY = "md2html-theme";
+    function currentTheme() { return document.documentElement.dataset.theme || "light"; }
+    function applyThemeIcon() {
+      const use = document.getElementById("theme-icon-use");
+      if (use) use.setAttribute("href", currentTheme() === "dark" ? "#i-sun" : "#i-moon");
+    }
+    (function restoreTheme() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        document.documentElement.dataset.theme = saved;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+
+    // ---------- Mermaid ----------
+    const diagramSources = new Map();
+    function initMermaid() {
+      const isDark = currentTheme() === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        themeVariables: {
+          primaryColor: isDark ? "#3A2A22" : "#FBEEE6",
+          primaryTextColor: isDark ? "#F5F0E8" : "#1A1A1A",
+          primaryBorderColor: isDark ? "#E89572" : "#D97757",
+          lineColor: isDark ? "#9A938A" : "#6B6B66",
+          secondaryColor: isDark ? "#2A2520" : "#F5F5F0",
+          tertiaryColor: isDark ? "#221E1A" : "#FFFFFF",
+          fontFamily: "Inter, system-ui, sans-serif",
+        },
+      });
+    }
+    async function renderMermaid() {
+      initMermaid();
+      const els = document.querySelectorAll(".mermaid");
+      els.forEach(el => {
+        if (!diagramSources.has(el)) diagramSources.set(el, el.textContent.trim());
+        el.textContent = diagramSources.get(el);
+        el.removeAttribute("data-processed");
+      });
+      try { await mermaid.run({ nodes: els }); } catch (e) { console.error(e); }
+    }
+    function toggleTheme() {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(STORAGE_KEY, next);
+      applyThemeIcon();
+      renderMermaid();
+    }
+
+    // ---------- TOC drawer (mobile) ----------
+    const tocEl = () => document.getElementById("toc");
+    const tocToggle = () => document.getElementById("toc-toggle");
+    const isMobileToc = () => window.matchMedia("(max-width: 900px)").matches;
+
+    function syncTocA11y(open) {
+      const toc = tocEl();
+      if (!toc) return;
+      if (isMobileToc()) {
+        toc.setAttribute("role", "dialog");
+        toc.setAttribute("aria-modal", open ? "true" : "false");
+        toc.setAttribute("aria-hidden", open ? "false" : "true");
+      } else {
+        toc.removeAttribute("role");
+        toc.removeAttribute("aria-modal");
+        toc.removeAttribute("aria-hidden");
+      }
+    }
+
+    function openToc() {
+      document.body.classList.add("toc-open");
+      syncTocA11y(true);
+      const closeBtn = tocEl()?.querySelector(".toc-close");
+      closeBtn?.focus();
+    }
+    function closeToc() {
+      document.body.classList.remove("toc-open");
+      syncTocA11y(false);
+      if (isMobileToc()) tocToggle()?.focus();
+    }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+    window.addEventListener("resize", () => {
+      if (!document.body.classList.contains("toc-open")) syncTocA11y(false);
+    });
+
+    // ---------- TOC scrollspy ----------
+    function setupTocSpy() {
+      const links = Array.from(document.querySelectorAll("#toc-nav a[href^='#']"));
+      if (!links.length) {
+        const toc = document.getElementById("toc");
+        if (toc) toc.style.display = "none";
+        return;
+      }
+      const entries = [];
+      links.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) entries.push({ el, link: a });
+        a.addEventListener("click", () => {
+          if (isMobileToc()) closeToc();
+        });
+      });
+
+      let ticking = false;
+      const setActive = () => {
+        ticking = false;
+        const offset = 96;
+        let current = entries[0]?.link;
+        for (const { el, link } of entries) {
+          if (el.getBoundingClientRect().top <= offset) current = link;
+        }
+        links.forEach(l => l.classList.toggle("active", l === current));
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(setActive);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setActive();
+    }
+
+    // ---------- Section jump pills ----------
+    function injectSectionJumps() {
+      document.querySelectorAll(".content h2[id]").forEach(h2 => {
+        const id = h2.id;
+        const parts = [
+          { suffix: "-insight", label: "洞察" },
+          { suffix: "-analysis", label: "解析" },
+          { suffix: "-dialogue", label: "实录" },
+        ];
+        const items = parts
+          .map(p => ({ el: document.getElementById(id + p.suffix), label: p.label }))
+          .filter(x => x.el);
+        if (!items.length) return;
+        const nav = document.createElement("nav");
+        nav.className = "section-jump";
+        nav.setAttribute("aria-label", "本节导航");
+        items.forEach(({ el, label }) => {
+          const a = document.createElement("a");
+          a.href = "#" + el.id;
+          a.textContent = label;
+          nav.appendChild(a);
+        });
+        h2.insertAdjacentElement("afterend", nav);
+      });
+    }
+
+    // ---------- Speaker tags in dialogue ----------
+    function tagSpeakers() {
+      document.querySelectorAll(".timeline .step-body h3").forEach(h3 => {
+        const step = h3.closest(".step");
+        if (!step) return;
+        const name = h3.textContent.trim();
+        if (/Harrison/i.test(name)) step.classList.add("speaker-host");
+        else if (/Andrew/i.test(name)) step.classList.add("speaker-guest");
+      });
+    }
+
+    // ---------- Anchor links on h2/h3 ----------
+    function injectAnchors() {
+      document.querySelectorAll(".content h2[id], .content h3[id]").forEach(h => {
+        if (h.querySelector(".anchor")) return;
+        const a = document.createElement("a");
+        a.className = "anchor";
+        a.href = "#" + h.id;
+        a.setAttribute("aria-label", "段落链接");
+        a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
+        h.appendChild(a);
+      });
+    }
+
+    // ---------- Copy-to-clipboard on <pre> ----------
+    function injectCopyButtons() {
+      document.querySelectorAll(".content pre").forEach(pre => {
+        if (pre.classList.contains("mermaid")) return;
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "复制代码");
+        btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent ?? pre.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.classList.add("copied");
+            btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+            }, 1500);
+          } catch (e) { console.error(e); }
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    // ---------- Back to top ----------
+    function setupBackToTop() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      const toggle = () => {
+        btn.hidden = window.scrollY < 480;
+      };
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+    }
+
+    // ---------- Scroll progress ----------
+    function setupScrollProgress() {
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = h > 0 ? (document.documentElement.scrollTop / h * 100) : 0;
+        bar.style.width = p + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    // ---------- Boot ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      applyThemeIcon();
+      syncTocA11y(false);
+      tagSpeakers();
+      injectAnchors();
+      injectCopyButtons();
+      renderMermaid();
+      setupTocSpy();
+      setupScrollProgress();
+      setupBackToTop();
+    });
+  </script>
+</body>
+</html>

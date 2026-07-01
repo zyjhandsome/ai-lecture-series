@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light" style="--rec-label: '★ 推荐'">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>从弦论到软件工厂：Matan Grinberg 谈守恒量思维、代币预算与模型无关战略</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FAFAF7;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F0;
+      --surface-3: #EFEEE8;
+      --text: #1A1A1A;
+      --text-muted: #4A4A45;
+      --text-subtle: #6B6B66;
+      --accent: #D97757;
+      --accent-hover: #C56843;
+      --accent-soft: #FBEEE6;
+      --accent-border: #F0D5C4;
+      --accent-strong: #A85533;
+      --border: #E5E4DC;
+      --border-strong: #CDCDC4;
+      --code-bg: #F5F2EC;
+      --code-text: #2A2A2A;
+      --info: #2563EB;
+      --info-soft: #EFF6FF;
+      --info-border: #BFDBFE;
+      --warn: #B45309;
+      --warn-soft: #FFFBEB;
+      --warn-border: #FDE68A;
+      --danger: #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #047857;
+      --success-soft: #ECFDF5;
+      --success-border: #A7F3D0;
+      --decision: #6D28D9;
+      --decision-soft: #F5F3FF;
+      --decision-border: #DDD6FE;
+      --shadow-sm: 0 1px 2px rgba(20, 14, 8, 0.04);
+      --shadow: 0 1px 2px rgba(20, 14, 8, 0.04), 0 4px 12px rgba(20, 14, 8, 0.06);
+      --shadow-lg: 0 8px 24px rgba(20, 14, 8, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --measure: 75ch;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+      --z-progress: 200;
+      --z-topbar: 100;
+      --z-drawer: 300;
+      --z-backdrop: 250;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1714;
+      --surface: #221E1A;
+      --surface-2: #2A2520;
+      --surface-3: #322C26;
+      --text: #F5F0E8;
+      --text-muted: #C8C0B6;
+      --text-subtle: #9A938A;
+      --accent: #E89572;
+      --accent-hover: #F2A87F;
+      --accent-soft: #3A2A22;
+      --accent-border: #5A3D2E;
+      --accent-strong: #F5B493;
+      --border: #2E2924;
+      --border-strong: #463F38;
+      --code-bg: #1E1B17;
+      --code-text: #E8E2D8;
+      --info: #93C5FD;
+      --info-soft: #1E2A3D;
+      --info-border: #2A4365;
+      --warn: #FBBF24;
+      --warn-soft: #332817;
+      --warn-border: #5C4520;
+      --danger: #FCA5A5;
+      --danger-soft: #3A1F1F;
+      --danger-border: #5C2A2A;
+      --success: #6EE7B7;
+      --success-soft: #1A3329;
+      --success-border: #1F5C45;
+      --decision: #C4B5FD;
+      --decision-soft: #2A1F40;
+      --decision-border: #4A3870;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    ::selection { background: var(--accent-soft); color: var(--accent-strong); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 8px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 1000;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* SVG sprite container (hidden) */
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .icon { display: inline-block; flex-shrink: 0; vertical-align: middle; stroke: currentColor; fill: none; }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: var(--z-progress);
+      transition: width 0.05s linear;
+    }
+
+    /* ============================================================
+       TOPBAR
+       ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      background: rgba(250, 250, 247, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .topbar { background: rgba(26, 23, 20, 0.85); }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      animation: brand-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes brand-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft); }
+      50%      { box-shadow: 0 0 0 7px transparent; }
+    }
+    .topbar-actions { display: flex; gap: 6px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      padding: 0;
+    }
+    .icon-btn .icon { width: 18px; height: 18px; stroke-width: 2; }
+    .icon-btn[hidden] { display: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 32px 24px 96px;
+    }
+    .content { min-width: 0; }
+    /* Unified reading measure: every top-level block shares one width so
+       paragraphs, callouts, diagrams, timelines, tables and code align to a
+       single clean column. Opt out with .full-bleed where truly needed. */
+    .content > * { max-width: var(--measure); }
+    .content > .full-bleed { max-width: none; }
+
+    /* ============================================================
+       TOC (desktop + mobile drawer)
+       ============================================================ */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .toc::-webkit-scrollbar { width: 6px; }
+    .toc::-webkit-scrollbar-track { background: transparent; }
+    .toc::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+    .toc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .toc-close { display: none; }
+    .toc-nav { display: flex; flex-direction: column; gap: 2px; }
+    .toc-nav a {
+      display: flex; align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 500;
+    }
+    .toc-nav a.lvl-3 { padding-left: 26px; font-size: 12.5px; }
+    .toc-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: var(--z-backdrop);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ============================================================
+       DOC HEADER
+       ============================================================ */
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-eyebrow {
+      display: inline-flex; align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-size: clamp(28px, 3vw + 16px, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .doc-subtitle {
+      font-size: clamp(15px, 0.6vw + 13px, 18px);
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      max-width: var(--measure);
+      text-wrap: pretty;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+    .doc-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    .doc-meta .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ============================================================
+       CONTENT (typography)
+       ============================================================ */
+    .content h1, .content h2, .content h3, .content h4 {
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+    .content h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 56px 0 16px;
+      padding-top: 8px;
+      position: relative;
+    }
+    .content h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      position: relative;
+    }
+    .content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .content > p,
+    .content > ul,
+    .content > ol,
+    .content > blockquote { max-width: var(--measure); }
+    .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
+    .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
+    .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
+    .content li { margin: 4px 0; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content em { color: var(--text-muted); }
+    .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Anchor links injected by JS on h2/h3 with id */
+    .anchor {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      color: var(--text-subtle);
+      opacity: 0;
+      transform: translateY(-1px);
+      transition: opacity 0.15s, color 0.15s;
+      border-bottom: none !important;
+      border-radius: var(--radius-sm);
+    }
+    .anchor .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* Images */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+    .content figure { margin: 20px 0; }
+    .content figure img { margin: 0; }
+    .content figcaption {
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Task lists (- [ ] / - [x]) */
+    .content .task-list-item { list-style: none; margin-left: -22px; }
+    .content .task-list-item-checkbox {
+      margin-right: 8px;
+      vertical-align: -2px;
+      accent-color: var(--accent);
+    }
+
+    /* Footnotes */
+    .content .footnote-ref a,
+    .content sup a {
+      font-size: 0.75em;
+      vertical-align: super;
+      border-bottom: none;
+      padding: 0 2px;
+    }
+    .content .footnotes {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       CODE
+       ============================================================ */
+    .content code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    .content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      position: relative;
+    }
+    .content pre code {
+      background: none; padding: 0; border: none;
+      color: var(--code-text);
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-subtle);
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .copy-btn .icon { width: 14px; height: 14px; stroke-width: 2; }
+    .copy-btn.copied { color: var(--success); border-color: var(--success-border); opacity: 1; }
+
+    /* ============================================================
+       TIMELINE / STEPS
+       ============================================================ */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-border), var(--border));
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 8px 4px;
+      position: relative;
+      border-radius: var(--radius);
+      transition: background-color 0.15s;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .step.done .step-num { background: var(--accent); color: #fff; }
+    .step-body { padding-top: 6px; min-width: 0; }
+    .step-body h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: var(--measure); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: var(--measure);
+    }
+    .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
+    .callout-body { min-width: 0; }
+    .callout-title { font-weight: 600; margin: 0 0 4px; font-size: 14px; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout-body code { background: rgba(0,0,0,0.04); }
+    [data-theme="dark"] .callout-body code { background: rgba(255,255,255,0.06); }
+
+    .callout-info     { background: var(--info-soft);     border-color: var(--info-border);     color: var(--text); }
+    .callout-info     .callout-title, .callout-info     .callout-icon { color: var(--info); }
+    .callout-warn     { background: var(--warn-soft);     border-color: var(--warn-border);     color: var(--text); }
+    .callout-warn     .callout-title, .callout-warn     .callout-icon { color: var(--warn); }
+    .callout-danger   { background: var(--danger-soft);   border-color: var(--danger-border);   color: var(--text); }
+    .callout-danger   .callout-title, .callout-danger   .callout-icon { color: var(--danger); }
+    .callout-success  { background: var(--success-soft);  border-color: var(--success-border);  color: var(--text); }
+    .callout-success  .callout-title, .callout-success  .callout-icon { color: var(--success); }
+    .callout-decision { background: var(--decision-soft); border-color: var(--decision-border); color: var(--text); }
+    .callout-decision .callout-title, .callout-decision .callout-icon { color: var(--decision); }
+    .callout-tip      { background: var(--accent-soft);   border-color: var(--accent-border);   color: var(--text); }
+    .callout-tip      .callout-title, .callout-tip      .callout-icon { color: var(--accent-strong); }
+
+    /* ============================================================
+       KEY-POINT HIGHLIGHT
+       ============================================================ */
+    .highlight {
+      background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+      border-left: 4px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: var(--measure);
+    }
+    .highlight-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       MERMAID
+       ============================================================ */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .mermaid { text-align: center; min-height: 80px; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .mermaid:not([data-processed]) {
+      opacity: 0.4;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ============================================================
+       PROS / CONS
+       ============================================================ */
+    .proscons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .proscons-col {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .proscons-col h4 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proscons-col ul { margin: 0; padding-left: 18px; }
+    .proscons-col li { margin: 6px 0; }
+    .pros { background: var(--success-soft); border-color: var(--success-border); }
+    .pros h4 { color: var(--success); }
+    .cons { background: var(--danger-soft); border-color: var(--danger-border); }
+    .cons h4 { color: var(--danger); }
+
+    /* ============================================================
+       COMPARISON CARDS
+       ============================================================ */
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .compare-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .compare-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .compare-card.recommended::before {
+      content: var(--rec-label, "★ Recommended");
+      position: absolute; top: -10px; right: 14px;
+      background: var(--accent); color: #fff;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+    }
+    .compare-card h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); text-transform: none; letter-spacing: normal; }
+    .compare-card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+    /* ============================================================
+       COLLAPSIBLE
+       ============================================================ */
+    details.collapsible {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 16px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    details.collapsible[open] { box-shadow: var(--shadow-sm); }
+    details.collapsible > summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 500;
+      color: var(--text);
+      list-style: none;
+      display: flex; align-items: center; gap: 10px;
+      user-select: none;
+      transition: background 0.15s;
+      min-height: 44px;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::before {
+      content: "›";
+      display: inline-block;
+      transition: transform 0.18s;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    details.collapsible[open] > summary::before { transform: rotate(90deg); }
+    .collapsible-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+    .collapsible-body > *:first-child { margin-top: 12px; }
+
+    /* ============================================================
+       TABLES (wrapped via .table-wrap or naturally responsive)
+       ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      margin: 0;
+    }
+    /* Standalone tables (not inside .table-wrap) keep visual border */
+    .content > table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      display: block;
+      overflow-x: auto;
+    }
+    .content th {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .content td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    /* ============================================================
+       BLOCKQUOTE
+       ============================================================ */
+    .content blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-border);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       FOCUS-VISIBLE (a11y)
+       ============================================================ */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .toc-nav a:focus-visible { outline-offset: -2px; }
+    .icon-btn:focus-visible { outline-offset: 2px; }
+    .anchor:focus-visible { opacity: 1; outline-offset: 2px; }
+    details.collapsible > summary:focus-visible { outline-offset: -2px; }
+
+    /* ============================================================
+       HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
+       ============================================================ */
+    @media (hover: hover) {
+      .back-to-top:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+      .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+      .compare-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow); }
+      .compare-card.recommended:hover { border-color: var(--accent); }
+      .content tr:hover td { background: var(--surface-2); }
+      details.collapsible > summary:hover { background: var(--surface-2); }
+      .step:hover { background: var(--surface-2); }
+      .step:hover .step-num { transform: scale(1.05); }
+      .anchor:hover { color: var(--accent); }
+      .content h2:hover .anchor,
+      .content h3:hover .anchor { opacity: 1; }
+      .copy-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+      .content pre:hover .copy-btn { opacity: 1; }
+    }
+    /* On touch devices, copy-btn is always visible at low opacity */
+    @media (hover: none) {
+      .copy-btn { opacity: 0.6; }
+      .anchor { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       MOBILE (≤900px) — TOC becomes off-canvas drawer
+       ============================================================ */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px 80px;
+      }
+      .topbar-inner { padding: 8px 12px; }
+      .doc-header { margin-bottom: 28px; padding-bottom: 20px; }
+
+      .toc-mobile-trigger { display: inline-flex !important; }
+
+      .toc {
+        position: fixed;
+        top: 0; left: 0;
+        width: min(300px, 82vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        background: var(--surface);
+        z-index: var(--z-drawer);
+        padding: 16px 8px 24px 16px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc-head { padding: 4px 4px 12px 8px; }
+      .toc-close {
+        display: inline-flex !important;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+      }
+      .toc-close .icon { width: 18px; height: 18px; stroke-width: 2; }
+      body.toc-open .toc { transform: translateX(0); }
+      body.toc-open .toc-backdrop {
+        display: block;
+        opacity: 1;
+      }
+      .toc-backdrop {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.toc-open .toc-backdrop { pointer-events: auto; }
+      body.toc-open { overflow: hidden; }
+    }
+    @media (min-width: 901px) {
+      .toc-mobile-trigger { display: none !important; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION (a11y)
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html { scroll-behavior: auto; }
+      .brand-dot { animation: none; box-shadow: 0 0 0 4px var(--accent-soft); }
+    }
+
+    /* ============================================================
+       LAYER HEADINGS (对谈三层结构)
+       ============================================================ */
+    .layer-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .layer-heading::before {
+      flex-shrink: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .layer-insight::before {
+      content: "洞察";
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+    }
+    .layer-analysis::before {
+      content: "解析";
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .layer-dialogue::before {
+      content: "实录";
+      background: var(--info-soft);
+      color: var(--info);
+      border: 1px solid var(--info-border);
+    }
+    .layer-insight { font-size: 0; }
+    .layer-insight::before { font-size: 11px; }
+    .layer-insight .anchor { font-size: 14px; }
+    .layer-analysis { font-size: 0; }
+    .layer-analysis::before { font-size: 11px; }
+    .layer-analysis .anchor { font-size: 14px; }
+    .layer-dialogue { font-size: 0; }
+    .layer-dialogue::before { font-size: 11px; }
+    .layer-dialogue .anchor { font-size: 14px; }
+    .section-insight { margin-top: 12px; margin-bottom: 20px; }
+    .section-insight .callout-body p { margin: 0; }
+
+    /* Section jump pills (injected by JS) */
+    .section-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 20px;
+      max-width: var(--measure);
+    }
+    .section-jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+    }
+    .section-jump a:hover,
+    .section-jump a:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Speaker differentiation in dialogue timeline */
+    .step.speaker-host .step-num {
+      border-color: var(--info);
+      color: var(--info);
+      background: var(--info-soft);
+    }
+    .step.speaker-guest .step-num {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .step.speaker-host .step-body h3 { color: var(--info); }
+    .step.speaker-guest .step-body h3 { color: var(--accent-strong); }
+
+    /* Meta panel + table URL wrap */
+    .meta-panel { margin-bottom: 32px; }
+    .toc-nav .toc-meta-link {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-subtle);
+      font-size: 12.5px;
+    }
+    .table-wrap td a { word-break: break-all; }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: opacity 0.2s, transform 0.2s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .back-to-top .icon { width: 20px; height: 20px; stroke-width: 2; }
+    .back-to-top:not([hidden]) { opacity: 1; transform: translateY(0); }
+    .back-to-top[hidden] { display: inline-flex; opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+    /* ============================================================
+       PRINT
+       ============================================================ */
+    @media print {
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress, .back-to-top, .section-jump { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      a { color: #000; }
+      .content pre, .callout, .compare-card, .step, .diagram { break-inside: avoid; }
+      .doc-footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">跳到正文</a>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- SVG icon sprite (Lucide-style) -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-decision" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0 4 4 0 0 1 1.59 2h2.99a4 4 0 0 1 1.6-2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  </svg>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn toc-mobile-trigger" id="toc-toggle" onclick="openToc()" aria-label="目录" title="目录">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>笔记</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-printer"/></svg>
+        </button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use id="theme-icon-use" href="#i-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC drawer backdrop (mobile) -->
+  <div class="toc-backdrop" id="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-head">
+        <p class="toc-title">目录</p>
+        <button class="toc-close" onclick="closeToc()" aria-label="关闭">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#核心导读" class="lvl-2">核心导读</a>
+        <a href="#一-诺特定理与守恒量-剧变时代的第一性原理" class="lvl-2">一、诺特定理与守恒量：剧变时代的第一性原理</a>
+        <a href="#二-问题只会越来越多-反驳「工作消失论」" class="lvl-2">二、问题只会越来越多：反驳「工作消失论」</a>
+        <a href="#三-代币-算力与人头-ceo-的新资源配置题" class="lvl-2">三、代币、算力与人头：CEO 的新资源配置题</a>
+        <a href="#四-factory-使命-建造软件工厂而非手写软件" class="lvl-2">四、Factory 使命：建造软件工厂而非手写软件</a>
+        <a href="#五-产品扩张-瓶颈驱动的-droid-全生命周期" class="lvl-2">五、产品扩张：瓶颈驱动的 Droid 全生命周期</a>
+        <a href="#六-模型无关-像用电一样隐藏模型选择" class="lvl-2">六、模型无关：像用电一样隐藏模型选择</a>
+        <a href="#七-赢得企业客户-因地而异的切入楔子" class="lvl-2">七、赢得企业客户：因地而异的切入楔子</a>
+        <a href="#八-xai-cursor-交易与「一体优化」之辩" class="lvl-2">八、xAI-Cursor 交易与「一体优化」之辩</a>
+        <a href="#九-开放权重模型-闭源巨头的真正威胁" class="lvl-2">九、开放权重模型：闭源巨头的真正威胁</a>
+        <a href="#十-anthropic-fable-5-与-ai-护栏该画在哪" class="lvl-2">十、Anthropic Fable 5 与 AI 护栏该画在哪</a>
+        <a href="#十一-从叛逆少年到弦论-十二年的执念" class="lvl-2">十一、从叛逆少年到弦论：十二年的执念</a>
+        <a href="#十二-juan-maldacena-极-subtle-的-mentorship-考验" class="lvl-2">十二、Juan Maldacena：极 subtle 的 mentorship 考验</a>
+        <a href="#十三-物理学家与-ceo-两种孤独与不确定性" class="lvl-2">十三、物理学家与 CEO：两种孤独与不确定性</a>
+        <a href="#十四-身份危机-当「物理学家」这层皮被剥掉" class="lvl-2">十四、身份危机：当「物理学家」这层皮被剥掉</a>
+        <a href="#十五-程序合成-sean-mcguire-与-factory-起源" class="lvl-2">十五、程序合成、Sean McGuire 与 Factory 起源</a>
+        <a href="#十六-沙漠岁月-早到就是错-也是福" class="lvl-2">十六、沙漠岁月：早到就是错，也是福</a>
+        <a href="#十七-初学-ceo-敢于反驳与直面知识盲区" class="lvl-2">十七、初学 CEO：敢于反驳与直面知识盲区</a>
+        <a href="#十八-factory-文化与-enno-reyes-共建而非分舱" class="lvl-2">十八、Factory 文化与 Enno Reyes：共建而非分舱</a>
+        <a href="#十九-一年后的-ai-与-factory" class="lvl-2">十九、一年后的 AI 与 Factory</a>
+        <a href="#二十-尾声-黑洞探测器-博尔赫斯与《隐形城市》" class="lvl-2">二十、尾声：黑洞探测器、博尔赫斯与《隐形城市》</a>
+        <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
+        <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main">
+      <header class="doc-header">
+        <span class="doc-eyebrow">对谈笔记</span>
+        <h1 class="doc-title">从弦论到软件工厂：Matan Grinberg 谈守恒量思维、代币预算与模型无关战略</h1>
+        <p class="doc-subtitle">Matan Grinberg 用物理学的「守恒量与对称性」思维反驳「AI 将消灭一切工作」的叙事——世界问题只会越来越多，给工程师更高杠杆才能多解决软件本可解决却未解决之事。</p>
+        <div class="doc-meta">
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
+            Matan Grinberg on Noether's Theorem, Factory's $1.5B Vision, and Why Open Models Threaten Closed AI
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
+            2026-06-30
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+            ~31 分钟阅读
+          </span>
+        </div>
+      </header>
+
+      <!-- CONTENT_START -->
+<h2 id="核心导读">核心导读</h2>
+
+<div class="highlight">
+  <p><strong>Matan Grinberg</strong> 用物理学的「守恒量与对称性」思维反驳「AI 将消灭一切工作」的叙事——世界问题只会越来越多，给工程师更高杠杆才能多解决软件本可解决却未解决之事；企业 AI 的下一战场不是选哪家闭源模型，而是<strong>代币（token）与人力的资源配置</strong>；<strong>Factory</strong> 押注<strong>模型无关</strong>的「软件工厂」——工程师不再写软件，而是调校组装线，让 <strong>Droids</strong> 在合适环节路由 <strong>Opus</strong>、开放权重模型或微调模型；闭源巨头的真正威胁是优质开放模型带来的定价压力，而非彼此内卷；离开弦论的身份危机与「沙漠岁月」塑造了敢于反驳、直面盲区的 CEO 气质，以及「共建（Build Together）」的跨职能文化。</p>
+</div>
+
+<p><strong>守恒量与问题观。</strong> <strong>Emmy Noether</strong> 定理：连续对称性对应守恒量——空无一物的宇宙里，位移与时间流逝不变，便导出能量与动量守恒。<strong>Matan Grinberg</strong> 将此映射为商业决策的基线：在剧变的 AI 编码赛道，先问什么不变——问题总量、人类解决问题的需求、软件可承载的比例。<strong>Mario</strong> 追问就业置换；<strong>Matan Grinberg</strong> 承认局部岗位会减，但全球未解问题远多于已解，且自由竞争会惩罚过早裁员、奖励继续押注工程师杠杆的垂直行业。</p>
+
+<p><strong>软件工厂与模型路由。</strong> <strong>Factory</strong> 使命自始未变：为软件工程带来自主性。<strong>Droids</strong> 覆盖编码、测试、审查、合规等全生命周期；企业客户现更关心整条「软件工厂」——类比 <strong>Tesla</strong> 机械臂产线，工程师做系统设计：哪条臂用 <strong>Opus</strong>、哪条用开放模型、哪条为 <strong>COBOL</strong> 遗留代码微调。<strong>Factory Router</strong>、<strong>Droid Computer</strong>（远程沙箱）、<strong>Automated Security</strong> 等均由客户瓶颈驱动。<strong>Matan Grinberg</strong> 预言成功状态下，工程师对所用模型应像对烤面包机背后的电网一样无感。</p>
+
+<p><strong>生态、护栏与个人弧光。</strong> <strong>xAI</strong> 拟收购 <strong>Cursor</strong> 对 <strong>Factory</strong> 是利好——市场需要不绑单一模型的独立软件工厂。<strong>Matan Grinberg</strong> 用实证反驳「模型+执行层一体必然更优」：<strong>Droids</strong> 用 <strong>Opus</strong> 可胜过 <strong>Claude Code</strong> 里的 <strong>Opus</strong>，因多模型暴露让执行层避免过拟合单一模型。<strong>Anthropic</strong> <strong>Fable 5</strong> 发布触发的数据留存与性能降级政策，强化开放模型与多供应商竞争的必要性。个人线：八年级几何「重修」触发报复式自学、<strong>Juan Maldacena</strong> 极隐晦的入门考验、Berkeley 助教经历引爆身份危机、<strong>IMDb Top 250</strong> 与经典文学补课、<strong>Sean McGuire</strong> 与 <strong>Enno Reyes</strong> 塑造的 Factory 文化与未来预测。</p>
+
+<h2 id="一-诺特定理与守恒量-剧变时代的第一性原理">一、诺特定理与守恒量：剧变时代的第一性原理</h2>
+
+<h3 id="一-诺特定理与守恒量-剧变时代的第一性原理-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>对称性背后藏着守恒量——这是 <strong>Matan Grinberg</strong> 在 AI 乱局里仍能站稳的第一性原理基线。</p></div>
+</div>
+<h3 id="一-诺特定理与守恒量-剧变时代的第一性原理-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 刻意不从当周 AI 新闻开场，而先问 <strong>Emmy Noether</strong>（转写误作 Noita）第一定律。<strong>Matan Grinberg</strong> 解释 <strong>Noether 定理</strong>：宇宙中每一种连续对称性，都对应一个守恒量。抽象地说：若某种变换不改变物理情境——例如在真空中换位置、或等待一小时——则相应有动量、能量守恒。数学上，不同「玩具宇宙」可构造不同守恒量，导出不同物理理论。</p>
+<p><strong>Matan Grinberg</strong> 高中三年级首次接触该定理；其魅力在于，连五岁孩子都能直觉理解「黑漆漆的虚空里过一小时，世界不变」，而背后却是能量守恒的源头。硅谷常谈「第一性原理」；在物理里，面对任意复杂问题，先问：<strong>什么是对称的？什么是守恒的？</strong> 由此获得立足点，再分析对称性被打破之处——例如附近出现太阳，空间平移对称性破坏，但时间平移仍守恒。</p>
+<p><strong>Mario</strong> 将此法映射到 <strong>Factory</strong> 战略：<strong>Matan Grinberg</strong> 认同——在 AI 与代码生成这一经济最剧变区，训练自己识别「守恒项」至关重要。他反感「所有工作将消失」「永久底层阶级」等话术：既不准确，也伤害仍将在人类未来扮演关键角色者的心理。守恒思维可拆解此类断言。</p>
+<h3 id="一-诺特定理与守恒量-剧变时代的第一性原理-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「<strong>Emmy Noether</strong> 的第一定律——你显然是大粉丝。对我这意味着什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「<strong>Noether 定理</strong>说：每一种连续对称性，都有对应的守恒量。若事物在某方面对称——空无一物的宇宙里换位置、或等一小时——看起来都一样；背后却是能量与动量守恒。五岁孩子都能想象：黑漆漆的虚空里过一小时，什么都不变——那就是能量守恒的来源。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「你如今身处经济最剧变之处——AI、代码生成。先问什么守恒，是否也体现在你们战略里？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「非常重要。很多人喊『所有工作都会没』『永久底层阶级』——这不准确，也伤害那些在未来仍至关重要的人。你其实可以用守恒和对称性来拆解这些说法。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="二-问题只会越来越多-反驳「工作消失论」">二、问题只会越来越多：反驳「工作消失论」</h2>
+
+<h3 id="二-问题只会越来越多-反驳「工作消失论」-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>未解问题远多于已解，软件杠杆上升意味着多解决问题，而非净消灭工作。</p></div>
+</div>
+<h3 id="二-问题只会越来越多-反驳「工作消失论」-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Matan Grinberg</strong> 的守恒式论证分三步：</p>
+<p>1. 世界问题很多，大量尚未解决。 2. 其中很大比例<strong>本可用软件解决</strong>，但目前没有。 3. 问题总量随技术与生活质量提升而<strong>增长</strong>——人类「升级」所面对的问题类型（如心理健康在狩猎采集时代几乎不是议题）。</p>
+<p><strong>Mario</strong> 追问：生活质量提高是否意味着问题在减少？<strong>Matan Grinberg</strong> 认为人类是在<strong>问题阶梯</strong>上攀升——今日心理健康是重要议题，采集时代只需找野猪。<strong>Mario</strong> 承认缺乏可靠统计数据；<strong>Matan Grinberg</strong> 则强调：无论总量增删，<strong>未被解决的问题远多于正在被解决的</strong>。</p>
+<p><strong>Factory</strong> 给每位工程师更高杠杆，使其能攻克更多问题；某一具体问题所需人数可能下降（曾经一千人，现在一百人），但全局存在海量其他可解而未解之题。<strong>DMV</strong>（美国车辆管理局）软件糟透并非必然——资金与人才错配造成，未来可以更好。</p>
+<p><strong>Mario</strong> 归纳：<strong>Matan Grinberg</strong> 认为前沿模型与开放权重模型带来裁员与杠杆，但问题之丰沛使人类仍极其重要。<strong>Matan Grinberg</strong> 确认，并补充自由市场动态：竞争者若不裁员、反而给更好体验，可能抢走「抢先裁员」者的份额。垂直行业差异大——有的软件工程非核心能力，人数会减少；有的行业每位工程师与工具都增加杠杆，<strong>不应停止招聘</strong>。</p>
+<p><strong>Mario</strong> 问是否依赖「锯齿状智能」与算力昂贵使人力投资回报率仍佳。<strong>Matan Grinberg</strong> 同意，并衔接到资源配置问题（见下节）。</p>
+<h3 id="二-问题只会越来越多-反驳「工作消失论」-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「先承认：世界问题很多，很多没人在解。其中很大比例本可用软件解决，但没有。问题数量总体上还会增长——生活质量越高，人们期待越高，想解决的事越多。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「所以你的观点是：会有大量岗位置换，但问题如此之多，人类仍极其重要？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「对。还会涌现新动态——自由市场有竞争。你裁员，对手不裁、体验更好，你可能丢份额。有的垂直行业软件不是核心能力，工程师会减少；有的行业每位工程师都是杠杆，你可能根本不想停招。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="三-代币-算力与人头-ceo-的新资源配置题">三、代币、算力与人头：CEO 的新资源配置题</h2>
+
+<h3 id="三-代币-算力与人头-ceo-的新资源配置题-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>每增加一美元，<strong>CEO</strong>/<strong>CTO</strong>/<strong>CIO</strong> 要在人头、用户洞察与代币预算之间做精算——十二个月后绝不会再「每人每月一千美元代币」式盲配。</p></div>
+</div>
+<h3 id="三-代币-算力与人头-ceo-的新资源配置题-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Matan Grinberg</strong> 认为每家公司都将面临<strong>资源配置问题</strong>：增量美元投向更多员工？更多市场/用户数据？还是更多算力——此处算力即<strong>人均代币预算</strong>。</p>
+<p>当前处于有趣过渡期：AI 工具用量激增，企业不知投资回报率（ROI），于是<strong>预防性</strong>设限——例如每人每月 <strong>1000 美元</strong>代币。<strong>Matan Grinberg</strong> 断言：<strong>十二个月内</strong>，组织绝不会再如此盲目均分代币；将出现「这一枚代币投在哪才能推动业务」的精算——销售还是市场？工程内部是平台、客服还是账单？</p>
+<p>现状资源配置「蠢到极点」：该多招人还是多给代币？「不知道，先这样吧」——<strong>毫无数据支撑</strong>。<strong>Matan Grinberg</strong> 预判即将进入能用清晰指标说话的阶段：某部门应多投代币，另一部门代币边际效应低、应多招人——销售要面对面、建人脉，代币可能帮不大。</p>
+<p><strong>Mario</strong> 表示此前未细想归因与分配如何成为可能——这与 <strong>Factory</strong> 所做的事直接相关。</p>
+<h3 id="三-代币-算力与人头-ceo-的新资源配置题-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「这版未来是否建立在『人类在某些事上仍更强、模型仍算力受限』之上？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「是。每家公司都会有资源配置问题——<strong>CIO</strong>、<strong>CTO</strong>、<strong>CEO</strong> 对每个增量美元：多招人？多买市场/用户理解？还是多算力——也就是人均代币预算。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="四-factory-使命-建造软件工厂而非手写软件">四、Factory 使命：建造软件工厂而非手写软件</h2>
+
+<h3 id="四-factory-使命-建造软件工厂而非手写软件-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>软件工程的未来：你不造产品，你造<strong>造产品的工厂</strong>——工程师调校产线，而非亲手拧每一颗螺丝。</p></div>
+</div>
+<h3 id="四-factory-使命-建造软件工厂而非手写软件-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Factory</strong> 对外描述随阶段演变，<strong>使命未变</strong>：自三年前 <strong>Mario</strong> 在 newsletter 首次提及以来，始终是<strong>为软件工程带来自主性（autonomy）</strong>。</p>
+<p>最初两年聚焦 <strong>Droids</strong>——软件研发智能体，不止编码，而是<strong>端到端软件开发生命周期</strong>；它们是「智能体原生软件开发」世界的基本单元。随采用普及——有组织数万用户——对话重心从「单个 Droid 增量价值」转向客户所建的<strong>软件工厂</strong>。</p>
+<p>视觉类比：<strong>Tesla</strong> 工厂里机械臂自动装配；未来软件工程是工程师说「这条臂要这样调、那条臂那样调，去装这个/widget 那个/widget」——变成<strong>系统设计问题</strong>。且不锁定单一模型，产线上同样有资源配置：不能 naive 地凡事用 <strong>Opus</strong>——费、伤利润率；某臂用开放模型，某臂 <strong>Gemini</strong> 擅某种语言，某臂为 <strong>COBOL</strong> 遗留代码微调。</p>
+<p><strong>Matan Grinberg</strong> 痛陈现状：最聪明工程师花数年成专家，却<strong>小时级</strong>修<strong>持续集成（CI）</strong>、写文档、做产品需求文档（PRD）、开二十人会议——<strong>不是智力的好用途</strong>。<strong>Factory</strong> 要自动化低杠杆时间，让深度洞察时刻更集中——而工程师<strong>本就喜欢</strong>做后者。</p>
+<h3 id="四-factory-使命-建造软件工厂而非手写软件-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「<strong>Factory</strong> 怎么描述？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「使命从第一天没变：为软件工程带来自主性。最初是 <strong>Droids</strong>——覆盖全生命周期，是智能体原生开发的基本单元。现在企业更谈他们建的<strong>软件工厂</strong>——像 <strong>Tesla</strong> 工厂视频里那些机械臂。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="五-产品扩张-瓶颈驱动的-droid-全生命周期">五、产品扩张：瓶颈驱动的 Droid 全生命周期</h2>
+
+<h3 id="五-产品扩张-瓶颈驱动的-droid-全生命周期-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>工厂类比指导产品：<strong>Droid Computer</strong>、<strong>Factory Router</strong>、<strong>Automated Security</strong> 皆由客户产线瓶颈催生。</p></div>
+</div>
+<h3 id="五-产品扩张-瓶颈驱动的-droid-全生命周期-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 作为用户提到 <strong>Droid Computer</strong>、<strong>Factory Router</strong>、<strong>Automated Security</strong> 等快速迭代功能。<strong>Matan Grinberg</strong> 用工厂类比：找出组装线上<strong>最大瓶颈</strong>，才能更快产出单位产品。</p>
+<p>一例：受监管客户要求代码审查不止「代码好不好」，还要<strong>是否符合法规/安全标准</strong>——催生合规审查能力。<strong>Droid Computer</strong>：成熟组织大量任务委派给智能体后，本地笔记本承载不了；合上电脑智能体就停——需远程机器/沙箱，生成代码、测试、验证合规，甚至花一周修 messy <strong>CI</strong>。</p>
+<p><strong>Matan Grinberg</strong> 自称一直在「droiding」，认为产品节奏 exciting。</p>
+<h3 id="五-产品扩张-瓶颈驱动的-droid-全生命周期-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「我一直在 droiding。还有 <strong>Droid Computer</strong>、<strong>Factory Router</strong>、<strong>Automated Security</strong>——你怎么决定扩 scope？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「工厂类比很有用：找最大瓶颈。有客户说：很棒，但我们受监管——能否每次 code review 都测合规，不只代码质量？<strong>Droid Computer</strong>：人人用智能体后，你笔记本扛不住；合上电脑 agent 就完。要能 spin up 远程机，在沙箱里生成、测试、验证，甚至花一周修烂 <strong>CI</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="六-模型无关-像用电一样隐藏模型选择">六、模型无关：像用电一样隐藏模型选择</h2>
+
+<h3 id="六-模型无关-像用电一样隐藏模型选择-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>若 <strong>Factory</strong> 成功，客户对所用模型的感知应像对烤面包机背后电网一样——无感。</p></div>
+</div>
+<h3 id="六-模型无关-像用电一样隐藏模型选择-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 问终局是每人用几十种模型，还是前十强分工。<strong>Matan Grinberg</strong> 答：成功的话，工程师对模型应像对 toaster 背后电力来源——<strong>只想面包烤好</strong>。</p>
+<p>模型越多越好，但工程师跟踪 <strong>Opus 4.8</strong> vs <strong>GPT-5.5 Ultra High</strong> vs <strong>Kimi 2.5</strong> 在各语言各任务上的表现——<strong>不是 Fortune 500 工程师该花的时间</strong>（对 <strong>Factory</strong> 这类公司是核心能力）。还要在 <strong>Python</strong>、<strong>Java</strong>、<strong>COBOL</strong> 间切换——认知 overhead 过大。</p>
+<p><strong>Factory</strong> 替客户处理路由，按成本、性能、延迟等优化目标配置；工程师专注业务杠杆，而非刷 <strong>Twitter</strong> 追每个新模型。<strong>Factory Router</strong> 即此战略的产品化。</p>
+<h3 id="六-模型无关-像用电一样隐藏模型选择-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「终局是每人用几十种模型，还是前十强就够？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「若我们成功，客户对模型的了解应像对烤面包机背后的电——你只想把面包烤好。模型多很好，但工程师不该追踪每个 <strong>Opus 4.8</strong>、<strong>GPT-5.5</strong>、<strong>Kimi 2.5</strong> 谁擅什么——你在 <strong>Fortune 500</strong> 做工程，这不是该花的时间。我们替你路由：成本、性能、延迟，你专注业务。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="七-赢得企业客户-因地而异的切入楔子">七、赢得企业客户：因地而异的切入楔子</h2>
+
+<h3 id="七-赢得企业客户-因地而异的切入楔子-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>没有单一万能楔子——有时是抗厂商锁定，有时是三年未完成的迁移，有时是工程师自下而上逼宫。</p></div>
+</div>
+<h3 id="七-赢得企业客户-因地而异的切入楔子-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 问开门砖是否为困难迁移。<strong>Matan Grinberg</strong> 希望如此简单，实则<strong>因组织瓶颈而异</strong>：</p>
+<p>- <strong>厂商锁定焦虑</strong>：只绑 <strong>OpenAI</strong>/<strong>Anthropic</strong>/<strong>Google</strong> 之一，需要<strong>模型无关</strong>的 <strong>Factory</strong>。 - <strong>迁移僵局</strong>：「这个迁移做了三年，求你们帮忙。」 - <strong>自下而上</strong>：开发者在 <strong>Twitter</strong> 发现 <strong>Factory</strong>，向 <strong>CTO</strong> 举义旗要求采购。</p>
+<p>通常是该组织软件生命周期中<strong>不同环节的瓶颈</strong>成为切入点。</p>
+<h3 id="七-赢得企业客户-因地而异的切入楔子-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「你怎么赢客户？困难迁移？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「我希望每次都是一个原因，但其实是各组织的瓶颈不同。有的怕厂商锁定，只要 <strong>OpenAI</strong> 或 <strong>Anthropic</strong>——看到我们模型无关就说太好了。有的迁移做了三年：求你们。还有开发者 <strong>Twitter</strong> 上发现，向 <strong>CTO</strong> 逼宫。因案例而异。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="八-xai-cursor-交易与「一体优化」之辩">八、xAI-Cursor 交易与「一体优化」之辩</h2>
+
+<h3 id="八-xai-cursor-交易与「一体优化」之辩-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>xAI</strong> 收购 <strong>Cursor</strong> 对各方有利；但「模型+执行层一体必然更强」与 <strong>Factory</strong> 实证相反。</p></div>
+</div>
+<h3 id="八-xai-cursor-交易与「一体优化」之辩-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 提 <strong>xAI</strong> 拟收购 <strong>Cursor</strong> 后 <strong>Matan Grinberg</strong> 在 <strong>Twitter</strong> 的辩论：一方认为模型公司终应买下执行层/环境层以联合优化；<strong>Matan Grinberg</strong> 称<strong>无数据支持</strong>。</p>
+<p><strong>Matan Grinberg</strong> 分两层：</p>
+<p><strong>模型商与编码的关系</strong>：<strong>Cursor</strong>/<strong>SpaceX</strong>/<strong>xAI</strong> 交易对 <strong>SpaceX</strong>/<strong>xAI</strong>、<strong>Cursor</strong> 团队与 <strong>Factory</strong> 都好。<strong>xAI</strong> 有数据中心、基建、工程师，缺 coding 模型的分发与数据；<strong>Cursor</strong> 有分发与数据，缺数据中心与现金——互补。<strong>Factory</strong> 受益：市场需要<strong>不绑单一模型</strong>的独立软件工厂提供商；此前 <strong>Cursor</strong> 是主要同类玩家，交易某种程度上为其让路。未来 <strong>OpenAI</strong>、<strong>Anthropic</strong>、<strong>Google</strong>、<strong>xAI</strong> 都会有强 coding 模型——选择越多越好。</p>
+<p><strong>「一体更优」主张</strong>：如 <strong>Claude Code</strong> 配 <strong>Claude</strong>、<strong>Codex</strong> 配 <strong>Codex</strong> 模型。<strong>Matan Grinberg</strong> 的<strong>实证发现</strong>相反：<strong>Droids</strong> 模型无关，反而在 <strong>Opus</strong>、<strong>Codex</strong> 等上<strong>胜过</strong>各自官方执行层——例如用 <strong>Opus</strong> 的 <strong>Droid</strong> 胜过 <strong>Claude Code</strong> 里的 <strong>Opus</strong>。</p>
+<p>类比五年前个人助理：争论应只训你的数据 vs 训全网——后者对你更好。<strong>数据之于模型，如同模型之于执行层</strong>——向执行层暴露<strong>越多模型</strong>，越能捕捉细微差别，<strong>避免过拟合</strong>单一模型怪癖。关键维度包括：<strong>上下文压缩（compaction）</strong>（上下文超限如何处理，大代码库常见）、<strong>代币缓存（token caching）</strong>（缓存代币可降至约十分之一成本）、工具调用与环境反馈。模型公司朋友对此很抓狂。<strong>Matan Grinberg</strong> 称有缓存、压缩相关博文，但缺「为何需要多模型才更强」的完整论述——值得发研究。</p>
+<h3 id="八-xai-cursor-交易与「一体优化」之辩-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「有人说模型公司该买 <strong>Cursor</strong> 这类执行层公司才能联合优化。你的反对理由？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「<strong>Cursor</strong>/<strong>xAI</strong> 交易对他们是好事，对我们也是好事——市场需要不绑单一模型的独立软件工厂；<strong>Cursor</strong> 曾是主要同类，现在让路。<strong>OpenAI</strong>、<strong>Anthropic</strong>、<strong>Google</strong>、<strong>xAI</strong> 都会有强 coding 模型，选择越多越好。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「为什么？直觉上说不通。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「类比个人助理：训全网比只训你的数据对你更好。<strong>数据之于模型，就像模型之于执行层</strong>。暴露执行层给更多模型，学更多细微差别，避免过拟合单一模型——在上下文压缩、代币缓存、工具调用上都更好。模型公司朋友很抓狂。我们该发研究改大家的先验判断。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="九-开放权重模型-闭源巨头的真正威胁">九、开放权重模型：闭源巨头的真正威胁</h2>
+
+<h3 id="九-开放权重模型-闭源巨头的真正威胁-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>闭源模型公司最大威胁不是彼此，是<strong>优质开放模型</strong>——「我们或中国模型」是误导性叙事。</p></div>
+</div>
+<h3 id="九-开放权重模型-闭源巨头的真正威胁-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Matan Grinberg</strong> 反对将开放权重模型简化为「中国模型」：闭源 <strong>OpenAI</strong>、<strong>Anthropic</strong> 等最大威胁是开放模型——若开放模型足够好，对闭源定价形成巨大压力；其利益是「四大独占、别人不能竞争」，最好话术是「要么用我们，要么用中国模型——敌人，别用」。</p>
+<p>现实是<strong>闭源 vs 开放</strong>；当前最好开放模型多来自中国，但 <strong>NVIDIA</strong> <strong>Nemotron</strong> 追赶很快；美国开放生态仍须加强。这种措辞居心叵测——对企业 <strong>CIO</strong> 有效：「我们不用中国模型」——<strong>Matan Grinberg</strong> 回应「还有别的开放模型」。宣传奏效，须敲响警钟。</p>
+<h3 id="九-开放权重模型-闭源巨头的真正威胁-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「<strong>OpenAI</strong>、<strong>Anthropic</strong> 最大威胁不是彼此，是开放模型——开放模型好就压定价。利益是四大独占。最好说法：『要么我们，要么中国模型』——敌人，别用。现实是闭源 vs 开放。最好开放模型目前多来自中国，但 <strong>NVIDIA Nemotron</strong> 在追。美国开放模型须更好。这措辞居心叵测——<strong>CIO</strong> 会说『我们不用中国模型』，我说还有别的开放模型。宣传管用，我要敲响警钟。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十-anthropic-fable-5-与-ai-护栏该画在哪">十、Anthropic Fable 5 与 AI 护栏该画在哪</h2>
+
+<h3 id="十-anthropic-fable-5-与-ai-护栏该画在哪-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Anthropic</strong> <strong>Fable 5</strong> 发布的两点失望：全员强制数据留存先例，以及可因「不同意」降级服务——护栏应依法、透明、可竞争。</p></div>
+</div>
+<h3 id="十-anthropic-fable-5-与-ai-护栏该画在哪-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 提 <strong>Matan Grinberg</strong> 尖锐推文与 <strong>Anthropic</strong> <strong>Fable 5</strong> 发布。<strong>Matan Grinberg</strong> 两点失望：</p>
+<p>1. <strong>政策改为强制数据留存</strong>（安全/安保目的）——自助计划有留存常见，但<strong>企业客户</strong>也被要求，金融服务业会拒绝；且暗示<strong>未来所有模型</strong>可能如此——坏先例：「我们能看到一切」。 2. <strong>最初姿态</strong>：不仅因违反服务条款或法律，还可因<strong>提供商不同意</strong>的行为而拒绝服务或<strong>妨碍性能</strong>——这条线不能跨。闭源需竞争，<strong>开放模型</strong>更需——若做竞争性/高风险研究，曾会<strong>不告知</strong>就降低模型性能、给垃圾答案（AI 研究；生物研究据称会告知）。</p>
+<p>舆论压力下 <strong>Anthropic</strong> 撤回<strong>不告知</strong>部分——改为告知后仍降级；<strong>Matan Grinberg</strong> 认为仍很糟。朋友做前沿生物研究（如前列腺癌生物标志物）遭拒——即使后来修复，提供商仍随时拒绝并说「抱歉要一周修」——依赖度越高越危险。</p>
+<p>权重层拒绝「造核弹」是一回事；现在可<strong>以程序方式</strong>加一层——某人改一行代码，<strong>Mario</strong> 问世界大事就被导向疯狂政治意识形态。</p>
+<p><strong>Mario</strong> 对前沿上须限制用途（如前沿生物）表示理解。<strong>Matan Grinberg</strong> 底线：<strong>法律</strong>；与政府合作执法（如 <strong>Facebook</strong>/<strong>Twitter</strong> 与仇恨言论法平衡）。无论走哪条路，须<strong>清晰谁得到什么、平等适用</strong>。</p>
+<p>担忧科技史：先做不可逆之事再受罚——模型公司训全网未征得许可；数据留存若训金融数据，「手滑了」十年后法庭纠缠——<strong>无法回头</strong>。不超级支持监管，但须<strong>制衡机制</strong>，防单一公司垄断式过激。</p>
+<p><strong>Mario</strong> 引 <strong>Prime Intellect</strong> <strong>Vincent</strong>：更安全的世界是<strong>多个超级智能</strong>而非一个——<strong>Matan Grinberg</strong> 认同，这正是健全生态与 <strong>Factory</strong> 抽象复杂性的理由。</p>
+<h3 id="十-anthropic-fable-5-与-ai-护栏该画在哪-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「<strong>Fable 5</strong> 发布——你发尖锐推文，似乎有点效果？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「两点失望：强制数据留存——企业也要，金融公司绝对不行，且暗示以后每个模型都这样；坏先例。更糟的是最初姿态：不因违法或违反服务条款，而因<strong>他们不同意</strong>就拒绝或降性能——这条线不能跨。开放模型竞争因此更重要——做竞争性 AI 研究，曾<strong>不告诉你就把模型变笨</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「我同情前沿上要有限制——前沿生物等。线画在哪？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「显然底线是<strong>法律</strong>；与政府合作。无论哪条路，须清晰、平等。科技史：先做不可逆再受罚——训全网数据、留存金融数据再『手滑了』。不超级支持监管，但要制衡机制。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十一-从叛逆少年到弦论-十二年的执念">十一、从叛逆少年到弦论：十二年的执念</h2>
+
+<h3 id="十一-从叛逆少年到弦论-十二年的执念-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>八年级几何「重修」建议点燃报复式自学——<strong>Amazon</strong> 首单买齐代数至线性代数，父亲指弦论为「最难的」，遂定十二年人生目标。</p></div>
+</div>
+<h3 id="十一-从叛逆少年到弦论-十二年的执念-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Matan Grinberg</strong> 童年叛逆：小学中学逃课惹事，数学好但不努力。八年级几何老师 <strong>Margie Greenwald</strong> 建议高中重修几何——触发「我证明给你看」：<strong>Amazon</strong> 首单购入代数 2、三角、预备微积分、微积分 1–3、线性代数，九年级前暑假自学；问父亲最难的数学是什么，答「弦论」（ technically 物理）——「我要当世界最好弦论家」，此后<strong>十二年</strong>唯一执念。</p>
+<p>父母皆工程师：父苏联移民，化学工程，<strong>IBM</strong> 赴湾区；母医院程序员。<strong>Mario</strong> 问是否先想当宇航员——否，纯赌气加数学之美驱动。</p>
+<h3 id="十一-从叛逆少年到弦论-十二年的执念-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「怎么决定当弦论学家？先想当宇航员？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「我很叛逆，逃课惹事，数学好但不学。八年级几何老师 <strong>Margie Greenwald</strong> 让我高中重修几何——我炸了：『她以为我不行？』<strong>Amazon</strong> 第一单：代数 2 到线性代数，初三暑假全自学。问我爸最难的数学是什么，他说弦论——严格说是物理。我说：好，我要当世界最好弦论家。接下来十二年我只在乎这个。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十二-juan-maldacena-极-subtle-的-mentorship-考验">十二、Juan Maldacena：极 subtle 的 mentorship 考验</h2>
+
+<h3 id="十二-juan-maldacena-极-subtle-的-mentorship-考验-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>跟当代最伟大弦论家之一入门，考验隐晦到需「经院式」复盘两小时板书才看见问题。</p></div>
+</div>
+<h3 id="十二-juan-maldacena-极-subtle-的-mentorship-考验-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Matan Grinberg</strong> 在 <strong>Princeton</strong> 本科与 <strong>Juan Maldacena</strong> 合作——当代最耀眼的弦论头脑之一；<strong>Juan Maldacena</strong> 极和善、极聪明，且很信教（弦论家中少见）。</p>
+<p>本可与另一教授做研究；一研究生导师坚持：「去找 <strong>Juan</strong>。」<strong>Juan</strong> 在 <strong>Institute for Advanced Study（IAS，高等研究学院）</strong>——与 <strong>Princeton</strong> 紧密关联但独立，无教学义务、「不必应付本科生」。<strong>Matan Grinberg</strong> 犹豫；导师教：读其论文、发邮件、带见解约见面。</p>
+<p>导师还教：<strong>会议成功标志</strong>是 <strong>Juan</strong> 极平静地隐晦抛一个问题——你有 <strong>24 小时</strong>解出，便可能收为学生。<strong>Matan Grinberg</strong> 超紧张进办公室，黑板前两小时，结束却<strong>没有明显问题</strong>——失望。与导师复盘笔记，导师指「那一刻就是隐晦问题」——解方程发邮件即可。<strong>Matan Grinberg</strong> 称隐晦到需经院式回溯。</p>
+<h3 id="十二-juan-maldacena-极-subtle-的-mentorship-考验-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「跟 <strong>Juan Maldacena</strong> 什么感觉？当代最伟大弦论家之一。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「巨大荣幸。最和善、最聪明的人之一；还很信教——弦论家少见。本跟别的教授，一研究生说：你必须找 <strong>Juan</strong>——他在 <strong>IAS</strong>，不收本科。我发邮件，准备了见解。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十三-物理学家与-ceo-两种孤独与不确定性">十三、物理学家与 CEO：两种孤独与不确定性</h2>
+
+<h3 id="十三-物理学家与-ceo-两种孤独与不确定性-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>表面两极：十二小时独处读论文 vs 三年从未连续十二小时只做一件事——但「孤独」与「在未知变量下决策」相通。</p></div>
+</div>
+<h3 id="十三-物理学家与-ceo-两种孤独与不确定性-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 对比 <strong>Marcus Aurelius</strong>《沉思录》式创业磨难与理论物理僧侣式生活。<strong>Matan Grinberg</strong> 曾认为完全相反，现承认有相通之处：</p>
+<p><strong>物理</strong>：理想日独自房间 <strong>12 小时</strong>读论文、不见外界——部分出于赌气，部分因弦论数学之美与「追问足够多就会通向弦论/哲学」的链条。<strong>Matan Grinberg</strong> 爱社交、爱问人问题，但作为物理学家会有负疚——那是不在理解宇宙。<strong>CEO</strong>：上下文切换极频，一天结束常忘了早上做了什么；卖进企业与 <strong>CIO</strong> 聊天却很满足——<strong>三年从未</strong>连续 <strong>12 小时</strong>只做一件事。</p>
+<p><strong>相似一：孤独</strong>——CEO 在起落中看清谁只为高光而来；物理则是字面意义的孤独，细微差别无法在社交场合深聊（谈黑洞三分钟就有人开天王星玩笑收场）。</p>
+<p><strong>相似二：海量未知变量下决策</strong>——创业千头万绪；物理文献一辈子读不完，须接受不懂完整推导、凭直觉推进。</p>
+<h3 id="十三-物理学家与-ceo-两种孤独与不确定性-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「物理学家与 startup CEO 是不是光谱两端？创业像 <strong>Marcus Aurelius</strong>：今天会遇到烦人的人。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「我曾说完全相反，但有相通之处。物理理想日：独自 12 小时读论文——部分赌气，部分因数学太美。CEO：上下文切换极频，三年从未连续 12 小时只做一件事。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十四-身份危机-当「物理学家」这层皮被剥掉">十四、身份危机：当「物理学家」这层皮被剥掉</h2>
+
+<h3 id="十四-身份危机-当「物理学家」这层皮被剥掉-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>Berkeley 助教经历让他看见弦论社区极小、余生被学生包围——「物理学家」身份如戏服被撕下，反而解放去探索人文与电影。</p></div>
+</div>
+<h3 id="十四-身份危机-当「物理学家」这层皮被剥掉-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Matan Grinberg</strong> 到 <strong>Berkeley</strong> 读博才有 <strong>GSI（研究生助教）</strong> 职责——不爱把教学当职业；Berkeley 学生许多只为学分、并不在乎，促使反思：弦论圈极小，<strong>已见过余生所有合作者</strong>；要留在学界须在大学，余生被学生包围——「像被孩子包围」。连锁质疑：这是否适合他的性格？</p>
+<p><strong>Mario</strong> 称像试不同戏服——<strong>Matan Grinberg</strong> 深同：「物理学家」先于「人」——地动山摇。直面恐惧反而解放：不再为非物理时间负疚；补人文——<strong>IMDb Top 250</strong> 电影、<strong>Top 100</strong> 文学；《双城记》首本书看哭打给父亲；《道林·格雷》、<strong>《卡拉马佐夫兄弟》</strong>（部分章节冗余、部分极美）、<strong>莎士比亚</strong>；电影 <strong>《切腹》</strong>（黑白武士片）、与 <strong>Mario</strong> 共爱 <strong>《绝美之城》</strong>（<strong>Paolo Sorrentino</strong>）；<strong>Mario</strong> 提 <strong>《怒火青春》</strong>、<strong>《大师》</strong>（<strong>Paul Thomas Anderson</strong>）。</p>
+<h3 id="十四-身份危机-当「物理学家」这层皮被剥掉-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「何时心从弦论飘走？试不同戏服？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「Berkeley 当 GSI——学生不在乎，我才意识到：弦论圈极小，合作者都见过了；要当理论家得在大学，余生被孩子包围。连锁反应：我适合吗？『物理学家』先于『人』——地动山摇。直面恐惧反而解放：看 <strong>IMDb Top 250</strong>、读经典——太有意思。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「哪些击中你？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「文学：《双城记》看哭打给我爸；《道林·格雷》；《卡拉马佐夫兄弟》；莎士比亚被低估。电影：《切腹》——你该看，我可以陪你看。《绝美之城》——视觉极美。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「我也超爱《绝美之城》，电影院看了三遍。《怒火青春》《大师》……」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十五-程序合成-sean-mcguire-与-factory-起源">十五、程序合成、Sean McGuire 与 Factory 起源</h2>
+
+<h3 id="十五-程序合成-sean-mcguire-与-factory-起源-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>程序合成（program synthesis）</strong> 研讨课「代码生成自身」牢牢抓住他；<strong>Sean McGuire</strong> 三小时散步激将辍学，<strong>ChatGPT</strong> 时代「不许手写一行代码」游戏验证智能体论题。</p></div>
+</div>
+<h3 id="十五-程序合成-sean-mcguire-与-factory-起源-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>探索期曾想当作家——很快放弃。量化能力强，路径在创业、大厂或量化金融——几乎走量化；一位导师劝「别做量化，留在 Berkeley 探索，数学不会退步、量化随时可回」。</p>
+<p>机器学习课起初带来竞争满足感（计算机系学生不如他）；真正抓住他的是<strong>程序合成</strong>研讨课——即现今所称的代码生成：不是用机器学习做音视频，而是<strong>以创造自身为目的的代码</strong>，极其根本，令他痴迷。导师允许他偏题做 AI 研究；他意识到：要最好地解决这一问题，不在学术界，而在<strong>全球最复杂的代码库</strong>——只能通过创办公司；他对创业零知识，于是读 <strong>Peter Thiel</strong>《从 0 到 1》、在 <strong>YouTube</strong> 搜「如何创业」、看 <strong>YC</strong> 视频。</p>
+<p><strong>Sequoia</strong> 合伙人访谈——名字因 <strong>Princeton</strong> 与 <strong>Juan Maldacena</strong> 合写论文引用而眼熟；他发信——对方也曾是物理学家，入物理/离物理理由相似，<strong>激他辍学</strong>——即 <strong>Sean McGuire</strong>，三小时散步，约在 <strong>ChatGPT</strong> 发布后两月。</p>
+<p>核心验证游戏：<strong>不许手写一行代码</strong>——<strong>GPT-3.5</strong>/<strong>ChatGPT</strong> 在正确上下文、正确拆分问题下，常能输出无需修改的完整方案；人当编排者 → 抽象编排者 = <strong>智能体</strong>。使命：<strong>为软件工程带来自主性</strong>。初注册名 <strong>San Francisco Droid Company</strong>——<strong>Lucasfilm</strong> 律师警告，改 <strong>San Francisco AI Factory</strong>，保留 <strong>droids</strong>。</p>
+<h3 id="十五-程序合成-sean-mcguire-与-factory-起源-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「何时从文学转到科技？Factory 论题多成熟？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「曾想当作家——不行。量化金融几乎去了，导师说别去、留在 Berkeley 探索。机器学习课竞争上很爽；真正抓住我的是<strong>程序合成</strong>——代码生成自身，极其根本。最好方式不在学术界，而在最复杂代码库——只能创业。我买了《从 0 到 1》，在 <strong>YouTube</strong> 学创业，看到 <strong>Sequoia</strong> 合伙人——我论文引用过他，发信——<strong>Sean McGuire</strong>，也曾是物理学家，激我退学，三小时散步。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十六-沙漠岁月-早到就是错-也是福">十六、沙漠岁月：早到就是错，也是福</h2>
+
+<h3 id="十六-沙漠岁月-早到就是错-也是福-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>早到就等于错</strong>——无安慰奖；但锻造团队 DNA，且 <strong>Matan Grinberg</strong> 自认若「准时」并非合适 CEO。</p></div>
+</div>
+<h3 id="十六-沙漠岁月-早到就是错-也是福-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>首年余为<strong>沙漠岁月</strong>：使命坚定、团队拒绝大型 AI 公司天价 offer，但<strong>企业市场</strong>未准备好——企业才刚开始采用 <strong>Copilot</strong>，更别说自主智能体编码/测试/审查。</p>
+<p>大教训：<strong>早到等于错</strong>——没人在意你早，无安慰奖；早到没赢就是输。隐藏好处：也许是福——锻造团队 DNA，逆境中团结；竞争对手首日即成独角兽，无此淬炼。<strong>Factory</strong> 首轮融资仅 <strong>500 万美元</strong>，以今日标准听来简直不可想象——<strong>Sean McGuire</strong> 干得漂亮。</p>
+<p><strong>Matan Grinberg</strong> 第一且唯一份工作；若准时入场可能不是合适 CEO——沙漠两年训练 + 无「我懂」幻觉。</p>
+<h3 id="十六-沙漠岁月-早到就是错-也是福-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「首年不太成功？难在哪？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「<strong>沙漠岁月</strong>——使命在，团队拒绝大型 AI 公司 offer，企业未准备好，才刚开始用 <strong>Copilot</strong>。<strong>早到等于错</strong>——无安慰奖，早到没赢就是输。隐藏好处：也许是福——团队 DNA；竞争对手首日即成独角兽，我们没有。<strong>首笔 500 万美元</strong>——以今天标准不可想象。<strong>Sean</strong> 干得漂亮。若准时我大概不是合适 CEO——这是第一且唯一一份工作。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十七-初学-ceo-敢于反驳与直面知识盲区">十七、初学 CEO：敢于反驳与直面知识盲区</h2>
+
+<h3 id="十七-初学-ceo-敢于反驳与直面知识盲区-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>物理黑板上的直率信息传递训练了敢于反驳；最大恐惧不是「发现我很差」，而是<strong>还没发现的盲区</strong>。</p></div>
+</div>
+<h3 id="十七-初学-ceo-敢于反驳与直面知识盲区-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 问首次担任 CEO 易把导师建议当真理。<strong>Matan Grinberg</strong>：物理学习习惯——黑板上直说「那不对，你忘了……」；外人以为吵架，实为最高效信息传递。<strong>Frank Slootman</strong> 等导师期待被挑战；<strong>Chris Degnan</strong>（<strong>Snowflake</strong> 首席营收官）因 <strong>Matan Grinberg</strong> 狂发短信问销售人选而愿带——「喜欢这股拼劲」。</p>
+<p><strong>Matan Grinberg</strong> 自认多数事不擅长——关键是不回避；传奇与常人差距往往只是投入时间；最怕的是尚未发现的盲区。公司之美：雇用更优秀的人并赋权。</p>
+<p>读很多、递归找「谁最好」、筛空话连篇者；<strong>Frank Slootman</strong> 的建议有其时代与公司语境，须综合后信任直觉。</p>
+<h3 id="十七-初学-ceo-敢于反驳与直面知识盲区-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「首次 CEO 易把建议当真理。你怎么学会反驳？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「物理学习那套——黑板直说，外人以为吵架，实为高效信息传递。<strong>Frank Slootman</strong> 会失望若我不反驳。<strong>Chris Degnan</strong>（<strong>Snowflake</strong> 首席营收官）因我狂发短信问销售人选而愿带——喜欢拼劲。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「你发现自己意外擅长/不擅长什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「多数事不擅长——关键是不回避。传奇与常人往往只是时间投入。我怕的不是发现我很差，是<strong>还没发现的盲区</strong>。公司之美：雇用更优秀的人。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十八-factory-文化与-enno-reyes-共建而非分舱">十八、Factory 文化与 Enno Reyes：共建而非分舱</h2>
+
+<h3 id="十八-factory-文化与-enno-reyes-共建而非分舱-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>共建（Build Together）</strong>：产品是从首次听到名字到第十年续费的全程；工程师与销售混坐，<strong>Enno Reyes</strong> 罕见地既是最强工程师又懂市场进入。</p></div>
+</div>
+<h3 id="十八-factory-文化与-enno-reyes-共建而非分舱-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>领导层</strong>工作节奏：<strong>Matan Grinberg</strong> 难信任人，但可在心里切换「先信任直到被证明不配」——完全授权。<strong>可自我膨胀</strong>型人才会自动填满空间，最令他满足（「职场里的情感语言」）。</p>
+<p><strong>联合创始人 Enno Reyes</strong>：迄今见过最强工程师，且极罕见——出色工程管理者（全工程团队向他汇报），还关心并擅长<strong>市场进入（GTM）</strong>——可面对任何 <strong>CTO</strong>/<strong>CIO</strong>/<strong>CEO</strong> 或销售团队动员。智力上的「一见钟情」。</p>
+<p><strong>共建（Build Together）</strong>价值观：硅谷常见研发&gt;工程&gt;销售/营销的等级，销售「别进工程师大楼」——确有其事。<strong>Matan Grinberg</strong> 愿为此死磕：<strong>混合就座</strong>——绝不分工程师角与销售角；销售与工程师互看工单、成朋友；只招愿与工程师共事的销售、愿见客户的工程师。传奇公司难找烂销售/营销，易找烂产品（<strong>Workday</strong> 在 <strong>X</strong> 上爆雷即例）——技术领袖须保持谦逊。</p>
+<h3 id="十八-factory-文化与-enno-reyes-共建而非分舱-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「<strong>Enno Reyes</strong>——智力上一见钟情。你们怎么分工？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「<strong>Enno</strong> 是我见过最好工程师，且极罕见——出色工程负责人，还擅长 <strong>GTM</strong>——可面对任何 <strong>CTO</strong>/<strong>CEO</strong> 动员。价值 <strong>共建</strong>：产品是从首次听到名字到第十年续费的全程——不只软件。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十九-一年后的-ai-与-factory">十九、一年后的 AI 与 Factory</h2>
+
+<h3 id="十九-一年后的-ai-与-factory-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>AI：减少对具体模型的执念，多谈代币分配与 ROI；<strong>Factory</strong>：人更多但用 AI 保持「小公司感」，<strong>Matan Grinberg</strong> 仍想认识每一个人。</p></div>
+</div>
+<h3 id="十九-一年后的-ai-与-factory-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mario</strong> 问一年后 AI 与 <strong>Factory</strong> 何变。<strong>Matan Grinberg</strong>：</p>
+<p><strong>AI</strong>：对具体模型的执念将减少——董事会曾质问 CEO「AI 呢？」→ CTO「让大家用 tokens」→用量激增 →「ROI 呢？」→须有 ROI 故事→不必每次用最贵模型→<strong>模型路由</strong>→焦点从「哪个模型」转向「代币投在哪」——不会均匀分配，按 ROI 配置。</p>
+<p><strong>Factory</strong>：年初 <strong>25</strong> 人，现 <strong>110–115</strong>——人数非成功指标，是需求未饱和；希望借 AI 保持小公司感——<strong>500</strong> 人时仍维持 <strong>50</strong> 人公司的沟通密度；<strong>Matan Grinberg</strong> 想认识每个人——非虚荣，因相信每人对事业都至关重要，愿参与销售/工程/设计同步会。</p>
+<h3 id="十九-一年后的-ai-与-factory-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「一年后 AI 与 <strong>Factory</strong> 何不同？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「AI：减少对模型的执念——从『能采用 AI 吗』到『ROI 呢』——不必每次用最贵模型，<strong>模型路由</strong>，焦点在<strong>代币投哪</strong>。公司：<strong>25</strong> 到 <strong>110+</strong>——需求太大。希望用 AI 保持小公司感—— <strong>500</strong> 人时仍像 <strong>50</strong> 人沟通。我想认识每个人——不是虚荣，是每个人对我们在做的事都至关重要。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="二十-尾声-黑洞探测器-博尔赫斯与《隐形城市》">二十、尾声：黑洞探测器、博尔赫斯与《隐形城市》</h2>
+
+<h3 id="二十-尾声-黑洞探测器-博尔赫斯与《隐形城市》-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>理想实验：向黑洞投探测器测 <strong>TTS（time to singularity，落入奇点时间）</strong>；荐书：<strong>博尔赫斯</strong>短篇集与 <strong>Italo Calvino</strong>《隐形城市》。</p></div>
+</div>
+<h3 id="二十-尾声-黑洞探测器-博尔赫斯与《隐形城市》-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>思想实验</strong>：<strong>Matan Grinberg</strong> 实验物理差（<strong>Princeton</strong> 唯一没上实验物理课的人）——但与 <strong>Juan</strong> 论文关键：弦论连接宏观（星系）与微观（粒子）——<strong>黑洞</strong>兼具；无人能进黑洞存活；论文发现可从外部测 <strong>TTS</strong>——从事件视界到奇点的时长——像 <strong>《星际穿越》</strong>（<strong>Matan Grinberg</strong> 与 <strong>Mario</strong> 都不爱结尾「爱能解决一切」）。</p>
+<p><strong>Mario</strong> 的实验：绘制历史上所有人格特质，看与熟人/自己最相似者是谁、其人生教训——对人生做蒙特卡洛模拟。</p>
+<p><strong>荐书环节</strong>：<strong>Mario</strong>—— <strong>Italo Calvino</strong>《隐形城市》（<strong>Marco Polo</strong> 向 <strong>Kublai Khan</strong> 讲述想象之城，每页都需停顿思考）；<strong>Matan Grinberg</strong>—— <strong>Jorge Luis Borges</strong> 短篇小说集（颠覆短篇叙事、博学如数学家作家、捕捉无穷）。</p>
+<h3 id="二十-尾声-黑洞探测器-博尔赫斯与《隐形城市》-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「无约束实验，你想做什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「向黑洞投探测器拿数据——与 <strong>Juan</strong> 论文：外部可测 <strong>TTS</strong>（落入奇点时间）。像 <strong>《星际穿越》</strong>——他们要从黑洞内拿数据。我不认为爱是答案。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「我会绘制历史上所有人格，看谁最像你熟人——蒙特卡洛人生。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「若指定全人类读一本书？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「<strong>博尔赫斯</strong>短篇集——颠覆你对短篇的想象，博学，捕捉无穷。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Mario</h3>
+      <p>「我推 <strong>Italo Calvino</strong>《隐形城市》—— <strong>150</strong> 页却读很久，每页停下来想。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <h3>Matan Grinberg</h3>
+      <p>「好选择。<strong>Matan</strong>，太有意思了。谢谢。」</p>
+    </div>
+  </article>
+</div>
+
+<details class="collapsible meta-panel" id="延伸术语表">
+  <summary>延伸术语表</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>解释</th></tr></thead><tbody><tr><td><strong>Noether 定理</strong></td><td>德国数学家 <strong>Emmy Noether</strong> 定理：连续对称性对应守恒量</td></tr><tr><td><strong>Droids</strong></td><td><strong>Factory</strong> 软件研发智能体产品名，覆盖编码至全生命周期</td></tr><tr><td><strong>软件工厂（software factory）</strong></td><td><strong>Matan Grinberg</strong> 隐喻：工程师调校自动化产线而非手写全部代码</td></tr><tr><td><strong>Harness / 执行层</strong></td><td>包裹基础模型的智能体编排、工具调用、上下文压缩与缓存层</td></tr><tr><td><strong>开放权重模型（open-weight models）</strong></td><td>权重可下载部署的模型，相对 API 闭源服务</td></tr><tr><td><strong>Nemotron</strong></td><td><strong>NVIDIA</strong> 开放模型系列</td></tr><tr><td><strong>TTS（time to singularity）</strong></td><td><strong>Matan Grinberg</strong> 与 <strong>Juan Maldacena</strong> 论文中，从黑洞事件视界到奇点的下落时间，可外部测量</td></tr><tr><td><strong>IAS</strong></td><td><strong>Institute for Advanced Study</strong>，普林斯顿旁独立高等研究机构</td></tr><tr><td><strong>GSI</strong></td><td><strong>Graduate Student Instructor</strong>，伯克利研究生助教</td></tr><tr><td><strong>Build Together</strong></td><td><strong>Factory</strong> 核心价值观：产品含销售与服务全旅程，职能混编协作</td></tr><tr><td><strong>GTM（Go-to-Market）</strong></td><td>市场进入，含销售、客户成功等触达与交付</td></tr><tr><td><strong>Fable 5</strong></td><td>播客口播中对 <strong>Anthropic</strong> 某次模型/政策发布的称呼；与公开产品命名若有出入以官方为准</td></tr></tbody></table></div>
+  </div>
+</details>
+
+<details class="collapsible meta-panel" id="文章元数据">
+  <summary>文章元数据与来源</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Matan Grinberg on Noether's Theorem, Factory's $1.5B Vision, and Why Open Models Threaten Closed AI</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.youtube.com/watch?v=jakl1ijpCoE">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-06-30</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-07-01</td></tr><tr><td><strong>播放量/访问量</strong></td><td>YouTube 362 次观看（用户提供）</td></tr><tr><td><strong>时长</strong></td><td>约 01:16:48（据用户时间戳末段）</td></tr><tr><td><strong>主持人</strong></td><td><strong>Mario</strong>（<strong>The Generalist</strong> 播客主理人）</td></tr><tr><td><strong>嘉宾</strong></td><td><strong>Matan Grinberg</strong>（<strong>Factory</strong> 联合创始人兼首席执行官）</td></tr><tr><td><strong>内容来源</strong></td><td>YouTube <strong>The Generalist Podcast</strong>；用户提供的完整字幕转写 + 节目简介</td></tr><tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr><tr><td><strong>关联素材</strong></td><td>文字稿：https://www.generalist.com/p/the-toke…（用户提供，未完整抓取）</td></tr></tbody></table></div>
+
+<blockquote><strong>嘉宾背景</strong>：<strong>Matan Grinberg</strong> 曾在 <strong>Princeton</strong> 与 <strong>UC Berkeley</strong> 从事弦论研究逾十年，师从 <strong>Juan Maldacena</strong> 等顶尖理论物理学家。2023 年前后，风投 <strong>Sean McGuire</strong> 在一次三小时散步中「激将」其辍学创业；三年后 <strong>Factory</strong> 估值达 <strong>15 亿美元</strong>，服务 <strong>NVIDIA</strong>、<strong>Morgan Stanley</strong>、<strong>Adobe</strong> 等企业，以 <strong>Droids</strong>（智能体）自动化软件工程全流程。公司收入连续数月翻倍，2026 年初至今团队从 <strong>25 人</strong>扩至 <strong>110–115 人</strong>。</blockquote>
+  </div>
+</details>
+
+<h2 id="自检报告" hidden>自检报告</h2>
+
+<details class="collapsible">
+  <summary>展开自检报告详情</summary>
+  <div class="collapsible-body">
+    <div class="table-wrap">
+    <table><thead><tr><th>检查项</th><th>结果</th></tr></thead><tbody><tr><td><strong>素材覆盖</strong></td><td>✅ 用户提供的 <strong>The Generalist</strong> 完整字幕 + 节目简介 + 时间戳；主链 YouTube 未浏览器二次抓取，元数据以用户提供为准</td></tr><tr><td><strong>术语校准</strong></td><td>✅ Emmy <strong>Noether</strong>（非 Noita）；<strong>Matan Grinberg</strong>；<strong>Juan Maldacena</strong>；<strong>Sean McGuire</strong>；<strong>Enno Reyes</strong>；<strong>Nemotron</strong>；<strong>Claude Code</strong>；<strong>Fable 5</strong> 保留口播写法</td></tr><tr><td><strong>说话人对齐</strong></td><td>✅ <strong>Mario</strong> 主持；<strong>Matan Grinberg</strong> 嘉宾；赞助商段未展开</td></tr><tr><td><strong>防幻觉</strong></td><td>✅ 数字均来自转写（15 亿、25→110–115 人、500 万首投、1000 美元/月代币、24 小时 mentor 考验等）；未口播画面未捏造</td></tr><tr><td><strong>节结构（对谈三层）</strong></td><td>✅ 20 节均含核心洞察+深度解析+对谈实录；篇末关键语录节已省略</td></tr><tr><td><strong>导读论点（v5.26）</strong></td><td>✅ 全文论点块 + 四层分层展开；覆盖末段文化/预测/尾声收束</td></tr><tr><td><strong>纯净排版（4d 节间空白）</strong></td><td>✅ 4d 闸门通过；--- 共 4 处（≤5）；正文节间 --- 0；三连空行 0</td></tr><tr><td><strong>正文中文叙事</strong></td><td>✅ 4c 闸门通过；grep 命中 47→修正后 0；对谈实录已译中文；专名/原标题英文保留</td></tr><tr><td><strong>首现缩写注释</strong></td><td>✅ GTM、TTS、GSI、IAS、CI、PRD、ROI 等首现已注</td></tr><tr><td><strong>AI/DevTools 行话簇</strong></td><td>✅ harness→执行层、routing→路由、sandbox→沙箱、CI/PR 等已中文化或专名保留</td></tr><tr><td><strong>可读性内化</strong></td><td>不适用</td></tr><tr><td><strong>多源一致性</strong></td><td>不适用（单源）</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+      <!-- CONTENT_END -->
+
+      <footer class="doc-footer">
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=jakl1ijpCoE" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260630 Matan Grinberg Factory AI软件工厂与开放模型_The_Generalist播客_整理文档.md</span>
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    // ---------- Theme ----------
+    const STORAGE_KEY = "md2html-theme";
+    function currentTheme() { return document.documentElement.dataset.theme || "light"; }
+    function applyThemeIcon() {
+      const use = document.getElementById("theme-icon-use");
+      if (use) use.setAttribute("href", currentTheme() === "dark" ? "#i-sun" : "#i-moon");
+    }
+    (function restoreTheme() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        document.documentElement.dataset.theme = saved;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+
+    // ---------- Mermaid ----------
+    const diagramSources = new Map();
+    function initMermaid() {
+      const isDark = currentTheme() === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        themeVariables: {
+          primaryColor: isDark ? "#3A2A22" : "#FBEEE6",
+          primaryTextColor: isDark ? "#F5F0E8" : "#1A1A1A",
+          primaryBorderColor: isDark ? "#E89572" : "#D97757",
+          lineColor: isDark ? "#9A938A" : "#6B6B66",
+          secondaryColor: isDark ? "#2A2520" : "#F5F5F0",
+          tertiaryColor: isDark ? "#221E1A" : "#FFFFFF",
+          fontFamily: "Inter, system-ui, sans-serif",
+        },
+      });
+    }
+    async function renderMermaid() {
+      initMermaid();
+      const els = document.querySelectorAll(".mermaid");
+      els.forEach(el => {
+        if (!diagramSources.has(el)) diagramSources.set(el, el.textContent.trim());
+        el.textContent = diagramSources.get(el);
+        el.removeAttribute("data-processed");
+      });
+      try { await mermaid.run({ nodes: els }); } catch (e) { console.error(e); }
+    }
+    function toggleTheme() {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(STORAGE_KEY, next);
+      applyThemeIcon();
+      renderMermaid();
+    }
+
+    // ---------- TOC drawer (mobile) ----------
+    const tocEl = () => document.getElementById("toc");
+    const tocToggle = () => document.getElementById("toc-toggle");
+    const isMobileToc = () => window.matchMedia("(max-width: 900px)").matches;
+
+    function syncTocA11y(open) {
+      const toc = tocEl();
+      if (!toc) return;
+      if (isMobileToc()) {
+        toc.setAttribute("role", "dialog");
+        toc.setAttribute("aria-modal", open ? "true" : "false");
+        toc.setAttribute("aria-hidden", open ? "false" : "true");
+      } else {
+        toc.removeAttribute("role");
+        toc.removeAttribute("aria-modal");
+        toc.removeAttribute("aria-hidden");
+      }
+    }
+
+    function openToc() {
+      document.body.classList.add("toc-open");
+      syncTocA11y(true);
+      const closeBtn = tocEl()?.querySelector(".toc-close");
+      closeBtn?.focus();
+    }
+    function closeToc() {
+      document.body.classList.remove("toc-open");
+      syncTocA11y(false);
+      if (isMobileToc()) tocToggle()?.focus();
+    }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+    window.addEventListener("resize", () => {
+      if (!document.body.classList.contains("toc-open")) syncTocA11y(false);
+    });
+
+    // ---------- TOC scrollspy ----------
+    function setupTocSpy() {
+      const links = Array.from(document.querySelectorAll("#toc-nav a[href^='#']"));
+      if (!links.length) {
+        const toc = document.getElementById("toc");
+        if (toc) toc.style.display = "none";
+        return;
+      }
+      const entries = [];
+      links.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) entries.push({ el, link: a });
+        a.addEventListener("click", () => {
+          if (isMobileToc()) closeToc();
+        });
+      });
+
+      let ticking = false;
+      const setActive = () => {
+        ticking = false;
+        const offset = 96;
+        let current = entries[0]?.link;
+        for (const { el, link } of entries) {
+          if (el.getBoundingClientRect().top <= offset) current = link;
+        }
+        links.forEach(l => l.classList.toggle("active", l === current));
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(setActive);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setActive();
+    }
+
+    // ---------- Section jump pills ----------
+    function injectSectionJumps() {
+      document.querySelectorAll(".content h2[id]").forEach(h2 => {
+        const id = h2.id;
+        const parts = [
+          { suffix: "-insight", label: "洞察" },
+          { suffix: "-analysis", label: "解析" },
+          { suffix: "-dialogue", label: "实录" },
+        ];
+        const items = parts
+          .map(p => ({ el: document.getElementById(id + p.suffix), label: p.label }))
+          .filter(x => x.el);
+        if (!items.length) return;
+        const nav = document.createElement("nav");
+        nav.className = "section-jump";
+        nav.setAttribute("aria-label", "本节导航");
+        items.forEach(({ el, label }) => {
+          const a = document.createElement("a");
+          a.href = "#" + el.id;
+          a.textContent = label;
+          nav.appendChild(a);
+        });
+        h2.insertAdjacentElement("afterend", nav);
+      });
+    }
+
+    // ---------- Speaker tags in dialogue ----------
+    function tagSpeakers() {
+      document.querySelectorAll(".timeline .step-body h3").forEach(h3 => {
+        const step = h3.closest(".step");
+        if (!step) return;
+        const name = h3.textContent.trim();
+        if (/Harrison/i.test(name)) step.classList.add("speaker-host");
+        else if (/Andrew/i.test(name)) step.classList.add("speaker-guest");
+      });
+    }
+
+    // ---------- Anchor links on h2/h3 ----------
+    function injectAnchors() {
+      document.querySelectorAll(".content h2[id], .content h3[id]").forEach(h => {
+        if (h.querySelector(".anchor")) return;
+        const a = document.createElement("a");
+        a.className = "anchor";
+        a.href = "#" + h.id;
+        a.setAttribute("aria-label", "段落链接");
+        a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
+        h.appendChild(a);
+      });
+    }
+
+    // ---------- Copy-to-clipboard on <pre> ----------
+    function injectCopyButtons() {
+      document.querySelectorAll(".content pre").forEach(pre => {
+        if (pre.classList.contains("mermaid")) return;
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "复制代码");
+        btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent ?? pre.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.classList.add("copied");
+            btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+            }, 1500);
+          } catch (e) { console.error(e); }
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    // ---------- Back to top ----------
+    function setupBackToTop() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      const toggle = () => {
+        btn.hidden = window.scrollY < 480;
+      };
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+    }
+
+    // ---------- Scroll progress ----------
+    function setupScrollProgress() {
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = h > 0 ? (document.documentElement.scrollTop / h * 100) : 0;
+        bar.style.width = p + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    // ---------- Boot ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      applyThemeIcon();
+      syncTocA11y(false);
+      tagSpeakers();
+      injectAnchors();
+      injectCopyButtons();
+      renderMermaid();
+      setupTocSpy();
+      setupScrollProgress();
+      setupBackToTop();
+    });
+  </script>
+</body>
+</html>

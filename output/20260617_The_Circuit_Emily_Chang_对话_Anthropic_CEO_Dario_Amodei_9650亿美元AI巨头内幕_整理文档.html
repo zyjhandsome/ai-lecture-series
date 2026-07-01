@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light" style="--rec-label: '★ 推荐'">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>The Circuit：Emily Chang 对话 Anthropic CEO Dario Amodei——9650 亿美元 AI 巨头的指数加速、五角大楼红线与文明终局</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FAFAF7;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F0;
+      --surface-3: #EFEEE8;
+      --text: #1A1A1A;
+      --text-muted: #4A4A45;
+      --text-subtle: #6B6B66;
+      --accent: #D97757;
+      --accent-hover: #C56843;
+      --accent-soft: #FBEEE6;
+      --accent-border: #F0D5C4;
+      --accent-strong: #A85533;
+      --border: #E5E4DC;
+      --border-strong: #CDCDC4;
+      --code-bg: #F5F2EC;
+      --code-text: #2A2A2A;
+      --info: #2563EB;
+      --info-soft: #EFF6FF;
+      --info-border: #BFDBFE;
+      --warn: #B45309;
+      --warn-soft: #FFFBEB;
+      --warn-border: #FDE68A;
+      --danger: #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #047857;
+      --success-soft: #ECFDF5;
+      --success-border: #A7F3D0;
+      --decision: #6D28D9;
+      --decision-soft: #F5F3FF;
+      --decision-border: #DDD6FE;
+      --shadow-sm: 0 1px 2px rgba(20, 14, 8, 0.04);
+      --shadow: 0 1px 2px rgba(20, 14, 8, 0.04), 0 4px 12px rgba(20, 14, 8, 0.06);
+      --shadow-lg: 0 8px 24px rgba(20, 14, 8, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --measure: 75ch;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+      --z-progress: 200;
+      --z-topbar: 100;
+      --z-drawer: 300;
+      --z-backdrop: 250;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1714;
+      --surface: #221E1A;
+      --surface-2: #2A2520;
+      --surface-3: #322C26;
+      --text: #F5F0E8;
+      --text-muted: #C8C0B6;
+      --text-subtle: #9A938A;
+      --accent: #E89572;
+      --accent-hover: #F2A87F;
+      --accent-soft: #3A2A22;
+      --accent-border: #5A3D2E;
+      --accent-strong: #F5B493;
+      --border: #2E2924;
+      --border-strong: #463F38;
+      --code-bg: #1E1B17;
+      --code-text: #E8E2D8;
+      --info: #93C5FD;
+      --info-soft: #1E2A3D;
+      --info-border: #2A4365;
+      --warn: #FBBF24;
+      --warn-soft: #332817;
+      --warn-border: #5C4520;
+      --danger: #FCA5A5;
+      --danger-soft: #3A1F1F;
+      --danger-border: #5C2A2A;
+      --success: #6EE7B7;
+      --success-soft: #1A3329;
+      --success-border: #1F5C45;
+      --decision: #C4B5FD;
+      --decision-soft: #2A1F40;
+      --decision-border: #4A3870;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    ::selection { background: var(--accent-soft); color: var(--accent-strong); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 8px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 1000;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* SVG sprite container (hidden) */
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .icon { display: inline-block; flex-shrink: 0; vertical-align: middle; stroke: currentColor; fill: none; }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: var(--z-progress);
+      transition: width 0.05s linear;
+    }
+
+    /* ============================================================
+       TOPBAR
+       ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      background: rgba(250, 250, 247, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .topbar { background: rgba(26, 23, 20, 0.85); }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      animation: brand-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes brand-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft); }
+      50%      { box-shadow: 0 0 0 7px transparent; }
+    }
+    .topbar-actions { display: flex; gap: 6px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      padding: 0;
+    }
+    .icon-btn .icon { width: 18px; height: 18px; stroke-width: 2; }
+    .icon-btn[hidden] { display: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 32px 24px 96px;
+    }
+    .content { min-width: 0; }
+    /* Unified reading measure: every top-level block shares one width so
+       paragraphs, callouts, diagrams, timelines, tables and code align to a
+       single clean column. Opt out with .full-bleed where truly needed. */
+    .content > * { max-width: var(--measure); }
+    .content > .full-bleed { max-width: none; }
+
+    /* ============================================================
+       TOC (desktop + mobile drawer)
+       ============================================================ */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .toc::-webkit-scrollbar { width: 6px; }
+    .toc::-webkit-scrollbar-track { background: transparent; }
+    .toc::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+    .toc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .toc-close { display: none; }
+    .toc-nav { display: flex; flex-direction: column; gap: 2px; }
+    .toc-nav a {
+      display: flex; align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 500;
+    }
+    .toc-nav a.lvl-3 { padding-left: 26px; font-size: 12.5px; }
+    .toc-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: var(--z-backdrop);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ============================================================
+       DOC HEADER
+       ============================================================ */
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-eyebrow {
+      display: inline-flex; align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-size: clamp(28px, 3vw + 16px, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .doc-subtitle {
+      font-size: clamp(15px, 0.6vw + 13px, 18px);
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      max-width: var(--measure);
+      text-wrap: pretty;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+    .doc-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    .doc-meta .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ============================================================
+       CONTENT (typography)
+       ============================================================ */
+    .content h1, .content h2, .content h3, .content h4 {
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+    .content h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 56px 0 16px;
+      padding-top: 8px;
+      position: relative;
+    }
+    .content h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      position: relative;
+    }
+    .content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .content > p,
+    .content > ul,
+    .content > ol,
+    .content > blockquote { max-width: var(--measure); }
+    .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
+    .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
+    .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
+    .content li { margin: 4px 0; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content em { color: var(--text-muted); }
+    .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Anchor links injected by JS on h2/h3 with id */
+    .anchor {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      color: var(--text-subtle);
+      opacity: 0;
+      transform: translateY(-1px);
+      transition: opacity 0.15s, color 0.15s;
+      border-bottom: none !important;
+      border-radius: var(--radius-sm);
+    }
+    .anchor .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* Images */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+    .content figure { margin: 20px 0; }
+    .content figure img { margin: 0; }
+    .content figcaption {
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Task lists (- [ ] / - [x]) */
+    .content .task-list-item { list-style: none; margin-left: -22px; }
+    .content .task-list-item-checkbox {
+      margin-right: 8px;
+      vertical-align: -2px;
+      accent-color: var(--accent);
+    }
+
+    /* Footnotes */
+    .content .footnote-ref a,
+    .content sup a {
+      font-size: 0.75em;
+      vertical-align: super;
+      border-bottom: none;
+      padding: 0 2px;
+    }
+    .content .footnotes {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       CODE
+       ============================================================ */
+    .content code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    .content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      position: relative;
+    }
+    .content pre code {
+      background: none; padding: 0; border: none;
+      color: var(--code-text);
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-subtle);
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .copy-btn .icon { width: 14px; height: 14px; stroke-width: 2; }
+    .copy-btn.copied { color: var(--success); border-color: var(--success-border); opacity: 1; }
+
+    /* ============================================================
+       TIMELINE / STEPS
+       ============================================================ */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-border), var(--border));
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 8px 4px;
+      position: relative;
+      border-radius: var(--radius);
+      transition: background-color 0.15s;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .step.done .step-num { background: var(--accent); color: #fff; }
+    .step-body { padding-top: 6px; min-width: 0; }
+    .step-body h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: var(--measure); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: var(--measure);
+    }
+    .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
+    .callout-body { min-width: 0; }
+    .callout-title { font-weight: 600; margin: 0 0 4px; font-size: 14px; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout-body code { background: rgba(0,0,0,0.04); }
+    [data-theme="dark"] .callout-body code { background: rgba(255,255,255,0.06); }
+
+    .callout-info     { background: var(--info-soft);     border-color: var(--info-border);     color: var(--text); }
+    .callout-info     .callout-title, .callout-info     .callout-icon { color: var(--info); }
+    .callout-warn     { background: var(--warn-soft);     border-color: var(--warn-border);     color: var(--text); }
+    .callout-warn     .callout-title, .callout-warn     .callout-icon { color: var(--warn); }
+    .callout-danger   { background: var(--danger-soft);   border-color: var(--danger-border);   color: var(--text); }
+    .callout-danger   .callout-title, .callout-danger   .callout-icon { color: var(--danger); }
+    .callout-success  { background: var(--success-soft);  border-color: var(--success-border);  color: var(--text); }
+    .callout-success  .callout-title, .callout-success  .callout-icon { color: var(--success); }
+    .callout-decision { background: var(--decision-soft); border-color: var(--decision-border); color: var(--text); }
+    .callout-decision .callout-title, .callout-decision .callout-icon { color: var(--decision); }
+    .callout-tip      { background: var(--accent-soft);   border-color: var(--accent-border);   color: var(--text); }
+    .callout-tip      .callout-title, .callout-tip      .callout-icon { color: var(--accent-strong); }
+
+    /* ============================================================
+       KEY-POINT HIGHLIGHT
+       ============================================================ */
+    .highlight {
+      background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+      border-left: 4px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: var(--measure);
+    }
+    .highlight-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       MERMAID
+       ============================================================ */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .mermaid { text-align: center; min-height: 80px; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .mermaid:not([data-processed]) {
+      opacity: 0.4;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ============================================================
+       PROS / CONS
+       ============================================================ */
+    .proscons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .proscons-col {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .proscons-col h4 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proscons-col ul { margin: 0; padding-left: 18px; }
+    .proscons-col li { margin: 6px 0; }
+    .pros { background: var(--success-soft); border-color: var(--success-border); }
+    .pros h4 { color: var(--success); }
+    .cons { background: var(--danger-soft); border-color: var(--danger-border); }
+    .cons h4 { color: var(--danger); }
+
+    /* ============================================================
+       COMPARISON CARDS
+       ============================================================ */
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .compare-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .compare-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .compare-card.recommended::before {
+      content: var(--rec-label, "★ Recommended");
+      position: absolute; top: -10px; right: 14px;
+      background: var(--accent); color: #fff;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+    }
+    .compare-card h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); text-transform: none; letter-spacing: normal; }
+    .compare-card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+    /* ============================================================
+       COLLAPSIBLE
+       ============================================================ */
+    details.collapsible {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 16px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    details.collapsible[open] { box-shadow: var(--shadow-sm); }
+    details.collapsible > summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 500;
+      color: var(--text);
+      list-style: none;
+      display: flex; align-items: center; gap: 10px;
+      user-select: none;
+      transition: background 0.15s;
+      min-height: 44px;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::before {
+      content: "›";
+      display: inline-block;
+      transition: transform 0.18s;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    details.collapsible[open] > summary::before { transform: rotate(90deg); }
+    .collapsible-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+    .collapsible-body > *:first-child { margin-top: 12px; }
+
+    /* ============================================================
+       TABLES (wrapped via .table-wrap or naturally responsive)
+       ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      margin: 0;
+    }
+    /* Standalone tables (not inside .table-wrap) keep visual border */
+    .content > table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      display: block;
+      overflow-x: auto;
+    }
+    .content th {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .content td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    /* ============================================================
+       BLOCKQUOTE
+       ============================================================ */
+    .content blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-border);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       FOCUS-VISIBLE (a11y)
+       ============================================================ */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .toc-nav a:focus-visible { outline-offset: -2px; }
+    .icon-btn:focus-visible { outline-offset: 2px; }
+    .anchor:focus-visible { opacity: 1; outline-offset: 2px; }
+    details.collapsible > summary:focus-visible { outline-offset: -2px; }
+
+    /* ============================================================
+       HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
+       ============================================================ */
+    @media (hover: hover) {
+      .back-to-top:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+      .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+      .compare-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow); }
+      .compare-card.recommended:hover { border-color: var(--accent); }
+      .content tr:hover td { background: var(--surface-2); }
+      details.collapsible > summary:hover { background: var(--surface-2); }
+      .step:hover { background: var(--surface-2); }
+      .step:hover .step-num { transform: scale(1.05); }
+      .anchor:hover { color: var(--accent); }
+      .content h2:hover .anchor,
+      .content h3:hover .anchor { opacity: 1; }
+      .copy-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+      .content pre:hover .copy-btn { opacity: 1; }
+    }
+    /* On touch devices, copy-btn is always visible at low opacity */
+    @media (hover: none) {
+      .copy-btn { opacity: 0.6; }
+      .anchor { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       MOBILE (≤900px) — TOC becomes off-canvas drawer
+       ============================================================ */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px 80px;
+      }
+      .topbar-inner { padding: 8px 12px; }
+      .doc-header { margin-bottom: 28px; padding-bottom: 20px; }
+
+      .toc-mobile-trigger { display: inline-flex !important; }
+
+      .toc {
+        position: fixed;
+        top: 0; left: 0;
+        width: min(300px, 82vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        background: var(--surface);
+        z-index: var(--z-drawer);
+        padding: 16px 8px 24px 16px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc-head { padding: 4px 4px 12px 8px; }
+      .toc-close {
+        display: inline-flex !important;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+      }
+      .toc-close .icon { width: 18px; height: 18px; stroke-width: 2; }
+      body.toc-open .toc { transform: translateX(0); }
+      body.toc-open .toc-backdrop {
+        display: block;
+        opacity: 1;
+      }
+      .toc-backdrop {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.toc-open .toc-backdrop { pointer-events: auto; }
+      body.toc-open { overflow: hidden; }
+    }
+    @media (min-width: 901px) {
+      .toc-mobile-trigger { display: none !important; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION (a11y)
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html { scroll-behavior: auto; }
+      .brand-dot { animation: none; box-shadow: 0 0 0 4px var(--accent-soft); }
+    }
+
+    /* ============================================================
+       LAYER HEADINGS (对谈三层结构)
+       ============================================================ */
+    .layer-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .layer-heading::before {
+      flex-shrink: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .layer-insight::before {
+      content: "洞察";
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+    }
+    .layer-analysis::before {
+      content: "解析";
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .layer-dialogue::before {
+      content: "实录";
+      background: var(--info-soft);
+      color: var(--info);
+      border: 1px solid var(--info-border);
+    }
+    .layer-insight { font-size: 0; }
+    .layer-insight::before { font-size: 11px; }
+    .layer-insight .anchor { font-size: 14px; }
+    .layer-analysis { font-size: 0; }
+    .layer-analysis::before { font-size: 11px; }
+    .layer-analysis .anchor { font-size: 14px; }
+    .layer-dialogue { font-size: 0; }
+    .layer-dialogue::before { font-size: 11px; }
+    .layer-dialogue .anchor { font-size: 14px; }
+    .section-insight { margin-top: 12px; margin-bottom: 20px; }
+    .section-insight .callout-body p { margin: 0; }
+
+    /* Section jump pills (injected by JS) */
+    .section-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 20px;
+      max-width: var(--measure);
+    }
+    .section-jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+    }
+    .section-jump a:hover,
+    .section-jump a:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Speaker differentiation in dialogue timeline */
+    .step.speaker-host .step-num {
+      border-color: var(--info);
+      color: var(--info);
+      background: var(--info-soft);
+    }
+    .step.speaker-guest .step-num {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .step.speaker-host .step-body h3 { color: var(--info); }
+    .step.speaker-guest .step-body h3 { color: var(--accent-strong); }
+
+    /* Meta panel + table URL wrap */
+    .meta-panel { margin-bottom: 32px; }
+    .toc-nav .toc-meta-link {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-subtle);
+      font-size: 12.5px;
+    }
+    .table-wrap td a { word-break: break-all; }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: opacity 0.2s, transform 0.2s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .back-to-top .icon { width: 20px; height: 20px; stroke-width: 2; }
+    .back-to-top:not([hidden]) { opacity: 1; transform: translateY(0); }
+    .back-to-top[hidden] { display: inline-flex; opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+    /* ============================================================
+       PRINT
+       ============================================================ */
+    @media print {
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress, .back-to-top, .section-jump { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      a { color: #000; }
+      .content pre, .callout, .compare-card, .step, .diagram { break-inside: avoid; }
+      .doc-footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">跳到正文</a>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- SVG icon sprite (Lucide-style) -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-decision" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0 4 4 0 0 1 1.59 2h2.99a4 4 0 0 1 1.6-2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  </svg>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn toc-mobile-trigger" id="toc-toggle" onclick="openToc()" aria-label="目录" title="目录">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>笔记</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-printer"/></svg>
+        </button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use id="theme-icon-use" href="#i-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC drawer backdrop (mobile) -->
+  <div class="toc-backdrop" id="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-head">
+        <p class="toc-title">目录</p>
+        <button class="toc-close" onclick="closeToc()" aria-label="关闭">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#核心导读" class="lvl-2">核心导读</a>
+        <a href="#指数加速-anthropic-内部的相对论与时间压缩" class="lvl-2">指数加速：Anthropic 内部的相对论与时间压缩</a>
+        <a href="#成长与出走-旧金山-open-philanthropy-与离开-openai" class="lvl-2">成长与出走：旧金山、Open Philanthropy 与离开 OpenAI</a>
+        <a href="#行业信任-印度峰会-demis-hassabis-与向上竞赛" class="lvl-2">行业信任：印度峰会、Demis Hassabis 与向上竞赛</a>
+        <a href="#企业赌注-为何押编码与企业-saas-命运如何" class="lvl-2">企业赌注：为何押编码与企业、SaaS 命运如何</a>
+        <a href="#资本与算力-近万亿估值-大厂股东与-crunch" class="lvl-2">资本与算力：近万亿估值、大厂股东与 crunch</a>
+        <a href="#领先者的代价-超越-openai-文化与产品速度" class="lvl-2">领先者的代价：超越 OpenAI、文化与产品速度</a>
+        <a href="#惊人发现-生物医疗突破与-dario-的写作习惯" class="lvl-2">惊人发现：生物医疗突破与 Dario 的写作习惯</a>
+        <a href="#就业冲击-50%-说法-任务与岗位-五年后的美国" class="lvl-2">就业冲击：50% 说法、任务与岗位、五年后的美国</a>
+        <a href="#五角大楼对峙-红线-禁令与「这不是一场战斗」" class="lvl-2">五角大楼对峙：红线、禁令与「这不是一场战斗」</a>
+        <a href="#ai-与战争-击杀效率-伊朗学校与自主武器" class="lvl-2">AI 与战争：击杀效率、伊朗学校与自主武器</a>
+        <a href="#mythos-网络超能力-271-个-firefox-漏洞与发布节奏" class="lvl-2">Mythos：网络超能力、271 个 Firefox 漏洞与发布节奏</a>
+        <a href="#治理终局-国有化辩论-白宫-中国与递归改进" class="lvl-2">治理终局：国有化辩论、白宫、中国与递归改进</a>
+        <a href="#文明风险与信任-oppenheimer-10-25%-与为何相信-anthropic" class="lvl-2">文明风险与信任：Oppenheimer、10–25% 与为何相信 Anthropic</a>
+        <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
+        <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main">
+      <header class="doc-header">
+        <span class="doc-eyebrow">对谈笔记</span>
+        <h1 class="doc-title">The Circuit：Emily Chang 对话 Anthropic CEO Dario Amodei——9650 亿美元 AI 巨头的指数加速、五角大楼红线与文明终局</h1>
+        <p class="doc-subtitle">Dario Amodei 把 Anthropic 置于一条「平滑指数曲线」上——商业领先是为了把行业往「向上竞赛」拉，而非为打败对手。</p>
+        <div class="doc-meta">
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
+            Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
+            2026-06-17（YouTube 上传日）
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+            ~20 分钟阅读
+          </span>
+        </div>
+      </header>
+
+      <!-- CONTENT_START -->
+<h2 id="核心导读">核心导读</h2>
+
+<div class="highlight">
+  <p><strong>Dario Amodei</strong> 把 <strong>Anthropic</strong> 置于一条「平滑指数曲线」上——商业领先是为了把行业往「向上竞赛」拉，而非为打败对手；真正难的是在高速扩张中守住信任与红线，并以理性、可逐级收紧的护栏应对就业冲击、军事化与递归自我改进，而非在恐慌与否认之间来回摇摆。</p>
+</div>
+
+<p><strong>指数内核。</strong> 内部感受像相对论加速：地球一天当两天过；成熟决策是承认风险在变大，却像外科医生一样冷静响应——<strong>Claude Cowork</strong> 等消费端意外起量，并未改变「企业优先」的价值对齐。</p>
+
+<p><strong>商业与算力。</strong> 押注编码与企业，是为避免广告驱动的成瘾商业模式；<strong>SaaSpocalypse</strong> 后 <strong>Dario Amodei</strong> 仍认为软件总盘子会变大，但「能写复杂代码」的护城河会消失。近 <strong>9650 亿美元</strong> 估值与 <strong>10 倍/年</strong> 算力规划，挡不住 <strong>2026 年一季度收入超 3 倍</strong> 的局部爆炸——算力可补，但需一两个月缓冲。</p>
+
+<p><strong>社会契约。</strong> 入门级白领岗位可能在 <strong>1–5 年</strong> 内遭遇数量级冲击——这是「可能有多疯狂」的量级估计，不是末日预言；<strong>Anthropic</strong> 推代币税、宏观政策与企业「做更多事而非裁更多人」。五角大楼对峙：红线是 mass surveillance 与 fully autonomous weapons；<strong>OpenAI</strong> 接手合同不等于辩论结束，国会两党已在立法。</p>
+
+<p><strong>终局护栏。</strong> <strong>Mythos</strong> 暂缓公开是因攻防失衡未解；AI 国有化需制衡而非没收；<strong>10–25%</strong> 文明崩溃概率来自技术不可预测性本身——信任须用延迟发布、对华断供等「代价行为」挣来，不能靠口号。</p>
+
+<h2 id="指数加速-anthropic-内部的相对论与时间压缩">指数加速：Anthropic 内部的相对论与时间压缩</h2>
+
+<h3 id="指数加速-anthropic-内部的相对论与时间压缩-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>指数增长像相对论加速：睡一晚地球已过数日；成熟领导者承认风险在放大，却拒绝在恐慌与自满之间来回摇摆。</p></div>
+</div>
+<h3 id="指数加速-anthropic-内部的相对论与时间压缩-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Emily Chang</strong> 开场问睡眠：<strong>Dario Amodei</strong> 本就不是长睡之人，正在学习在异常压力下放松。被问及「AI 宇宙中心」是什么感受，他用<strong>特殊相对论</strong>类比：飞船以近光速远离地球，你睡一晚醒来，地球上可能已过两天；再睡一晚，三天、四天——「这就是内部的感觉」。</p>
+<p><strong>Emily Chang</strong> 追问是否带着偏执入睡。<strong>Dario Amodei</strong> 承认有「清晰且紧迫」的问题要处理，同时思考如何准备；但偏执并不 productive。他观察历史上高压决策者：须<strong>理性响应</strong>，不能把不同危险不成比例地放大——在「我不担心」与「天哪今天要恐慌」之间来回摇摆，是<strong>不成熟决策</strong>的标志；成熟做法是<strong>不能忽视、不能自满</strong>，风险确实在变大，却要像外科医生、军官一样理解风险并保持基本冷静。</p>
+<p>消费端也在起量：儿子想用 <strong>Dario Amodei</strong> 的 <strong>Claude Cowork</strong> 账号，被拒——「我需要我的 tokens」。<strong>Anthropic</strong> 本想更偏企业，但即使不刻意投入，消费端也在加速。</p>
+<p>关于成为「AI 公司 revenue 与 valuation 最高者」：<strong>Dario Amodei</strong> 说不意外——图表上本就是平滑指数线，他早就预判「大约此时」会发生；但真发生时细节与色彩仍令人惊讶。问题本质未变：如何训练好模型、做好产品、保安全、帮助用户并管理社会风险——只是显微镜倍数更大。</p>
+<h3 id="指数加速-anthropic-内部的相对论与时间压缩-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「一切动得太快了——内部是什么感觉？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「像特殊相对论：你加速离开地球，睡一晚醒来，地球上已过两天；再睡一晚，三天、四天——有点像这样。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「你会带着偏执入睡，担心醒来发生什么吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「有清晰且紧迫的问题要处理，但偏执并不 productive。在『我不担心』和『天哪要恐慌』之间来回摇摆，是不成熟决策；成熟是承认风险在变大，却像外科医生一样理性响应。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「你儿子想用你的 Claude Cowork 账号？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「绝对不行——我需要我的 tokens。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="成长与出走-旧金山-open-philanthropy-与离开-openai">成长与出走：旧金山、Open Philanthropy 与离开 OpenAI</h2>
+
+<h3 id="成长与出走-旧金山-open-philanthropy-与离开-openai-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>离开 <strong>OpenAI</strong> 不是因为安全分歧本身，而是信任崩塌；旧金山「可以 crazy」的非主流精神，与 <strong>Holden Karnofsky</strong> 时代的有效利他主义讨论，共同塑造了 <strong>Anthropic</strong> 的起点。</p></div>
+</div>
+<h3 id="成长与出走-旧金山-open-philanthropy-与离开-openai-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>童年 <strong>San Francisco</strong>：第一波互联网革命在周围发生，<strong>Dario Amodei</strong> 却只对数学、涂写、理解宇宙、科幻感兴趣。这座城市的影响在于<strong>不 conform、个人主义、可以 crazy</strong>——与欧洲等地「想不同会被 discourage」形成对照。他对硅谷有很多批评，但认同一项：<strong>专家都反对也不妨</strong>，若有连贯愿景就应 pursue；失败概率高，但一旦命中，回报呈<strong>长尾</strong>——「某些矿脉里可能有巨大金矿」。</p>
+<p>2016 年，<strong>Dario Amodei</strong> 与 <strong>Daniela Amodei</strong>、<strong>Holden Karnofsky</strong>（<strong>Open Philanthropy</strong> 负责人）等同住合租房。彼时 <strong>Open Philanthropy</strong> 刚起步，<strong>Dario Amodei</strong> 还是生物科学家，帮他们在发展中国家健康、生物研究等领域判断哪些方向有前景。</p>
+<p>离开 <strong>OpenAI</strong> 已成硅谷传奇。<strong>Emily Chang</strong> 要求叙事之外的真相。<strong>Dario Amodei</strong> 说得很简单：构建强大技术时，<strong>Anthropic</strong> 每天也面临不知对错的安全决策，与 <strong>OpenAI</strong> 的安全分歧<strong>存在且有效</strong>，但<strong>单凭这一点不足以离职</strong>——公司内部彼此也有分歧。真正的问题是：<strong>当你觉得无法信任某人、价值观与宣称不符、不诚实、动机不对、看到令人不安的不诚实行为模式</strong>——继续合作极难。「愿景不同又不信任，争论何用？各走各路。」他完全接受「我们按我们的方式，他们按他们的方式；市场与公众舆论会说话」。<strong>Anthropic</strong> 想示范如何负责任部署；若 <strong>OpenAI</strong> 不同意，应公开论证。</p>
+<h3 id="成长与出走-旧金山-open-philanthropy-与离开-openai-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「离开 OpenAI 真正发生了什么？ beyond the narrative？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「安全上有许多有效分歧，但 alone 不足以离开。当你无法信任某人、觉得他们不诚实、动机不对——继续合作很难。愿景不同又不信任，就各走各路；市场与公众舆论会说话。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「2016 年合租房里你们在辩论什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「<strong>Open Philanthropy</strong> 刚起步，我在帮 <strong>Holden Karnofsky</strong> 他们看发展中国家健康、生物研究哪些方向有前景。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="行业信任-印度峰会-demis-hassabis-与向上竞赛">行业信任：印度峰会、Demis Hassabis 与向上竞赛</h2>
+
+<h3 id="行业信任-印度峰会-demis-hassabis-与向上竞赛-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>印度峰会「拒牵手」是活动混乱，不是 existential risk 协作失败的隐喻；可信玩家应结盟，把不可信者逼到同一标准——<strong>Demis Hassabis</strong> 是 <strong>Dario Amodei</strong> 信任的对手。</p></div>
+</div>
+<h3 id="行业信任-印度峰会-demis-hassabis-与向上竞赛-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>印度 AI 峰会：<strong>Dario Amodei</strong> 与 <strong>Sam Altman</strong> 似乎拒绝牵手。<strong>Emily Chang</strong> 追问：若造最重要技术的人都不能牵手，如何信任他们在存在性风险上合作？</p>
+<p><strong>Dario Amodei</strong> 解释：峰会<strong>极度混乱</strong>，最后一刻改站位顺序，拍照后 <strong>Narendra Modi</strong> 突然要求所有人牵手——这类国际峰会普遍如此，非针对印度。<strong>Sam Altman</strong> 与 <strong>Elon Musk</strong> 还在互诉。</p>
+<p>更实质的回答：<strong>行业玩家可信度方差很大</strong>。「没人互相信任」的网络梗不对——<strong>Demis Hassabis</strong>（<strong>Gemini</strong>）是 <strong>15 年</strong>老友，一起处理过诸多议题；<strong>Anthropic</strong> 向 <strong>Google</strong> 买算力，常交换安全想法。需要<strong>可信行动者联合起来</strong>，让不可信者不得不采纳同样标准：多数人做对时，其余人「做不了太多出格的事」。也有<strong>胡萝卜</strong>——<strong>Demis Hassabis</strong> 做 <strong>AlphaFold</strong>，<strong>Anthropic</strong> 也做 bio；<strong>Anthropic</strong> 做 interpretability，<strong>Google</strong> 也跟；不是零和竞争，而是「那很酷，我们也试试」。<strong>大棒</strong>则是：「这些人在做对的事，你不做就难看」——常看到勉勉强强做对却假装不同。</p>
+<h3 id="行业信任-印度峰会-demis-hassabis-与向上竞赛-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「印度峰会上你和 Sam Altman 似乎拒绝牵手——发生了什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「峰会极度混乱，最后一刻改顺序，Modi 突然叫大家牵手——这类国际峰会都这样。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「若最重要技术的建造者都不能牵手，如何信任你们在 existential risk 上合作？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「『没人互信』的 meme 不对——我认识 <strong>Demis Hassabis</strong> 15 年，我们买 Google 算力、常换安全想法。可信玩家应结盟，把不可信者逼到同一标准。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="企业赌注-为何押编码与企业-saas-命运如何">企业赌注：为何押编码与企业、SaaS 命运如何</h2>
+
+<h3 id="企业赌注-为何押编码与企业-saas-命运如何-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>企业商业模式与「安全、长期信任」协同；<strong>Claude Code</strong>/<strong>Claude Cowork</strong> 命中，是因为正面用例大多落在 enterprise——而非广告驱动的成瘾消费。</p></div>
+</div>
+<h3 id="企业赌注-为何押编码与企业-saas-命运如何-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>早期他人做 splashy 消费 app，<strong>Anthropic</strong> 押 coding 与 enterprise，<strong>Claude Code</strong>、<strong>Claude Cowork</strong> 成 hit。<strong>Emily Chang</strong> 问：价值观还是商业？</p>
+<p><strong>Dario Amodei</strong> 说基本点是「要做对」；但训练 frontier 模型极贵，必须有 business model，且<strong>不能与 values 根本冲突</strong>——否则要么背叛价值，要么边缘化，陷入进退两难。社交媒体/消费世界鼓励互动甚至成瘾；AI 视频 slop 最大化「你盯屏分钟数」以换广告收入。Enterprise 则不同：用 AI  curing 疾病（biotech/pharma/学术）、降能源成本、教育、发展中国家健康——<strong>大多是 enterprise</strong>（含 nonprofit 形态）。Enterprise 重视<strong>长期信任关系</strong>，与安全部署协同；冲突仍会存在，但数量远低于消费广告模式。</p>
+<p>开发者一下午可从 <strong>Claude</strong> 切到 <strong>ChatGPT</strong> 或 <strong>Gemini</strong>——<strong>Dario Amodei</strong> 认为<strong>模型质量最重要</strong>，目前 <strong>Anthropic</strong> 质量<strong>遥遥领先</strong>；从不依赖粘性与惯性， growth rate 在录制时<strong>仍在上升</strong>。</p>
+<p><strong>Claude Cowork</strong> 发布后，<strong>2850 亿美元</strong> 市值一夜蒸发，交易员称 <strong>SaaSpocalypse</strong>。<strong>Emily Chang</strong> 问传统软件被替换多少、多快。</p>
+<p><strong>Dario Amodei</strong> 说无法完美预测——能预测就发财了。传统 SaaS 有多条护城河：「快速写复杂软件」这条<strong>会消失</strong>；客户关系、领域诀窍、独特领域知识 <strong>会留存且相对更重要</strong>。建议：列清所有护城河，清醒认识哪些消失、哪些变重要；可能有<strong>新护城河</strong>。敏捷者会好；自满、把头埋沙里的会很难。总体上他<strong>猜软件行业会变大而非变小</strong>——AI 让蛋糕变大，在位者相对份额可能变小，有些会估值下跌甚至出局；若 AI 能力 <strong>10 倍</strong> 增长，在位者行业也可能只 <strong>1.5 倍</strong>——相对变小但绝对仍增。会有大输家。</p>
+<h3 id="企业赌注-为何押编码与企业-saas-命运如何-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「Claude Cowork 发布后 2850 亿美元市值蒸发——传统软件会被替换多少、多快？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「『我们能写别人写不出的复杂软件』这条 moat 会消失；客户关系、领域知识会相对更重要。总体上我猜软件行业会<strong>变大</strong>——pie 在变大，不 adapt 的 incumbent 会很难。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「押 enterprise 是价值观还是商业决定？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「若 business model 与 values 根本冲突，你要么背叛价值要么边缘化。Enterprise 的长期信任与安全部署协同——治病、能源、教育大多是 enterprise。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="资本与算力-近万亿估值-大厂股东与-crunch">资本与算力：近万亿估值、大厂股东与 crunch</h2>
+
+<h3 id="资本与算力-近万亿估值-大厂股东与-crunch-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>融资近 <strong>9650 亿美元</strong> 估值是应对算力 ramp 不确定性的 rational buffer；<strong>2026 Q1</strong> 收入 <strong>&gt;3 倍</strong> 季度增长远超 <strong>10 倍/年</strong> 算力规划——不是买少了，是局部爆炸。</p></div>
+</div>
+<h3 id="资本与算力-近万亿估值-大厂股东与-crunch-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Amazon</strong>、<strong>Google</strong>、<strong>Microsoft</strong>、<strong>Nvidia</strong> 等既是 partner 又是 rival，且有 commercial milestone 绑 funding——谁真正说了算？</p>
+<p><strong>Dario Amodei</strong> 举例：他对<strong>对华芯片出口管制</strong>非常公开宣扬，认为 <strong>China</strong> 领先 AI 对民主世界极 bad——芯片商 obviously 不同意，但没阻止他说；签更多 partnership 后仍 repeat。<strong>Anthropic</strong> 一直是好合作伙伴；「成年人可以在一件事上合作、另一件事上 disagree。」</p>
+<p><strong>Bloomberg</strong> 报道估值高于 <strong>OpenAI</strong>，近<strong>万亿美元</strong>、五年 startup——如何理解？需要那么多钱吗？</p>
+<p>算力 ramp <strong>极快</strong>：business fundamentals 可以很好，但一年后算力可能是现在的 <strong>3–4 倍</strong>（不给 exact numbers）。预期 revenue ramp 会 meet/exceed；融资是应对 <strong>cone of uncertainty</strong> 的 buffer——dilution 很小，与 fundamentals 有问题<strong>不矛盾</strong>。</p>
+<p><strong>Emily Chang</strong> 提 server strain、tokens 用尽、他人 yolo infrastructure——<strong>Anthropic</strong> 够吗？</p>
+<p><strong>Dario Amodei</strong> 区分 marketing compute 与真实能力：reasonable 标准下<strong>没有买少</strong>——规划 <strong>10 倍/年</strong> 算力增长。<strong>2026 年一季度</strong> revenue <strong>&gt;3 倍</strong>（季度，非年化）；若年化相当于 <strong>80 倍</strong>，不可能 rational 地按 80 倍规划——那样若只到 10 倍就浪费 <strong>8 倍</strong>。当前是<strong> locally extreme</strong> 爆炸，不会持续——若持续会到地球上没有公司有过的 revenue，不可能。但短期确实「天哪比任何预期都快」。<strong>Google</strong>、<strong>Amazon</strong> compute deals 已签，市场 liquid——用得好、有 demand，<strong>一两个月</strong>能拿到算力。</p>
+<h3 id="资本与算力-近万亿估值-大厂股东与-crunch-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「Amazon、Google、Microsoft、Nvidia 各有 agenda——谁说了算？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「我对对华芯片出口管制非常 outspoken——芯片商不同意，但没阻止我说。成年人可以合作又 disagree。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「近万亿美元估值——如何理解？需要那么多钱吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「算力 ramp 极快；融资是对不确定性的 buffer，dilution 很小，不等于 fundamentals 有问题。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「算力够吗，还是在追赶？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「按 reasonable 标准没买少——规划 10 倍/年算力。Q1 revenue &gt;3 倍季度增长，是 locally extreme 爆炸；Google、Amazon deals 已签，有 demand 一两个月能拿到算力。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="领先者的代价-超越-openai-文化与产品速度">领先者的代价：超越 OpenAI、文化与产品速度</h2>
+
+<h3 id="领先者的代价-超越-openai-文化与产品速度-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>商业领先不是为了 beating rivals，而是为了 <strong>pull ecosystem</strong> 做向上竞赛；<strong>Dario Amodei</strong> 花约一半时间谈 culture，防 big tech  hire 带来的文化 recapitulation。</p></div>
+</div>
+<h3 id="领先者的代价-超越-openai-文化与产品速度-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Emily Chang</strong>：超越 arch rival 感觉好吗？</p>
+<p><strong>Dario Amodei</strong>：前方挑战仍多；<strong>race to the top</strong> 是要 pull 其他公司——有时他们不承认，有时一边 copy 一边 attack，但 pull 很有价值。领先 commercially 与 model-wise，不是为了 beating rivals，而是<strong>有能力把生态带 along</strong>——当然 winning 也会有一点 good feeling；在 free enterprise 里 success 没问题，关键是 mitigate model risks。</p>
+<p>从弱势者到领先者：道德高地是否在「一无所有」时更容易？<strong>Dario Amodei</strong> 说每个规模都 paranoid——商业求胜意志与价值观内核都 worry，且协同：好模型才允许在变大时 assert values。陷阱是公司构成变化极快——<strong>他约一半时间</strong>谈 <strong>Anthropic</strong> culture；fast growth 从 big tech 招大量人，不 explicit 教 operating 方式，他们会 recapitulate 前雇主。<strong>Daniela Amodei</strong> 与他 top priority 是 preserve 这个 core。</p>
+<p>产品迭代速度惊人——如何做到？两点：<strong>unified company/culture</strong>，变大仍 incredibly efficient、same page；第二，<strong>Claude itself</strong> 帮 develop models、提效、快速做产品——新 practice 仍在摸索，但 acceleration 越来越多且 increasingly reliable。</p>
+<h3 id="领先者的代价-超越-openai-文化与产品速度-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「超越 arch rival 感觉好吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「不是为了 beating rivals——是为了 pull 生态做向上竞赛。有时他们 copy 我们同时 attack 我们，但 pull 很有价值。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「从 underdog 到 leader，守住 values 有多难？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「每个 scale 我都 paranoid。好模型才允许在变大时 assert values。我约一半时间在谈 culture——不教的话，big tech 来的人会 recapitulate 前雇主。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「产品迭代速度惊人——怎么做到的？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「统一文化与组织；第二，用 Claude 自己开发模型和产品——还在摸索，但 acceleration 越来越多。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="惊人发现-生物医疗突破与-dario-的写作习惯">惊人发现：生物医疗突破与 Dario 的写作习惯</h2>
+
+<h3 id="惊人发现-生物医疗突破与-dario-的写作习惯-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>最惊人的是 bio/medicine：<strong>Daniela Amodei</strong> 等案例里 <strong>Claude</strong> 诊断出顶级医生漏掉的病；<strong>Dario Amodei</strong> 用 Claude 头脑风暴写作，但坚持自己执笔以保留思考 struggle。</p></div>
+</div>
+<h3 id="惊人发现-生物医疗突破与-dario-的写作习惯-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>最惊人的 AI 行为：<strong>biology/medicine</strong>——包括 <strong>Daniela Amodei</strong> 案例，<strong>Claude</strong> 诊断出多位顶级医生漏掉的问题。模型在 drug design、computational chemistry 等任务上 surprising good——前生物学家视角：「那很难，需要大量训练，Claude 却在变好。」正面：<strong>一个世纪</strong>的科学与 medical progress，人类体验 quality 会大幅改善——回到 1900 年看 premature death、material deprivation，再想象又一个百年；若度过当前关口，<strong> increasingly optimistic</strong> 会有 much better world。</p>
+<p>写作：<strong>Dario Amodei</strong> 用 <strong>Claude</strong> 头脑风暴、梳 theme、找 references，但<strong>不允许 Claude 直接写正文</strong>——风格太挑剔。担心若端到端让 Claude 写 essay，会失去 writing 带来的 critical thinking；对外 audience 如此，对内 clarify thinking、建立 common reference 同样重要。未来模型更好时，或许能更 directly 参与写作仍 preserve benefits——会是 subtle 的事。</p>
+<h3 id="惊人发现-生物医疗突破与-dario-的写作习惯-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「你见过 AI 做的最惊人的事是什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「Bio/medicine——<strong>Daniela</strong> 的案例里 Claude 诊断出 fancy doctors 漏掉的病。Drug design、chemistry 也 surprising good。positive side：一个世纪的科学进步会让生活好很多。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「你用 Claude 帮忙写作吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「用来 brainstorm、梳 theme，但不允许直接写正文——writing 是 struggle through ideas 的过程，端到端交给 AI 会 lose 那个 benefit。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="就业冲击-50%-说法-任务与岗位-五年后的美国">就业冲击：50% 说法、任务与岗位、五年后的美国</h2>
+
+<h3 id="就业冲击-50%-说法-任务与岗位-五年后的美国-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>「<strong>50%</strong> 入门级白领 <strong>1–5 年</strong>消失」是<strong>数量级</strong>警告而非精确预测；<strong>Dario Amodei</strong> 反对三秒 clip 的末日营销，但 concern 量级未变——须提前规划匹配问题。</p></div>
+</div>
+<h3 id="就业冲击-50%-说法-任务与岗位-五年后的美国-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Emily Chang</strong> 提 <strong>Dario Amodei</strong> 一年前警告：AI 可能在 <strong>1–5 年</strong>消除约 <strong>50%</strong> entry-level white collar jobs；AI 动得更快，还是 50% 还是更高？</p>
+<p><strong>Dario Amodei</strong> 说原话始终是「<strong>不知道会发生什么</strong>，但这是局面可能变得<strong>极其疯狂</strong>的数量级」——且始终附带应对方案：代币税、与企业合作调整人力、对再培训持怀疑但仍纳入、宏观政策等。信息<strong>不是末日降临</strong>，而是应预见、担忧并<strong>积极回应</strong>。他仍相当担忧，<strong>担忧量级未变</strong>。当前 AI 让人更高效——工业史中的「驼峰」：自动化 90%，剩 10% 的人因杠杆 <strong>10 倍</strong> 增效；接近 100% 时须找别的事做。长期 truly 不确定。</p>
+<p><strong>Anthropic</strong> 内部软件工程师：AI 写 almost all code，仍让人更高效，但已开始看到<strong>有些人</strong> AI 做更好、不必 human 介入。另一面：<strong>前沿部署工程师 / 应用 AI 解决方案架构师</strong>——技术+客户沟通，需求很大。不是一对一转换，但大意是「大量 disruption + adjustment」。重要的是 warn 才能 respond、make policy。</p>
+<p><strong>Emily Chang</strong> 要五年后的美国图景——大量 unemployment 是否 revolution 起点？</p>
+<p><strong>Dario Amodei</strong>：这正是要 <strong>prevent</strong> 的 outcome。可能出路（none guaranteed）：<strong>physical world</strong>——robotics 慢于 AI，但信息处理变易后，瓶颈可能在物理世界，需要更多人 manufacture；<strong>human-centered</strong> jobs——人仍想与真人谈重要的事；human  directing AI 以 align values——thin vs thick 未知。pushback：<strong>Jensen Huang</strong> 等说 conflating tasks with jobs、末日营销利于 <strong>Anthropic</strong>。</p>
+<p><strong>Dario Amodei</strong> 强烈 push back：essay <strong>Adolescence of Technology</strong> 里 <strong>五页</strong>讲 tasks vs jobs、为何这次不同、六项应对（private philanthropy 到 government）。<strong>Anthropic</strong> 有 economic grants、<strong>economic index</strong>。social media 三秒 clip 是 laziness、failure to engage serious intellectual work—— Silicon Valley 被 social media 病绑架，failed mature conversation。</p>
+<p>enterprise customers 面临选择：save costs（少雇人）vs <strong>do more with same resources</strong>——<strong>Anthropic</strong> 尽量 push 后者（正和博弈）。pie 会 expand a lot，probably 有地方容纳人，关键是 <strong>匹配问题</strong> fast enough；disruption size 会 big。</p>
+<h3 id="就业冲击-50%-说法-任务与岗位-五年后的美国-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「一年前你说 1–5 年可能消除约 50% 入门级白领——还是 50% 还是更高？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「原话是『不知道，但这是有多 crazy 的数量级』——且 always 附带 token tax、宏观政策等应对。不是末日预言，是要 foresee 并 positively respond。concern 量级未变。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「Jensen Huang 说你混淆 tasks 与 jobs，这是末日营销。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「<strong>Adolescence of Technology</strong> 里五页讲 tasks vs jobs 与六项应对。三秒 clip 是不 engage 严肃智识工作的 laziness——我们谈风险也谈解决方案。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「五年后美国什么样？大量失业会不会引发革命？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「这正是要 prevent 的。physical world、human-centered 关系、human directing AI 可能是出路——但匹配问题会很难，disruption 会 big。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="五角大楼对峙-红线-禁令与「这不是一场战斗」">五角大楼对峙：红线、禁令与「这不是一场战斗」</h2>
+
+<h3 id="五角大楼对峙-红线-禁令与「这不是一场战斗」-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>与国防部合作是为民主世界防御威权复兴；红线是 <strong>mass surveillance</strong>（大规模监控）与 <strong>fully autonomous weapons</strong>（完全自主武器）——赢的不是合同，是让国家认真讨论 AI 政府用途的先例。</p></div>
+</div>
+<h3 id="五角大楼对峙-红线-禁令与「这不是一场战斗」-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Emily Chang</strong>：<strong>Anthropic</strong> 深度嵌入国家安全；<strong>Dario Amodei</strong> 长期反战（<strong>Caltech</strong> 时代），却是首批在涉密网络上与 <strong>Department of Defense</strong> 签约的 AI 公司之一——如何解释？</p>
+<p>世界变了：<strong>Russia</strong> 侵 <strong>Ukraine</strong>、<strong>China</strong> 可能侵 <strong>Taiwan</strong>——威权阵营复苏且咄咄逼人，须自卫。<strong>Anthropic</strong> 跨两党政府大体支持；不想 <strong>China/Russia</strong> 用 AI 分析情报、攻 <strong>Taiwan/Ukraine</strong> 而民主世界无力防御。不是为钱——接入政府网络极其麻烦，诉讼 aside 报酬也不多；因在乎而做，也因在乎而须设<strong>限制</strong>——长文表述：<strong>除损害我们价值观的用途外，其余皆可用</strong>；红线：<strong>大规模监控</strong>、<strong>完全自主武器</strong>——民主若靠这些取胜也不值得。这解释为何首批与<strong>战争部</strong>合作，又有他人愿做而 <strong>Anthropic</strong> 不做之事。公司不应在「完全不合作」与「什么都做」之间摇摆——<strong>选定原则并坚守</strong>。</p>
+<p><strong>Palantir</strong> 自 <strong>2024</strong> 合作；其技术用于 <strong>ICE</strong>、警察、<strong>Gaza</strong> 等——<strong>Claude</strong> 用于监控吗？<strong>Anthropic</strong> <strong>不</strong>通过 <strong>Palantir</strong> 或任何渠道与 <strong>ICE</strong>、<strong>CBP</strong> 合作；<strong>Gaza</strong> 相信也没有；项目范围严格限定。</p>
+<p>总统禁止联邦采购、五角大楼标 <strong>supply chain risk</strong>、<strong>OpenAI</strong> 接手 <strong>Anthropic</strong> 拒签的合同——何谓「赢」？</p>
+<p><strong>Dario Amodei</strong>：私营公司<strong>不是为了赢或输而战斗</strong>——这是关于<strong>政府如何正当使用 AI</strong> 的辩论。新兴技术，可靠性与价值观促进尚不清楚；重要的是建立先例：哪些用例好（坦率说大多数）、哪些令人担忧。合同能力有限——他人可签不尊重你红线的合同；但提高了 awareness，<strong>国会两党</strong>正立法禁止担忧用途、设 guardrails。「赢」是让国家<strong>更审慎地思考</strong>。</p>
+<p>被称意识形态疯子、左翼 nut jobs——介意吗？被叫更难听的 all the time；两件事 matter：<strong>公司成功</strong>、<strong>坚守价值观</strong>——life 反而简单，always know where you stand。</p>
+<h3 id="五角大楼对峙-红线-禁令与「这不是一场战斗」-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「你反战，为何首批签国防部涉密合同？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「俄罗斯侵乌克兰、中国可能侵台湾——须自卫。不是为钱，接入政府网极其麻烦。红线：大规模监控、完全自主武器——民主若靠这些取胜也不值得。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「Palantir 技术用于 ICE、Gaza——Claude 用于监控吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「不与 ICE、CBP 合作；Gaza 相信也没有。项目范围严格限定。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「OpenAI 接手你拒签的合同——赢是什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「不是为了赢而战斗——是让国家认真讨论 AI 政府用途。国会两党已在立法设护栏。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="ai-与战争-击杀效率-伊朗学校与自主武器">AI 与战争：击杀效率、伊朗学校与自主武器</h2>
+
+<h3 id="ai-与战争-击杀效率-伊朗学校与自主武器-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>LLM</strong> 帮美军目标处理能力从 <strong>1000/天</strong> 到 <strong>5000/天</strong>——<strong>Dario Amodei</strong> 支持 deterrence，但坚持 human final call； fully autonomous weapons 才是 <strong>Anthropic</strong> 真正对抗的噩梦。</p></div>
+</div>
+<h3 id="ai-与战争-击杀效率-伊朗学校与自主武器-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>美国官员称借助 <strong>LLM</strong>，军事从 <strong>1000 targets/day</strong> 到 <strong>5000</strong>——<strong>Claude</strong> 帮 kill more people more quickly，comfortable 吗？</p>
+<p>两点：<strong>US</strong> 军事 effectiveness 更强——<strong>Dario Amodei</strong> supportive；更强<strong> deter wars</strong> 而非 cause。 patriot，希望国家是 more powerful actor。 separate question：具体 policy support 或不 support——提供 technology 后，<strong>不能</strong>说「这个军事行动可以、那个不行」——policy 在 military decision makers 手里；可 assert <strong>high level boundaries</strong>  inconsistent with values。</p>
+<p><strong>Bloomberg</strong> 报道 <strong>Claude</strong> 通过 <strong>Palantir</strong> <strong>Maven Smart System</strong> 用于 <strong>Iran</strong> war AI-assisted targeting；<strong>2026 年 2 月</strong> 导弹击中 <strong>Iran</strong> 女校，<strong>150+</strong> 人死，多数儿童——<strong>Claude</strong> 参与了吗？</p>
+<p><strong>Anthropic</strong> 无 access，不知 models 如何被用；warfare mistakes terrible。说明为何要 limit use cases——讨论的 use case <strong>甚至不 violate red lines</strong>；worried 的是 <strong>100 倍</strong> violate red lines 的 use。<strong>Human makes final call</strong>，不是 <strong>Claude</strong>——若 fully autonomous，AI 决定 human never sees，才是 <strong>Anthropic</strong> fighting against（almost every other company 现在不得不 fully autonomous weapons）。作为 citizen 也 concern military decision makers operate reliably——像 government 用 <strong>Microsoft Excel</strong>，supplier 无法 realistic 限制某次行动用不用 Excel。</p>
+<p><strong>Emily Chang</strong>：学校有 website，<strong>Google</strong> 能搜到——<strong>Claude</strong> 不该 spot 吗？technology as shortcut in war 是否更 scary？</p>
+<p><strong>Dario Amodei</strong> 不知 classified details；principle obeyed：<strong>human makes final decision</strong>。若这不能说明 principle 重要，不知什么能。</p>
+<p>AI warfare 更可能 stop <strong>WWIII</strong>（<strong>US-China</strong>）还是 cause it？<strong>on balance</strong> 更可能 stop；若无 limits 则 may cause。<strong>Doctor Strangelove</strong> doomsday device 类比—— fully autonomous weapons、误解、accidents。<strong>Superior intelligence</strong> 可 deter（predict <strong>Taiwan</strong> invasion、<strong>Ukraine</strong> movement）；superior response ability deter conflict。</p>
+<h3 id="ai-与战争-击杀效率-伊朗学校与自主武器-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「LLM 帮美军从 1000 目标/天到 5000——Claude 帮更快杀更多人，你接受吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「更强军事能力威慑战争。提供技术后不能逐场审批军事行动——但可设高层边界。人类做最终决定，不是 Claude。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「伊朗女校 150+ 儿童死亡——Claude 参与了吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「我们无权限知晓。这甚至不违反红线；我们担心的是百倍违反红线的用途。人类做了最终决定——若完全自主，才是我们对抗的世界。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「AI 战争更可能阻止还是引发中美大战？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「总体上更可能阻止；无限制则可能引发。《奇爱博士》式末日装置——完全自主让事故更可能。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="mythos-网络超能力-271-个-firefox-漏洞与发布节奏">Mythos：网络超能力、271 个 Firefox 漏洞与发布节奏</h2>
+
+<h3 id="mythos-网络超能力-271-个-firefox-漏洞与发布节奏-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Mythos</strong> 强到 early testers 求别发布；暂缓公开是为等 cyber defenses 到位——<strong>271</strong> 个 <strong>Firefox</strong> 新漏洞是 workflow 实证，非 Twitter 式「指哪打哪」伪 replication。</p></div>
+</div>
+<h3 id="mythos-网络超能力-271-个-firefox-漏洞与发布节奏-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Mythos</strong> 可 autonomously 走完 cyber kill chain；<strong>Dario Amodei</strong> 称 too powerful for public。<strong>Emily Chang</strong> 问最 surprise 什么？</p>
+<p>最大 jump：<strong>find vulnerabilities</strong> 并 <strong>turn into exploits</strong>（人们常只谈前者）。early companies 说「super weapon，应要 gun license，please don't release」。goal <strong>不是</strong> forever lock up——gradually 扩大 access，eventually general audience with strong cyber safeguards。<strong>Opus 4.7</strong> cyber model 较弱，safeguards 可被 jailbreak；other companies 以为 sufficient——<strong>Anthropic</strong> testing 认为 defenses <strong>not strong yet</strong>，等 confidence。</p>
+<p>pushback：researchers 用 cheaper open source replicate；<strong>OpenAI</strong> 已有能力——PR play？</p>
+<p>开源 replicate 的说法<strong>完全错误</strong>：有人拿开源模型指向 <strong>Mythos</strong> 找到的同一行代码——<strong>不是同一工作流</strong>。<strong>终极检验</strong>：<strong>Firefox</strong> 上 <strong>271</strong> 个新漏洞；私有公司数千个——前代模型找不到。<strong>Anthropic</strong> 不发布让公司在商业上<strong>损失惨重</strong>——却加速了内部研究；若对外发布也会同样加速外部。攻防兼顾——策略是<strong>先给防御方 patch 漏洞</strong>；攻击面有限，补洞后加上更强模型写代码，会更难攻破。六个月到一年后 hopefully 会有<strong>更安全的互联网</strong>。</p>
+<p>政府放慢开放节奏（反情报风险）—— sensible。<strong>Twitter</strong> 上其他 AI 公司的冷嘲热讽来自<strong>不严肃的人</strong>——客户/国家每天要 access，政府/安全团队说 wait；real challenge，须 society 一起 face，而非廉价营销。</p>
+<p>trade-offs？<strong>Anthropic</strong>  entire history <strong>都是 trade-offs</strong>——ideal world  release 前 study years；<strong>Claude</strong>  initial release delayed months。commercially leading position 让 <strong>Dario Amodei</strong>/<strong>Daniela Amodei</strong> 可把 dial <strong> further toward careful</strong>——<strong>Mythos</strong> release 就是这样；hard if not leading player；会看到 more such things。</p>
+<h3 id="mythos-网络超能力-271-个-firefox-漏洞与发布节奏-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「Mythos 太强不能公开——什么最让你惊讶？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「找漏洞并转化为 exploit 的巨大跃升。早期测试者说『超级武器，请别发布』。不是永远锁死——等网络防御到位再逐步开放。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「有人说开源能 replicate——公关噱头？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「完全错误——指到 Mythos 找到的同一行代码不是同一工作流。我们在 Firefox 找到 271 个新漏洞。不发布让我们在商业上损失惨重。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="治理终局-国有化辩论-白宫-中国与递归改进">治理终局：国有化辩论、白宫、中国与递归改进</h2>
+
+<h3 id="治理终局-国有化辩论-白宫-中国与递归改进-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>AI 是史上首个主要由 private sector 建造、政府 late 的 powerful technology——需 company↔government 双向 checks；<strong>recursive self-improvement</strong> 是连续过程，护栏应 smooth ratchet up，勿 yo-yo。</p></div>
+</div>
+<h3 id="治理终局-国有化辩论-白宫-中国与递归改进-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>为何政府不直接接管？<strong>Dario Amodei</strong> 认为 serious question，share concerns，但不支持 outright takeover。historically nuclear、internet、<strong>GPS</strong>、cell phones 等 origination 多在 government；<strong>AI</strong> first built private sector、government late——<strong>dangerous unstable</strong>，非 ideal，但 technology 会被 adversaries 建、有 economic value，<strong>会被建</strong>。issue 是 government not doing it，不是 private doing it。checks on AI company power：<strong>Long Term Benefit Trust</strong> 可 appoint/remove majority board——thread through 可 <strong>fire CEO</strong>；引入一点 public governance elements；encourage other companies similar。government side：Congress red lines efforts；legislative/judicial 须 exert——scared of companies having it，也 scared of government having it；双向 checks。basic regulation：pre-release testing、auditing。 Silicon Valley 人从 extreme anti-regulation yo-yo 到 nationalization——need <strong>sensible moderate</strong> approach <strong>Anthropic</strong> favored all along。</p>
+<p>White House visit：<strong>Anthropic</strong> 简单原则、hope reasonable counterpart；government 对 <strong>Mythos</strong> very seriously——<strong>Treasury Secretary Bessent</strong>、<strong>Chief of Staff Susie Wiles</strong> 等 good conversations；any administration 都有好相处与难相处部分。</p>
+<p><strong>China</strong> strong open source：<strong>intelligence premium</strong>——很少见人选 lower intelligence model。frontier vs laggard：<strong>10 倍/年</strong> growth 下 frontier value always much larger。worry：laggard models 的 <strong>Mythos-class cyber</strong> <strong>12 个月</strong>后可能 anyone download——hopefully patched before then；can't stop but serious concern。<strong>Baidu</strong> 一年经验未 shape China views much；concern 是 geopolitical——<strong>Uyghurs</strong>、<strong>Hong Kong</strong>、CCP reach into US business network suppress criticism；high tech authoritarian + AI = <strong>1984 or worse</strong>。opportunity：AI as <strong>pro-democracy</strong> technology。</p>
+<p><strong>Recursive self-improvement</strong>：不是 moment in time，是 <strong>continuous process</strong>——AI 已 suggest architectures for next AI。<strong>TFP</strong> from AI：一年前 <strong>10–15%</strong>，现在 probably <strong>20–30%</strong>，可能 doubling。无 moment AI runs out of control——accelerating exponential 每点 assess slow down? more controls? <strong>Countermeasures smoothly ratchet up</strong> with power；crazy yo-yo reaction = caught by surprise、not serious。</p>
+<h3 id="治理终局-国有化辩论-白宫-中国与递归改进-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「为何不让政府接管这么 powerful 的技术？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「这是严肃问题。AI 是首个主要由私营部门建造的 powerful 技术——危险且不稳定。需要双向制衡：<strong>Long Term Benefit Trust</strong> 可解雇我；国会设红线；发布前测试。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「White House 回访如何？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「政府把 Mythos 很 seriously——与 Bessent、Susie Wiles 等谈得不错。任何政府都有好相处与难相处部分。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「中国强 open source——威胁吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「前沿智能溢价极大。担忧是 12 个月后 Mythos 级网络能力可能被任何人下载。地缘政治担忧是高科技威权 + AI。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「递归自我改进还有多远？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">8</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「不是某一时刻，是连续过程——已在建议下一代架构。对策应平滑收紧，别来回摇摆。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="文明风险与信任-oppenheimer-10-25%-与为何相信-anthropic">文明风险与信任：Oppenheimer、10–25% 与为何相信 Anthropic</h2>
+
+<h3 id="文明风险与信任-oppenheimer-10-25%-与为何相信-anthropic-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>10–25%</strong> 文明崩溃概率 too high 但 <strong>Anthropic</strong> 行动旨在 lower it；信任须从对华断供、<strong>Mythos</strong> 商业损失等 costly choices 挣来——默认 distrust Silicon Valley 是 rational。</p></div>
+</div>
+<h3 id="文明风险与信任-oppenheimer-10-25%-与为何相信-anthropic-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>Favorite book：《The Making of the Atomic Bomb》。<strong>Emily Chang</strong> 问是否见 <strong>Oppenheimer</strong> parallels——<strong>Dario Amodei</strong> 最 identify <strong>Leo Szilard</strong>（chain reaction idea）。不会靠 larger-than-life personality 度过——need <strong>checks and balances everywhere</strong>；<strong>Oppenheimer</strong> in some ways <strong>failure case</strong>。</p>
+<p><strong>10–25%</strong> civilizational collapse——<strong>Anthropic</strong> built 导致？hope not；actions <strong>lower</strong> rather than increase probability——来自 technology recipe + many countries/companies；void 不 fill 才是 dilemma。<strong>Airline</strong> analogy：你的航司比他人 <strong>10 倍</strong> safe，仍无法 guarantee never crash——<strong>25% too high</strong>，goal make <strong>much much lower</strong>。</p>
+<p>为何 trust you——building powerful、gain enormously？</p>
+<p>starting distrust <strong>rational</strong>——Silicon Valley lost world's trust。message：different，须 <strong>earned in things we actually do</strong>：Pentagon values、<strong>Mythos</strong> commercial hampering、<strong>China</strong> cut off models cost <strong>several hundred million</strong> when that was significant fraction of revenue、<strong>Claude 2</strong> delay 等 long history。imperfect，many foot faults——ask：overall history most consistent hypothesis？<strong>genuinely trying to do right thing</strong>。</p>
+<p>结尾：<strong>Emily Chang</strong> 玩笑 CEO 要常化妆——<strong>Dario Amodei</strong> 说 not on bingo card，「just a little powder」。</p>
+<h3 id="文明风险与信任-oppenheimer-10-25%-与为何相信-anthropic-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「《原子弹制造》——你像 Oppenheimer 吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「最 identify <strong>Leo Szilard</strong>。不会靠 larger-than-life personality——需要 everywhere checks and balances。Oppenheimer 某种程度上是 failure case。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「10–25% 文明崩溃——会是 Anthropic 造成的吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「hope not。我们的行动旨在 lower 而非 raise 概率。25% too high——目标是 much much lower。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「你造 powerful 东西、获益巨大——为何 trust 你？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「默认 distrust rational——Silicon Valley 失去了世界信任。看 overall history：对华断供花数亿、Mythos 不发布 hurt commercially、Pentagon 守红线——最 consistent 的假设是我们 genuinely trying to do right thing。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <h3>Emily Chang</h3>
+      <p>「你总想当 Hollywood star 吧？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">8</div>
+    <div class="step-body">
+      <h3>Dario Amodei</h3>
+      <p>「CEO 工作 surprising 的一点是常要化妆——不在 bingo card 上。Just a little powder。」</p>
+    </div>
+  </article>
+</div>
+
+<details class="collapsible meta-panel" id="延伸术语表">
+  <summary>延伸术语表</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>说明</th></tr></thead><tbody><tr><td><strong>Anthropic</strong></td><td><strong>Dario Amodei</strong> 与 <strong>Daniela Amodei</strong> 等 2021 年创立的 AI 安全与 frontier 模型公司，旗舰模型 <strong>Claude</strong></td></tr><tr><td><strong>Claude Code / Claude Cowork</strong></td><td><strong>Anthropic</strong> 面向开发者与知识工作者的编码/协作产品，企业战略核心</td></tr><tr><td><strong>Mythos</strong></td><td><strong>Anthropic</strong> 网络安全向 frontier 模型，可 autonomously 走完 cyber kill chain；因攻防 safeguards 未就绪而暂缓广泛发布</td></tr><tr><td><strong>SaaSpocalypse</strong></td><td><strong>Claude Cowork</strong> 发布后传统 SaaS 股大幅抛售的市场叙事（访谈口播约 <strong>2850 亿美元</strong> 市值蒸发）</td></tr><tr><td><strong>Long Term Benefit Trust</strong></td><td><strong>Anthropic</strong> 治理结构，可任命/罢免多数董事，对 CEO 有实质制衡</td></tr><tr><td><strong>Maven Smart System</strong></td><td><strong>Palantir</strong> 美军 AI 目标辅助平台；媒体报道 <strong>Claude</strong> 经此用于 <strong>Iran</strong> 相关 targeting</td></tr><tr><td><strong>Adolescence of Technology</strong></td><td><strong>Dario Amodei</strong> 长文，系统论述 AI 就业风险、tasks vs jobs 与政策应对</td></tr><tr><td><strong>Race to the top</strong></td><td><strong>Dario Amodei</strong> 用语：以负责任实践 pull 行业向上，而非单纯军备竞赛</td></tr><tr><td><strong>Fully autonomous weapons</strong></td><td><strong>Anthropic</strong> 对国防部合作的明确红线之一（人类须 retain final decision）</td></tr><tr><td><strong>Department of War</strong></td><td>访谈中 <strong>Dario Amodei</strong> 对美国国防部的口播称呼（现行官方名 <strong>Department of Defense</strong>）</td></tr></tbody></table></div>
+  </div>
+</details>
+
+<details class="collapsible meta-panel" id="文章元数据">
+  <summary>文章元数据与来源</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.youtube.com/watch?v=x2VHFgyawPE">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-06-17（YouTube 上传日）</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-06-21</td></tr><tr><td><strong>播放量/访问量</strong></td><td>YouTube 观看次数：314,221（用户提供）；页面抓取约 314.7K</td></tr><tr><td><strong>时长</strong></td><td>YouTube 片长：01:10:04</td></tr><tr><td><strong>主持人</strong></td><td><strong>Emily Chang</strong>（<strong>Bloomberg Originals</strong> 节目 <strong>The Circuit</strong> 主持人）</td></tr><tr><td><strong>嘉宾</strong></td><td><strong>Dario Amodei</strong>（<strong>Anthropic</strong> 联合创始人兼 CEO）</td></tr><tr><td><strong>内容来源</strong></td><td>用户提供完整英文字幕转写 + YouTube 页面元数据（WebFetch）</td></tr><tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr></tbody></table></div>
+
+<blockquote><strong>人物背景</strong>：<strong>Dario Amodei</strong> 在旧金山长大，父母分别为皮革工匠与图书馆员；早年对互联网革命兴趣不大，沉迷数学、科幻与「理解宇宙」。曾在 <strong>Baidu</strong> 硅谷分部工作约一年，后参与 <strong>OpenAI</strong> 创立，2021 年与妹妹 <strong>Daniela Amodei</strong> 等联合创办 <strong>Anthropic</strong>，主张「安全优先」的 frontier 模型路线。本期为 <strong>The Circuit</strong> 加长访谈，串联 <strong>Anthropic</strong> 指数级扩张、与 <strong>OpenAI</strong> 的竞争、企业押注、算力 crunch、就业警告争议、五角大楼合同对峙、<strong>Mythos</strong> 网络安全模型，以及 AI 军事化、中国开源、递归自我改进与文明风险等终局议题。同系列纪录片见 <a href="https://youtu.be/v1wZwxY3CMg">Inside Anthropic, the $965 Billion AI Juggernaut</a>。</blockquote>
+  </div>
+</details>
+
+<h2 id="自检报告" hidden>自检报告</h2>
+
+<details class="collapsible">
+  <summary>展开自检报告详情</summary>
+  <div class="collapsible-body">
+    <div class="table-wrap">
+    <table><thead><tr><th>检查项</th><th>状态</th><th>备注</th></tr></thead><tbody><tr><td>内容类型识别</td><td>✅</td><td>Bloomberg <strong>The Circuit</strong> 加长访谈，双人 Q&amp;A</td></tr><tr><td>节结构（对谈三层）</td><td>✅</td><td>13 节均含核心洞察+深度解析；13 节含对谈实录</td></tr><tr><td>导读论点（v5.26）</td><td>✅</td><td>含 <code>&gt; <strong>全文论点</strong></code> 块；分层段覆盖就业、五角大楼、Mythos、文明风险收束线</td></tr><tr><td>元数据完整性</td><td>✅</td><td>播放量 314,221、时长 01:10:04、抓取时间 2026-06-21</td></tr><tr><td>术语校准</td><td>✅</td><td>Claude Code/Cowork、Mythos、Maven、Palantir、Demis Hassabis、Leo Szilard 等</td></tr><tr><td>防幻觉</td><td>✅</td><td>伊朗学校 150+、Firefox 271 漏洞、Q1 &gt;3x revenue、1000→5000 targets 等均来自口播</td></tr><tr><td>主持人引子入库</td><td>✅</td><td>SaaSpocalypse 2850 亿、9650 亿估值、India 牵手、Bloomberg Iran 报道等已承接</td></tr><tr><td>纯净排版（4d 节间空白）</td><td>✅</td><td>4d 闸门通过；--- 共 5 处（元数据后、导读后、目录后、术语表前、自检前）；正文节间 --- 0</td></tr><tr><td>正文中文叙事</td><td>✅</td><td>4c 闸门通过；grep 命中 47→修正后 0（专名层除外）；对谈实录已译中文</td></tr><tr><td>可读性内化</td><td>不适用</td><td>未指定跨文化受众</td></tr><tr><td>篇末关键语录节</td><td>✅</td><td>已按对谈三层默认省略，金句沉入各节实录</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+      <!-- CONTENT_END -->
+
+      <footer class="doc-footer">
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=x2VHFgyawPE" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260617_The_Circuit_Emily_Chang_对话_Anthropic_CEO_Dario_Amodei_9650亿美元AI巨头内幕_整理文档.md</span>
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    // ---------- Theme ----------
+    const STORAGE_KEY = "md2html-theme";
+    function currentTheme() { return document.documentElement.dataset.theme || "light"; }
+    function applyThemeIcon() {
+      const use = document.getElementById("theme-icon-use");
+      if (use) use.setAttribute("href", currentTheme() === "dark" ? "#i-sun" : "#i-moon");
+    }
+    (function restoreTheme() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        document.documentElement.dataset.theme = saved;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+
+    // ---------- Mermaid ----------
+    const diagramSources = new Map();
+    function initMermaid() {
+      const isDark = currentTheme() === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        themeVariables: {
+          primaryColor: isDark ? "#3A2A22" : "#FBEEE6",
+          primaryTextColor: isDark ? "#F5F0E8" : "#1A1A1A",
+          primaryBorderColor: isDark ? "#E89572" : "#D97757",
+          lineColor: isDark ? "#9A938A" : "#6B6B66",
+          secondaryColor: isDark ? "#2A2520" : "#F5F5F0",
+          tertiaryColor: isDark ? "#221E1A" : "#FFFFFF",
+          fontFamily: "Inter, system-ui, sans-serif",
+        },
+      });
+    }
+    async function renderMermaid() {
+      initMermaid();
+      const els = document.querySelectorAll(".mermaid");
+      els.forEach(el => {
+        if (!diagramSources.has(el)) diagramSources.set(el, el.textContent.trim());
+        el.textContent = diagramSources.get(el);
+        el.removeAttribute("data-processed");
+      });
+      try { await mermaid.run({ nodes: els }); } catch (e) { console.error(e); }
+    }
+    function toggleTheme() {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(STORAGE_KEY, next);
+      applyThemeIcon();
+      renderMermaid();
+    }
+
+    // ---------- TOC drawer (mobile) ----------
+    const tocEl = () => document.getElementById("toc");
+    const tocToggle = () => document.getElementById("toc-toggle");
+    const isMobileToc = () => window.matchMedia("(max-width: 900px)").matches;
+
+    function syncTocA11y(open) {
+      const toc = tocEl();
+      if (!toc) return;
+      if (isMobileToc()) {
+        toc.setAttribute("role", "dialog");
+        toc.setAttribute("aria-modal", open ? "true" : "false");
+        toc.setAttribute("aria-hidden", open ? "false" : "true");
+      } else {
+        toc.removeAttribute("role");
+        toc.removeAttribute("aria-modal");
+        toc.removeAttribute("aria-hidden");
+      }
+    }
+
+    function openToc() {
+      document.body.classList.add("toc-open");
+      syncTocA11y(true);
+      const closeBtn = tocEl()?.querySelector(".toc-close");
+      closeBtn?.focus();
+    }
+    function closeToc() {
+      document.body.classList.remove("toc-open");
+      syncTocA11y(false);
+      if (isMobileToc()) tocToggle()?.focus();
+    }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+    window.addEventListener("resize", () => {
+      if (!document.body.classList.contains("toc-open")) syncTocA11y(false);
+    });
+
+    // ---------- TOC scrollspy ----------
+    function setupTocSpy() {
+      const links = Array.from(document.querySelectorAll("#toc-nav a[href^='#']"));
+      if (!links.length) {
+        const toc = document.getElementById("toc");
+        if (toc) toc.style.display = "none";
+        return;
+      }
+      const entries = [];
+      links.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) entries.push({ el, link: a });
+        a.addEventListener("click", () => {
+          if (isMobileToc()) closeToc();
+        });
+      });
+
+      let ticking = false;
+      const setActive = () => {
+        ticking = false;
+        const offset = 96;
+        let current = entries[0]?.link;
+        for (const { el, link } of entries) {
+          if (el.getBoundingClientRect().top <= offset) current = link;
+        }
+        links.forEach(l => l.classList.toggle("active", l === current));
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(setActive);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setActive();
+    }
+
+    // ---------- Section jump pills ----------
+    function injectSectionJumps() {
+      document.querySelectorAll(".content h2[id]").forEach(h2 => {
+        const id = h2.id;
+        const parts = [
+          { suffix: "-insight", label: "洞察" },
+          { suffix: "-analysis", label: "解析" },
+          { suffix: "-dialogue", label: "实录" },
+        ];
+        const items = parts
+          .map(p => ({ el: document.getElementById(id + p.suffix), label: p.label }))
+          .filter(x => x.el);
+        if (!items.length) return;
+        const nav = document.createElement("nav");
+        nav.className = "section-jump";
+        nav.setAttribute("aria-label", "本节导航");
+        items.forEach(({ el, label }) => {
+          const a = document.createElement("a");
+          a.href = "#" + el.id;
+          a.textContent = label;
+          nav.appendChild(a);
+        });
+        h2.insertAdjacentElement("afterend", nav);
+      });
+    }
+
+    // ---------- Speaker tags in dialogue ----------
+    function tagSpeakers() {
+      document.querySelectorAll(".timeline .step-body h3").forEach(h3 => {
+        const step = h3.closest(".step");
+        if (!step) return;
+        const name = h3.textContent.trim();
+        if (/Harrison/i.test(name)) step.classList.add("speaker-host");
+        else if (/Andrew/i.test(name)) step.classList.add("speaker-guest");
+      });
+    }
+
+    // ---------- Anchor links on h2/h3 ----------
+    function injectAnchors() {
+      document.querySelectorAll(".content h2[id], .content h3[id]").forEach(h => {
+        if (h.querySelector(".anchor")) return;
+        const a = document.createElement("a");
+        a.className = "anchor";
+        a.href = "#" + h.id;
+        a.setAttribute("aria-label", "段落链接");
+        a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
+        h.appendChild(a);
+      });
+    }
+
+    // ---------- Copy-to-clipboard on <pre> ----------
+    function injectCopyButtons() {
+      document.querySelectorAll(".content pre").forEach(pre => {
+        if (pre.classList.contains("mermaid")) return;
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "复制代码");
+        btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent ?? pre.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.classList.add("copied");
+            btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+            }, 1500);
+          } catch (e) { console.error(e); }
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    // ---------- Back to top ----------
+    function setupBackToTop() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      const toggle = () => {
+        btn.hidden = window.scrollY < 480;
+      };
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+    }
+
+    // ---------- Scroll progress ----------
+    function setupScrollProgress() {
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = h > 0 ? (document.documentElement.scrollTop / h * 100) : 0;
+        bar.style.width = p + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    // ---------- Boot ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      applyThemeIcon();
+      syncTocA11y(false);
+      tagSpeakers();
+      injectAnchors();
+      injectCopyButtons();
+      renderMermaid();
+      setupTocSpy();
+      setupScrollProgress();
+      setupBackToTop();
+    });
+  </script>
+</body>
+</html>

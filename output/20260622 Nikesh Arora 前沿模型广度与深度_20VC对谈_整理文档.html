@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light" style="--rec-label: '★ 推荐'">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>广度换消费、深度换企业：Nikesh Arora 谈代币降价、Mythos 与代理式安全</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FAFAF7;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F0;
+      --surface-3: #EFEEE8;
+      --text: #1A1A1A;
+      --text-muted: #4A4A45;
+      --text-subtle: #6B6B66;
+      --accent: #D97757;
+      --accent-hover: #C56843;
+      --accent-soft: #FBEEE6;
+      --accent-border: #F0D5C4;
+      --accent-strong: #A85533;
+      --border: #E5E4DC;
+      --border-strong: #CDCDC4;
+      --code-bg: #F5F2EC;
+      --code-text: #2A2A2A;
+      --info: #2563EB;
+      --info-soft: #EFF6FF;
+      --info-border: #BFDBFE;
+      --warn: #B45309;
+      --warn-soft: #FFFBEB;
+      --warn-border: #FDE68A;
+      --danger: #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #047857;
+      --success-soft: #ECFDF5;
+      --success-border: #A7F3D0;
+      --decision: #6D28D9;
+      --decision-soft: #F5F3FF;
+      --decision-border: #DDD6FE;
+      --shadow-sm: 0 1px 2px rgba(20, 14, 8, 0.04);
+      --shadow: 0 1px 2px rgba(20, 14, 8, 0.04), 0 4px 12px rgba(20, 14, 8, 0.06);
+      --shadow-lg: 0 8px 24px rgba(20, 14, 8, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --measure: 75ch;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+      --z-progress: 200;
+      --z-topbar: 100;
+      --z-drawer: 300;
+      --z-backdrop: 250;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1714;
+      --surface: #221E1A;
+      --surface-2: #2A2520;
+      --surface-3: #322C26;
+      --text: #F5F0E8;
+      --text-muted: #C8C0B6;
+      --text-subtle: #9A938A;
+      --accent: #E89572;
+      --accent-hover: #F2A87F;
+      --accent-soft: #3A2A22;
+      --accent-border: #5A3D2E;
+      --accent-strong: #F5B493;
+      --border: #2E2924;
+      --border-strong: #463F38;
+      --code-bg: #1E1B17;
+      --code-text: #E8E2D8;
+      --info: #93C5FD;
+      --info-soft: #1E2A3D;
+      --info-border: #2A4365;
+      --warn: #FBBF24;
+      --warn-soft: #332817;
+      --warn-border: #5C4520;
+      --danger: #FCA5A5;
+      --danger-soft: #3A1F1F;
+      --danger-border: #5C2A2A;
+      --success: #6EE7B7;
+      --success-soft: #1A3329;
+      --success-border: #1F5C45;
+      --decision: #C4B5FD;
+      --decision-soft: #2A1F40;
+      --decision-border: #4A3870;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    ::selection { background: var(--accent-soft); color: var(--accent-strong); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 8px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 1000;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* SVG sprite container (hidden) */
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .icon { display: inline-block; flex-shrink: 0; vertical-align: middle; stroke: currentColor; fill: none; }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: var(--z-progress);
+      transition: width 0.05s linear;
+    }
+
+    /* ============================================================
+       TOPBAR
+       ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      background: rgba(250, 250, 247, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .topbar { background: rgba(26, 23, 20, 0.85); }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      animation: brand-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes brand-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft); }
+      50%      { box-shadow: 0 0 0 7px transparent; }
+    }
+    .topbar-actions { display: flex; gap: 6px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      padding: 0;
+    }
+    .icon-btn .icon { width: 18px; height: 18px; stroke-width: 2; }
+    .icon-btn[hidden] { display: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 32px 24px 96px;
+    }
+    .content { min-width: 0; }
+    /* Unified reading measure: every top-level block shares one width so
+       paragraphs, callouts, diagrams, timelines, tables and code align to a
+       single clean column. Opt out with .full-bleed where truly needed. */
+    .content > * { max-width: var(--measure); }
+    .content > .full-bleed { max-width: none; }
+
+    /* ============================================================
+       TOC (desktop + mobile drawer)
+       ============================================================ */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .toc::-webkit-scrollbar { width: 6px; }
+    .toc::-webkit-scrollbar-track { background: transparent; }
+    .toc::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+    .toc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .toc-close { display: none; }
+    .toc-nav { display: flex; flex-direction: column; gap: 2px; }
+    .toc-nav a {
+      display: flex; align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 500;
+    }
+    .toc-nav a.lvl-3 { padding-left: 26px; font-size: 12.5px; }
+    .toc-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: var(--z-backdrop);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ============================================================
+       DOC HEADER
+       ============================================================ */
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-eyebrow {
+      display: inline-flex; align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-size: clamp(28px, 3vw + 16px, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .doc-subtitle {
+      font-size: clamp(15px, 0.6vw + 13px, 18px);
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      max-width: var(--measure);
+      text-wrap: pretty;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+    .doc-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    .doc-meta .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ============================================================
+       CONTENT (typography)
+       ============================================================ */
+    .content h1, .content h2, .content h3, .content h4 {
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+    .content h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 56px 0 16px;
+      padding-top: 8px;
+      position: relative;
+    }
+    .content h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      position: relative;
+    }
+    .content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .content > p,
+    .content > ul,
+    .content > ol,
+    .content > blockquote { max-width: var(--measure); }
+    .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
+    .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
+    .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
+    .content li { margin: 4px 0; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content em { color: var(--text-muted); }
+    .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Anchor links injected by JS on h2/h3 with id */
+    .anchor {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      color: var(--text-subtle);
+      opacity: 0;
+      transform: translateY(-1px);
+      transition: opacity 0.15s, color 0.15s;
+      border-bottom: none !important;
+      border-radius: var(--radius-sm);
+    }
+    .anchor .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* Images */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+    .content figure { margin: 20px 0; }
+    .content figure img { margin: 0; }
+    .content figcaption {
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Task lists (- [ ] / - [x]) */
+    .content .task-list-item { list-style: none; margin-left: -22px; }
+    .content .task-list-item-checkbox {
+      margin-right: 8px;
+      vertical-align: -2px;
+      accent-color: var(--accent);
+    }
+
+    /* Footnotes */
+    .content .footnote-ref a,
+    .content sup a {
+      font-size: 0.75em;
+      vertical-align: super;
+      border-bottom: none;
+      padding: 0 2px;
+    }
+    .content .footnotes {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       CODE
+       ============================================================ */
+    .content code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    .content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      position: relative;
+    }
+    .content pre code {
+      background: none; padding: 0; border: none;
+      color: var(--code-text);
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-subtle);
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .copy-btn .icon { width: 14px; height: 14px; stroke-width: 2; }
+    .copy-btn.copied { color: var(--success); border-color: var(--success-border); opacity: 1; }
+
+    /* ============================================================
+       TIMELINE / STEPS
+       ============================================================ */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-border), var(--border));
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 8px 4px;
+      position: relative;
+      border-radius: var(--radius);
+      transition: background-color 0.15s;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .step.done .step-num { background: var(--accent); color: #fff; }
+    .step-body { padding-top: 6px; min-width: 0; }
+    .step-body h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: var(--measure); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: var(--measure);
+    }
+    .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
+    .callout-body { min-width: 0; }
+    .callout-title { font-weight: 600; margin: 0 0 4px; font-size: 14px; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout-body code { background: rgba(0,0,0,0.04); }
+    [data-theme="dark"] .callout-body code { background: rgba(255,255,255,0.06); }
+
+    .callout-info     { background: var(--info-soft);     border-color: var(--info-border);     color: var(--text); }
+    .callout-info     .callout-title, .callout-info     .callout-icon { color: var(--info); }
+    .callout-warn     { background: var(--warn-soft);     border-color: var(--warn-border);     color: var(--text); }
+    .callout-warn     .callout-title, .callout-warn     .callout-icon { color: var(--warn); }
+    .callout-danger   { background: var(--danger-soft);   border-color: var(--danger-border);   color: var(--text); }
+    .callout-danger   .callout-title, .callout-danger   .callout-icon { color: var(--danger); }
+    .callout-success  { background: var(--success-soft);  border-color: var(--success-border);  color: var(--text); }
+    .callout-success  .callout-title, .callout-success  .callout-icon { color: var(--success); }
+    .callout-decision { background: var(--decision-soft); border-color: var(--decision-border); color: var(--text); }
+    .callout-decision .callout-title, .callout-decision .callout-icon { color: var(--decision); }
+    .callout-tip      { background: var(--accent-soft);   border-color: var(--accent-border);   color: var(--text); }
+    .callout-tip      .callout-title, .callout-tip      .callout-icon { color: var(--accent-strong); }
+
+    /* ============================================================
+       KEY-POINT HIGHLIGHT
+       ============================================================ */
+    .highlight {
+      background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+      border-left: 4px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: var(--measure);
+    }
+    .highlight-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       MERMAID
+       ============================================================ */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .mermaid { text-align: center; min-height: 80px; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .mermaid:not([data-processed]) {
+      opacity: 0.4;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ============================================================
+       PROS / CONS
+       ============================================================ */
+    .proscons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .proscons-col {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .proscons-col h4 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proscons-col ul { margin: 0; padding-left: 18px; }
+    .proscons-col li { margin: 6px 0; }
+    .pros { background: var(--success-soft); border-color: var(--success-border); }
+    .pros h4 { color: var(--success); }
+    .cons { background: var(--danger-soft); border-color: var(--danger-border); }
+    .cons h4 { color: var(--danger); }
+
+    /* ============================================================
+       COMPARISON CARDS
+       ============================================================ */
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .compare-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .compare-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .compare-card.recommended::before {
+      content: var(--rec-label, "★ Recommended");
+      position: absolute; top: -10px; right: 14px;
+      background: var(--accent); color: #fff;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+    }
+    .compare-card h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); text-transform: none; letter-spacing: normal; }
+    .compare-card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+    /* ============================================================
+       COLLAPSIBLE
+       ============================================================ */
+    details.collapsible {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 16px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    details.collapsible[open] { box-shadow: var(--shadow-sm); }
+    details.collapsible > summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 500;
+      color: var(--text);
+      list-style: none;
+      display: flex; align-items: center; gap: 10px;
+      user-select: none;
+      transition: background 0.15s;
+      min-height: 44px;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::before {
+      content: "›";
+      display: inline-block;
+      transition: transform 0.18s;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    details.collapsible[open] > summary::before { transform: rotate(90deg); }
+    .collapsible-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+    .collapsible-body > *:first-child { margin-top: 12px; }
+
+    /* ============================================================
+       TABLES (wrapped via .table-wrap or naturally responsive)
+       ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      margin: 0;
+    }
+    /* Standalone tables (not inside .table-wrap) keep visual border */
+    .content > table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      display: block;
+      overflow-x: auto;
+    }
+    .content th {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .content td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    /* ============================================================
+       BLOCKQUOTE
+       ============================================================ */
+    .content blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-border);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       FOCUS-VISIBLE (a11y)
+       ============================================================ */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .toc-nav a:focus-visible { outline-offset: -2px; }
+    .icon-btn:focus-visible { outline-offset: 2px; }
+    .anchor:focus-visible { opacity: 1; outline-offset: 2px; }
+    details.collapsible > summary:focus-visible { outline-offset: -2px; }
+
+    /* ============================================================
+       HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
+       ============================================================ */
+    @media (hover: hover) {
+      .back-to-top:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+      .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+      .compare-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow); }
+      .compare-card.recommended:hover { border-color: var(--accent); }
+      .content tr:hover td { background: var(--surface-2); }
+      details.collapsible > summary:hover { background: var(--surface-2); }
+      .step:hover { background: var(--surface-2); }
+      .step:hover .step-num { transform: scale(1.05); }
+      .anchor:hover { color: var(--accent); }
+      .content h2:hover .anchor,
+      .content h3:hover .anchor { opacity: 1; }
+      .copy-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+      .content pre:hover .copy-btn { opacity: 1; }
+    }
+    /* On touch devices, copy-btn is always visible at low opacity */
+    @media (hover: none) {
+      .copy-btn { opacity: 0.6; }
+      .anchor { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       MOBILE (≤900px) — TOC becomes off-canvas drawer
+       ============================================================ */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px 80px;
+      }
+      .topbar-inner { padding: 8px 12px; }
+      .doc-header { margin-bottom: 28px; padding-bottom: 20px; }
+
+      .toc-mobile-trigger { display: inline-flex !important; }
+
+      .toc {
+        position: fixed;
+        top: 0; left: 0;
+        width: min(300px, 82vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        background: var(--surface);
+        z-index: var(--z-drawer);
+        padding: 16px 8px 24px 16px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc-head { padding: 4px 4px 12px 8px; }
+      .toc-close {
+        display: inline-flex !important;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+      }
+      .toc-close .icon { width: 18px; height: 18px; stroke-width: 2; }
+      body.toc-open .toc { transform: translateX(0); }
+      body.toc-open .toc-backdrop {
+        display: block;
+        opacity: 1;
+      }
+      .toc-backdrop {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.toc-open .toc-backdrop { pointer-events: auto; }
+      body.toc-open { overflow: hidden; }
+    }
+    @media (min-width: 901px) {
+      .toc-mobile-trigger { display: none !important; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION (a11y)
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html { scroll-behavior: auto; }
+      .brand-dot { animation: none; box-shadow: 0 0 0 4px var(--accent-soft); }
+    }
+
+    /* ============================================================
+       LAYER HEADINGS (对谈三层结构)
+       ============================================================ */
+    .layer-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .layer-heading::before {
+      flex-shrink: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .layer-insight::before {
+      content: "洞察";
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+    }
+    .layer-analysis::before {
+      content: "解析";
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .layer-dialogue::before {
+      content: "实录";
+      background: var(--info-soft);
+      color: var(--info);
+      border: 1px solid var(--info-border);
+    }
+    .layer-insight { font-size: 0; }
+    .layer-insight::before { font-size: 11px; }
+    .layer-insight .anchor { font-size: 14px; }
+    .layer-analysis { font-size: 0; }
+    .layer-analysis::before { font-size: 11px; }
+    .layer-analysis .anchor { font-size: 14px; }
+    .layer-dialogue { font-size: 0; }
+    .layer-dialogue::before { font-size: 11px; }
+    .layer-dialogue .anchor { font-size: 14px; }
+    .section-insight { margin-top: 12px; margin-bottom: 20px; }
+    .section-insight .callout-body p { margin: 0; }
+
+    /* Section jump pills (injected by JS) */
+    .section-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 20px;
+      max-width: var(--measure);
+    }
+    .section-jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+    }
+    .section-jump a:hover,
+    .section-jump a:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Speaker differentiation in dialogue timeline */
+    .step.speaker-host .step-num {
+      border-color: var(--info);
+      color: var(--info);
+      background: var(--info-soft);
+    }
+    .step.speaker-guest .step-num {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .step.speaker-host .step-body h3 { color: var(--info); }
+    .step.speaker-guest .step-body h3 { color: var(--accent-strong); }
+
+    /* Meta panel + table URL wrap */
+    .meta-panel { margin-bottom: 32px; }
+    .toc-nav .toc-meta-link {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-subtle);
+      font-size: 12.5px;
+    }
+    .table-wrap td a { word-break: break-all; }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: opacity 0.2s, transform 0.2s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .back-to-top .icon { width: 20px; height: 20px; stroke-width: 2; }
+    .back-to-top:not([hidden]) { opacity: 1; transform: translateY(0); }
+    .back-to-top[hidden] { display: inline-flex; opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+    /* ============================================================
+       PRINT
+       ============================================================ */
+    @media print {
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress, .back-to-top, .section-jump { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      a { color: #000; }
+      .content pre, .callout, .compare-card, .step, .diagram { break-inside: avoid; }
+      .doc-footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">跳到正文</a>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- SVG icon sprite (Lucide-style) -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-decision" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0 4 4 0 0 1 1.59 2h2.99a4 4 0 0 1 1.6-2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  </svg>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn toc-mobile-trigger" id="toc-toggle" onclick="openToc()" aria-label="目录" title="目录">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>笔记</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-printer"/></svg>
+        </button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use id="theme-icon-use" href="#i-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC drawer backdrop (mobile) -->
+  <div class="toc-backdrop" id="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-head">
+        <p class="toc-title">目录</p>
+        <button class="toc-close" onclick="closeToc()" aria-label="关闭">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#核心导读" class="lvl-2">核心导读</a>
+        <a href="#一-个人品牌-vs-产品-谁真正驱动谁" class="lvl-2">一、个人品牌 vs 产品：谁真正驱动谁</a>
+        <a href="#二-前沿模型的广度与深度之分" class="lvl-2">二、前沿模型的广度与深度之分</a>
+        <a href="#三-半数企业仍用错-ai-重设计工作流才是主战场" class="lvl-2">三、半数企业仍用错 AI：重设计工作流才是主战场</a>
+        <a href="#四-有意见的软件-ai-应用-vs-无意见的-saas" class="lvl-2">四、有意见的软件：AI 应用 vs 无意见的 SaaS</a>
+        <a href="#五-代币经济学-算力稀缺-消费补贴与企业账单" class="lvl-2">五、代币经济学：算力稀缺、消费补贴与企业账单</a>
+        <a href="#六-价值沉淀-基础设施-模型-记忆与应用层" class="lvl-2">六、价值沉淀：基础设施、模型、记忆与应用层</a>
+        <a href="#七-claude-mythos-网络安全的加速剂与攻防不对称" class="lvl-2">七、Claude Mythos：网络安全的加速剂与攻防不对称</a>
+        <a href="#八-ai-护栏与政府-探索中的国家安全问题" class="lvl-2">八、AI 护栏与政府：探索中的国家安全问题</a>
+        <a href="#九-若今天重建-palo-alto-waymo-式还是-tesla-式" class="lvl-2">九、若今天重建 Palo Alto：Waymo 式还是 Tesla 式</a>
+        <a href="#十-ai-eio-与组织转型-达尔文式竞争" class="lvl-2">十、AI EIO 与组织转型：达尔文式竞争</a>
+        <a href="#十一-代理式安全-为何所有代理流量需要网关" class="lvl-2">十一、代理式安全：为何所有代理流量需要网关</a>
+        <a href="#十二-saas-抛售-平台化与网安创业空间" class="lvl-2">十二、SaaS 抛售、平台化与网安创业空间</a>
+        <a href="#十三-中国开源模型-任务专用模型与编排层" class="lvl-2">十三、中国开源模型、任务专用模型与编排层</a>
+        <a href="#十四-财富-谈判力与如何做父亲" class="lvl-2">十四、财富、谈判力与如何做父亲</a>
+        <a href="#十五-快问快答-fomo-沉没成本与人生幸福" class="lvl-2">十五、快问快答：FOMO、沉没成本与人生幸福</a>
+        <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
+        <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main">
+      <header class="doc-header">
+        <span class="doc-eyebrow">整理笔记</span>
+        <h1 class="doc-title">广度换消费、深度换企业：Nikesh Arora 谈代币降价、Mythos 与代理式安全</h1>
+        <p class="doc-subtitle">前沿大模型在消费端拼广度、在企业端拼深度——消费者容忍误报，企业代理场景零容忍。</p>
+        <div class="doc-meta">
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
+            Nikesh Arora on the Frontier Model Problem: Breadth vs Depth | The Future of Token Costs | Memory Becoming the Moat
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
+            2026-06-22
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+            ~26 分钟阅读
+          </span>
+        </div>
+      </header>
+
+      <!-- CONTENT_START -->
+<h2 id="核心导读">核心导读</h2>
+
+<div class="highlight">
+  <p>前沿大模型在<strong>消费端拼广度、在企业端拼深度</strong>——消费者容忍误报，企业代理场景零容忍；多数公司仍在用 AI 给旧流程「打补丁」，而非用 AI 重设计工作流；<strong>代币（token）长期应降至现价约十分之一</strong>，算力稀缺推高了企业侧成本，但<strong>记忆与上下文</strong>才是模型与应用层争夺的护城河；对 <strong>Palo Alto Networks</strong> 而言，<strong>Anthropic Mythos</strong> 把六年漏洞扫描压缩到六周，既武装攻击者也倒逼防御升级——代理时代必须经<strong>统一网关</strong>治理流量，错过三次技术浪潮就会出局，而网络安全赛道因攻击面永新仍留风险资本级回报空间。</p>
+</div>
+
+<p><strong>品牌与产品。</strong> <strong>Nikesh Arora</strong> 认为差异化产品养品牌，同质化商品才靠品牌开路；<strong>Google</strong>、<strong>Sun Microsystems</strong>、<strong>Yahoo</strong> 史证产品死则品牌亡。<strong>Harry Stebbings</strong> 追问个人品牌是否加速器——<strong>Nikesh Arora</strong> 反论：他经营的是业务，不是人设。</p>
+
+<p><strong>企业 AI 与工作流。</strong> 超半数企业仍把 AI 嵌进现有 <strong>ERP</strong>、销售、人力流程，做 <strong>20% 扫描发票</strong>式边际提效；赢家应让 AI 在招聘等环节承担 <strong>80% 判断</strong>。<strong>SaaS</strong> 无意见，<strong>AI 应用有意见</strong>——营销助手会直接说「文案很烂、不符合品牌调性」。<strong>Nikesh</strong> 预测三年内 <strong>G&amp;A（一般及管理）</strong> 职能人力约减半，但<strong>技术岗与销售岗会增加</strong>；代币按「审慎使用、追踪用量、用得好不封顶」管理。</p>
+
+<p><strong>代币、算力与价值归属。</strong> 算力不足、成本为两三年前 <strong>2–4 倍</strong>；超半数算力喂给<strong>亏损的消费端 ChatGPT 式免费查询</strong>，企业编码与应用被迫买单。<strong>Nikesh</strong> 判断 <strong>3–5 年</strong>代币价格大幅下降；广告难扩总饼，<strong>交易型收入</strong>（更高转化、更低营销浪费）更可能补贴消费 AI。价值在基础设施（稀缺赚钱）、前沿模型与<strong>带记忆的企业上下文</strong>之间分配——模型公司正<strong>积极主动</strong>把消费记忆做进模型以筑<strong>护城河</strong>。</p>
+
+<p><strong>安全、组织与人生收束。</strong> <strong>Mythos</strong> 六周发现需 <strong>5–6 年</strong>人工才能找到的漏洞，防御侧误报仍高，需人机评测与沙箱；<strong>Waymo</strong>（全自主）vs <strong>Tesla FSD</strong>（分段自动化）隐喻产品战略——现有客户不能接受「80% 正确再等三年」。内部 <strong>AI EIO</strong> 双周会驱动 <strong>15–20</strong> 名技术负责人达尔文式竞争；六个月前收购<strong>代理流量网关</strong>押注<strong>代理式安全</strong>。对<strong>中国开源模型</strong>：开源本身不可怕，<strong>国家级后门</strong>才需警惕。财富与成功带来「随时离场」的谈判力而非变软弱；育儿靠身教；快问快答警示<strong>错失恐惧（FOMO）</strong>与沉没成本谬误。</p>
+
+<h2 id="一-个人品牌-vs-产品-谁真正驱动谁">一、个人品牌 vs 产品：谁真正驱动谁</h2>
+
+<h3 id="一-个人品牌-vs-产品-谁真正驱动谁-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>差异化产品养品牌；纯 commodity（同质化商品）才靠品牌开路——<strong>Nikesh Arora</strong> 经营公司，不经营人设。</p></div>
+</div>
+<h3 id="一-个人品牌-vs-产品-谁真正驱动谁-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry Stebbings</strong> 开场调侃上次对谈时自己断食 <strong>22 小时</strong>「又饿又暴躁」，<strong>Nikesh Arora</strong> 称完全失忆、乐于再访。两人共识：远程播客不如现场——<strong>Nikesh</strong> 已要求嘉宾飞伦敦，代价是加州来客常 jet-lagged。</p>
+<p><strong>Marc Andreessen</strong> 式自省被改写为可执行版本：<strong>「我怎样才能让这件事更好？」</strong>——<strong>Nikesh</strong> 每日问增量改进，每三年问激进式改进；「并非每件事都能变好，但只能尽力，试得多成功概率更高。」</p>
+<p><strong>Harry</strong> 认为个人品牌即业务；<strong>Nikesh</strong> 反驳：好产品加好公司，品牌自然长存；好品牌配烂产品，品牌照样崩盘。他援引 <strong>Google</strong> 首席营销官五年经历：<strong>Sun Microsystems</strong> 曾是业界宠儿，今已不存在；<strong>Yahoo</strong> 品牌仍响，市值却是 <strong>Google</strong> 的小数点后两位。</p>
+<p>光谱两端：<strong>Google Search</strong> 级差异化产品自建品牌；<strong>Evian</strong> 级同质化商品只靠品牌。<strong>Harry</strong> 认为噪音时代品牌是加速器；<strong>Nikesh</strong> 承认存在光谱，企业须自选站位——同质化则品牌优先，差异化则产品优先。</p>
+<h3 id="一-个人品牌-vs-产品-谁真正驱动谁-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「我觉得你的个人品牌就是你的业务。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「我不像你那样思考——你以此为生。我想的是经营我的公司。如果你做出好产品、好公司，人们喜欢你的产品，品牌最终会留下来。你也可以有好品牌、烂产品、烂执行——品牌会一塌糊涂。我把逻辑反过来。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「今天还是这样吗？品牌可以是如此强的加速器……」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「我在 <strong>Google</strong> 待了很多年，当过五年首席营销官。科技史上有很多好品牌却死了的公司——记得 <strong>Sun Microsystems</strong> 吗？30 年前是宠儿，现在不存在。为什么？品牌死了，或产品烂了。<strong>Yahoo</strong> 呢？好品牌，远在 <strong>Google</strong> 之前——我觉得它的体量可能只是 <strong>Google</strong> 的两位小数。产品是品牌的根基。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="二-前沿模型的广度与深度之分">二、前沿模型的广度与深度之分</h2>
+
+<h3 id="二-前沿模型的广度与深度之分-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>消费端要广度与首选品牌，企业代理要深度与零误报——<strong>Waymo</strong> 是最佳代理产品隐喻。</p></div>
+</div>
+<h3 id="二-前沿模型的广度与深度之分-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Nikesh Arora</strong> 发推：「前沿模型问题本质是 <strong>breadth vs depth</strong>。」他持续听 <strong>Harry Stebbings</strong> 播客并盯市场，因这决定 <strong>Palo Alto Networks</strong> 如何 build。</p>
+<p><strong>消费端（breadth）</strong>：<strong>OpenAI</strong>、<strong>Google</strong>、<strong>Anthropic</strong> 模型每隔几天 leapfrog。消费者在 <strong>ChatGPT</strong> 里问问题「很有帮助」——容忍 <strong>false positive</strong>，因为「中间总有一个真人做判断」。<strong>Nikesh</strong> 用 <strong>Gemini</strong> 四分钟生成投资备忘录，「大致准确，略改即可 passable」——breadth 够就成 go-to，像 <strong>YouTube</strong> 之于视频、<strong>Google</strong> 之于搜索；前沿模型朋友追 consumer brand，误报「不重要」。</p>
+<p><strong>企业端（depth）</strong>：若 agent 独立决策并行动，<strong>zero tolerance for false positives</strong>。</p>
+<p><strong>Waymo</strong> 类比：迄今最大<strong>代理式产品</strong>——用 AI 取代司机，何时转弯、停车皆机器学习决策；为替换人类司机所需的边界场景训练可能耗资<strong>数百亿美元</strong>。他们本可用「等价 AI 模型」，却堆叠上下文、专有数据、边界案例——数据不在互联网上，不能把下一代 <strong>Anthropic</strong> 模型塞进 <strong>Mercedes</strong> 说「开回家」——那是<strong>深度</strong>问题。</p>
+<p>张力：前沿模型要消费端注意力（驱动后训练与模型品牌）；真正企业收入来自需大量上下文的用例——<strong>编码</strong>是突出例子（普遍活动、人人数据可训）。其余垂直场景仍待发现。</p>
+<h3 id="二-前沿模型的广度与深度之分-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「你那条推文 masterful——『前沿模型问题是 breadth vs depth』。解释一下？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「消费端是广度问题——它给我写了投资备忘录，很酷，我本要雇银行家和分析师、花几天，四分钟搞定。广度到了，你就成首选品牌。我们的前沿模型厂商在追消费端品牌，误报无所谓。企业端？误报非常重要——想象代理独立决策并行动，你对误报零容忍。拿 <strong>Waymo</strong> 说：我看它是最大的代理产品——你替换了一个叫司机的人类。想想边界场景训练花了多少——几十亿？要把一个用例往死里训。<strong>深度</strong>——你需要围绕模型的上下文与智能，才真正对代理场景有用。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="三-半数企业仍用错-ai-重设计工作流才是主战场">三、半数企业仍用错 AI：重设计工作流才是主战场</h2>
+
+<h3 id="三-半数企业仍用错-ai-重设计工作流才是主战场-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>超半数企业仍在给旧流程「打 AI 补丁」；长期赢家用 AI <strong>从根本上重设计</strong>公司，而非边际适配。</p></div>
+</div>
+<h3 id="三-半数企业仍用错-ai-重设计工作流才是主战场-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry Stebbings</strong> 问：会被前沿模型锁死，还是多数企业工作流用开源更划算？<strong>Nikesh Arora</strong>：<strong>超过半数</strong>企业仍没搞对 AI 用法——忙着把 AI 塞进现有业务做法：「今天怎么做，加一点 AI，边际更高效。」</p>
+<p>真正机会：<strong>用 AI 从根本上重设计工作流</strong>。长期赢家是借 AI 重设计公司的人，不是给现有流程边际贴 AI 的人。</p>
+<p><strong>Harry</strong> 替大企业 CEO 问「具体做什么？brainstorming？」<strong>Nikesh</strong> 分两类：</p>
+<p>1. <strong>现有 SaaS-ified 流程</strong>（<strong>ERP</strong>、销售团队、人力）：软件不 intelligent，只是 coded input/output。 2. <strong>AI 参与判断的新流程</strong>：招聘——把每份 CV 给 AI，筛 <strong>20 人</strong>面试、生成针对 <strong>Harry Stebbings</strong> 的 <strong>10 个追问</strong>（因同事只问了五个）。需 <strong>relinquish human control</strong>，让 AI 做 <strong>80% thinking</strong>——现状只是扫发票、abstract data、「快 <strong>20%</strong>」。</p>
+<p><strong>Harry</strong> 举 <strong>1700 人</strong> petition 反对鼠标键盘追踪——<strong>Nikesh</strong> 区分两点：mass collection of data to inform AI（摄像头拍叠衣服训练 physical AI）危险；但在 enterprise，marketing 等可 relinquish control——marketing training data <strong>by definition 已在 public domain</strong>，frontier models 已是世界最好 marketing DB；问题是有 <strong>600 人</strong> marketing 却不一致 deliver tone of voice——AI 可判「这与 brand 不一致」。</p>
+<p><strong>Harry</strong> 追问「600 人 marketing？」<strong>Nikesh</strong>：「你有 <strong>2.1 万</strong>人公司呢——不会真是 600，但 rule of thumb：<strong>未来三年 G&amp;A 类活动人力大约减半</strong>（marketing、finance、HR）——process management 可被 intelligent AI 替代；<strong>SaaS applications will give way to AI applications</strong>。」</p>
+<h3 id="三-半数企业仍用错-ai-重设计工作流才是主战场-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「超过半数企业仍没搞对——我们忙着把 AI 嵌进现有业务做法。机会是<strong>从根本上重设计工作流</strong>。长期赢家：借 AI 重设计公司，不是给现有流程边际贴 AI。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「我们 willing give up human control 吗？1700 人 petition 不让 track mouse……」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「两点不同。大规模采集数据训练 AI 危险——有人用摄像头拍叠衣服、熨衣服来训练实体 AI。企业侧：营销——训练营销模型所需数据按定义已在公共领域。我有 600 人营销，不确定他们能否一致传达品牌调性——AI 会说『这与品牌不一致』。经验法则：未来三年 <strong>G&amp;A 类人力大约减半</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="四-有意见的软件-ai-应用-vs-无意见的-saas">四、有意见的软件：AI 应用 vs 无意见的 SaaS</h2>
+
+<h3 id="四-有意见的软件-ai-应用-vs-无意见的-saas-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>SaaS 无意见；AI 应用会评判、推荐、替人干活——技术岗反增，销售岗亦增。</p></div>
+</div>
+<h3 id="四-有意见的软件-ai-应用-vs-无意见的-saas-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>「AI 应用会有主见」</strong>含义：AI 营销/人力助手会说「你的文案很烂，不符合品牌调性，我建议……」——有<strong>主见</strong>让普通员工更聪明，故需更少人头。</p>
+<p><strong>Harry</strong> 反驳：marketing 团队会产出更多 copy、覆盖更多渠道。<strong>Nikesh</strong> 承认可能错在 <strong>technical resources</strong>——<strong>不会</strong>因 AI 总人更少；各团队 clamor for more <strong>AI-savvy resources</strong>、prompt frontier models、build <strong>harnesses</strong>、bring proprietary data、要更多 compute/storage。</p>
+<p>销售亦增：product 好就要更多人 <strong>pound the pavement</strong>——他上周欧洲见 <strong>20</strong> 客户，一半仍不知 <strong>Palo Alto</strong> 二十年产品线；若内部 arcane software 够 intelligent 会告诉他该做什么。</p>
+<p><strong>代币分配</strong>：<strong>Meta</strong>、<strong>Uber</strong>、<strong>Microsoft</strong> 等有预算 vs 创意式放开。<strong>Nikesh</strong> 模型：<strong>90%</strong> 企业员工不精通 AI，无大学可送——达尔文式筛选时刻。<strong>Brian Armstrong</strong>、<strong>Jack Dorsey</strong> 裁减组织 <strong>30–40%</strong> 重建是一种；<strong>Palo Alto</strong> 渐进路线：只通过<strong>黑客马拉松</strong>招人，自然流失约 <strong>2%/月</strong>，替换为 AI 熟手——<strong>12 个月</strong>转型 <strong>20–25%</strong>，<strong>3 年</strong>有望足够。</p>
+<p><strong>代币最大化</strong>风险：最聪明员工用量可达平均 <strong>20 倍</strong>——打地鼠式限代币会伤害最好的人。<strong>顶尖人才</strong>会把「最贵前沿模型 + 最大预算」当员工福利。</p>
+<p><strong>Build vs buy</strong>：generic AI marketing/HR/<strong>ERP</strong> 等 wait <strong>12–24 个月</strong> shelf；<strong>只 build proprietary</strong>——unique distinguished knowledge。<strong>代币</strong>：非 free-for-all，<strong>use judiciously</strong>，track usage，用得好不 constrain，离谱则 cap。</p>
+<p><strong>Harry</strong> 引某领袖：年花 <strong>3 亿</strong>美元 <strong>Anthropic</strong> 给 dev，约 <strong>developer salary spend 的 3.8%</strong>——若维持则 <strong>Anthropic/OpenAI</strong> 估值 grossly overvalued；若到 <strong>20%</strong> 则 undervalued；若如 <strong>Macquarie</strong> 某分析师说「tokens 与 salary 等量」则 grossly undervalued。</p>
+<h3 id="四-有意见的软件-ai-应用-vs-无意见的-saas-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「『AI applications will have opinions』——对用户意味着什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「方方面面。你的 AI 营销助手会说：『我看了你的文案，很烂，不够好，不符合品牌调性，我建议……』这叫有<strong>主见</strong>。普通员工会聪明很多——就不需要那么多人了。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="五-代币经济学-算力稀缺-消费补贴与企业账单">五、代币经济学：算力稀缺、消费补贴与企业账单</h2>
+
+<h3 id="五-代币经济学-算力稀缺-消费补贴与企业账单-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>算力不够且贵 <strong>2–4 倍</strong>；<strong>Nikesh Arora</strong> 认为长期代币应为现价约 <strong>1/10</strong>，但未来十年算力需求仍巨大。</p></div>
+</div>
+<h3 id="五-代币经济学-算力稀缺-消费补贴与企业账单-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Nikesh</strong> 把 <strong>3.8% vs 15.8% vs salary-parity</strong> 放更大图景：<strong>unequivocally not enough compute</strong>，买不到，成本为 <strong>2–3 或 4 倍</strong>于两年前——scarcity + excess cost <strong>forcing pricing</strong>。</p>
+<p><strong>超过半数算力</strong>喂给消费端（<strong>ChatGPT</strong>、<strong>Claude</strong>、<strong>Gemini</strong> 免费日常查询）——<strong>本质亏损</strong>，数十亿人查询，<strong>吸走一半算力却无回报</strong>——压力转到企业编码/应用，须付费直到消费端有交易/广告模式——但算力需求与成本是 search/<strong>YouTube</strong> 时代约 <strong>10 倍</strong>。</p>
+<p><strong>Long-term token pricing should be 1/10 of today</strong>——价格降则 consumption 升；<strong>3–5 年</strong>见 reduction。Consumer use 终将被 frontier 公司 <strong>constrain</strong>——post-training data 够多、每 user unprofitable。</p>
+<p><strong>Advertising</strong> 能否救 consumer？<strong>Nikesh</strong> 2004 进 <strong>Google</strong> 时占全球广告 <strong>2%</strong>，全球 <strong>5000–6000 亿</strong>；online 现约 <strong>70%</strong> total ad，总 pie 年增仅 <strong>3–5%</strong>——<strong>60–70% 已被 online 拿走</strong>，除非 marketing spend explosion，否则 consumer AI 难靠广告 profitable。</p>
+<p><strong>Transaction revenue</strong> 机会更大：online ad conversion <strong>~1–1.5%</strong>（best breed <strong>7–10%</strong>），平均 <strong>85–90% marketing wasted</strong>。AI 有 memory + context → targeting 更 smart → conversion up。Consumer goods list price 中 <strong>5–8%</strong> 是商品本身，<strong>92%</strong> 是 distribution + marketing——AI 让 marketing efficient，更多 dollar 以 <strong>transaction</strong> 形式进 online world。</p>
+<p><strong>为何前沿未降价？</strong> 模型公司在<strong>价值最大化</strong>而非代币最大化——万亿估值下下一波 <strong>1000 亿</strong>算力从哪来？金融市场难再扛，须可持续商业模式、毛利——最快增长的经济项（代币）<strong>向我们收更多</strong>。</p>
+<p><strong>Efficiency</strong> 仍会进步：memory/compute 更高效；<strong>不需要 Fable 5 或 Mythos 5 做今天 90% 的 AI 工作</strong>——两三年前模型 capability 对多数 query 已够，只是 compute inefficient；R&amp;D 成本转嫁 token price，但 <strong>token prices come down</strong>；<strong>next 10 years compute need huge</strong>；frontier models 仍有望 capture significant future economic value。</p>
+<p><strong>Infrastructure bubble？</strong> <strong>Nikesh</strong> 问：<strong>physics 何时 kick in</strong>——数据中心、能源、铜短缺；<strong>Pantanos</strong> 海上数据中心、<strong>Elon</strong> 太空建中心等创意——或出现 digestion period：demand 在但 execute capacity 受 physics 限，infra 玩家 over-build。Doesn't remove compute need。部分 model 公司 outstripped 他人 build frontier 能力——frontier player 或在 settling。<strong>Application layer</strong>  simplistic——首次有 memory + applications understand context；enterprise 尚未；coding models 须懂 individual enterprise/human context 才 effective。</p>
+<h3 id="五-代币经济学-算力稀缺-消费补贴与企业账单-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「长期<strong>代币定价应是今天的十分之一</strong>。到那时，消费会更多。未来 <strong>3–5 年</strong>代币价格会下降。超过<strong>半数算力</strong>去喂消费端——<strong>本质亏损</strong>。<strong>ChatGPT</strong>、<strong>Claude</strong>、<strong>Gemini</strong> 免费——数十亿人，吸走一半算力，无回报。压力在另一半——企业编码得付钱。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「代币便宜了，为何前沿模型不更便宜？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「前沿模型公司在<strong>价值最大化</strong>，不是代币最大化——万亿估值，下一波千亿算力从哪来？唯一杠杆：对增长最快的业务多收费。<strong>我仍然认为，今天人们用 AI 做的 90% 的事，不需要 Fable 5 或 Mythos 5。</strong>」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="六-价值沉淀-基础设施-模型-记忆与应用层">六、价值沉淀：基础设施、模型、记忆与应用层</h2>
+
+<h3 id="六-价值沉淀-基础设施-模型-记忆与应用层-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>Infra 因稀缺赚钱；价值在 frontier model 与企业 context 之间分享——<strong>memory around consumption</strong> 是下一战场。</p></div>
+</div>
+<h3 id="六-价值沉淀-基础设施-模型-记忆与应用层-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry</strong>（VC 视角）：不知 value accrue 在 infra、models 还是 apps——<strong>Nikesh</strong> 同意。<strong>Infra making money</strong>，比以往贵，trillion market caps 因 compute scarcity + need for speed。</p>
+<p><strong>应用层</strong>说法过于简化——应用现已能理解上下文（消费端已见，企业端未）。<strong>编码模型</strong>须懂企业/个人上下文。<strong>价值</strong>在前沿模型与企业上下文之间分享。<strong>前沿 AI 模型</strong>未来 <strong>1–2 年</strong>会花更多精力<strong>围绕消费行为构建记忆</strong>——不只扩大上下文窗口：常用模型开始「你昨天问了这个……是否结合我对你的一切了解来回答？」——<strong>30/60/90 天</strong>个性化交互需大量存储；上下文越多 → 粘性 → <strong>护城河</strong>。</p>
+<p><strong>编排层</strong> vs 模型记忆：<strong>Nikesh</strong> 不确定投资人该押哪——前沿模型正<strong>积极主动</strong>把记忆做进模型（因知这是护城河）；若不用模型记忆，模型可能不可用；编排层今日<strong>资金不如模型</strong>——风险：<strong>被单一模型锁定</strong>，难以保持模型无关，换模型须重设计整个应用。</p>
+<h3 id="六-价值沉淀-基础设施-模型-记忆与应用层-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「价值沉淀在基础设施、模型还是应用？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「<strong>基础设施在赚钱</strong>。比以往任何时候都贵——万亿市值，算力稀缺。<strong>价值在前沿模型与企业侧上下文之间分享</strong>。前沿 AI 模型——水晶球——未来一两年会花更多时间<strong>围绕消费行为构建记忆</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「围绕消费构建记忆——扩大上下文窗口？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「不止于此。消费端交互：记得你昨天问了什么……是否结合我对你的一切了解来回答？过去 <strong>30、60、90 天</strong>——要存大量信息。关于我的上下文越多 → 答案越容易 → <strong>粘性 → 护城河</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="七-claude-mythos-网络安全的加速剂与攻防不对称">七、Claude Mythos：网络安全的加速剂与攻防不对称</h2>
+
+<h3 id="七-claude-mythos-网络安全的加速剂与攻防不对称-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Mythos</strong> 六周发现 <strong>5–6 年</strong>级漏洞；进攻够用、自动防御不够——倒逼客户加固，利好专业网安。</p></div>
+</div>
+<h3 id="七-claude-mythos-网络安全的加速剂与攻防不对称-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry</strong> 问 <strong>Mythos</strong> 是蚕食还是成就业务——<strong>Nikesh</strong>：<strong>网络安全的加速剂</strong>。</p>
+<p><strong>Mythos</strong>  moment：模型被 train「great code written」，也能 <strong>find bad code</strong>——枪调转方向：「天哪，你们 code 这么多 flaws。」Like every model，<strong>false positives</strong>——offensive actor 对 <strong>20VC</strong> 等企业 external scan：websocket open、IP mess up → daisy chain vulnerabilities。<strong>Defensive</strong> 不够：不能「找到 vulnerability → auto patch」——可能 patch <strong>30%</strong> 误报项，<strong>blow up infrastructure</strong>。</p>
+<p><strong>Palo Alto</strong> 做法：respect <strong>Mythos</strong>，run against own code——<strong>6 weeks found what would take 5–6 years</strong>；<strong>Claude Code</strong> 帮 build patch，仍须 human evals、testing、production testing、sandboxing——<strong>6 weeks</strong> 后才 patch everything。</p>
+<p>含义：every enterprise <strong>better fix stuff faster</strong>——下一代 model 指 infrastructure 会找 flaws、misconfigurations → urgency improve <strong>cybersecurity posture</strong> → good for cybersecurity companies。</p>
+<p><strong>Harry</strong> 总结：weaponize bad actors find holes，不够 provide solutions。<strong>Nikesh</strong>：solutions exist——challenge 是 customer attention；<strong>Mythos lit fire</strong> under security practitioners worldwide。</p>
+<p><strong>Cyber defense 两 fundamental things</strong>：</p>
+<p>1. <strong>At the gate stop it</strong>——<strong>Palo Alto</strong> <strong>1.5 亿 sensors</strong> worldwide；infuse AI at gate + vulnerabilities → protect。无 <strong>OpenAI endpoint agent</strong> 可 replace <strong>Palo Alto</strong> at gate——problem not at gate。 2. <strong>Bad actor already in</strong>——多快 find and evict？需 <strong>context + intelligence</strong> 懂 intrusion meaning——<strong>AI cybersecurity challenge</strong>；<strong>Palo Alto</strong> spent <strong>5 years</strong> build that inside enterprises。</p>
+<p>净效果：<strong>加速剂</strong>；须把更多 AI 注入防御基础设施；能力尚未齐备。</p>
+<h3 id="七-claude-mythos-网络安全的加速剂与攻防不对称-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Mythos</strong> 是蚕食业务还是成就业务？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「<strong>网络安全的加速剂</strong>。<strong>Mythos</strong> 证明：训练模型写好代码——也知道<strong>找坏代码</strong>。枪调转方向——『看这些坏代码，这么多缺陷』。进攻方：从外扫描 <strong>20VC</strong> 等企业——websocket 开着……坏人串联漏洞。防御方：不能说去 patch 一切——可能 patch <strong>30%</strong> 本没错的东西，搞垮基础设施。我们对自己的代码跑了一遍——<strong>六周发现人工要 5–6 年</strong>。<strong>Claude Code</strong> 帮写补丁——仍要人工评测、沙箱。<strong>六周</strong>后才全面 patch。每家企业都该更快修复——<strong>紧迫感</strong>，对网安公司是好事。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="八-ai-护栏与政府-探索中的国家安全问题">八、AI 护栏与政府：探索中的国家安全问题</h2>
+
+<h3 id="八-ai-护栏与政府-探索中的国家安全问题-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>护栏不够 robust、易被 jailbreak；政府介入是在说「请把护栏当真问题修」——<strong>Nikesh Arora</strong> 希望可能修好。</p></div>
+</div>
+<h3 id="八-ai-护栏与政府-探索中的国家安全问题-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry</strong> 问超强模型是否该政府介入——<strong>Nikesh</strong>：<strong>仍在探索</strong>。<strong>护栏不够 robust</strong>——早期越狱成 hobby：问法不同就绕过。挑战：确保模型只用于既定目的。<strong>政府</strong>在护栏不够时称国家安全——须<strong>把护栏当真问题修</strong>。<strong>Harry</strong>：可能吗？<strong>Nikesh</strong>：希望可能。</p>
+<h3 id="八-ai-护栏与政府-探索中的国家安全问题-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「Government intervention on AI——good or bad？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「<strong>探索过程</strong>。<strong>护栏不够 robust</strong>——容易绕过，早期越狱成 hobby。挑战：加足够护栏——只用于既定目的。政府在说：国家安全——<strong>修护栏</strong>。很简单：把护栏当<strong>真问题</strong>，解决它。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「Possible？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「<strong>I'm hoping it is</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="九-若今天重建-palo-alto-waymo-式还是-tesla-式">九、若今天重建 Palo Alto：Waymo 式还是 Tesla 式</h2>
+
+<h3 id="九-若今天重建-palo-alto-waymo-式还是-tesla-式-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>企业产品宜 <strong>Tesla FSD</strong> 式分段自动化，忌传统车厂「AI 洗绿」；不能 <strong>Brian Armstrong</strong> 式整组织爆破——底层 AI 软件未就绪。</p></div>
+</div>
+<h3 id="九-若今天重建-palo-alto-waymo-式还是-tesla-式-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry</strong> 转述某顶尖网安投资人问题：若今天重建网络安全公司，会做什么不同？</p>
+<p><strong>自动驾驶三路径</strong>：</p>
+<p>1. <strong>Waymo</strong>：车内无人，不断圈定、训练直至完全自主——多城已运营；每个边界场景都转化为训练。 2. <strong>Tesla FSD</strong>：分段自动化——曾只跑高速，现街道改善但仍常握方向盘；摄像头盯注意力；边界场景随业务演进慢慢修。 3. <strong>传统车厂</strong>：大 V8、漂亮车身，贴一点自动驾驶——<strong>AI 洗绿</strong>。</p>
+<p><strong>Nikesh</strong> 的担心：企业是否都得走 <strong>Waymo 路线</strong>，还是 <strong>Tesla 路线</strong>仍有空间？现有客户接受不了「产品 80% 正确，再训 3 年到 100%」。他 paranoid 的是：<strong>产品战略 pivot 够不够快</strong>，让产品更「自动驾驶」？还是 AI 赋能部分模块、用机器学习管边界场景？</p>
+<p><strong>Nikesh</strong> 观点：做 AI 融合能力的企业须走 <strong>Tesla 路线</strong>；不能学传统车厂 AI 洗绿。</p>
+<p><strong>Harry</strong>：会否学 <strong>Brian Armstrong/Jack Dorsey</strong> 大裁员？<strong>Nikesh</strong>：因公司而异——<strong>不能整组织爆破</strong>；底层 AI 应用软件<strong>尚未就绪</strong>；不想自建 AI 营销/人力/<strong>ERP</strong> 栈——等下一代 <strong>Salesforce/SAP/Workday</strong>；<strong>要自建</strong>组织上下文/记忆/智能等特有部分。</p>
+<p><strong>AI EIO</strong> 会议：双周一次，戏仿 Old MacDonald <strong>E-I-E-I-O</strong>——汇聚职能，前 <strong>15–20</strong> 名技术负责人同向；尚无未来企业设计蓝图专家——须在重转型前对价值归属自有判断。</p>
+<p><strong>Leader 是否 AI 原生？</strong> <strong>Harry</strong> 见大公司 <strong>CRO/CPO</strong> 往往不 AI 原生——<strong>Nikesh</strong> 忆 <strong>2004</strong> 年 <strong>Google 欧洲</strong>：CEO 雇 <strong>24 岁</strong>「互联网向导/首席互联网官」——CEO 甩手，向导 frustrated。<strong>AI 同样风险</strong>：首席 AI 官曾是研究员、执行弱——须领导层理解 AI 挑战与机遇。</p>
+<p><strong>产品路线图</strong>问题：产品经理有 <strong>6–12 月</strong>路线图满「修这些」——<strong>没有 agents</strong>；「客户现在要这个」——须推动代理化工作、腾出资源做新事。与 <strong>14–20</strong> 人一对一 vs 双周演示 + <strong>达尔文式竞争</strong>——同事做出酷东西 → 你下次也要拿出成果。</p>
+<h3 id="九-若今天重建-palo-alto-waymo-式还是-tesla-式-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「若今天重建 <strong>Palo Alto</strong>，AI 时代会做什么不同？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「自动驾驶两三种路线。<strong>Waymo</strong>：车里没人，不断圈定、训练直到完全自主。<strong>Tesla</strong>：分段开车，一半自动化、一半人类处理边界——仍常握方向盘。第三种：传统车厂贴一点 AI——<strong>AI 洗绿</strong>。我怕的是：我们是否都得 <strong>Waymo 路线</strong>？<strong>Tesla 路线</strong>有没有空间？现有客户：『产品 80% 正确，再训 3 年到 100%』——接受不了。做 AI 融合企业须 <strong>Tesla 路线</strong>；不能 AI 洗绿。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「你会学 <strong>Brian Armstrong</strong> 大裁员吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「<strong>不能整组织爆破</strong>——底层 AI 软件还没到位。别自建 AI 营销/人力/ERP——等下一代 <strong>Salesforce/SAP/Workday</strong>。要自建的是组织特有的上下文与记忆。<strong>AI EIO</strong> 双周一次——前 <strong>15–20</strong> 名负责人同向发力。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十-ai-eio-与组织转型-达尔文式竞争">十、AI EIO 与组织转型：达尔文式竞争</h2>
+
+<h3 id="十-ai-eio-与组织转型-达尔文式竞争-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>双周 <strong>AI EIO</strong> 让 <strong>15–20</strong> 名技术负责人同台竞技；自上而下与自下而上代币实验并行，<strong>2 年</strong>转型 <strong>2 万</strong>人。</p></div>
+</div>
+<h3 id="十-ai-eio-与组织转型-达尔文式竞争-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>（本节与第九节衔接，侧重组织机制。）</p>
+<p><strong>AI EIO</strong> 内容：各负责人分享如何适应 AI——产品开发、产品内代理、后端基础设施、代币使用、资源。<strong>转型 2.1 万人</strong>须赢得领导层人心。<strong>尚无</strong>未来企业设计专家——一群聪明人胜过单个专家。</p>
+<p><strong>自下而上</strong>：代币实验找顶尖人才。<strong>自上而下</strong>：EIO 驱动雄心、竞争、学习心态——「<strong>Harry</strong>，过去 3 天你为 AI 做了什么？」→ 怕 <strong>Nikesh</strong> 三天后再问，或同侪压力 → 必须拿出成果。</p>
+<p><strong>企业采纳与 FDE</strong>：<strong>Harry</strong> 引两派——「企业采纳离不开<strong>全职驻场工程师（FTEs）</strong>」vs <strong>Factory</strong> 嘉宾「要 FTEs 说明产品不行」。</p>
+<p><strong>Nikesh</strong> 解读：<strong>企业 AI 梦想顶多 12 个月</strong>——大模型聊天机器人未稳，<strong>代理</strong>又出现；「代理节」人人定义不同；应用层产品<strong>尚不完备</strong>——未经企业需求检验。</p>
+<p><strong>FDE（前线部署工程师）</strong> 短期是「产品未就绪」的 shorthand——技术仍在演进——派人坐在客户办公室<strong>边适配边共建</strong>——<strong>Palantir</strong> 模式。产品工程师驻场，代码带回产品：「人人都会需要。」</p>
+<p>有些「FDE」只是技术销售顾问帮采纳，非真 FDE。<strong>饥饿的初创</strong>在产品就绪前就卖——AI 应用需求积压。<strong>12–24 个月</strong>人们会换产品——编码赛道 <strong>Windsurf</strong>、<strong>Devin/Cognition</strong>、<strong>Codex</strong>、<strong>Claude</strong>、<strong>Antigravity</strong>、<strong>Factory SDLC</strong>、<strong>Cognition SDLC</strong> 等不断重塑；<strong>2–3 年</strong>难赌赢家——<strong>Nikesh</strong> 不赌，只要团队能用的好工具。</p>
+<h3 id="十-ai-eio-与组织转型-达尔文式竞争-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「企业采纳是否必须 <strong>FTEs</strong>？<strong>Factory</strong> 朋友说：要 FTEs 你就没有 product。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「企业 AI 梦想<strong>顶多 12 个月</strong>——刚忙大模型客服，<strong>代理</strong>又来了。应用层产品<strong>尚不完备</strong>——未经企业检验。<strong>FDE</strong> 就是产品还没到位——派人到你办公室边建边适配。<strong>Palantir</strong> 模式。真 <strong>FDE</strong>：代码带回——『写进产品，人人需要』。短期需要——初创<strong>产品未就绪就开卖</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十一-代理式安全-为何所有代理流量需要网关">十一、代理式安全：为何所有代理流量需要网关</h2>
+
+<h3 id="十一-代理式安全-为何所有代理流量需要网关-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>企业全面代理化后，须经<strong>网关/防火墙/路由器</strong>聚合代理流量才能治理与防护——<strong>Palo Alto</strong> 六个月前收购网关产品押注此方向。</p></div>
+</div>
+<h3 id="十一-代理式安全-为何所有代理流量需要网关-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry</strong> 问 <strong>Nikesh</strong> 如何选 founder 帮助——女儿 <strong>Aisha</strong> 说他常联系很多人。<strong>Nikesh</strong> 的困境：市场动得太快——<strong>OpenClaw</strong> 出、代理浏览器曾热（今噪音少）——须评估哪个会成、对产品线影响；从想法到执行窗口<strong>缩短</strong>（<strong>12–24 个月</strong>公司 <strong>1 亿 ARR</strong> 史上最快）→ 企业客户在用 → 必须防护。</p>
+<p><strong>第一步</strong>：联系做有意思事的创始人——未必是该公司，而是其<strong>架构/概念</strong>相关。</p>
+<p><strong>买 vs 等</strong>：规模 + 并购预算可以等十亿美元收购——但<strong>必须学习</strong>；不跟踪八家玩家难判断坏主意 vs 执行差。</p>
+<p><strong>六个月前</strong>收购<strong>代理 AI 网关</strong>（不贵）——逻辑：人人代理化 → 多少代理在跑、如何追踪、治理、防护？<strong>唯一办法</strong>：聚合代理流量——经<strong>网关/防火墙/路由器</strong>监视全部流量、阻止代理乱动。<strong>代理式安全</strong>第一步是网关；今人们才醒觉需要路由器/网关（优化、路由、代币原因）——早买对价；<strong>1 倍 vs 2 倍</strong>收购价不如 <strong>10 倍 vs 100 倍</strong>业务价值。</p>
+<p><strong>企业并购</strong>：一直深度参与；今更参与<strong>学习技术</strong>——错过一次还能活，两次半死不活，三次就过时。</p>
+<h3 id="十一-代理式安全-为何所有代理流量需要网关-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「你怎么选帮谁？<strong>Aisha</strong> 说你常联系很多创始人。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「市场动得太快——<strong>OpenClaw</strong>、代理浏览器曾热……评估哪个会成、对产品线影响。<strong>六个月前</strong>买了<strong>代理 AI 网关</strong>——若人人代理化：怎么追踪、治理、防护？<strong>唯一办法</strong>：代理流量经<strong>网关/防火墙/路由器</strong>。<strong>代理式安全</strong>第一件事是<strong>网关</strong>。错过一次还能活，两次半死不活，三次<strong>过时</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十二-saas-抛售-平台化与网安创业空间">十二、SaaS 抛售、平台化与网安创业空间</h2>
+
+<h3 id="十二-saas-抛售-平台化与网安创业空间-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>市场在对席位、分析、工作流三重不确定定价；<strong>Palo Alto</strong> 押注平台化 + AI 上下文——网安仍留数百亿美元级新公司空间。</p></div>
+</div>
+<h3 id="十二-saas-抛售-平台化与网安创业空间-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>SaaS 感到过时</strong>——<strong>Nikesh</strong> 解读：市场在说<strong>记录型系统/工作系统</strong>将<strong>重想象</strong>——无主见软件 → 有主见且替人干活；<strong>AI 应用尚未创造</strong>，SaaS 版仍存在。</p>
+<p><strong>分析重塑</strong>：SaaS 上分析能力曾叠在记录系统上——现更易抽到<strong>数据湖</strong> + <strong>LLM</strong> 分析——<strong>Snowflake</strong>、<strong>Glean</strong>、<strong>Databricks</strong> 等推企业数据湖。</p>
+<p><strong>第三重困惑</strong>：未来企业<strong>多少人/多少席位</strong>。</p>
+<p>三重困惑 → 不知合理估值。<strong>Harry</strong>（播客免责声明）理解席位 + 工作流，问分析如何变——<strong>Nikesh</strong> 以 <strong>Salesforce</strong> 应用市场 <strong>300</strong> 个分析应用消费 go-to-market 数据为例。</p>
+<p><strong>Neil Mehta</strong>（<strong>Greylock</strong>）常问「最好日子在前还是后」——<strong>Salesforce</strong> 取决于执行。<strong>熊市情景</strong>：<strong>3 年</strong>内没完成 <strong>AI 优先转型</strong>——误报下降、代理成真、写进产品 → 别人造更好捕鼠器。<strong>牛市情景</strong>：转型正确 + <strong>平台化</strong>趋势（客户不愿管 <strong>40–60</strong> 家网安厂商）——<strong>Palo Alto</strong> 单一平台 + 企业上下文无缝缝合 + 拥抱 AI。</p>
+<p><strong>平台化 vs 风投回报？</strong> <strong>Harry Stebbings</strong> 要 <strong>100 亿美元</strong>公司——<strong>Nikesh Arora</strong>：十亿美元 exit？可以把整份收购清单卖给你，但创新不会停；<strong>网络安全最具创新</strong>——坏人永远找新攻击面；<strong>Palo Alto</strong> 网安收入份额从 <strong>&lt;2%</strong> → <strong>8–9%</strong>，仍有空间到 <strong>20–30–40%</strong>——<strong>60% 市值</strong>仍在其他公司；<strong>10–25 年</strong>可建<strong>数百亿美元市值</strong>公司。<strong>S&amp;P</strong> 科技权重 20 年前 vs 今 vs 20 年后——营销/人力支出与代币支出皆成<strong>科技支出</strong>。</p>
+<h3 id="十二-saas-抛售-平台化与网安创业空间-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「SaaS 厂商过时了——超卖还是准确？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「市场在说：<strong>记录型系统</strong>将<strong>重想象工作流</strong>——无主见 → 有主见、替人干活。<strong>AI 应用尚未创造</strong>——SaaS 还在。<strong>分析</strong>：抽到数据湖，<strong>LLM</strong> 分析——<strong>Snowflake</strong>、<strong>Glean</strong>、<strong>Databricks</strong>。第三：<strong>多少席位</strong>能活下来。三重困惑——不知合理估值。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「<strong>Salesforce</strong> 最好日子在前还是后？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「看执行。<strong>熊市</strong>：<strong>3 年</strong>内没完成 <strong>AI 优先转型</strong>——别人造更好捕鼠器。<strong>牛市</strong>：转型对 + <strong>平台化</strong>——不要 <strong>40–60</strong> 家网安公司，要 <strong>Palo Alto</strong> 一平台 + 企业上下文 + AI。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十三-中国开源模型-任务专用模型与编排层">十三、中国开源模型、任务专用模型与编排层</h2>
+
+<h3 id="十三-中国开源模型-任务专用模型与编排层-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>开源模型本身不可怕；<strong>国家级</strong>开源的后门风险才需警惕——任务专用模型 + 编排层将分化生态。</p></div>
+</div>
+<h3 id="十三-中国开源模型-任务专用模型与编排层-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry Stebbings</strong> 问中国开源模型大量涌现——<strong>Nikesh Arora</strong> 思想实验：<strong>先把「中国」拿掉</strong>——开源模型危险吗？<strong>不</strong>（开源本身不危险）。来源重要吗？<strong>是</strong>——<strong>并非</strong>对<strong>中国开源</strong>毫不担心；也曾有大科技公司开源。</p>
+<p>未来：<strong>各取所需</strong>——任务专用模型（<strong>ElevenLabs</strong> 语音等）优于前沿包打天下。<strong>Physical AI</strong> 只有深度、无消费场景——飞飞机 vs 开车 vs 机器人制造，模型不同。</p>
+<p><strong>编排层</strong>为任务选最佳模型——须更懂上下文 + 记忆。记忆存编排层还是前沿模型？前沿积极主动纳入记忆（护城河）——可能付两次；编排层资金少 → <strong>被单一模型锁定</strong>架构：全押一模型或换模型须重设计。</p>
+<p><strong>开源利好</strong>成本曲线——「不必用最聪明模型做最聪明的事」。国家级开源：<strong>后门</strong>、潜伏代理外传数据——可防护（<strong>Palo Alto Networks</strong> 帮企业防护模型）。<strong>Harry Stebbings</strong> 玩笑「谁防护你的后门」——<strong>Nikesh Arora</strong> 反问证件。</p>
+<h3 id="十三-中国开源模型-任务专用模型与编排层-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「中国开源模型大量涌现——担心吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「思想实验：<strong>先把中国拿掉</strong>——开源危险？<strong>不</strong>。<strong>来源呢</strong>？<strong>是</strong>——<strong>并非</strong>对<strong>中国开源</strong>毫不担心。未来：<strong>各取所需</strong>，任务专用。<strong>Physical AI</strong> 只有深度。<strong>编排层</strong>选最佳模型——更懂上下文与记忆。<strong>开源利好</strong>成本。<strong>国家级</strong>开源：<strong>后门</strong>、潜伏代理——可以防护。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十四-财富-谈判力与如何做父亲">十四、财富、谈判力与如何做父亲</h2>
+
+<h3 id="十四-财富-谈判力与如何做父亲-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>成功多于金钱——「随时离场」能力强化谈判而非软化；育儿靠日常身教，无 AI 可训练完美父亲。</p></div>
+</div>
+<h3 id="十四-财富-谈判力与如何做父亲-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Harry</strong>：有钱后无人告知之事——他变得<strong>更没耐心</strong>、品质不达标就恼火；心理咨询建议「把自己放第一位」。</p>
+<p><strong>Nikesh Arora</strong>：更多是<strong>成功</strong>而非金钱——<strong>马斯洛需求层次</strong>；赴美 <strong>200 美元</strong>、两只行李箱、保安、在 <strong>Burger King</strong> 煎汉堡、为残障人士做笔记——<strong>业力/天命</strong>的东方哲学：该做什么就做什么，不知会否成功。</p>
+<p>财富攀升后：不必再做保安、不必忍受曾必须忍受的事——<strong>可以随时离场</strong>。<strong>Harry Stebbings</strong> 问会否因此变软弱——<strong>Nikesh Arora</strong>：相反，离场能力<strong>优化谈判结果</strong>；若孤注一掷于结果会轻易妥协；「这些条款，否则不成交，我随时离场」——看谁更想要这笔交易（<strong>Harry Stebbings</strong> 联想起 <strong>Donald Trump</strong>《交易的艺术》，<strong>Nikesh Arora</strong> 未读）。</p>
+<p><strong>父亲角色与工作</strong>：世上最难的问题之一——文明以来 <strong>200–300 亿</strong>人出生，没有 AI 能训练出完美育儿方案；变量太多。最好办法：孩子通过<strong>观察</strong>你的工作作风、价值观、日常微观情境来吸收；孩子相信你有<strong>最好意图</strong>，这就走很远。</p>
+<p><strong>Harry Stebbings</strong> 转述嘉宾：<strong>National Geographic</strong> 里的大象——幼象跟随，要对服务员好就自己先对服务员好，要孩子努力就自己努力。<strong>Nikesh Arora</strong>：组织也呈现 leader 形态——创始人特质与公司文化高度共振。</p>
+<p><strong>Nikesh Arora</strong> 不是 <strong>996 型 CEO</strong>——尽量<strong>每天</strong>找点可享受的事；做网络安全意味着总有一天会有人被黑——心态要乐观、感恩、每日幸福；多发性硬化症等健康突破、孩子幸福、母亲长寿等美好<strong>可能发生也可能不发生</strong>——<strong>专注明天</strong>。</p>
+<h3 id="十四-财富-谈判力与如何做父亲-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「有钱后，有什么是没人告诉你的？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「与其说是钱，不如说是<strong>成功</strong>——<strong>马斯洛</strong>。两只行李箱、<strong>200 美元</strong>、当保安、在 <strong>Burger King</strong> 打工——<strong>业力</strong>、<strong>天命</strong>。往上爬：不必再煎汉堡，不必再忍受——<strong>可以随时离场</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「随时离场会让你变软弱吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「<strong>恰恰相反</strong>——优化结果。谈判时说：『这些条款，否则不成交，我随时离场』——<strong>Harry</strong>，是你更想要，还是我更想要？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「如何当好父亲，又不牺牲工作？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「最难的问题——没有 AI 能训练育儿。<strong>孩子看着你</strong>——工作作风、价值观、各种微观情境。孩子相信你的<strong>最好意图</strong>——这就走很远。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="十五-快问快答-fomo-沉没成本与人生幸福">十五、快问快答：FOMO、沉没成本与人生幸福</h2>
+
+<h3 id="十五-快问快答-fomo-沉没成本与人生幸福-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>硅谷最大误判是<strong>错失恐惧加狂热</strong>把每家都当下一个 <strong>Anthropic</strong>；董事会智慧：<strong>别混淆投入的努力与值得成交</strong>。</p></div>
+</div>
+<h3 id="十五-快问快答-fomo-沉没成本与人生幸福-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>硅谷普遍误判</strong>：<strong>FOMO + 狂热</strong>——错过 <strong>Anthropic</strong> 第二、三、四、五轮像错过 <strong>SpaceX</strong>（但 <strong>Anthropic</strong> 才 <strong>3 年</strong>，<strong>SpaceX</strong> 等了 <strong>20 年</strong>）——风险是以为每个新公司都是下一个 <strong>Anthropic</strong>。</p>
+<p><strong>董事会最震撼一刻</strong>：近<strong>十亿美元</strong>收购，磨了几个月——董事说：「你不会每笔收购都给我打电话——这次不同？不，我只是在<strong>认真琢磨</strong>。<strong>去散长步。忽略已投入的努力。</strong>别把<strong>努力</strong>和<strong>想要结果</strong>混为一谈。你还没花一分钱——只是 <strong>3 个月</strong>努力。一旦付钱，成败就是你的责任。若现在零成本、只写支票——<strong>还会买吗？</strong>」→ <strong>忘掉沉没成本</strong>（投资同理：打败八家 VC 不重要，这笔交易本身站不站得住？）。</p>
+<p><strong>最好建议</strong>：飞机上老人——「人生很简单：早上醒来<strong>期待</strong>去工作——<strong>有福</strong>；忙完一天<strong>期待</strong>回家见家人——<strong>有福</strong>。」</p>
+<p><strong>未来 5–10 年最期待什么？</strong> <strong>Nikesh Arora</strong>：不纠结一五年后——<strong>明天</strong>就够；每日感恩；多发性硬化症等健康突破<strong>可能有也可能没有</strong>。</p>
+<h3 id="十五-快问快答-fomo-沉没成本与人生幸福-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「硅谷多数投资人/创始人相信什么，但你认为是错的？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「<strong>错失恐惧 + 狂热</strong>——错过 <strong>Anthropic</strong> 各轮像错过 <strong>SpaceX</strong>，但 <strong>3 年 vs 20 年</strong>根本不同。风险：以为每个新公司都是下一个 <strong>Anthropic</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「董事会上最震撼的一刻？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「近十亿收购——董事说：『<strong>忽略已投入的努力</strong>。别把努力和想要结果混为一谈。<strong>还没花一分钱</strong>——只是三个月。若现在零成本、只写支票——<strong>还会买吗？</strong>』<strong>忘掉沉没成本</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Harry Stebbings</h3>
+      <p>「收到过的最好建议？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Nikesh Arora</h3>
+      <p>「飞机上老人：『早上<strong>期待</strong>去工作——<strong>有福</strong>；忙完一天<strong>期待</strong>回家——<strong>有福</strong>』。」</p>
+    </div>
+  </article>
+</div>
+
+<details class="collapsible meta-panel" id="延伸术语表">
+  <summary>延伸术语表</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>说明</th></tr></thead><tbody><tr><td><strong>Mythos</strong></td><td><strong>Anthropic</strong> 前沿模型；<strong>Palo Alto Networks</strong> 用于代码审计，六周发现人工需数年的漏洞</td></tr><tr><td><strong>Fable</strong></td><td><strong>Anthropic</strong> 相关模型/generation（播客语境中与 Mythos 并提）</td></tr><tr><td><strong>FDE</strong></td><td>前线部署工程师（Forward Deployed Engineers），<strong>Palantir</strong> 式驻场共建模式</td></tr><tr><td><strong>G&amp;A</strong></td><td>一般及管理职能（General &amp; Administrative）</td></tr><tr><td><strong>SDLC</strong></td><td>软件开发生命周期（Software Development Life Cycle）</td></tr><tr><td><strong>Waymo / Tesla FSD</strong></td><td>全自主 vs 分段辅助驾驶两种产品自动化路径隐喻</td></tr><tr><td><strong>OpenClaw</strong></td><td>代理式工作流相关开源/产品（转写 <strong>Open Cloak</strong> 已校准）</td></tr><tr><td><strong>AI EIO</strong></td><td><strong>Nikesh Arora</strong> 内部双周 AI 对齐会（戏仿 Old MacDonald <strong>E-I-E-I-O</strong>）</td></tr><tr><td><strong>Platformization</strong></td><td>平台化：客户从数十家单点网安厂商收敛到单一平台</td></tr><tr><td><strong>Systems of record</strong></td><td>记录型系统（传统 <strong>SaaS</strong> 核心）</td></tr><tr><td><strong>False positive</strong></td><td>误报；企业/代理场景容忍度远低于消费端</td></tr></tbody></table></div>
+  </div>
+</details>
+
+<details class="collapsible meta-panel" id="文章元数据">
+  <summary>文章元数据与来源</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Nikesh Arora on the Frontier Model Problem: Breadth vs Depth | The Future of Token Costs | Memory Becoming the Moat</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.youtube.com/watch?v=v4GN1q7HX1Y">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-06-22</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-06-24</td></tr><tr><td><strong>播放量/访问量</strong></td><td>YouTube 观看次数：14,750（用户提供）；20VC 官网发布于 2026-06-22</td></tr><tr><td><strong>时长</strong></td><td>约 01:16:36（据用户时间戳末段）</td></tr><tr><td><strong>主持人</strong></td><td><strong>Harry Stebbings</strong>（<strong>20VC</strong> 播客主理人、投资人）</td></tr><tr><td><strong>嘉宾</strong></td><td><strong>Nikesh Arora</strong>（<strong>Palo Alto Networks</strong> 董事长兼首席执行官）</td></tr><tr><td><strong>内容来源</strong></td><td>YouTube <strong>Full Episodes</strong> 频道；用户提供的完整字幕转写 + <a href="https://www.thetwentyminutevc.com/nikesh-arora-2">20VC 官网</a> 元数据</td></tr></tbody></table></div>
+
+<blockquote><strong>嘉宾背景</strong>：<strong>Nikesh Arora</strong> 2018 年执掌 <strong>Palo Alto Networks</strong>，将公司从约 <strong>180 亿美元</strong>市值带到 <strong>2250 亿美元</strong>以上，全球员工逾 <strong>2.1 万</strong>人。此前曾任 <strong>SoftBank</strong> 总裁兼首席运营官，与 <strong>孙正义（Masayoshi Son）</strong> 共事并参与科技投资战略。早年赴美仅带两只行李箱与 <strong>200 美元</strong>，做过保安、为残障人士做笔记、在 <strong>Burger King</strong> 煎汉堡以付学费；曾任 <strong>Google</strong> 首席营销官五年。</blockquote>
+  </div>
+</details>
+
+<h2 id="自检报告" hidden>自检报告</h2>
+
+<details class="collapsible">
+  <summary>展开自检报告详情</summary>
+  <div class="collapsible-body">
+    <div class="table-wrap">
+    <table><thead><tr><th>项目</th><th>结果</th></tr></thead><tbody><tr><td><strong>节结构（对谈三层）</strong></td><td>✅ 15 节均为 核心洞察 → 深度解析 → 对谈实录；无空壳实录节</td></tr><tr><td><strong>导读论点（v5.26）</strong></td><td>✅ 含 <code>&gt; <strong>全文论点</strong></code>；分层段覆盖代币/Mythos/组织/人生收束</td></tr><tr><td><strong>多源一致性</strong></td><td>不适用（单源 20VC + 用户转写；Mythos 六周 vs 5–6 年与外部 TBPN「5–7 年」口径一致）</td></tr><tr><td><strong>术语校准</strong></td><td>✅ Mythos/Fable（Anthropic）；Claude Code；Meta/Uber（非 Matters）；OpenClaw；FDE；Windsurf/Devin/Cognition；Neil Mehta；Palantir；末尾 Akash→Nikesh 口误未写入正文</td></tr><tr><td><strong>首现缩写注释</strong></td><td>✅ G&amp;A、FDE、SDLC、FSD 首现已注</td></tr><tr><td><strong>正文中文叙事</strong></td><td>✅ 4c 闸门通过；对谈实录与核心洞察已中文化；深度解析部分技术/商业术语保留英文专名（breadth/depth、G&amp;A 等）；grep 词库叙述层命中 0</td></tr><tr><td><strong>AI/DevTools 行话簇</strong></td><td>✅ 执行框架/代理化/代币最大化/价值最大化等已中文化或首现括注</td></tr><tr><td><strong>纯净排版（4d 节间空白）</strong></td><td>✅ <code>---</code> 共 5 处（元数据后、导读后、目录后、术语表前、自检前）；正文节间 --- 0；三连空行 0</td></tr><tr><td><strong>防幻觉</strong></td><td>✅ 数字均来自转写/用户提供播放量；Banning/300M Anthropic 讲者转写未明，未臆测人名；Pantalassa 作海上数据中心描述未强加未核实公司全名</td></tr><tr><td><strong>可读性内化</strong></td><td>不适用</td></tr><tr><td><strong>主来源与降级</strong></td><td>用户完整转写为主；<a href="https://www.thetwentyminutevc.com/nikesh-arora-2">20VC 官网</a> 补标题与日期；YouTube 页面未单独 WebFetch，播放量用用户提供 14,750</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+      <!-- CONTENT_END -->
+
+      <footer class="doc-footer">
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=v4GN1q7HX1Y" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260622 Nikesh Arora 前沿模型广度与深度_20VC对谈_整理文档.md</span>
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    // ---------- Theme ----------
+    const STORAGE_KEY = "md2html-theme";
+    function currentTheme() { return document.documentElement.dataset.theme || "light"; }
+    function applyThemeIcon() {
+      const use = document.getElementById("theme-icon-use");
+      if (use) use.setAttribute("href", currentTheme() === "dark" ? "#i-sun" : "#i-moon");
+    }
+    (function restoreTheme() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        document.documentElement.dataset.theme = saved;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+
+    // ---------- Mermaid ----------
+    const diagramSources = new Map();
+    function initMermaid() {
+      const isDark = currentTheme() === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        themeVariables: {
+          primaryColor: isDark ? "#3A2A22" : "#FBEEE6",
+          primaryTextColor: isDark ? "#F5F0E8" : "#1A1A1A",
+          primaryBorderColor: isDark ? "#E89572" : "#D97757",
+          lineColor: isDark ? "#9A938A" : "#6B6B66",
+          secondaryColor: isDark ? "#2A2520" : "#F5F5F0",
+          tertiaryColor: isDark ? "#221E1A" : "#FFFFFF",
+          fontFamily: "Inter, system-ui, sans-serif",
+        },
+      });
+    }
+    async function renderMermaid() {
+      initMermaid();
+      const els = document.querySelectorAll(".mermaid");
+      els.forEach(el => {
+        if (!diagramSources.has(el)) diagramSources.set(el, el.textContent.trim());
+        el.textContent = diagramSources.get(el);
+        el.removeAttribute("data-processed");
+      });
+      try { await mermaid.run({ nodes: els }); } catch (e) { console.error(e); }
+    }
+    function toggleTheme() {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(STORAGE_KEY, next);
+      applyThemeIcon();
+      renderMermaid();
+    }
+
+    // ---------- TOC drawer (mobile) ----------
+    const tocEl = () => document.getElementById("toc");
+    const tocToggle = () => document.getElementById("toc-toggle");
+    const isMobileToc = () => window.matchMedia("(max-width: 900px)").matches;
+
+    function syncTocA11y(open) {
+      const toc = tocEl();
+      if (!toc) return;
+      if (isMobileToc()) {
+        toc.setAttribute("role", "dialog");
+        toc.setAttribute("aria-modal", open ? "true" : "false");
+        toc.setAttribute("aria-hidden", open ? "false" : "true");
+      } else {
+        toc.removeAttribute("role");
+        toc.removeAttribute("aria-modal");
+        toc.removeAttribute("aria-hidden");
+      }
+    }
+
+    function openToc() {
+      document.body.classList.add("toc-open");
+      syncTocA11y(true);
+      const closeBtn = tocEl()?.querySelector(".toc-close");
+      closeBtn?.focus();
+    }
+    function closeToc() {
+      document.body.classList.remove("toc-open");
+      syncTocA11y(false);
+      if (isMobileToc()) tocToggle()?.focus();
+    }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+    window.addEventListener("resize", () => {
+      if (!document.body.classList.contains("toc-open")) syncTocA11y(false);
+    });
+
+    // ---------- TOC scrollspy ----------
+    function setupTocSpy() {
+      const links = Array.from(document.querySelectorAll("#toc-nav a[href^='#']"));
+      if (!links.length) {
+        const toc = document.getElementById("toc");
+        if (toc) toc.style.display = "none";
+        return;
+      }
+      const entries = [];
+      links.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) entries.push({ el, link: a });
+        a.addEventListener("click", () => {
+          if (isMobileToc()) closeToc();
+        });
+      });
+
+      let ticking = false;
+      const setActive = () => {
+        ticking = false;
+        const offset = 96;
+        let current = entries[0]?.link;
+        for (const { el, link } of entries) {
+          if (el.getBoundingClientRect().top <= offset) current = link;
+        }
+        links.forEach(l => l.classList.toggle("active", l === current));
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(setActive);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setActive();
+    }
+
+    // ---------- Section jump pills ----------
+    function injectSectionJumps() {
+      document.querySelectorAll(".content h2[id]").forEach(h2 => {
+        const id = h2.id;
+        const parts = [
+          { suffix: "-insight", label: "洞察" },
+          { suffix: "-analysis", label: "解析" },
+          { suffix: "-dialogue", label: "实录" },
+        ];
+        const items = parts
+          .map(p => ({ el: document.getElementById(id + p.suffix), label: p.label }))
+          .filter(x => x.el);
+        if (!items.length) return;
+        const nav = document.createElement("nav");
+        nav.className = "section-jump";
+        nav.setAttribute("aria-label", "本节导航");
+        items.forEach(({ el, label }) => {
+          const a = document.createElement("a");
+          a.href = "#" + el.id;
+          a.textContent = label;
+          nav.appendChild(a);
+        });
+        h2.insertAdjacentElement("afterend", nav);
+      });
+    }
+
+    // ---------- Speaker tags in dialogue ----------
+    function tagSpeakers() {
+      document.querySelectorAll(".timeline .step-body h3").forEach(h3 => {
+        const step = h3.closest(".step");
+        if (!step) return;
+        const name = h3.textContent.trim();
+        if (/Harrison/i.test(name)) step.classList.add("speaker-host");
+        else if (/Andrew/i.test(name)) step.classList.add("speaker-guest");
+      });
+    }
+
+    // ---------- Anchor links on h2/h3 ----------
+    function injectAnchors() {
+      document.querySelectorAll(".content h2[id], .content h3[id]").forEach(h => {
+        if (h.querySelector(".anchor")) return;
+        const a = document.createElement("a");
+        a.className = "anchor";
+        a.href = "#" + h.id;
+        a.setAttribute("aria-label", "段落链接");
+        a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
+        h.appendChild(a);
+      });
+    }
+
+    // ---------- Copy-to-clipboard on <pre> ----------
+    function injectCopyButtons() {
+      document.querySelectorAll(".content pre").forEach(pre => {
+        if (pre.classList.contains("mermaid")) return;
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "复制代码");
+        btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent ?? pre.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.classList.add("copied");
+            btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+            }, 1500);
+          } catch (e) { console.error(e); }
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    // ---------- Back to top ----------
+    function setupBackToTop() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      const toggle = () => {
+        btn.hidden = window.scrollY < 480;
+      };
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+    }
+
+    // ---------- Scroll progress ----------
+    function setupScrollProgress() {
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = h > 0 ? (document.documentElement.scrollTop / h * 100) : 0;
+        bar.style.width = p + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    // ---------- Boot ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      applyThemeIcon();
+      syncTocA11y(false);
+      tagSpeakers();
+      injectAnchors();
+      injectCopyButtons();
+      renderMermaid();
+      setupTocSpy();
+      setupScrollProgress();
+      setupBackToTop();
+    });
+  </script>
+</body>
+</html>

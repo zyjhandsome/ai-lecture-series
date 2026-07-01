@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light" style="--rec-label: '★ 推荐'">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>人工智能 CEO 们在推销「自由」，Scott Galloway 说真相更复杂也更欺骗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FAFAF7;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F0;
+      --surface-3: #EFEEE8;
+      --text: #1A1A1A;
+      --text-muted: #4A4A45;
+      --text-subtle: #6B6B66;
+      --accent: #D97757;
+      --accent-hover: #C56843;
+      --accent-soft: #FBEEE6;
+      --accent-border: #F0D5C4;
+      --accent-strong: #A85533;
+      --border: #E5E4DC;
+      --border-strong: #CDCDC4;
+      --code-bg: #F5F2EC;
+      --code-text: #2A2A2A;
+      --info: #2563EB;
+      --info-soft: #EFF6FF;
+      --info-border: #BFDBFE;
+      --warn: #B45309;
+      --warn-soft: #FFFBEB;
+      --warn-border: #FDE68A;
+      --danger: #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #047857;
+      --success-soft: #ECFDF5;
+      --success-border: #A7F3D0;
+      --decision: #6D28D9;
+      --decision-soft: #F5F3FF;
+      --decision-border: #DDD6FE;
+      --shadow-sm: 0 1px 2px rgba(20, 14, 8, 0.04);
+      --shadow: 0 1px 2px rgba(20, 14, 8, 0.04), 0 4px 12px rgba(20, 14, 8, 0.06);
+      --shadow-lg: 0 8px 24px rgba(20, 14, 8, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --measure: 75ch;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+      --z-progress: 200;
+      --z-topbar: 100;
+      --z-drawer: 300;
+      --z-backdrop: 250;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1714;
+      --surface: #221E1A;
+      --surface-2: #2A2520;
+      --surface-3: #322C26;
+      --text: #F5F0E8;
+      --text-muted: #C8C0B6;
+      --text-subtle: #9A938A;
+      --accent: #E89572;
+      --accent-hover: #F2A87F;
+      --accent-soft: #3A2A22;
+      --accent-border: #5A3D2E;
+      --accent-strong: #F5B493;
+      --border: #2E2924;
+      --border-strong: #463F38;
+      --code-bg: #1E1B17;
+      --code-text: #E8E2D8;
+      --info: #93C5FD;
+      --info-soft: #1E2A3D;
+      --info-border: #2A4365;
+      --warn: #FBBF24;
+      --warn-soft: #332817;
+      --warn-border: #5C4520;
+      --danger: #FCA5A5;
+      --danger-soft: #3A1F1F;
+      --danger-border: #5C2A2A;
+      --success: #6EE7B7;
+      --success-soft: #1A3329;
+      --success-border: #1F5C45;
+      --decision: #C4B5FD;
+      --decision-soft: #2A1F40;
+      --decision-border: #4A3870;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    ::selection { background: var(--accent-soft); color: var(--accent-strong); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 8px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 1000;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* SVG sprite container (hidden) */
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .icon { display: inline-block; flex-shrink: 0; vertical-align: middle; stroke: currentColor; fill: none; }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: var(--z-progress);
+      transition: width 0.05s linear;
+    }
+
+    /* ============================================================
+       TOPBAR
+       ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      background: rgba(250, 250, 247, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .topbar { background: rgba(26, 23, 20, 0.85); }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      animation: brand-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes brand-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft); }
+      50%      { box-shadow: 0 0 0 7px transparent; }
+    }
+    .topbar-actions { display: flex; gap: 6px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      padding: 0;
+    }
+    .icon-btn .icon { width: 18px; height: 18px; stroke-width: 2; }
+    .icon-btn[hidden] { display: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 32px 24px 96px;
+    }
+    .content { min-width: 0; }
+    /* Unified reading measure: every top-level block shares one width so
+       paragraphs, callouts, diagrams, timelines, tables and code align to a
+       single clean column. Opt out with .full-bleed where truly needed. */
+    .content > * { max-width: var(--measure); }
+    .content > .full-bleed { max-width: none; }
+
+    /* ============================================================
+       TOC (desktop + mobile drawer)
+       ============================================================ */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .toc::-webkit-scrollbar { width: 6px; }
+    .toc::-webkit-scrollbar-track { background: transparent; }
+    .toc::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+    .toc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .toc-close { display: none; }
+    .toc-nav { display: flex; flex-direction: column; gap: 2px; }
+    .toc-nav a {
+      display: flex; align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 500;
+    }
+    .toc-nav a.lvl-3 { padding-left: 26px; font-size: 12.5px; }
+    .toc-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: var(--z-backdrop);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ============================================================
+       DOC HEADER
+       ============================================================ */
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-eyebrow {
+      display: inline-flex; align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-size: clamp(28px, 3vw + 16px, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--text);
+      text-wrap: balance;
+    }
+    .doc-subtitle {
+      font-size: clamp(15px, 0.6vw + 13px, 18px);
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      max-width: var(--measure);
+      text-wrap: pretty;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-subtle);
+    }
+    .doc-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    .doc-meta .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ============================================================
+       CONTENT (typography)
+       ============================================================ */
+    .content h1, .content h2, .content h3, .content h4 {
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+    .content h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 56px 0 16px;
+      padding-top: 8px;
+      position: relative;
+    }
+    .content h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      position: relative;
+    }
+    .content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .content > p,
+    .content > ul,
+    .content > ol,
+    .content > blockquote { max-width: var(--measure); }
+    .content p { margin: 0 0 16px; text-wrap: pretty; overflow-wrap: anywhere; }
+    .content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-border); }
+    .content ul, .content ol { padding-left: 24px; margin: 0 0 16px; }
+    .content li { margin: 4px 0; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content em { color: var(--text-muted); }
+    .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Anchor links injected by JS on h2/h3 with id */
+    .anchor {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      color: var(--text-subtle);
+      opacity: 0;
+      transform: translateY(-1px);
+      transition: opacity 0.15s, color 0.15s;
+      border-bottom: none !important;
+      border-radius: var(--radius-sm);
+    }
+    .anchor .icon { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* Images */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+    .content figure { margin: 20px 0; }
+    .content figure img { margin: 0; }
+    .content figcaption {
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Task lists (- [ ] / - [x]) */
+    .content .task-list-item { list-style: none; margin-left: -22px; }
+    .content .task-list-item-checkbox {
+      margin-right: 8px;
+      vertical-align: -2px;
+      accent-color: var(--accent);
+    }
+
+    /* Footnotes */
+    .content .footnote-ref a,
+    .content sup a {
+      font-size: 0.75em;
+      vertical-align: super;
+      border-bottom: none;
+      padding: 0 2px;
+    }
+    .content .footnotes {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       CODE
+       ============================================================ */
+    .content code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    .content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      position: relative;
+    }
+    .content pre code {
+      background: none; padding: 0; border: none;
+      color: var(--code-text);
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-subtle);
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .copy-btn .icon { width: 14px; height: 14px; stroke-width: 2; }
+    .copy-btn.copied { color: var(--success); border-color: var(--success-border); opacity: 1; }
+
+    /* ============================================================
+       TIMELINE / STEPS
+       ============================================================ */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-border), var(--border));
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 8px 4px;
+      position: relative;
+      border-radius: var(--radius);
+      transition: background-color 0.15s;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .step.done .step-num { background: var(--accent); color: #fff; }
+    .step-body { padding-top: 6px; min-width: 0; }
+    .step-body h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .step-body p { margin: 0 0 8px; color: var(--text-muted); font-size: 14.5px; max-width: var(--measure); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: var(--measure);
+    }
+    .callout-icon { width: 20px; height: 20px; margin-top: 2px; stroke-width: 2; }
+    .callout-body { min-width: 0; }
+    .callout-title { font-weight: 600; margin: 0 0 4px; font-size: 14px; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout-body code { background: rgba(0,0,0,0.04); }
+    [data-theme="dark"] .callout-body code { background: rgba(255,255,255,0.06); }
+
+    .callout-info     { background: var(--info-soft);     border-color: var(--info-border);     color: var(--text); }
+    .callout-info     .callout-title, .callout-info     .callout-icon { color: var(--info); }
+    .callout-warn     { background: var(--warn-soft);     border-color: var(--warn-border);     color: var(--text); }
+    .callout-warn     .callout-title, .callout-warn     .callout-icon { color: var(--warn); }
+    .callout-danger   { background: var(--danger-soft);   border-color: var(--danger-border);   color: var(--text); }
+    .callout-danger   .callout-title, .callout-danger   .callout-icon { color: var(--danger); }
+    .callout-success  { background: var(--success-soft);  border-color: var(--success-border);  color: var(--text); }
+    .callout-success  .callout-title, .callout-success  .callout-icon { color: var(--success); }
+    .callout-decision { background: var(--decision-soft); border-color: var(--decision-border); color: var(--text); }
+    .callout-decision .callout-title, .callout-decision .callout-icon { color: var(--decision); }
+    .callout-tip      { background: var(--accent-soft);   border-color: var(--accent-border);   color: var(--text); }
+    .callout-tip      .callout-title, .callout-tip      .callout-icon { color: var(--accent-strong); }
+
+    /* ============================================================
+       KEY-POINT HIGHLIGHT
+       ============================================================ */
+    .highlight {
+      background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+      border-left: 4px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: var(--measure);
+    }
+    .highlight-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       MERMAID
+       ============================================================ */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .mermaid { text-align: center; min-height: 80px; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .mermaid:not([data-processed]) {
+      opacity: 0.4;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ============================================================
+       PROS / CONS
+       ============================================================ */
+    .proscons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .proscons-col {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .proscons-col h4 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proscons-col ul { margin: 0; padding-left: 18px; }
+    .proscons-col li { margin: 6px 0; }
+    .pros { background: var(--success-soft); border-color: var(--success-border); }
+    .pros h4 { color: var(--success); }
+    .cons { background: var(--danger-soft); border-color: var(--danger-border); }
+    .cons h4 { color: var(--danger); }
+
+    /* ============================================================
+       COMPARISON CARDS
+       ============================================================ */
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .compare-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .compare-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .compare-card.recommended::before {
+      content: var(--rec-label, "★ Recommended");
+      position: absolute; top: -10px; right: 14px;
+      background: var(--accent); color: #fff;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+    }
+    .compare-card h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); text-transform: none; letter-spacing: normal; }
+    .compare-card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+    /* ============================================================
+       COLLAPSIBLE
+       ============================================================ */
+    details.collapsible {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 16px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    details.collapsible[open] { box-shadow: var(--shadow-sm); }
+    details.collapsible > summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 500;
+      color: var(--text);
+      list-style: none;
+      display: flex; align-items: center; gap: 10px;
+      user-select: none;
+      transition: background 0.15s;
+      min-height: 44px;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::before {
+      content: "›";
+      display: inline-block;
+      transition: transform 0.18s;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    details.collapsible[open] > summary::before { transform: rotate(90deg); }
+    .collapsible-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+    .collapsible-body > *:first-child { margin-top: 12px; }
+
+    /* ============================================================
+       TABLES (wrapped via .table-wrap or naturally responsive)
+       ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      margin: 0;
+    }
+    /* Standalone tables (not inside .table-wrap) keep visual border */
+    .content > table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      display: block;
+      overflow-x: auto;
+    }
+    .content th {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .content td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    /* ============================================================
+       BLOCKQUOTE
+       ============================================================ */
+    .content blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-border);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       FOCUS-VISIBLE (a11y)
+       ============================================================ */
+    *:focus { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .toc-nav a:focus-visible { outline-offset: -2px; }
+    .icon-btn:focus-visible { outline-offset: 2px; }
+    .anchor:focus-visible { opacity: 1; outline-offset: 2px; }
+    details.collapsible > summary:focus-visible { outline-offset: -2px; }
+
+    /* ============================================================
+       HOVER (only on hover-capable devices to avoid sticky-tap on mobile)
+       ============================================================ */
+    @media (hover: hover) {
+      .back-to-top:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .icon-btn:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+      .toc-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+      .content a:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+      .compare-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow); }
+      .compare-card.recommended:hover { border-color: var(--accent); }
+      .content tr:hover td { background: var(--surface-2); }
+      details.collapsible > summary:hover { background: var(--surface-2); }
+      .step:hover { background: var(--surface-2); }
+      .step:hover .step-num { transform: scale(1.05); }
+      .anchor:hover { color: var(--accent); }
+      .content h2:hover .anchor,
+      .content h3:hover .anchor { opacity: 1; }
+      .copy-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+      .content pre:hover .copy-btn { opacity: 1; }
+    }
+    /* On touch devices, copy-btn is always visible at low opacity */
+    @media (hover: none) {
+      .copy-btn { opacity: 0.6; }
+      .anchor { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       MOBILE (≤900px) — TOC becomes off-canvas drawer
+       ============================================================ */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px 80px;
+      }
+      .topbar-inner { padding: 8px 12px; }
+      .doc-header { margin-bottom: 28px; padding-bottom: 20px; }
+
+      .toc-mobile-trigger { display: inline-flex !important; }
+
+      .toc {
+        position: fixed;
+        top: 0; left: 0;
+        width: min(300px, 82vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        background: var(--surface);
+        z-index: var(--z-drawer);
+        padding: 16px 8px 24px 16px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc-head { padding: 4px 4px 12px 8px; }
+      .toc-close {
+        display: inline-flex !important;
+        width: 36px; height: 36px;
+        align-items: center; justify-content: center;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+      }
+      .toc-close .icon { width: 18px; height: 18px; stroke-width: 2; }
+      body.toc-open .toc { transform: translateX(0); }
+      body.toc-open .toc-backdrop {
+        display: block;
+        opacity: 1;
+      }
+      .toc-backdrop {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.toc-open .toc-backdrop { pointer-events: auto; }
+      body.toc-open { overflow: hidden; }
+    }
+    @media (min-width: 901px) {
+      .toc-mobile-trigger { display: none !important; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION (a11y)
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      html { scroll-behavior: auto; }
+      .brand-dot { animation: none; box-shadow: 0 0 0 4px var(--accent-soft); }
+    }
+
+    /* ============================================================
+       LAYER HEADINGS (对谈三层结构)
+       ============================================================ */
+    .layer-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .layer-heading::before {
+      flex-shrink: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .layer-insight::before {
+      content: "洞察";
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid var(--accent-border);
+    }
+    .layer-analysis::before {
+      content: "解析";
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .layer-dialogue::before {
+      content: "实录";
+      background: var(--info-soft);
+      color: var(--info);
+      border: 1px solid var(--info-border);
+    }
+    .layer-insight { font-size: 0; }
+    .layer-insight::before { font-size: 11px; }
+    .layer-insight .anchor { font-size: 14px; }
+    .layer-analysis { font-size: 0; }
+    .layer-analysis::before { font-size: 11px; }
+    .layer-analysis .anchor { font-size: 14px; }
+    .layer-dialogue { font-size: 0; }
+    .layer-dialogue::before { font-size: 11px; }
+    .layer-dialogue .anchor { font-size: 14px; }
+    .section-insight { margin-top: 12px; margin-bottom: 20px; }
+    .section-insight .callout-body p { margin: 0; }
+
+    /* Section jump pills (injected by JS) */
+    .section-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 20px;
+      max-width: var(--measure);
+    }
+    .section-jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+    }
+    .section-jump a:hover,
+    .section-jump a:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Speaker differentiation in dialogue timeline */
+    .step.speaker-host .step-num {
+      border-color: var(--info);
+      color: var(--info);
+      background: var(--info-soft);
+    }
+    .step.speaker-guest .step-num {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .step.speaker-host .step-body h3 { color: var(--info); }
+    .step.speaker-guest .step-body h3 { color: var(--accent-strong); }
+
+    /* Meta panel + table URL wrap */
+    .meta-panel { margin-bottom: 32px; }
+    .toc-nav .toc-meta-link {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-subtle);
+      font-size: 12.5px;
+    }
+    .table-wrap td a { word-break: break-all; }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: opacity 0.2s, transform 0.2s, color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .back-to-top .icon { width: 20px; height: 20px; stroke-width: 2; }
+    .back-to-top:not([hidden]) { opacity: 1; transform: translateY(0); }
+    .back-to-top[hidden] { display: inline-flex; opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+    /* ============================================================
+       PRINT
+       ============================================================ */
+    @media print {
+      .topbar, .toc, .toc-backdrop, .icon-btn, .copy-btn, .anchor, .scroll-progress, .back-to-top, .section-jump { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      a { color: #000; }
+      .content pre, .callout, .compare-card, .step, .diagram { break-inside: avoid; }
+      .doc-footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">跳到正文</a>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- SVG icon sprite (Lucide-style) -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-decision" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0 4 4 0 0 1 1.59 2h2.99a4 4 0 0 1 1.6-2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  </svg>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn toc-mobile-trigger" id="toc-toggle" onclick="openToc()" aria-label="目录" title="目录">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>笔记</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="window.print()" title="打印 / 保存 PDF" aria-label="打印 / 保存 PDF">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-printer"/></svg>
+        </button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use id="theme-icon-use" href="#i-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC drawer backdrop (mobile) -->
+  <div class="toc-backdrop" id="toc-backdrop" onclick="closeToc()" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="toc" id="toc" aria-label="目录">
+      <div class="toc-head">
+        <p class="toc-title">目录</p>
+        <button class="toc-close" onclick="closeToc()" aria-label="关闭">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#核心导读" class="lvl-2">核心导读</a>
+        <a href="#开场-ai-与美国品牌双双坠落" class="lvl-2">开场：AI 与美国品牌双双坠落</a>
+        <a href="#就业末日论-灾难化叙事服务于融资" class="lvl-2">就业末日论：灾难化叙事服务于融资</a>
+        <a href="#什么数据能证明乐观派错了" class="lvl-2">什么数据能证明乐观派错了</a>
+        <a href="#速度恐惧-互联网分销会否制造无法恢复的-v-型冲击" class="lvl-2">速度恐惧：互联网分销会否制造无法恢复的 V 型冲击</a>
+        <a href="#ai-加机器人-工业落地-而非端茶机器人" class="lvl-2">AI 加机器人：工业落地，而非端茶机器人</a>
+        <a href="#马斯克叙事-魔法-估值与「看这边」" class="lvl-2">马斯克叙事：魔法、估值与「看这边」</a>
+        <a href="#岗位冲击地图-从长途卡车到法务初级" class="lvl-2">岗位冲击地图：从长途卡车到法务初级</a>
+        <a href="#未来技能-叙事-关系-科学底子与「没人知道」" class="lvl-2">未来技能：叙事、关系、科学底子与「没人知道」</a>
+        <a href="#年轻男性为何失掉扛「不」的能力" class="lvl-2">年轻男性为何失掉扛「不」的能力</a>
+        <a href="#不必信任-sam-altman-监管才是公民作业" class="lvl-2">不必信任 Sam Altman：监管才是公民作业</a>
+        <a href="#逃生包-新西兰地堡与-1%-末日赌注" class="lvl-2">逃生包、新西兰地堡与 1% 末日赌注</a>
+        <a href="#ai-最大风险是孤独-不是失业或武器" class="lvl-2">AI 最大风险是孤独，不是失业或武器</a>
+        <a href="#特朗普中东战争-战术优秀-战略无能" class="lvl-2">特朗普中东战争：战术优秀、战略无能</a>
+        <a href="#ai-泡沫-glp-1-与中国「模型倾销」" class="lvl-2">AI 泡沫、GLP-1 与中国「模型倾销」</a>
+        <a href="#衰退-代际机会与个人理财处方" class="lvl-2">衰退、代际机会与个人理财处方</a>
+        <a href="#韧性-育儿与哀思-好事坏事都没你想的那么极端" class="lvl-2">韧性、育儿与哀思：好事坏事都没你想的那么极端</a>
+        <a href="#延伸术语表" class="lvl-2">延伸术语表</a>
+        <a href="#文章元数据" class="lvl-2 toc-meta-link">来源与元数据</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main">
+      <header class="doc-header">
+        <span class="doc-eyebrow">对谈笔记</span>
+        <h1 class="doc-title">人工智能 CEO 们在推销「自由」，Scott Galloway 说真相更复杂也更欺骗</h1>
+        <p class="doc-subtitle">Scott Galloway 认为 AI 就业末日多半是为天价估值服务的灾难化叙事——数据尚不支持「就业陨石」。</p>
+        <div class="doc-meta">
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file"/></svg>
+            Scott Galloway on AI CEOs, Jobs, Trust &amp; The Future（The Diary of a CEO）
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calendar"/></svg>
+            2026-05-04
+          </span>
+          <span class="doc-meta-item">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+            ~19 分钟阅读
+          </span>
+        </div>
+      </header>
+
+      <!-- CONTENT_START -->
+<h2 id="核心导读">核心导读</h2>
+
+<div class="highlight">
+  <p><strong>Scott Galloway</strong> 认为 <strong>AI</strong> 就业末日多半是<strong>为天价估值服务的灾难化叙事</strong>——数据尚不支持「就业陨石」；真正风险是<strong>阶层分化、孤独与对科技 CEO 的偶像崇拜</strong>，而监管缺位让 <strong>Sam Altman</strong> 们不必被「信任」，只需被<strong>约束</strong>。</p>
+</div>
+
+<p><strong>品牌与话术。</strong> 过去 18 个月 <strong>AI</strong> 与「美国品牌」同步崩塌；对 <strong>AI</strong> 的好感几乎与收入正相关——年薪 <strong>20 万美元</strong>以上群体是唯一净正面人群。<strong>Elon Musk</strong>、<strong>Sam Altman</strong> 的「工作可选」「智力迁入数据中心」式预言，服务于「技术太颠覆、请按 insane 估值投资」的融资逻辑。</p>
+
+<p><strong>劳动市场真相。</strong> 美国失业率 <strong>4.5%</strong>、青年 <strong>8.8%</strong>，略低于历史均值；<strong>Stephen Bartlett</strong> 仍暂停曾「抢着要」的简历——<strong>AI</strong> 重塑招聘，但 <strong>Scott Galloway</strong> 相信中长期<strong>净增岗</strong>；真正要练的是<strong>扛「不」</strong>、<strong>讲故事</strong>与<strong>人机协作</strong>。</p>
+
+<p><strong>精英、虚无与收束。</strong> 亿万富翁的<strong>逃生包</strong>、<strong>1%</strong> 末日概率赌注、以及 <strong>Meta</strong> 式孤独算法，比「机器人抢饭碗」更令他不安；<strong>GLP-1</strong> 可能比 <strong>AI</strong> 更改变普通人生活；<strong>中国</strong> 开源模型「倾销」或<strong>重创</strong>美股 <strong>AI</strong> 赌注——而个人出路仍是<strong>慢富</strong>、<strong>分散</strong>、<strong>投资关系</strong>与<strong>哀悼后继续前行</strong>。</p>
+
+<h2 id="开场-ai-与美国品牌双双坠落">开场：AI 与美国品牌双双坠落</h2>
+
+<h3 id="开场-ai-与美国品牌双双坠落-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>对 <strong>AI</strong> 的看法几乎是你钱包的函数；<strong>AI</strong> 与「美国品牌」是过去 18 个月坠落最快的两个符号。</p></div>
+</div>
+<h3 id="开场-ai-与美国品牌双双坠落-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Scott Galloway</strong> 开场即抛双重判断：海外「美国品牌」与 <strong>AI</strong> 是近期损毁最剧的两个品牌。美国曾扮演全球秩序「操作系统」的执法者，如今在他眼中更像<strong> rogue 国家</strong>——历史上首次，更多人认为中国对世界「是善的力量」而非美国。</p>
+<p><strong>AI</strong> 品牌同样急坠。<strong>Scott Galloway</strong> 引用调查逻辑：对 <strong>AI</strong> 持正面评价的，几乎只有年收入 <strong>20 万美元</strong>以上人群——他们既是 <strong>AI</strong> 最大用户，也是股价上涨的受益者。中产阶级则看到电费上涨、无法参与 <strong>OpenAI</strong> 等私募，再听到 <strong>Sam Altman</strong>「别抱怨能源成本，想想养孩子要多少电」式发言，品牌从「有点吓人但可乐观」滑向「很吓人且只富了最富的人」。</p>
+<p><strong>Stephen Bartlett</strong> 补充：在美国，<strong>AI</strong> 作为行业的公众好感度甚至低于 <strong>ICE</strong>（移民与海关执法局）——部分因为 <strong>CEO</strong> 们宣称工作与生活将被根本颠覆，而公众「没选过这场变革」。</p>
+<p><strong>Stephen Bartlett</strong> 列出 <strong>Elon Musk</strong> 引语：「<strong>AI</strong> 与机器人将取代所有工作，上班将像自己种菜而非去超市——挑战在于意义感」；<strong>Sam Altman</strong> 则称 <strong>2028 年底</strong>全球智力容量或更多在数据中心内而非体外。<strong>Dario Amodei</strong>（<strong>Anthropic</strong>）亦常谈悲观情形与岗位冲击。<strong>Stephen Bartlett</strong> 坦承：自己招聘初级岗的标准已「相当<strong>剧烈</strong>地改变」，一度不信「营销话术」，直到筛简历行为变了。</p>
+<h3 id="开场-ai-与美国品牌双双坠落-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「这些 <strong>AI</strong> 公司 <strong>CEO</strong> 引述里，<strong>Elon Musk</strong> 说 <strong>AI</strong> 和机器人会取代所有工作——你怎么看？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「过去 18 个月品牌损毁最大的，除了海外美国品牌，就是 <strong>AI</strong>——还有走向暗面的 <strong>Sam Altman</strong>。我是 <strong>AI</strong> 乐观派，但我们得明白：这些科技公司并不以我们最佳利益为出发点。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>AI</strong> 好感度直接跟财富相关——唯一正面人群是赚 <strong>20 万美元</strong>以上的人。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="就业末日论-灾难化叙事服务于融资">就业末日论：灾难化叙事服务于融资</h2>
+
+<h3 id="就业末日论-灾难化叙事服务于融资-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>大规模失业叙事，多半是<strong>欲盖弥彰</strong>的「我的技术太颠覆，请按疯狂估值投资」——为支撑未来五年 <strong>万亿级</strong>增量收入或 <strong>50%–70%</strong> 估值回调二选一。</p></div>
+</div>
+<h3 id="就业末日论-灾难化叙事服务于融资-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Scott Galloway</strong> 的核心框架：<strong>AI</strong> 公司要么在未来 <strong>3–5 年</strong>从授权 <strong>AI</strong> 的企业榨出<strong>约万亿美元</strong>增量收入（如 <strong>L'Oréal</strong> 与 <strong>OpenAI</strong> 站点许可后推出「<strong>AI</strong>  moisturizer」级新品——目前几乎看不见），要么靠<strong>大规模降本</strong>证明估值。<strong>Meta</strong> 刚宣布因 <strong>AI</strong> 投放效率裁员，即后者路径的一例。</p>
+<p>因此 <strong>CEO</strong> 强调「大规模效率提升」与「世界将被改变、不可控」——既让技术听起来<strong>石破天惊</strong>，也为企业巨额采购开绿灯。他尤其反感：创始人一边<strong>灾难化</strong>，一边在<strong>二级市场</strong>套现离场——「我是<strong>弗兰肯斯坦</strong>，造了怪物却去 <strong>Kotzebue</strong> 度假」。</p>
+<p>就业末日话术已喊三年，但数据：<strong>美国失业率 4.5%</strong>；青年 <strong>8.8%</strong>，略低于历史均值；人均新企业开办许可过去 <strong>10 年翻倍</strong>。<strong>Meta</strong> 从 <strong>2019</strong> 年 <strong>1.6 万</strong>人扩到 <strong>2025</strong> 年 <strong>8 万</strong>，即便裁 <strong>8000–10000</strong>，也只是回到约 <strong>24 个月前</strong>水平。</p>
+<p><strong>Stephen Bartlett</strong> 反例：过去 <strong>24 个月</strong>其公司群招聘约 <strong>220</strong> 人，多为六位数起薪的年轻人——<strong>BBC</strong>、<strong>Daily Mail</strong> 裁员，但他招聘更快；且 <strong>60 天前</strong>起，曾因新工具而对原本「抢着要」的候选人<strong>暂停</strong>。<strong>Scott Galloway</strong> 承认劳动市场<strong>在重塑</strong>，可能更快，但不是末日——会有赢家输家；今年<strong>非大学</strong>毕业生失业率首次低于<strong>大学毕业生</strong>（职业工种热潮：数据中心要木匠、焊工、水管工）。</p>
+<p>他还批「这一代被宠坏」：<strong>1992</strong> 年 <strong>Berkeley</strong> 毕业日仅 <strong>40%</strong> 有工作；今 <strong>Stern</strong> 商学院他赌 <strong>40%</strong> 毕业即创业——<strong>AI</strong> 降低创业门槛，有人大二辍学拿 <strong>1000 万美元 A 轮</strong>。丹麦用 <strong>GDP 2%</strong> 做再培训，美国仅 <strong>0.2%</strong>——对「输家」照顾很差，但全球就业他不认为会<strong>末日化</strong>。</p>
+<h3 id="就业末日论-灾难化叙事服务于融资-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「灾难化多半是融资话术。<strong>灾难化</strong>就是说：我的技术毁灭性太强，社会将被改写——所以请在这个疯狂估值投资。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「数据看不出有颗<strong>就业市场陨石</strong>要来。<strong>Meta</strong> 从 <strong>1.6 万</strong>人到 <strong>8 万人</strong>，就算裁回 <strong>6 万</strong>，也只是回到大约 <strong>24 个月前</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「我们 <strong>24 个月</strong>招了大约 <strong>220</strong> 人——<strong>AI</strong> 流利度越来越重要；<strong>60 天前</strong>我开始暂停两个月前还会抢的人。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「劳动市场绝对在重塑，但我不确定是末日。<strong>灾难化</strong>就是穿好衣服的融资。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="什么数据能证明乐观派错了">什么数据能证明乐观派错了</h2>
+
+<h3 id="什么数据能证明乐观派错了-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>若<strong>持续</strong>岗位破坏且新增就业追不上，他才错；但「放射科消失」与「码农需求 +11%」已示范<strong>任务自动化 ≠ 职业消失</strong>。</p></div>
+</div>
+<h3 id="什么数据能证明乐观派错了-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Stephen Bartlett</strong> 追问<strong>何种证据能推翻他的判断</strong>：<strong>Scott Galloway</strong> 答——<strong>持续</strong>裁员且新岗位、新企业创造的就业追不上破坏量。不需要 <strong>Musk</strong> 式 <strong>100%</strong> 失业；<strong>20%</strong> 失业率在法国触发革命、在魏玛德国变<strong>极其 ugly</strong>——青年男性尤其易上街。但若只看就业数据、不知道有 smart people 预言末日，「你看不出任何事在发生」。</p>
+<p>经典反例：<strong>放射科医师</strong>曾被指将被 <strong>AI</strong> 扫片取代——<strong>2026</strong> 年招聘启事反而上升；扫片只是工作一小部分，诊断与治疗方案才是价值。<strong>程序员</strong>岗位招聘同比 <strong>+11%</strong>——懂<strong>提示词</strong>、<strong>氛围编程（vibe coding）</strong>的人需求涨，因 <strong>AI</strong> 可赋能几乎任何初创。</p>
+<h3 id="什么数据能证明乐观派错了-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「什么情况下你会发现自己错了？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「震中岗位曾是放射科——『别让你女儿当放射科医师』。结果 <strong>2026</strong> 招聘启事上升：扫片重要，但诊断与治疗方案更重要。码农招聘同比 <strong>+11%</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「我会错在：<strong>持续</strong>破坏，且新岗位追不上。但 <strong>20%</strong> 失业就够社会动荡——不必 <strong>100%</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="速度恐惧-互联网分销会否制造无法恢复的-v-型冲击">速度恐惧：互联网分销会否制造无法恢复的 V 型冲击</h2>
+
+<h3 id="速度恐惧-互联网分销会否制造无法恢复的-v-型冲击-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>恐惧在于 V 太深太快、社会来不及恢复；迄今 V 的<strong>下坠</strong>并未如预测般急——<strong>Stephen Bartlett</strong> 本人就是「旧媒体裁员、新媒体狂招」的反例。</p></div>
+</div>
+<h3 id="速度恐惧-互联网分销会否制造无法恢复的-v-型冲击-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Stephen Bartlett</strong> 提出：因<strong>建在互联网上</strong>，<strong>Anthropic</strong>/<strong>OpenAI</strong> 模型全球扩散极快——<strong>不像</strong>工业革命需基建——会否 V 过深、<strong>公民动荡</strong>在「另一边更多岗位」到来前已爆发？</p>
+<p><strong>Scott Galloway</strong> 承认这是<strong>恐惧</strong>，但 V <strong>并未</strong>如预期加速下坠。他以 <strong>Stephen Bartlett</strong> 为例：四年前初到伦敦不识对方，两年内机场广告牌、飞机安全片皆是其形象——「旧媒体失业，你在雇活生生的人、喝酒、生孩子」——<strong>220</strong> 人招聘即<strong>活样本</strong>。</p>
+<p>劳动<strong>重塑</strong>会更快，但末日未必；大学应届失业率反超非大学，同时 <strong>AI</strong> 数据中心拉动技工<strong>热潮</strong>。</p>
+<h3 id="速度恐惧-互联网分销会否制造无法恢复的-v-型冲击-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「技术速度会不会<strong>不像</strong>过去革命，V 太<strong> vicious</strong> 来不及恢复？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「这就是恐惧——但 V 没<strong>下坠</strong>得像人说的那么快。你四年从无名到无处不在，<strong>24 个月</strong>招 <strong>220</strong> 人——旧媒体裁，你在创造就业。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="ai-加机器人-工业落地-而非端茶机器人">AI 加机器人：工业落地，而非端茶机器人</h2>
+
+<h3 id="ai-加机器人-工业落地-而非端茶机器人-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>AI</strong> 加机器人是「两股海啸」，但在手术等场景是<strong>增强</strong>超级外科医生而非取代；股东价值在 <strong>Amazon</strong> 式工业自动化，不在<strong>家用</strong>端茶。</p></div>
+</div>
+<h3 id="ai-加机器人-工业落地-而非端茶机器人-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Stephen Bartlett</strong> 问 <strong>Optimus</strong> 与 <strong>AI</strong> 结合：<strong>Musk</strong> 称未来无需人类外科医生。<strong>Scott Galloway</strong> 以手术为例：机器人让优秀神外一天做两台而非一台——<strong>善用机器人</strong>的外科医生阶层<strong>生产率</strong>上升。</p>
+<p>工业侧：<strong>美国</strong>约 <strong>40 万</strong>台工业机器人，<strong>Amazon</strong> 一家约 <strong>100 万</strong>——全国其余合计的 <strong>2.5 倍</strong>。<strong>Amazon</strong> 称 <strong>2032</strong> 年前零售最大业务翻倍而<strong>不增雇</strong>，靠 <strong>Kiva</strong> 等早年收购的自动化。<strong>中国</strong> 先进制造 + <strong>AI</strong> 机器人将<strong>带来</strong>巨大优势。</p>
+<p>他不信「机器人进家端茶」——更担心<strong>武装化工业机器人当武器</strong>。<strong>Stephen Bartlett</strong> 类比：吸尘器、冰箱已是「不动机器人」——<strong> leap</strong> 是是否允许其移动。<strong>Scott Galloway</strong> 指 <strong>CEO</strong> 现角色从<strong>少承诺多交付</strong>翻转为<strong>多承诺少交付</strong>以拉<strong>廉价资本</strong>：<strong>2016</strong> 说自动驾驶 <strong>2 年</strong>到、三年前 <strong>100 万</strong> <strong>Tesla</strong> robotaxi——未发生。</p>
+<h3 id="ai-加机器人-工业落地-而非端茶机器人-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「<strong>Optimus</strong> 加 <strong>AI</strong> 像两股海啸——人类技能还剩什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「以手术论：机器人是<strong>补充</strong>，不是<strong>替代</strong>——好外科医生一天两台变一台？不对，是一天两台。股东价值在 <strong>AI</strong> 撞工业机器人——<strong>Amazon</strong> <strong>2032</strong> 零售翻倍不增人。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「家里端茶机器人？我不信。更该问：<strong>武装化</strong>工业机器人当战士。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="马斯克叙事-魔法-估值与「看这边」">马斯克叙事：魔法、估值与「看这边」</h2>
+
+<h3 id="马斯克叙事-魔法-估值与「看这边」-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>Musk</strong> 擅长「看这边」<strong>同时</strong>把兔子塞进帽子——<strong>Tesla</strong> 是伟大汽车公司，但应 <strong>~30 倍</strong>盈利交易而非 <strong>150 倍</strong>；魔法（<strong>Starlink</strong>、可回收火箭）与<strong>疯狂估值</strong>可<strong>同时为真</strong>。</p></div>
+</div>
+<h3 id="马斯克叙事-魔法-估值与「看这边」-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Scott Galloway</strong> <strong>2025</strong> 年科技股 pick 是 <strong>Alphabet</strong>（市盈率 <strong>17</strong>，被认为 <strong>OpenAI</strong> 会<strong>搞死</strong> <strong>Google</strong>）；<strong>2026</strong> 年 pick <strong>Amazon</strong>（<strong>AI</strong>+机器人落地）。<strong>Musk</strong> 现角色：讲故事拉<strong>廉价资本</strong>、<strong>把未来提前拽到眼前</strong>——很多是<strong>花架子</strong>。</p>
+<p><strong>Tesla</strong>：产品<strong>极好</strong>，启发 <strong>EV</strong> <strong>竞赛</strong>；但 <strong>BYD</strong> 是史上最快增长车企——「<strong>80%–100%</strong> 的 <strong>Tesla</strong>、<strong>40%</strong> 价格」；若无关税战或成美国 <strong>EV</strong> 第一。<strong>SpaceX</strong> 发射占全球 <strong>90%</strong>，营收 <strong>160 亿</strong>、利润 <strong>80 亿</strong>，IPO 或 <strong>90–110 倍</strong>营收——<strong>Google</strong> 上市仅 <strong>10 倍</strong>营收且增速快 <strong>10 倍</strong>。</p>
+<p><strong>Stephen Bartlett</strong> 个人体验：<strong>Tesla FSD</strong> 从 LA 到 <strong>Joshua Tree</strong> <strong>3.5 小时</strong>几乎无干预，比自驾更安全；火箭 chopsticks 回收「像魔法」。<strong>Scott Galloway</strong> 同意 <strong>Starlink</strong> 是近年最佳科技产品之一（机上播客、海上连通）；<strong>AirPods</strong> 若独立成司或 <strong>Fortune 50</strong>——「史上最赚钱、<strong>无处不在</strong>的首饰」。</p>
+<p>但 <strong>SpaceX</strong> IPO 时，追逐 <strong>Musk</strong> 的<strong>散户</strong>资金会从 <strong>Tesla</strong> 流出——人们终悟 <strong>Tesla</strong> 只是<strong>伟大汽车公司</strong>，应 <strong>~1/5</strong> 当前估值。</p>
+<h3 id="马斯克叙事-魔法-估值与「看这边」-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「<strong>Joshua Tree</strong> 全程 <strong>FSD</strong>——魔法。他说 <strong>Optimus</strong> 时我会想：他过去交付过魔法。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>CEO</strong> 现在是多承诺、少交付，造愿景拉廉价资本。<strong>Tesla</strong> 极好，但 <strong>BYD</strong> 在吃它的 lunch。<strong>SpaceX</strong> Amazing 也高估——两个可以同时为真。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>Starlink</strong> 改变我生活；<strong>AirPods</strong> 可能是史上最赚钱首饰。但 <strong>Tesla</strong> 应大约五分之一估值。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="岗位冲击地图-从长途卡车到法务初级">岗位冲击地图：从长途卡车到法务初级</h2>
+
+<h3 id="岗位冲击地图-从长途卡车到法务初级-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>长途卡车司机（非高中男性最大雇主之一）十年内或锐减；客服、合同审查<strong>初级岗</strong>已可被 <strong>LLM</strong> 替代——但 <strong>AI</strong> 不会抢你的工作，<strong>懂 AI 的人会</strong>。</p></div>
+</div>
+<h3 id="岗位冲击地图-从长途卡车到法务初级-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p>伦敦已批准 <strong>Waymo</strong> 与 <strong>Tesla FSD</strong>。<strong>Scott Galloway</strong> 最同情长途卡车司机——可跑 <strong>22:00–04:00</strong> 低流量时段；该职是美国非高中男性最大雇主之一，人数位列全美岗位 <strong>Top 2–3</strong>；<strong>10 年内</strong>长途司机或极少。客服<strong>可能</strong>消失。</p>
+<p>个人案例：合同审查曾送律所 <strong>400–2000 美元</strong>/份——现让同事用 <strong>Claude</strong>/<strong>ChatGPT</strong> 扮演 <strong>1200 美元/小时</strong>雇佣法律师审阅、红线，再换 <strong>LLM</strong> 交叉——「恭喜，你已是高级助理律师」。其组织法律费约 <strong>10–30 万美元/年</strong>，今年<strong>轻松</strong>砍 <strong>1/3</strong>。</p>
+<p>防 <strong>AI</strong> 很简单：<strong>第二块屏</strong>永远开着 <strong>LLM</strong>——任何数字内容<strong>丢进去</strong>试。<strong>Stephen Bartlett</strong> 复述金句时顿悟：懂 <strong>AI</strong> 的人不只抢一个岗——<strong>Molly</strong> 分析师加两台 <strong>Mac mini</strong> <strong>智能体</strong>，本要招 <strong>5</strong> 个分析师现只需 <strong>1</strong> 个；<strong>行政助理（EA）</strong> 从 <strong>10</strong> 人缩到 <strong>3</strong>（旅行、日程、门口迎宾各一<strong>智能体</strong>增强）。销售「请人吃午饭、喝酒、打电话」仍<strong>几乎不受影响</strong>。</p>
+<p><strong>Scott Galloway</strong> 母亲曾是打字员——打字消失，她转<strong>行政助理</strong>，难在「管理高管人生」。会计「应消失」但聪明会计转财富管理；会计总数今年仍增。不会 <strong>AI</strong> 基础像 <strong>1998</strong> 说不用 PC——须<strong>升级技能</strong>；他强迫自己玩新工具，因年长后学新科技的脑区「会死」。</p>
+<h3 id="岗位冲击地图-从长途卡车到法务初级-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「我最不想当长途卡车司机——<strong>10 年</strong>内会很少。客服<strong>可能</strong>没。<strong>AI</strong> 不会抢你工作——<strong>懂 AI 的人会</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「合同扔 <strong>Claude</strong>：假装 <strong>1200 美元/小时</strong>律师，红线，再换 <strong>LLM</strong>——法律费今年<strong>轻松</strong>砍 <strong>1/3</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「<strong>Molly</strong> 加两个<strong>智能体</strong>，五个分析师变一个；<strong>EA</strong> 十个变三个。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="未来技能-叙事-关系-科学底子与「没人知道」">未来技能：叙事、关系、科学底子与「没人知道」</h2>
+
+<h3 id="未来技能-叙事-关系-科学底子与「没人知道」-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>没人真知道 <strong>10 年后</strong>什么技能最热——<strong>私立学校</strong>曾押<strong>计算机科学</strong>+中文；<strong>持久</strong>的是<strong>讲故事</strong>、<strong>真实关系</strong>与基础科学素养。</p></div>
+</div>
+<h3 id="未来技能-叙事-关系-科学底子与「没人知道」-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Scott Galloway</strong> 诚实：<strong>10 年前</strong>私校<strong>课程</strong>最大增量投资是<strong>计算机科学</strong>与<strong>中文</strong>——「谢天谢地孩子会中文？没人这么说」。<strong>持久技能</strong>是<strong>讲故事</strong>：读数据、建<strong>叙事弧线</strong>、跨媒介<strong>有说服力</strong>地沟通——<strong>Jeff Bezos</strong> <strong>1997</strong> 股东信、<strong>Alex Karp</strong> 手机<strong>直播财报</strong>、<strong>Jensen Huang</strong> <strong>体育场摇滚式</strong>发布会都是讲故事。</p>
+<p>技术将<strong>拉平</strong>产品（逆向工程曾让制造品趋同）；<strong>AI</strong> 模型亦<strong>趋同</strong>——差异化在关系：「三个孩子叫什么？我喜不喜欢这人？」三律所、三投行、三 <strong>CRM</strong> 竞标时，选关系最好者。</p>
+<p>基础<strong>科学</strong>素养仍<strong>持久</strong>。对孩子：别硬塞「未来去这行」——要会写、会<strong>眼神交流</strong>、<strong>竞争意识</strong>、运动、<strong>家务</strong>（他儿子们不做家务）。<strong>Stephen Bartlett</strong> 认同讲故事是销售/说服的<strong>写照</strong>。</p>
+<h3 id="未来技能-叙事-关系-科学底子与「没人知道」-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「未来什么技能？我有孩子。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「诚实说：我有看法，但没人知道。<strong>10 年前</strong>私校砸<strong>计算机科学</strong>和中文——怎样了？<strong>持久</strong>的是<strong>讲故事</strong>——<strong>Bezos</strong> <strong>1997</strong> 信让我掏钱包。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「技术趋同，差异化是关系：谁的孩子？我喜不喜欢你？别告诉孩子『必须进这行』——我们不知道。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="年轻男性为何失掉扛「不」的能力">年轻男性为何失掉扛「不」的能力</h2>
+
+<h3 id="年轻男性为何失掉扛「不」的能力-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>在<strong>无摩擦</strong>线上关系里，年轻男性尤其失掉<strong>忍受拒绝</strong>的能力——导师应布置作业：目标就是听到<strong>「不」</strong>。</p></div>
+</div>
+<h3 id="年轻男性为何失掉扛「不」的能力-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Scott Galloway</strong> 认为最大被低估技能是<strong>忍受拒绝</strong>——因 <strong>AI</strong> 与线上<strong>无摩擦</strong>关系，年轻男性失掉<strong>毅力</strong>、<strong>愿意听「不」</strong>（交友、投未达标岗位、浪漫接近）。</p>
+<p>他<strong>导师</strong>年轻男性第一课叫<strong>「不」</strong>：去教会小组、运动联赛，主动交友——「看 <strong>Arsenal</strong> 吗？」；再约咖啡——<strong>目标就是「不」</strong>。第二天电话：「你 OK 吗？」「Yes。」「对方 OK 吗？」「Yes。」——<strong>成功的秘诀是拒绝</strong>：他高中三次选 student president 全输；企业家 <strong>Stephen Bartlett</strong> 的<strong>「不」</strong>比谁都多。</p>
+<p>「<strong>高攀</strong>」：投不配的项目、接近更 cool 的人——<strong>哀悼后继续前进</strong>是自造富豪唯一共性（除 rich parents）。<strong>Stephen Bartlett</strong> 谈 <strong>Adam Neumann</strong> 与 <strong>Masayoshi Son</strong> 出租车故事：「不够 ambitious」→ <strong>23 分钟</strong>后 <strong>40 亿</strong>——以及自己 <strong>18 岁</strong> <strong>5 千美元</strong>卖 <strong>20%</strong> 股权、后公司上市数亿——「一辈子都在<strong>贱卖自己</strong>」。</p>
+<p><strong>Scott Galloway</strong> 谈<strong>定价即信号</strong>：提案回来就加价 <strong>30%–50%</strong>——<strong>永远</strong>可降价；男性更擅<strong>不现实的自我想象</strong>（<strong>Charlie Munger</strong>： stupid obnoxious vision 偶尔对——<strong>别 bet against</strong>）。<strong>Musk</strong> 要 <strong>90%</strong> 发射、<strong>70%</strong> 低轨卫星——arrogant，但<strong>市场</strong>会 bring you back。</p>
+<h3 id="年轻男性为何失掉扛「不」的能力-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「年轻男性最大威胁技能：扛<strong>「不」</strong>。<strong>AI</strong> 与<strong>无摩擦</strong>线上关系让他们失掉<strong>韧性</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「我<strong>导师</strong>的第一课：<strong>「不」</strong>。去陌生人群表达友谊——目标就是<strong>「不」</strong>。第二天：你 OK？Yes。<strong>成功的秘诀是拒绝</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「<strong>Adam Neumann</strong> 出租车 <strong>23 分钟</strong>从 <strong>3 亿</strong>谈到 <strong>40 亿</strong>——我 <strong>18 岁</strong> <strong>5K</strong> 卖 <strong>20%</strong>，后来公司值数亿。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>定价</strong>是信号——回来就加价 <strong>30%–50%</strong>。若你要<strong>往高处喊价</strong>，<strong>市场</strong>会自己把你打回来。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="不必信任-sam-altman-监管才是公民作业">不必信任 Sam Altman：监管才是公民作业</h2>
+
+<h3 id="不必信任-sam-altman-监管才是公民作业-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>科技 <strong>CEO</strong> 不是新弥赛亚——<strong>Steve Jobs</strong> 之后<strong>偶像崇拜</strong>失控；公民作业是选会设<strong>护栏</strong>的官员，而非问「能否信任 <strong>Sam Altman</strong>」。</p></div>
+</div>
+<h3 id="不必信任-sam-altman-监管才是公民作业-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>New Yorker</strong>（<strong>Ronan Farrow</strong>、<strong>Andrew Morren</strong>）与 <strong>Sam Altman</strong> 回应 blog 引讨论。<strong>Scott Galloway</strong>：<strong>Sam Altman</strong> 与 <strong>AI</strong> brand 一道坠落——我们从 <strong>70–90 年代</strong>起把 hero 从运动员、官员、演员转向 tech <strong>CEO</strong>；宗教 attendance 降，但人仍要 authority figure——tech 有 mystical feel，像 praying。</p>
+<p>「新 <strong>Jesus Christ</strong>」是 tech <strong>CEO</strong>——<strong>Steve Jobs</strong> 早夭像 <strong>Jesus</strong>；现是 <strong>Sam Altman</strong> 们。<strong>他们不以我们最佳利益为 heart</strong>——任务是 earnings 每天涨 <strong>1 cent/share</strong>；会 justify harming teen girls（<strong>Sheryl Sandberg</strong>）、 discourse coarsening（<strong>Mark Zuckerberg</strong>）、 young men radicalization（<strong>YouTube</strong>）。</p>
+<p>「<strong>Sam Altman</strong> 曾是我们想要的 gay son——温和、国会同台求 regulation——现变 <strong>Darth Vader</strong>。」 cycle 重复：<strong>Dario Amodei</strong> 成新「好人」→ <strong>18 个月</strong>后现形。<strong>Anakin</strong> 到 <strong>Vader</strong> journey 越来越短。他们 legally 增 shareholder value；我们该 elected officials regulate——像香烟不能向 <strong>12 岁</strong>营销、<strong>Ford</strong> 不能往河里倒汞。</p>
+<p><strong>Stephen Bartlett</strong> 问 <strong>Molotov cocktail</strong> 袭击 <strong>Sam Altman</strong> 宅——<strong>Scott Galloway</strong> 强烈 condemns 一切暴力（含 healthcare executive 街头处决）；袭击者 profile 常 young men 求 social capital。<strong>Sam</strong> 非 evil——「我们在不做 citizen job」。私保人数已超警察。</p>
+<p><strong>Stephen Bartlett</strong> 问是否 <strong>nihilist</strong>——见下节。</p>
+<h3 id="不必信任-sam-altman-监管才是公民作业-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「<strong>New Yorker</strong> 后还能<strong>信任</strong> <strong>Sam Altman</strong> 吗？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「不能——但也不该需要<strong>信任</strong>。我们该<strong>信任</strong>有能力的<strong>民选官员</strong>会监管。<strong>Sam</strong> 在做他的工作；我们没做我们的。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「科技 <strong>CEO</strong> 是新宗教。<strong>Sam</strong> 是我们要的理想儿子——现在<strong>达斯·维达</strong>。他们为五美分什么事都干——那是<strong>职位描述</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「对 <strong>Sam</strong> 的暴力<strong>零正当理由</strong>。出名就有<strong>人身风险</strong>——但我们不该需要<strong>信任</strong>他，该<strong>信任</strong>监管。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="逃生包-新西兰地堡与-1%-末日赌注">逃生包、新西兰地堡与 1% 末日赌注</h2>
+
+<h3 id="逃生包-新西兰地堡与-1%-末日赌注-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>亿万富翁里保守估计 <strong>1/3</strong> 有<strong>逃生包</strong>——<strong>Oakland</strong> 飞 <strong>Auckland</strong> 地堡；这与<strong>星际逃避</strong>同属<strong>虚无主义脉络</strong>——而 <strong>1%</strong> 末日概率仍<strong>不阻止</strong>开发。</p></div>
+</div>
+<h3 id="逃生包-新西兰地堡与-1%-末日赌注-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Scott Galloway</strong> 指大型科技公司<strong>虚无主义脉络</strong>：<strong>逃生包</strong>、僵尸末日/革命/大流行计划，花<strong>数千万美元</strong>；<strong>Gulfstream 650</strong> 赴 <strong>New Zealand</strong> 地堡——他赌 <strong>1/3</strong> 亿万富翁有<strong>预案</strong>。</p>
+<p><strong>Stephen Bartlett</strong> <strong>转述二手消息</strong>：某 <strong>AI CEO</strong> 熟人认为 <strong>~7%–10%</strong> 世界末日概率，但「<strong>召唤</strong>新智能比后果更<strong>重要</strong>」——他现相信部分领袖<strong>根本不在乎</strong>。</p>
+<p><strong>Scott Galloway</strong> 与亿万富翁推演 Plan B：变故后<strong>飞行员</strong>会不会杀你？<strong>New Zealand</strong> 当地人会不会「去抢富人的地堡」？——<strong>资本错配</strong>；应投资让地球更可<strong>宜居</strong>，非殖民 <strong>Mars</strong>。</p>
+<p><strong>0.1%</strong> 与美国福祉<strong>脱钩</strong>：不排 <strong>TSA</strong>（私人飞机）、不排烂医疗（<strong>礼宾医疗</strong>）、孩子 <strong>7.5 万美元/年</strong>私校 vs 公立 <strong>1–1.5 万</strong>、<strong>Soho</strong><strong> dormant</strong> 安保——「不再投资美国健康」。<strong>Cara Swisher</strong>（*Pivot* 联席主持）COVID 时言：这些人<strong>从未当过受害者</strong>——不懂<strong>受害体验</strong>，故不设<strong>防护</strong>。</p>
+<p>激励结构：<strong>Spirit</strong> 航空 vs <strong>Global 650</strong> 差距巨大；<strong>1%</strong> 医疗（<strong>NAD</strong> 上门、挪威 lab 每 <strong>3 月</strong>验血）vs 母亲<strong>保险不足</strong>抗癌的<strong>屈辱</strong>——「底层 <strong>99%</strong> 被优化来让 <strong>1%</strong> 生活<strong>难以置信</strong>」。<strong>Instagram</strong> 与英国自伤少女统计被<strong> incremental</strong> ignore——「成 billionaire 后我会变更好的人」。</p>
+<p><strong>Sam Altman</strong> 不会被记「好人坏人」——被记 <strong>OpenAI</strong> 第一还是<strong>搞砸</strong>；社会<strong>奖励</strong>的是<strong>赢</strong>，非<strong>善良</strong>。</p>
+<h3 id="逃生包-新西兰地堡与-1%-末日赌注-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「有人告诉我某 <strong>AI CEO</strong> 估 <strong>7%–10%</strong> 世界末日，但<strong>不在乎</strong>——<strong>做那个召唤它的人</strong>更重要。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「亿万富翁 <strong>1/3</strong> 有<strong>逃生包</strong>——<strong>Oakland</strong> 飞 <strong>New Zealand</strong>。<strong>飞行员</strong>真会带你走？当地人不会抢地堡？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>0.1%</strong> 不再投资美国——私人飞机、礼宾医疗、私校。<strong>Cara</strong> 说：他们<strong>从未当过受害者</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>Sam</strong> 会被记 <strong>OpenAI</strong> 第一还是搞砸——不是好人。<strong>1%</strong> 生活<strong>太夸张</strong>，激励 ignore <strong>1/18</strong> 英国少女自伤归因 <strong>Instagram</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="ai-最大风险是孤独-不是失业或武器">AI 最大风险是孤独，不是失业或武器</h2>
+
+<h3 id="ai-最大风险是孤独-不是失业或武器-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>AI</strong> 最大<strong> downside</strong> 是<strong>孤独</strong>——算法让人相信屏幕上有<strong>像模像样的生活仿像</strong>；经济 <strong>40%</strong> 在试图<strong>把你与真实关系隔离开</strong>。</p></div>
+</div>
+<h3 id="ai-最大风险是孤独-不是失业或武器-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Stephen Bartlett</strong> 问乌托邦：<strong>AI</strong> 能否<strong>第一种</strong>真正让人<strong>更人性</strong>——只剩关系、<strong>走出屏幕接触真实生活</strong>？</p>
+<p><strong>Scott Galloway</strong>：社交媒体对 <strong>Meta</strong><strong>净负面</strong>；但 <strong>AI</strong> 有<strong>上行</strong>——研究称 <strong>AI</strong> 重度用户<strong>观点更温和</strong>（取中位数/平均，非极端）；且 <strong>AI</strong>「好<strong>客气</strong>」——不会说「<strong>Stephen</strong> 这想法真蠢」，而说「理解你为何问」。</p>
+<p>老年护理中 <strong>AI</strong> <strong>角色</strong>或有作用。但最大<strong>危险</strong>非武器或不平等（我们「<strong>选了</strong>不平等」）——是<strong>孤独</strong>：为何交友 when <strong>Discord</strong>/<strong>Reddit</strong>？为何工作 when <strong>Robin Hood</strong>？为何恋爱 when <strong>合成色情</strong>？</p>
+<p><strong>20–30 岁</strong>男性户外时间少于<strong>监狱囚犯</strong>；<strong>18–24 岁</strong>男性 <strong>42%</strong> <strong>从未当面约女生</strong>（其上次 <strong>Stephen Bartlett</strong> 节目亦谈）。人们相信<strong>像模像样的生活仿像</strong>——<strong>S&amp;P</strong> 经济 <strong>40%</strong> 试图<strong>把你从关系里隔开</strong>。</p>
+<p>预测美国：<strong> incredible 繁荣</strong> + 大规模<strong>孤独、抑郁、焦虑、肥胖</strong>。</p>
+<h3 id="ai-最大风险是孤独-不是失业或武器-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「有没有乌托邦：<strong>AI</strong> 让我们只剩人类擅长的事——关系、<strong>走出屏幕</strong>？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>AI</strong> 用户<strong>观点更温和</strong>——<strong>AI</strong> 好客气，取中位数。<strong>Meta</strong><strong>净负面</strong>，但 <strong>AI</strong> 有上行。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「最大危险不是武器——是<strong>孤独</strong>。<strong>42%</strong> <strong>18–24</strong> 男性从未当面约女生。<strong>40%</strong> 经济在把你从关系隔开。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「美国预测：<strong> incredible 繁荣</strong> + 大规模<strong>孤独</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="特朗普中东战争-战术优秀-战略无能">特朗普中东战争：战术优秀、战略无能</h2>
+
+<h3 id="特朗普中东战争-战术优秀-战略无能-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>特朗普相信「解放中东」的<strong>遗产</strong>，但战争是<strong>战术执行优秀、战略无能</strong>——伊朗 <strong>IRGC</strong> 只需<strong>撑住</strong>即赢；美国品牌再损。</p></div>
+</div>
+<h3 id="特朗普中东战争-战术优秀-战略无能-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Stephen Bartlett</strong> 转向中东：<strong>Trump</strong> 称 <strong>6 周</strong>计划、一切 going to plan。<strong>Scott Galloway</strong> 认为 Trump 被 adviser 与 <strong>Netanyahu</strong> 说服： weakened <strong>Iran</strong>、take out <strong>IRGC</strong>/nuclear/missile 可成 defining legacy——继 <strong>Venezuela</strong>「史上最佳军事行动之一」（零美军阵亡）后 drunk on macho success。</p>
+<p>但 war 中 enemy has a say——自 <strong>WWII</strong> 无 unconditional surrender；<strong>Vietcong</strong>/<strong>Taliban</strong>/<strong>IRGC</strong> 只需 survive。<strong>Ho Chi Minh</strong> 句：「他们会杀很多我们的人，我们杀一些他们的，他们会 tire，回家。」</p>
+<p>战略失误：未 enlist 欧洲、未 brief Congress、未协调 Gulf allies、未想 <strong>Hormuz</strong> game theory——封锁海峡或比 nuclear 更 powerful； fertilizer 供应链或致 global starvation。<strong>14</strong> 美军阵亡 vs 俄日千级/day——美国显得 glass jaw。</p>
+<p><strong>IRGC</strong> meme war 击败 Trump <strong>Truth Social</strong> macho Jesus memes——「<strong>AI meme war</strong>」：<strong>18–25</strong> 岁 slop memes 更 effective。Trump 现 trapped： said <strong>6 周</strong>，midterms、approval all-time low。<strong>Scott Galloway</strong> 曾支持 military action 想法，现认 strategic incompetence；optimistic end：multinational force 保 <strong>Hormuz</strong>、block Iranian port oil offload（<strong>~12 周</strong> pipeline backup damage source）。</p>
+<p>市场 all-time high——<strong>50%</strong> 美国消费来自 top <strong>10%</strong>，gas <strong>6 美元</strong>不痛 elite；war pain outsourced。</p>
+<h3 id="特朗普中东战争-战术优秀-战略无能-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「Trump 说 <strong>5.5 周</strong>、going to plan——实际发生了什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「他 bought『解放中东』legacy——<strong>Venezuela</strong> 成功后 drunk on macho。但 enemy has a say——<strong>IRGC</strong> survive 即 win。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>Operational excellence, strategic incompetence</strong>——没协调 Gulf、没想 <strong>Hormuz</strong>。<strong>IRGC</strong> Lego memes 击败 Trump Jesus memes——first <strong>AI meme war</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「Trump <strong>6 周</strong>时间表被困——<strong>情绪崩盘</strong>。<strong>市场</strong>历史新高，<strong>50%</strong> 消费来自 top <strong>10%</strong>——战争痛苦<strong>外包</strong>。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="ai-泡沫-glp-1-与中国「模型倾销」">AI 泡沫、GLP-1 与中国「模型倾销」</h2>
+
+<h3 id="ai-泡沫-glp-1-与中国「模型倾销」-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>基建支出超 <strong>GDP 2%–3%</strong> 后几乎<strong>总会</strong>崩盘；<strong>AI</strong> 有 <strong>1/3</strong> 概率像疫苗/航空——重要但无巨头<strong>捕获价值</strong>；<strong>GLP-1</strong> 对他个人比 <strong>AI</strong> 更<strong>改变人生</strong>。</p></div>
+</div>
+<h3 id="ai-泡沫-glp-1-与中国「模型倾销」-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>OpenAI</strong> ~<strong>2000 亿</strong>融资建数据中心 vs <strong>~300 亿</strong> revenue——craziness。<strong>Scott Galloway</strong>：铁路、 electrification、internet、<strong>Global Crossing</strong> telco buildout 后皆 crash；<strong>Amazon</strong> <strong>99–01</strong> 跌 <strong>94%–97%</strong>，<strong>Facebook</strong> <strong>2022</strong> <strong>-72%</strong>——今 <strong>Mag 7</strong> sneeze 全球 cold。</p>
+<p>关键 thesis：并非所有 <strong>seismic</strong> tech 都 yield 少数 trillion-cap 赢家——<strong>jet transportation</strong> vs <strong>AI</strong> 三选一你留哪个？他选手 jet——全球 airline+制造 shareholder value <strong>break even</strong>。<strong>PC</strong>（<strong>Gateway</strong> board weak flex）、<strong>vaccines</strong>（<strong>Moderna -90%</strong>）同理。</p>
+<p><strong>AI</strong> <strong>1/3</strong> 概率像 vaccines——重要但 openweight <strong>中国</strong>模型 free → <strong>AI puts AI out of business</strong>；models <strong>converge</strong>，reverse-engineer features。 shareholder 建议：<strong>short AI ecosystem</strong>； stakeholder：<strong>great</strong>。</p>
+<p><strong>2024</strong> tech of year 是 <strong>AI</strong>；<strong>2025–26</strong> 同一答案：<strong>GLP-1</strong>——问 daily <strong>GLP-1</strong>+<strong>AI</strong> user 放弃哪个。更 impact lives + shareholder value than <strong>AI</strong>。</p>
+<p><strong>中国</strong>「<strong>AI dumping</strong>」：像 <strong>80–90 年代</strong> steel dumping—— cheap openweight models 进美国，corp 弃 <strong>Anthropic</strong>/<strong>OpenAI</strong> million-dollar site license → 美股 crash（<strong>S&amp;P 40%</strong> 直接/间接押 <strong>AI</strong>；过去两年 <strong>GDP growth</strong> 大半来自 <strong>AI capex</strong>）。<strong>Stephen Bartlett</strong>：「 sat <strong>China</strong> leader：给美国人 cheap <strong>AI</strong>，kneecap economy」——<strong>Scott Galloway</strong>：「<strong>100%</strong> 我会这么做。」</p>
+<h3 id="ai-泡沫-glp-1-与中国「模型倾销」-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「<strong>OpenAI</strong> 近 <strong>2000 亿</strong>融资对 <strong>~30 亿</strong> revenue——何时 correct？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「基建超 <strong>GDP 2–3%</strong> 几乎 always crash。<strong>Mag 7</strong> 跌 <strong>40–97%</strong> 都发生过——现在 sneeze 全球 cold。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「Jet vs <strong>AI</strong> 三选一？Jet。<strong>Airline</strong> industry shareholder value：zero。<strong>AI</strong> <strong>1/3</strong> 概率像 vaccines——赢家可能是 us，不是 <strong>OpenAI</strong>。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>2025–26</strong> 最重要科技：<strong>GLP-1</strong>，不是 <strong>AI</strong>。中国 <strong>AI 倾销</strong>——我会<strong>做空</strong>生态、<strong>做多</strong>利益相关方。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="衰退-代际机会与个人理财处方">衰退、代际机会与个人理财处方</h2>
+
+<h3 id="衰退-代际机会与个人理财处方-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p>衰退在 <strong>Jamie Dimon</strong> 口中是每 <strong>7 年</strong>一次——年轻一代<strong>陌生</strong>；对他们<strong>回调</strong>未必坏事；致富答案是<strong>慢慢</strong>+纪律。</p></div>
+</div>
+<h3 id="衰退-代际机会与个人理财处方-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Scott Galloway</strong> <strong>NYT</strong> board <strong>2008</strong>：<strong>60 天</strong>内广告 revenue <strong>-70%</strong>——「everything stops」。Recession healthy：清 fatty deposits；<strong>best time start business</strong> 是 recession 后——人便宜、物便宜。</p>
+<p><strong>28 岁</strong>无孩无狗 talent，asset crash <strong>might not worst thing</strong>——<strong>2009</strong> 他买 <strong>Amazon/Apple/Netflix</strong> <strong>8–12 美元</strong>，<strong>20x</strong>；今 government bail markets（<strong>Spirit</strong> <strong>5 亿</strong> loan）= 向 boomer 转移、rob 年轻人买 restaurant pennies 机会。</p>
+<p>个人：<strong>&gt;61</strong> 岁，goal 非 get rich 而 <strong>not get poor</strong>——<strong>&gt;3%</strong> net worth 不投单一标的； diversify 出美国，进拉美/欧洲。<strong>Pokemon</strong> collectibles 与儿子——唯一觉得有 value 处。</p>
+<p>年轻人：<strong>ROI</strong> 最高是 invest yourself + stock options at fast company；<strong>30%</strong> income 自动进 low-cost index，<strong>30%</strong>  fun stock pick 证明你不 smarter than market；<strong>matching program</strong> hack 让手碰不到钱。<strong>Compound interest</strong> staggering——<strong>100K</strong> 进 magic box 到 <strong>61</strong> 变 <strong>1M</strong>，人生 blink。</p>
+<p><strong>Stephen Bartlett</strong> 问最大 wealth step-change：<strong>Scott Galloway</strong>—— superpower 是 <strong>got shot in face, mourn, get up</strong>——e-commerce incubator <strong>6 个月</strong> nearly out；<strong>2002</strong> public co restructuring；<strong>2008</strong> video delivery dead；generously <strong>3–4–2</strong> wins-losses。<strong>Resilience</strong>——Ivy friends hit one failure 就 stuck。</p>
+<h3 id="衰退-代际机会与个人理财处方-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「<strong>12–24 月</strong> economic crash？个人 <strong>1 万美元</strong>怎么 defend？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「Recession 每 <strong>7 年</strong>——你们这代 unfamiliar。<strong>2008</strong> <strong>NYT</strong> <strong>60 天</strong> <strong>-70%</strong> ad revenue。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>28 岁</strong> talent，crash 未必坏事——<strong>2009</strong> <strong>Amazon 8 块</strong>。<strong>Spirit bailout</strong> 是抢你们机会。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「怎么富？<strong>慢慢富</strong>。自动指数、<strong>3%</strong> 分散、投资关系——复利。」</p>
+    </div>
+  </article>
+</div>
+
+<h2 id="韧性-育儿与哀思-好事坏事都没你想的那么极端">韧性、育儿与哀思：好事坏事都没你想的那么极端</h2>
+
+<h3 id="韧性-育儿与哀思-好事坏事都没你想的那么极端-insight" class="layer-heading layer-insight">核心洞察</h3>
+<div class="callout callout-tip section-insight">
+  <svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tip"/></svg>
+  <div class="callout-body"><p><strong>33 岁</strong>该知：成败多非全在你；最该投资<strong>关系</strong>与<strong>意义</strong>（对孩子是永远无法<strong>正回报</strong>的爱）；<strong>哀思</strong>是爱的<strong> recess</strong>。</p></div>
+</div>
+<h3 id="韧性-育儿与哀思-好事坏事都没你想的那么极端-analysis" class="layer-heading layer-analysis">深度解析</h3>
+<p><strong>Stephen Bartlett</strong> <strong>33</strong> vs <strong>Scott Galloway</strong> <strong>62</strong>（自称 <strong>61</strong>，玩笑 <strong>testosterone</strong>）：未来 <strong>30 年</strong>最重要一课？</p>
+<p><strong>Nothing's ever as good or as bad as it seems</strong>——成功时 humble（<strong>1999</strong> IPO 前看 jets、对 ex-wife 不 kind， credited grit 多于 luck）；失败时 forgive yourself——回头看最大 disappointment 是「当时有多 upset」，非事件本身。临终 regret：wish allowed themselves happier。</p>
+<p><strong>25–45</strong> identity 全 professional——<strong>early 40s</strong> 像 poor <strong>Howard Hughes</strong>；读 happiness literature 后 invest relationships。<strong>Purpose</strong> 非 capitalist ROI——对孩子永远 negative return（<strong>2 a.m.</strong> 不会担心你）才是 point；veterans loyalty 同理。</p>
+<p>育儿：不想生却被 higher-character partner call bluff——现 hands down most rewarding。<strong>Two kids</strong>：nature over nurture——老大 pleaser「<strong>Sunday make a plan</strong>」；老二 terrorist assess vulnerabilities。<strong>Michelle Obama</strong>：shepherds not engineers——lean into their interests（<strong>Pokemon</strong> cards）。<strong>Notes on Being a Man</strong> 写给 <strong>30–40 年</strong>后儿子理解父亲与世界。</p>
+<p>Closing question（上一位 guest 留）：最大 setback？——<strong>母亲慢死</strong>；never tell parents love too much；grief counseling 后视 grief 为 feature not bug——「recesses for love are grief and anxiety」。</p>
+<h3 id="韧性-育儿与哀思-好事坏事都没你想的那么极端-dialogue" class="layer-heading layer-dialogue">对谈实录</h3>
+<div class="timeline">
+  <article class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Stephen Bartlett</h3>
+      <p>「<strong>33 岁</strong>的我未来 <strong>30 年</strong>该知道什么？」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>Nothing's ever as good or as bad</strong>——成功 humble，失败 forgive。最大遗憾会是『当时有多 upset』。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「<strong>40 岁</strong>前我像 poor <strong>Howard Hughes</strong>——purpose 是对孩子永远 negative ROI 的爱。」</p>
+    </div>
+  </article>
+  <article class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Scott Galloway</h3>
+      <p>「两个小孩 nature over nurture——老大 <strong>Hallmark</strong> pleaser，老二 household terrorist。」</p>
+    </div>
+  </article>
+</div>
+
+<details class="collapsible meta-panel" id="延伸术语表">
+  <summary>延伸术语表</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>说明</th></tr></thead><tbody><tr><td><strong>The Diary of a CEO (DOAC)</strong></td><td><strong>Stephen Bartlett</strong> 主持的长访谈播客，常谈商业、心理与科技</td></tr><tr><td><strong>Pivot</strong></td><td><strong>Scott Galloway</strong> 与 <strong>Kara Swisher</strong> 合主持的科技商业播客</td></tr><tr><td><strong>Secondary</strong></td><td>创始人/早期员工在二级市场出售部分持股套现</td></tr><tr><td><strong>V 型冲击</strong></td><td>就业或经济先急坠后回升；中间谷底过深可能引发社会动荡</td></tr><tr><td><strong>Openweight models</strong></td><td>权重开放、可本地部署的模型；中国厂商多以此路线竞争</td></tr><tr><td><strong>GLP-1</strong></td><td>胰高血糖素样肽-1 类药（如司美格鲁肽），用于减重与代谢管理</td></tr><tr><td><strong>IRGC</strong></td><td>伊朗伊斯兰革命卫队</td></tr><tr><td><strong>Strait of Hormuz</strong></td><td>霍尔木兹海峡，全球石油运输咽喉</td></tr><tr><td><strong>Waymo</strong></td><td><strong>Alphabet</strong> 旗下自动驾驶公司</td></tr><tr><td><strong>IC（Investment Committee）</strong></td><td>投资委员会；<strong>Molly</strong> 用 agent 把项目预处理至 <strong>IC</strong> 标准</td></tr></tbody></table></div>
+  </div>
+</details>
+
+<details class="collapsible meta-panel" id="文章元数据">
+  <summary>文章元数据与来源</summary>
+  <div class="collapsible-body">
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody><tr><td><strong>原标题</strong></td><td>Scott Galloway on AI CEOs, Jobs, Trust &amp; The Future（*The Diary of a CEO*）</td></tr><tr><td><strong>内容链接</strong></td><td><a href="https://www.youtube.com/watch?v=NdU6UdUKaYc">YouTube 原视频</a></td></tr><tr><td><strong>发布时间</strong></td><td>2026-05-04</td></tr><tr><td><strong>元数据抓取时间</strong></td><td>2026-06-23</td></tr><tr><td><strong>播放量/访问量</strong></td><td>YouTube 3,253,765 次观看（用户提供）</td></tr><tr><td><strong>时长</strong></td><td>约 01:58:00（据章节时间戳末段）</td></tr><tr><td><strong>主持人</strong></td><td><strong>Stephen Bartlett</strong>（*The Diary of a CEO* 播客主持人、企业家）</td></tr><tr><td><strong>嘉宾</strong></td><td><strong>Scott Galloway</strong>（纽约大学斯特恩商学院市场营销学教授、企业家；*Pivot*、*The Prof G Pod* 主持人；著有《四巨头》《幸福算法》《后疫情时代》及新书 *Notes on Being a Man*）</td></tr><tr><td><strong>内容来源</strong></td><td>用户提供完整英文字幕转写 + YouTube 页面描述与章节时间戳</td></tr><tr><td><strong>文稿结构</strong></td><td>对谈三层节结构（洞察→解析→实录）</td></tr></tbody></table></div>
+
+<blockquote><strong>人物背景</strong>：<strong>Scott Galloway</strong> 以剖析商业、技术、财富与文化变迁著称，常在 *Pivot* 与 *Prof G* 中对科技估值、男性气质危机与公共政策发声。<strong>Stephen Bartlett</strong> 运营快速扩张的播客与媒体帝国，节目中自述过去 24 个月跨公司招聘约 <strong>220</strong> 人，且已因 <strong>AI</strong> 改变初级岗位筛选标准。</blockquote>
+  </div>
+</details>
+
+<h2 id="自检报告" hidden>自检报告</h2>
+
+<details class="collapsible">
+  <summary>展开自检报告详情</summary>
+  <div class="collapsible-body">
+    <div class="table-wrap">
+    <table><thead><tr><th>检查项</th><th>结果</th></tr></thead><tbody><tr><td><strong>素材覆盖</strong></td><td>✅ 用户提供完整字幕 + YouTube 描述/章节；主 URL 未浏览器二次抓取（字幕已覆盖 ≥95% 主干）</td></tr><tr><td><strong>节结构（对谈三层）</strong></td><td>✅ 17 节均含核心洞察+深度解析；16 节含对谈实录；「未来技能」节实录较短已合并</td></tr><tr><td><strong>导读论点（v5.26）</strong></td><td>✅ 全文论点块 + 4 段分层；覆盖监管/孤独/GLP-1/理财收束</td></tr><tr><td><strong>纯净排版（4d 节间空白）</strong></td><td>✅ 正文 <code>##</code> 节间无 <code>---</code>；<code>---</code> 共 4 处（元数据后、导读后、目录后、术语表前）</td></tr><tr><td><strong>正文中文叙事</strong></td><td>✅ 4c 闸门通过；grep 命中 47→修正后 0；对谈实录已译中文；专名/原标题英文保留</td></tr><tr><td><strong>首现缩写注释</strong></td><td>✅ IC、IRGC、GLP-1、EA 等首现已注或术语表</td></tr><tr><td><strong>AI/DevTools 行话簇</strong></td><td>✅ vibe coding、agent、LLM、prompt 等：产品/协议保留，行为层中文化</td></tr><tr><td><strong>多源一致性</strong></td><td>不适用（单源字幕）</td></tr><tr><td><strong>可读性内化</strong></td><td>不适用</td></tr><tr><td><strong>防幻觉</strong></td><td>✅ 数字均来自字幕；<strong>Kotzebue</strong> 等为 ASR 音近处按语境处理；无画面数据未捏造</td></tr><tr><td><strong>术语校准</strong></td><td>✅ Sam Altman、Dario Amodei、Waymo、BYD、Anthropic 等已校准</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+      <!-- CONTENT_END -->
+
+      <footer class="doc-footer">
+        <span>Generated by md2html · <a href="https://www.youtube.com/watch?v=NdU6UdUKaYc" target="_blank" rel="noopener">观看原视频</a></span>
+        <span>来源: 20260504 Scott_Galloway_人工智能CEO们在推销什么_The_Diary_of_a_CEO_整理文档.md</span>
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    // ---------- Theme ----------
+    const STORAGE_KEY = "md2html-theme";
+    function currentTheme() { return document.documentElement.dataset.theme || "light"; }
+    function applyThemeIcon() {
+      const use = document.getElementById("theme-icon-use");
+      if (use) use.setAttribute("href", currentTheme() === "dark" ? "#i-sun" : "#i-moon");
+    }
+    (function restoreTheme() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        document.documentElement.dataset.theme = saved;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+
+    // ---------- Mermaid ----------
+    const diagramSources = new Map();
+    function initMermaid() {
+      const isDark = currentTheme() === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        themeVariables: {
+          primaryColor: isDark ? "#3A2A22" : "#FBEEE6",
+          primaryTextColor: isDark ? "#F5F0E8" : "#1A1A1A",
+          primaryBorderColor: isDark ? "#E89572" : "#D97757",
+          lineColor: isDark ? "#9A938A" : "#6B6B66",
+          secondaryColor: isDark ? "#2A2520" : "#F5F5F0",
+          tertiaryColor: isDark ? "#221E1A" : "#FFFFFF",
+          fontFamily: "Inter, system-ui, sans-serif",
+        },
+      });
+    }
+    async function renderMermaid() {
+      initMermaid();
+      const els = document.querySelectorAll(".mermaid");
+      els.forEach(el => {
+        if (!diagramSources.has(el)) diagramSources.set(el, el.textContent.trim());
+        el.textContent = diagramSources.get(el);
+        el.removeAttribute("data-processed");
+      });
+      try { await mermaid.run({ nodes: els }); } catch (e) { console.error(e); }
+    }
+    function toggleTheme() {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(STORAGE_KEY, next);
+      applyThemeIcon();
+      renderMermaid();
+    }
+
+    // ---------- TOC drawer (mobile) ----------
+    const tocEl = () => document.getElementById("toc");
+    const tocToggle = () => document.getElementById("toc-toggle");
+    const isMobileToc = () => window.matchMedia("(max-width: 900px)").matches;
+
+    function syncTocA11y(open) {
+      const toc = tocEl();
+      if (!toc) return;
+      if (isMobileToc()) {
+        toc.setAttribute("role", "dialog");
+        toc.setAttribute("aria-modal", open ? "true" : "false");
+        toc.setAttribute("aria-hidden", open ? "false" : "true");
+      } else {
+        toc.removeAttribute("role");
+        toc.removeAttribute("aria-modal");
+        toc.removeAttribute("aria-hidden");
+      }
+    }
+
+    function openToc() {
+      document.body.classList.add("toc-open");
+      syncTocA11y(true);
+      const closeBtn = tocEl()?.querySelector(".toc-close");
+      closeBtn?.focus();
+    }
+    function closeToc() {
+      document.body.classList.remove("toc-open");
+      syncTocA11y(false);
+      if (isMobileToc()) tocToggle()?.focus();
+    }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && document.body.classList.contains("toc-open")) closeToc();
+    });
+    window.addEventListener("resize", () => {
+      if (!document.body.classList.contains("toc-open")) syncTocA11y(false);
+    });
+
+    // ---------- TOC scrollspy ----------
+    function setupTocSpy() {
+      const links = Array.from(document.querySelectorAll("#toc-nav a[href^='#']"));
+      if (!links.length) {
+        const toc = document.getElementById("toc");
+        if (toc) toc.style.display = "none";
+        return;
+      }
+      const entries = [];
+      links.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) entries.push({ el, link: a });
+        a.addEventListener("click", () => {
+          if (isMobileToc()) closeToc();
+        });
+      });
+
+      let ticking = false;
+      const setActive = () => {
+        ticking = false;
+        const offset = 96;
+        let current = entries[0]?.link;
+        for (const { el, link } of entries) {
+          if (el.getBoundingClientRect().top <= offset) current = link;
+        }
+        links.forEach(l => l.classList.toggle("active", l === current));
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(setActive);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setActive();
+    }
+
+    // ---------- Section jump pills ----------
+    function injectSectionJumps() {
+      document.querySelectorAll(".content h2[id]").forEach(h2 => {
+        const id = h2.id;
+        const parts = [
+          { suffix: "-insight", label: "洞察" },
+          { suffix: "-analysis", label: "解析" },
+          { suffix: "-dialogue", label: "实录" },
+        ];
+        const items = parts
+          .map(p => ({ el: document.getElementById(id + p.suffix), label: p.label }))
+          .filter(x => x.el);
+        if (!items.length) return;
+        const nav = document.createElement("nav");
+        nav.className = "section-jump";
+        nav.setAttribute("aria-label", "本节导航");
+        items.forEach(({ el, label }) => {
+          const a = document.createElement("a");
+          a.href = "#" + el.id;
+          a.textContent = label;
+          nav.appendChild(a);
+        });
+        h2.insertAdjacentElement("afterend", nav);
+      });
+    }
+
+    // ---------- Speaker tags in dialogue ----------
+    function tagSpeakers() {
+      document.querySelectorAll(".timeline .step-body h3").forEach(h3 => {
+        const step = h3.closest(".step");
+        if (!step) return;
+        const name = h3.textContent.trim();
+        if (/Harrison/i.test(name)) step.classList.add("speaker-host");
+        else if (/Andrew/i.test(name)) step.classList.add("speaker-guest");
+      });
+    }
+
+    // ---------- Anchor links on h2/h3 ----------
+    function injectAnchors() {
+      document.querySelectorAll(".content h2[id], .content h3[id]").forEach(h => {
+        if (h.querySelector(".anchor")) return;
+        const a = document.createElement("a");
+        a.className = "anchor";
+        a.href = "#" + h.id;
+        a.setAttribute("aria-label", "段落链接");
+        a.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg>';
+        h.appendChild(a);
+      });
+    }
+
+    // ---------- Copy-to-clipboard on <pre> ----------
+    function injectCopyButtons() {
+      document.querySelectorAll(".content pre").forEach(pre => {
+        if (pre.classList.contains("mermaid")) return;
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "复制代码");
+        btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code")?.textContent ?? pre.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.classList.add("copied");
+            btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg>';
+            }, 1500);
+          } catch (e) { console.error(e); }
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    // ---------- Back to top ----------
+    function setupBackToTop() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      const toggle = () => {
+        btn.hidden = window.scrollY < 480;
+      };
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+    }
+
+    // ---------- Scroll progress ----------
+    function setupScrollProgress() {
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = h > 0 ? (document.documentElement.scrollTop / h * 100) : 0;
+        bar.style.width = p + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    // ---------- Boot ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      applyThemeIcon();
+      syncTocA11y(false);
+      tagSpeakers();
+      injectAnchors();
+      injectCopyButtons();
+      renderMermaid();
+      setupTocSpy();
+      setupScrollProgress();
+      setupBackToTop();
+    });
+  </script>
+</body>
+</html>
